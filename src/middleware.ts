@@ -3,6 +3,8 @@ import { match } from "@formatjs/intl-localematcher";
 import { NextRequest, NextResponse } from "next/server";
 import { i18n } from "@/lib/i18n-config";
 
+const PUBLIC_FILE = /\.(.*)$/;
+
 const cookieName = "i18nlang";
 // Get the preferred locale, similar to the above or using a library
 function getLocale(request: NextRequest): string {
@@ -18,9 +20,19 @@ function getLocale(request: NextRequest): string {
   return match(languages, i18n.locales, i18n.defaultLocale);
 }
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/_next")) return NextResponse.next();
-  // Check if there is any supported locale in the pathname
-  const { pathname } = request.nextUrl;
+  const pathname = request.nextUrl.pathname;
+
+  // Allow direct access to manifest.json and other necessary files
+  if (
+    pathname.startsWith("/_next") ||
+    pathname === "/manifest.json" ||
+    pathname === "/manifest.webmanifest" ||
+    pathname === "/service-worker.js" ||
+    PUBLIC_FILE.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
   const pathnameHasLocale = i18n.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
