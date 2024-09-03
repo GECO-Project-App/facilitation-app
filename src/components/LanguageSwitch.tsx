@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export const LanguageSwitcher = () => {
   return (
-    <div>
-      <Link href="/" locale="en">
+    <div className="space-x-4">
+      <Link href="/en" locale="en">
         English
       </Link>
-      <Link href="/" locale="sv">
+      <Link href="/sv" locale="sv">
         Swedish
       </Link>
-      <Link href="/" locale="nl">
+      <Link href="/nl" locale="nl">
         Dutch
       </Link>
     </div>
