@@ -32,10 +32,6 @@ To set up the development environment, follow these steps:
 - Use ESLint to ensure code quality
 - Format your code with Prettier
 
-## Testing
-
-- Write unit tests for new functionality
-- Run existing tests before submitting a pull request
 
 ## Submitting Changes
 
