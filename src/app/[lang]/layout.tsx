@@ -1,12 +1,14 @@
+
 import { JetBrains_Mono } from "next/font/google";
 import "../globals.css";
 import type { Metadata } from "next";
 
 const jetbrains_mono = JetBrains_Mono({ subsets: ["latin"] });
 
+
 export const metadata: Metadata = {
-  manifest: "/manifest.json",
-  title: "Create next app",
+  manifest: '/manifest.json',
+  title: 'Create next app',
 };
 
 export default function RootLayout({
