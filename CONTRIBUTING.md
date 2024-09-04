@@ -1,4 +1,4 @@
-# Contributing to [Project Name]
+# Contributing to The GECO Project Facilitation App
 
 We appreciate your interest in contributing to our project! Here are some guidelines to help you get started.
 
