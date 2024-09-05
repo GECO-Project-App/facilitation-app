@@ -1,9 +1,7 @@
-
 import Image from 'next/image';
-import { Button, LanguageSwitcher, Timer } from "@/components";
-import { getDictionary } from "./dictionaries";
-import { ArrowRight } from "lucide-react";
-
+import {Button, LanguageSwitcher, Timer} from '@/components';
+import {getDictionary} from './dictionaries';
+import {ArrowRight} from 'lucide-react';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);

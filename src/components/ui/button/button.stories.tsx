@@ -11,15 +11,14 @@ const meta: Meta<typeof Button> = {
   },
   argTypes: {
     variant: {
-
-      control: "select",
-      description: "Button variants",
-      options: ["checkin", "checkout", "back", "pass"],
+      control: 'select',
+      description: 'Button variants',
+      options: ['checkin', 'checkout', 'back', 'pass'],
     },
     size: {
-      control: "select",
-      description: "Button sizes",
-      options: ["default", "icon"],
+      control: 'select',
+      description: 'Button sizes',
+      options: ['default', 'icon'],
     },
     disabled: {
       control: 'boolean',
@@ -39,7 +38,7 @@ const meta: Meta<typeof Button> = {
     },
 
     hasShadow: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -49,47 +48,43 @@ type Story = StoryObj<typeof meta>;
 
 export const Checkin: Story = {
   args: {
-
-    variant: "checkin",
+    variant: 'checkin',
     disabled: false,
-    onClick: action("default click"),
-    children: "Check in",
+    onClick: action('default click'),
+    children: 'Check in',
     hasShadow: true,
-    className: "",
-
+    className: '',
   },
 };
 
 export const Checkout: Story = {
   args: {
-
-    variant: "checkout",
+    variant: 'checkout',
     hasShadow: true,
     disabled: false,
-    onClick: action("default click"),
-    children: "Check out",
-    className: "",
+    onClick: action('default click'),
+    children: 'Check out',
+    className: '',
   },
 };
 export const Pass: Story = {
   args: {
-    variant: "pass",
+    variant: 'pass',
     disabled: false,
-    onClick: action("default click"),
-    children: "Pass it on",
+    onClick: action('default click'),
+    children: 'Pass it on',
     hasShadow: true,
-    className: "",
-
+    className: '',
   },
 };
 
 export const Back: Story = {
   args: {
-    variant: "back",
+    variant: 'back',
     disabled: false,
-    onClick: action("default click"),
-    children: "Back",
+    onClick: action('default click'),
+    children: 'Back',
     hasShadow: true,
-    className: "",
+    className: '',
   },
 };
