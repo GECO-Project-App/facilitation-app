@@ -1,8 +1,10 @@
-import {Inter} from 'next/font/google';
-import '../globals.css';
-import type {Metadata} from 'next';
 
-const inter = Inter({subsets: ['latin']});
+import { JetBrains_Mono } from "next/font/google";
+import "../globals.css";
+import type { Metadata } from "next";
+
+const jetbrains_mono = JetBrains_Mono({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -16,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={jetbrains_mono.className}>{children}</body>
     </html>
   );
 }
