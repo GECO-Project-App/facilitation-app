@@ -32,7 +32,6 @@ To set up the development environment, follow these steps:
 - Use ESLint to ensure code quality
 - Format your code with Prettier
 
-
 ## Submitting Changes
 
 1. Commit your changes: `git commit -m 'Add some feature'`

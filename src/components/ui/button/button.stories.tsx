@@ -1,50 +1,43 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { Button } from "./button";
+import type {Meta, StoryObj} from '@storybook/react';
+import {action} from '@storybook/addon-actions';
+import {Button} from './button';
 
 const meta: Meta<typeof Button> = {
-  title: "components/ui/button",
+  title: 'components/ui/button',
   component: Button,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
   argTypes: {
     variant: {
-      control: "select",
-      description: "Button variants",
-      options: [
-        "default",
-        "destructive",
-        "outline",
-        "secondary",
-        "ghost",
-        "link",
-      ],
+      control: 'select',
+      description: 'Button variants',
+      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
     },
     size: {
-      control: "select",
-      description: "Button sizes",
-      options: ["default", "sm", "lg", "icon"],
+      control: 'select',
+      description: 'Button sizes',
+      options: ['default', 'sm', 'lg', 'icon'],
     },
     disabled: {
-      control: "boolean",
-      description: "Button disabled state",
+      control: 'boolean',
+      description: 'Button disabled state',
     },
     onClick: {
-      action: "clicked",
-      description: "Function called when button is clicked",
+      action: 'clicked',
+      description: 'Function called when button is clicked',
     },
     children: {
-      control: "text",
-      description: "Content displayed inside button ",
+      control: 'text',
+      description: 'Content displayed inside button ',
     },
     className: {
-      control: "text",
-      description: "Custom tailwind classes applied to button",
+      control: 'text',
+      description: 'Custom tailwind classes applied to button',
     },
     asChild: {
-      control: "boolean",
+      control: 'boolean',
     },
   },
 };
@@ -54,72 +47,72 @@ type Story = StoryObj<typeof meta>;
 
 export const DefaultButton: Story = {
   args: {
-    variant: "default",
-    size: "lg",
+    variant: 'default',
+    size: 'lg',
     disabled: false,
-    onClick: action("default click"),
-    children: "Default Button",
+    onClick: action('default click'),
+    children: 'Default Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
 
 export const SecondaryButton: Story = {
   args: {
-    variant: "secondary",
-    size: "lg",
+    variant: 'secondary',
+    size: 'lg',
     disabled: false,
-    onClick: action("secondary click"),
-    children: "Secondary Button",
+    onClick: action('secondary click'),
+    children: 'Secondary Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
 
 export const OutlineButton: Story = {
   args: {
-    variant: "outline",
-    size: "lg",
+    variant: 'outline',
+    size: 'lg',
     disabled: false,
-    onClick: action("otline click"),
-    children: "Outline Button",
+    onClick: action('otline click'),
+    children: 'Outline Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
 
 export const DestructiveButton: Story = {
   args: {
-    variant: "destructive",
-    size: "lg",
+    variant: 'destructive',
+    size: 'lg',
     disabled: false,
-    onClick: action("destructive click"),
-    children: "Destructive Button",
+    onClick: action('destructive click'),
+    children: 'Destructive Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
 
 export const GhostButton: Story = {
   args: {
-    variant: "ghost",
-    size: "lg",
+    variant: 'ghost',
+    size: 'lg',
     disabled: false,
-    onClick: action("Ghost click"),
-    children: "Ghost Button",
+    onClick: action('Ghost click'),
+    children: 'Ghost Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
 
 export const LinkButton: Story = {
   args: {
-    variant: "link",
-    size: "lg",
+    variant: 'link',
+    size: 'lg',
     disabled: false,
-    onClick: action("Link click"),
-    children: "Link Button",
+    onClick: action('Link click'),
+    children: 'Link Button',
     asChild: false,
-    className: "",
+    className: '',
   },
 };
