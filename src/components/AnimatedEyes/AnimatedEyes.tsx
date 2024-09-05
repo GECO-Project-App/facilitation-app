@@ -11,7 +11,7 @@ export const AnimatedEyes: React.FC<React.SVGProps<SVGSVGElement>> = ({className
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentEyeIndex((prevIndex) => (prevIndex + 1) % eyeComponents.length);
-    }, 2000); // Byt ikon var 2:a sekund
+    }, 4000); // Set to switching every 4 second
 
     return () => clearInterval(interval);
   }, []);
@@ -21,12 +21,6 @@ export const AnimatedEyes: React.FC<React.SVGProps<SVGSVGElement>> = ({className
   return (
     <div className={cn(className, 'relative transition-opacity duration-500 ease-in-out')}>
       <CurrentEye {...props} className="opacity-100" />
-      {eyeComponents.map(
-        (Eye, index) =>
-          index !== currentEyeIndex && (
-            <Eye key={index} {...props} className="absolute left-0 top-0 opacity-0" />
-          ),
-      )}
     </div>
   );
 };

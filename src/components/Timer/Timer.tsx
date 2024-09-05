@@ -2,6 +2,7 @@
 import {FC, useCallback, useEffect, useState} from 'react';
 import {StylizedContainer} from '../StylizedContainer';
 import {AnimatedEyes} from '../AnimatedEyes/AnimatedEyes';
+import {cn} from '@/lib/utils';
 
 type TimerProps = {
   seconds?: number;
@@ -42,10 +43,22 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }, [countdown]);
 
+  console.log(seconds, countdown);
+
   return (
     <StylizedContainer className="bg-white">
-      <p className="text-center text-4xl font-bold">{formatTime()}</p>
-      <AnimatedEyes />
+      <button onClick={toggle}>
+        <p
+          className={cn(
+            seconds === countdown ? 'text-green-500' : '',
+            countdown === 0 ? 'text-amber-500' : '',
+          )}>
+          {formatTime()}
+        </p>
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+          <AnimatedEyes />
+        </div>
+      </button>
     </StylizedContainer>
   );
 };

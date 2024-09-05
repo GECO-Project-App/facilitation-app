@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {action} from '@storybook/addon-actions';
 import {Timer} from './Timer';
 
 const meta: Meta<typeof Timer> = {
