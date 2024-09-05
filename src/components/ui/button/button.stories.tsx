@@ -13,19 +13,12 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: "select",
       description: "Button variants",
-      options: [
-        "default",
-        "destructive",
-        "outline",
-        "secondary",
-        "ghost",
-        "link",
-      ],
+      options: ["checkin", "checkout", "back", "pass"],
     },
     size: {
       control: "select",
       description: "Button sizes",
-      options: ["default", "sm", "lg", "icon"],
+      options: ["default", "icon"],
     },
     disabled: {
       control: "boolean",
@@ -43,7 +36,7 @@ const meta: Meta<typeof Button> = {
       control: "text",
       description: "Custom tailwind classes applied to button",
     },
-    asChild: {
+    hasShadow: {
       control: "boolean",
     },
   },
@@ -52,74 +45,46 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DefaultButton: Story = {
+export const Checkin: Story = {
   args: {
-    variant: "default",
-    size: "lg",
+    variant: "checkin",
     disabled: false,
     onClick: action("default click"),
-    children: "Default Button",
-    asChild: false,
+    children: "Check in",
+    hasShadow: true,
     className: "",
   },
 };
 
-export const SecondaryButton: Story = {
+export const Checkout: Story = {
   args: {
-    variant: "secondary",
-    size: "lg",
+    variant: "checkout",
+    hasShadow: true,
     disabled: false,
-    onClick: action("secondary click"),
-    children: "Secondary Button",
-    asChild: false,
+    onClick: action("default click"),
+    children: "Check out",
+    className: "",
+  },
+};
+export const Pass: Story = {
+  args: {
+    variant: "pass",
+
+    disabled: false,
+    onClick: action("default click"),
+    children: "Pass it on",
+    hasShadow: true,
     className: "",
   },
 };
 
-export const OutlineButton: Story = {
+export const Back: Story = {
   args: {
-    variant: "outline",
-    size: "lg",
+    variant: "back",
     disabled: false,
-    onClick: action("otline click"),
-    children: "Outline Button",
-    asChild: false,
-    className: "",
-  },
-};
-
-export const DestructiveButton: Story = {
-  args: {
-    variant: "destructive",
-    size: "lg",
-    disabled: false,
-    onClick: action("destructive click"),
-    children: "Destructive Button",
-    asChild: false,
-    className: "",
-  },
-};
-
-export const GhostButton: Story = {
-  args: {
-    variant: "ghost",
-    size: "lg",
-    disabled: false,
-    onClick: action("Ghost click"),
-    children: "Ghost Button",
-    asChild: false,
-    className: "",
-  },
-};
-
-export const LinkButton: Story = {
-  args: {
-    variant: "link",
-    size: "lg",
-    disabled: false,
-    onClick: action("Link click"),
-    children: "Link Button",
-    asChild: false,
+    onClick: action("default click"),
+    children: "Back",
+    hasShadow: true,
     className: "",
   },
 };
