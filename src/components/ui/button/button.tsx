@@ -1,10 +1,11 @@
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { cva, type VariantProps } from "class-variance-authority";
+import * as React from 'react';
+import {Slot} from '@radix-ui/react-slot';
+import {cva, type VariantProps} from 'class-variance-authority';
 
-import { cn } from "@/lib/utils";
+import {cn} from '@/lib/utils';
 
 const buttonVariants = cva(
+
   "flex flex-row items-center rounded-full border-2 border-black text-black uppercase font-bold text-xl p-6 gap-2",
   {
     variants: {
@@ -35,7 +36,7 @@ const buttonVariants = cva(
       variant: "checkin",
       size: "default",
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -73,6 +74,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
-export { Button, buttonVariants };
+export {Button, buttonVariants};

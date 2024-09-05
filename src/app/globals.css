@@ -101,3 +101,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .stylized-container {
+    @apply relative gap-2 rounded-full border-2 border-black px-6 py-4 text-xl font-bold uppercase text-black;
+  }
+  .stylized-container-shadow {
+    @apply absolute inset-0 -z-10 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black;
+  }
+}
