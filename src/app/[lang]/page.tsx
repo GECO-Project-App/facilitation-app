@@ -18,7 +18,7 @@ export default async function Home({params}: {params: {lang: string}}) {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <LanguageSwitcher />
 
-      <Timer seconds={3} />
+      <Timer seconds={10} />
 
       <Button variant="checkin" hasShadow>
         Check in <ArrowRight size={28} />
