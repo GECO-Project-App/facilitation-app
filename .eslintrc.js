@@ -1,4 +1,5 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   extends: [
     'next',
     'next/core-web-vitals',
