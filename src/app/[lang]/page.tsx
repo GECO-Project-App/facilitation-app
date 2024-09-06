@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import {Button, LanguageSwitcher, Timer} from '@/components';
+import {Button, LanguageSwitcher, RandomQuestion, Timer} from '@/components';
 import {getDictionary} from './dictionaries';
 import {ArrowRight} from 'lucide-react';
+import {mockQuestions} from '@/lib/mock';
+import {getRandomUniqueItem} from '@/lib/utils';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -23,9 +25,8 @@ export default async function Home({params}: {params: {lang: string}}) {
       <Button variant="checkin" hasShadow>
         Check in <ArrowRight size={28} />
       </Button>
-      <p> {t.home.title}</p>
-
-      {t.home.desc}
+      <RandomQuestion />
+      <p> {t.home.desc}</p>
     </main>
   );
 }

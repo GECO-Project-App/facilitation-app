@@ -20,7 +20,7 @@ Welcome to the GECO Project's Facilitation app! This open-source project helps t
 
 To get started with [Project Name], follow these steps:
 
-1. Clone the repo: `git clone https://github.com/[username]/[project-name].git`
+1. Clone the repo: `git clone https://github.com/GECO-Project-App/facilitation-app.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 
