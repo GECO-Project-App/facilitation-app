@@ -1,8 +1,15 @@
-import Image from 'next/image';
-import {Button, LanguageSwitcher, Timer} from '@/components';
-import {getDictionary} from './dictionaries';
-import {ArrowRight} from 'lucide-react';
+import {Button, Timer} from '@/components';
 import {i18n} from '@/lib/i18n-config';
+import {ArrowRight} from 'lucide-react';
+import dynamic from 'next/dynamic';
+import {getDictionary} from './dictionaries';
+
+const DynamicLangSwitcher = dynamic(
+  () => import('@/components/LanguageSwitch').then((mod) => mod.LanguageSwitcher),
+  {
+    ssr: false,
+  },
+);
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -17,7 +24,7 @@ export default async function Home({params}: {params: {lang: string}}) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <LanguageSwitcher />
+      <DynamicLangSwitcher />
 
       <Timer seconds={10} />
 
