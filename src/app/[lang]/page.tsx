@@ -2,6 +2,7 @@ import Image from 'next/image';
 import {Button, LanguageSwitcher, Timer} from '@/components';
 import {getDictionary} from './dictionaries';
 import {ArrowRight} from 'lucide-react';
+import {i18n} from '@/lib/i18n-config';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -28,4 +29,8 @@ export default async function Home({params}: {params: {lang: string}}) {
       {t.home.desc}
     </main>
   );
+}
+
+export function generateStaticParams() {
+  return i18n.locales.map((lang) => ({lang}));
 }
