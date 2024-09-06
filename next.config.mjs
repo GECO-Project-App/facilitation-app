@@ -1,3 +1,4 @@
+// @ts-check
 /** @type {import('next').NextConfig} */
 
 import withPWAInit from '@ducanh2912/next-pwa';
@@ -16,4 +17,5 @@ const withPWA = withPWAInit({
 export default withPWA({
   reactStrictMode: true,
   swcMinify: true,
+  output: 'export',
 });
