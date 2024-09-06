@@ -1,3 +1,5 @@
+import {Star, StarAlt3, StarAlt4, Triangle} from '../components/icons';
+
 export const Colors = {
   White: '#FFFF',
   Black: '#000000',
@@ -14,3 +16,5 @@ export const ShapeColors = {
   Orange: '#FB8510',
   Yellow: '#FCD548',
 };
+
+export const Shapes = [Triangle, Star, StarAlt3, StarAlt4];

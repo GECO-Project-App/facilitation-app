@@ -1,11 +1,15 @@
 'use client';
+import {ShapeColors, Shapes} from '@/lib/constants';
 import {mockQuestions} from '@/lib/mock';
-import {getRandomUniqueItem, getRandomColor} from '@/lib/utils';
-import {FC, useEffect, useState} from 'react';
-import {Star, StarAlt3, StarAlt4, Triangle} from '../icons';
-import {ShapeColors} from '@/lib/constants';
-const shapes = [Triangle, Star, StarAlt3, StarAlt4];
-export const RandomQuestion: FC = () => {
+import {getRandomColor, getRandomUniqueItem} from '@/lib/utils';
+import {FC, SVGProps, useEffect, useState} from 'react';
+
+type RandomQuestionProps = {
+  defaultColor?: string;
+  defaultQuestion?: string;
+};
+
+export const RandomQuestion: FC<RandomQuestionProps> = ({defaultColor, defaultQuestion}) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
 
@@ -17,7 +21,7 @@ export const RandomQuestion: FC = () => {
 
   const getNextQuestion = () => {
     const nextQuestion = getRandomUniqueItem(mockQuestions, previousPicks);
-    setCurrentShapeIdx((prevIndex) => (prevIndex + 1) % shapes.length);
+    setCurrentShapeIdx((prevIndex) => (prevIndex + 1) % Shapes.length);
 
     if (nextQuestion) {
       previousPicks.push(nextQuestion);
@@ -34,11 +38,13 @@ export const RandomQuestion: FC = () => {
     }
   };
 
-  const CurrentShape = shapes[currentShapeIdx];
+  const CurrentShape = Shapes[currentShapeIdx];
 
   return (
     <div onClick={getNextQuestion}>
-      <CurrentShape fill={getRandomColor(ShapeColors)}>{currentQuestion}</CurrentShape>
+      <CurrentShape fill={defaultColor ?? getRandomColor(ShapeColors)}>
+        {defaultQuestion ?? currentQuestion}
+      </CurrentShape>
     </div>
   );
 };
