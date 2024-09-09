@@ -52,7 +52,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
   };
 
   return (
-    <div onClick={getNextQuestion}>
+    <div onClick={getNextQuestion} className="w-fit">
       <CurrentShape fill={defaultColor ?? getRandomColor(ShapeColors)}>
         {currentQuestion}
       </CurrentShape>

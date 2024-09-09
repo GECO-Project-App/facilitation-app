@@ -104,6 +104,10 @@
 }
 
 @layer utilities {
+  .page-padding {
+    @apply p-4;
+  }
+
   .stylized-container {
     @apply relative gap-2 rounded-full border-2 border-black px-6 py-4 text-xl font-bold uppercase text-black;
   }

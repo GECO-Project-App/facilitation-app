@@ -3,7 +3,7 @@ import {BackButton} from './BackButton';
 
 export const NavBar: FC<{children?: ReactNode}> = ({children}) => {
   return (
-    <nav className="p-4">
+    <nav className="">
       <ul className="flex w-full flex-row items-center justify-between gap-2 lg:gap-4">
         <BackButton />
 

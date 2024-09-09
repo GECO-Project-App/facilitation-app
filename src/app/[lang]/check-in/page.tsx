@@ -17,17 +17,19 @@ export default async function Popcorn({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
-    <main className="mx-auto flex min-h-screen flex-col bg-orange">
+    <main className="page-padding flex min-h-screen flex-col bg-orange">
       <NavBar />
-      <section className="space-y-16">
-        <RandomQuestion defaultColor={Colors.Yellow} />
-        <>
-          <Link href={'/popcorn'}>
-            <Button variant="pass" hasShadow className="mx-auto">
-              Pass it on <ArrowRight size={28} />
-            </Button>
-          </Link>
-        </>
+      <section className="flex flex-1 flex-col items-center justify-center">
+        <div className="mx-auto w-fit space-y-16">
+          <RandomQuestion defaultColor={Colors.Yellow} />
+          <div>
+            <Link href={'/popcorn'}>
+              <Button variant="pass" hasShadow className="mx-auto">
+                Pass it on <ArrowRight size={28} />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
     </main>
   );
