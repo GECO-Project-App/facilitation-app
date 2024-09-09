@@ -3,7 +3,7 @@ import {Colors} from '@/lib/constants';
 import {ArrowRight} from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import {getDictionary} from '../dictionaries';
+import {getDictionary} from '../../dictionaries';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -13,7 +13,7 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Popcorn({params}: {params: {lang: string}}) {
+export default async function Checkin({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
