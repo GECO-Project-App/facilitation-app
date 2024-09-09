@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({className, variant, size, asChild = false, hasShadow = false, ...props}, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
-      <div className="relative w-fit">
+      <div className={cn(className, 'relative w-fit')}>
         {hasShadow && (
           <div
             className={cn(
@@ -59,7 +59,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
         <Comp
-          className={cn(buttonVariants({variant, size, className}), 'group relative')}
+          className={cn(buttonVariants({variant, size}), 'group relative')}
           ref={ref}
           {...props}>
           {props.children}
