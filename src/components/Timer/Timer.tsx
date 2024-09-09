@@ -43,8 +43,6 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }, [countdown]);
 
-  console.log(seconds, countdown);
-
   return (
     <StylizedContainer className="bg-white">
       <button onClick={toggle}>

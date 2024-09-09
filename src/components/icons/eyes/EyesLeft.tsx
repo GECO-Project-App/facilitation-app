@@ -16,7 +16,7 @@ export const EyesLeft: FC<React.SVGProps<SVGSVGElement>> = ({height = 32, width 
         rx="7.5"
         fill="white"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <rect
         x="1.5"
@@ -26,7 +26,7 @@ export const EyesLeft: FC<React.SVGProps<SVGSVGElement>> = ({height = 32, width 
         rx="4.5"
         fill="black"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <rect
         x="19.5"
@@ -36,7 +36,7 @@ export const EyesLeft: FC<React.SVGProps<SVGSVGElement>> = ({height = 32, width 
         rx="7.5"
         fill="white"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <rect
         x="19.5"
@@ -46,7 +46,7 @@ export const EyesLeft: FC<React.SVGProps<SVGSVGElement>> = ({height = 32, width 
         rx="4.5"
         fill="black"
         stroke="black"
-        stroke-width="3"
+        strokeWidth="3"
       />
     </svg>
   );
