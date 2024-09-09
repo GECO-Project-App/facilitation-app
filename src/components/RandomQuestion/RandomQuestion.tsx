@@ -2,7 +2,7 @@
 import {ShapeColors, Shapes} from '@/lib/constants';
 import {mockQuestions} from '@/lib/mock';
 import {getRandomColor, getRandomUniqueItem} from '@/lib/utils';
-import {FC, SVGProps, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 
 export const RandomQuestion: FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);

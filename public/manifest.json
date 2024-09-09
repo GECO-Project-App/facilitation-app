@@ -1,6 +1,6 @@
 {
-  "name": "My awesome PWA app",
-  "short_name": "PWA App",
+  "name": "Project GECO",
+  "short_name": "GECO",
   "icons": [
     {
       "src": "/icon-192x192.png",
