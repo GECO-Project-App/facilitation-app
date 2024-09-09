@@ -10,3 +10,11 @@ export const mockQuestions = [
   'If you could teleport anywhere for your next break, where would you go?',
   "What's one goal you're working towards right now?",
 ];
+
+export const mockPopcorn = [
+  'who has a dog',
+  'who has a cat',
+  'who has met a celebrity',
+  'who has a daughter',
+  'who likes herring',
+];

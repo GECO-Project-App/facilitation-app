@@ -9,9 +9,6 @@ export const LanguageSwitcher = () => {
       <Link href="/sv" locale="sv">
         Swedish
       </Link>
-      <Link href="/nl" locale="nl">
-        Dutch
-      </Link>
     </div>
   );
 };

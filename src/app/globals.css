@@ -53,9 +53,10 @@
     --white: 0 0% 100%;
     --black: 0 0% 0%;
     --green: 148 87% 36%;
-    --pink: 279 96% 81%;
+    --pink: 335 98% 79%;
+    --purple: 279 96% 81%;
     --orange: 30 97% 52%;
-    --yellow: 47 97% 64%;
+    --yellow: 50 98% 61%;
     --blue: 241 99% 66%;
   }
   /* .dark {
@@ -95,14 +96,18 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply overscroll-none border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply overscroll-none bg-background text-foreground;
   }
 }
 
 @layer utilities {
+  .page-padding {
+    @apply p-4;
+  }
+
   .stylized-container {
     @apply relative gap-2 rounded-full border-2 border-black px-6 py-4 text-xl font-bold uppercase text-black;
   }

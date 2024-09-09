@@ -5,7 +5,7 @@ import {cva, type VariantProps} from 'class-variance-authority';
 import {cn} from '@/lib/utils';
 
 const buttonVariants = cva(
-  'flex flex-row  items-center rounded-full border-2 border-black text-black uppercase font-bold text-xl p-6 gap-2',
+  'flex flex-row items-center rounded-full border-2 border-black uppercase font-bold text-xl gap-2 whitespace-nowrap justify-center w-fit',
   {
     variants: {
       variant: {
@@ -19,14 +19,17 @@ const buttonVariants = cva(
         //   "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         // ghost: "hover:bg-accent hover:text-accent-foreground",
         // link: "text-primary underline-offset-4 hover:underline",
-        checkin: 'bg-pink hover:bg-black [&>*:not(svg)]:hover:bg-pink hover:text-white',
-        checkout: 'bg-green hover:bg-black [&>*:not(svg)]:hover:bg-green hover:text-white',
-        pass: 'bg-orange hover:bg-black [&>*:not(svg)]:hover:bg-orange hover:text-white',
-        back: 'bg-yellow hover:bg-black [&>*:not(svg)]:hover:bg-yellow hover:text-white',
+        icon: 'border-none ',
+        ghost: 'border-none ',
+        checkin: 'bg-pink hover:bg-black [&>*:not(svg)]:hover:bg-pink hover:text-white text-black',
+        checkout:
+          'bg-green hover:bg-black [&>*:not(svg)]:hover:bg-green hover:text-white text-black',
+        pass: 'bg-blue hover:bg-black [&>*:not(svg)]:hover:bg-blue text-white',
+        back: 'bg-yellow hover:bg-black [&>*:not(svg)]:hover:bg-yellow hover:text-white text-black',
       },
       size: {
-        default: '',
-        icon: 'h-9 w-9',
+        default: 'p-4',
+        icon: 'p-4',
       },
     },
     defaultVariants: {
