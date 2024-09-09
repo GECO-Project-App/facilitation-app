@@ -1,4 +1,19 @@
-import {Star, StarAlt3, StarAlt4, Triangle} from '../components/icons';
+import dynamic from 'next/dynamic';
+
+const Triangle = dynamic(() => import('@/components/icons').then((mod) => mod.Triangle), {
+  ssr: false,
+});
+const Star = dynamic(() => import('@/components/icons').then((mod) => mod.Star), {
+  ssr: false,
+});
+
+const StarAlt3 = dynamic(() => import('@/components/icons').then((mod) => mod.StarAlt3), {
+  ssr: false,
+});
+
+const StarAlt4 = dynamic(() => import('@/components/icons').then((mod) => mod.StarAlt4), {
+  ssr: false,
+});
 
 export const Colors = {
   White: '#FFFF',
@@ -19,4 +34,4 @@ export const ShapeColors = {
   Yellow: '#FCD548',
 };
 
-export const Shapes = [Triangle, Star, StarAlt3, StarAlt4];
+export const QuestionShapes = [Star, StarAlt3, StarAlt4];

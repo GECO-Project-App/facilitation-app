@@ -1,6 +1,7 @@
 import {clsx, type ClassValue} from 'clsx';
 import {twMerge} from 'tailwind-merge';
 import {ShapeColors, Colors} from './constants';
+import {mockPopcorn, mockQuestions} from './mock';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -29,3 +30,21 @@ export const getRandomColor = (colors: typeof ShapeColors | typeof Colors): stri
   const randomIndex = generateRandomNumberInRange(colorKeys.length);
   return colors[colorKeys[randomIndex] as keyof typeof colors];
 };
+
+// export const getRandomQuestion = (): string => {
+//   const randomIndex = generateRandomNumberInRange(mockQuestions.length);
+//   const question = mockQuestions[randomIndex];
+//   if (typeof window !== 'undefined') {
+//     localStorage.setItem('checkinQuestion', question);
+//   }
+//   return question;
+// };
+
+// export const getRandomPopcornPrompt = (): string => {
+//   const randomIndex = generateRandomNumberInRange(mockPopcorn.length);
+//   const prompt = mockPopcorn[randomIndex];
+//   if (typeof window !== 'undefined') {
+//     localStorage.setItem('popcornPrompt', prompt);
+//   }
+//   return prompt;
+// };

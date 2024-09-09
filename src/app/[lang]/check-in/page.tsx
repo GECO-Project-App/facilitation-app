@@ -1,5 +1,8 @@
-import {Button, RandomQuestion, Timer} from '@/components';
+import {Button, NavBar, RandomQuestion} from '@/components';
+import {Colors} from '@/lib/constants';
 import {ArrowRight} from 'lucide-react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import {getDictionary} from '../dictionaries';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
@@ -10,17 +13,22 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Checkin({params}: {params: {lang: string}}) {
+export default async function Popcorn({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-12">
-      <Timer seconds={3} />
-
-      <RandomQuestion />
-      <Button variant="pass" hasShadow>
-        Pass it on <ArrowRight size={28} />
-      </Button>
+    <main className="mx-auto flex min-h-screen flex-col bg-orange">
+      <NavBar />
+      <section className="space-y-16">
+        <RandomQuestion defaultColor={Colors.Yellow} />
+        <>
+          <Link href={'/popcorn'}>
+            <Button variant="pass" hasShadow className="mx-auto">
+              Pass it on <ArrowRight size={28} />
+            </Button>
+          </Link>
+        </>
+      </section>
     </main>
   );
 }

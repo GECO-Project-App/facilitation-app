@@ -2,8 +2,8 @@ import {Colors} from '@/lib/constants';
 import React, {FC} from 'react';
 
 export const StarAlt3: FC<React.SVGProps<SVGSVGElement>> = ({
-  width = 370,
-  height = 362,
+  height = 280,
+  width = 280,
   fill = Colors.Pink,
   strokeWidth = 3,
   children,
@@ -37,7 +37,7 @@ export const StarAlt3: FC<React.SVGProps<SVGSVGElement>> = ({
             style={{
               margin: 0,
               padding: 0,
-              fontSize: '1em',
+              fontSize: '1.4rem',
               fontWeight: 'bold',
               color: 'black',
               wordBreak: 'break-word',

@@ -96,10 +96,10 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply overscroll-none border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply overscroll-none bg-background text-foreground;
   }
 }
 
