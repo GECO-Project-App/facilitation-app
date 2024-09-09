@@ -4,12 +4,7 @@ import {mockQuestions} from '@/lib/mock';
 import {getRandomColor, getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useEffect, useState} from 'react';
 
-type RandomQuestionProps = {
-  defaultColor?: string;
-  defaultQuestion?: string;
-};
-
-export const RandomQuestion: FC<RandomQuestionProps> = ({defaultColor, defaultQuestion}) => {
+export const RandomQuestion: FC = () => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
 
@@ -42,9 +37,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({defaultColor, defaultQu
 
   return (
     <div onClick={getNextQuestion}>
-      <CurrentShape fill={defaultColor ?? getRandomColor(ShapeColors)}>
-        {defaultQuestion ?? currentQuestion}
-      </CurrentShape>
+      <CurrentShape fill={getRandomColor(ShapeColors)}>{currentQuestion}</CurrentShape>
     </div>
   );
 };

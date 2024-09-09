@@ -5,7 +5,6 @@ import {ShapeColors} from '@/lib/constants';
 const meta: Meta<typeof RandomQuestion> = {
   title: 'components/random-question',
   component: RandomQuestion,
-
   parameters: {
     layout: 'centered',
   },
