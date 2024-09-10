@@ -6,3 +6,4 @@ export * from './figure';
 export * from './circle';
 export * from './figureWithFingers';
 export * from './home';
+export * from './geco';
