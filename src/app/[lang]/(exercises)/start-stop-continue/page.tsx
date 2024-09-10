@@ -19,7 +19,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
     <main className="page-padding flex min-h-screen flex-col bg-blue">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        <Link href={'/start-stop-continue/tips'}>
+        <Link href={'/start-stop-continue/tips'} className='self-end pr-[10%]'>
           <Light />
         </Link>
         <Link href={'/start-stop-continue/start'}>
