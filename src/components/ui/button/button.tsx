@@ -55,7 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {hasShadow && (
           <div
             className={cn(
-              '∏translate-x-1.5 absolute inset-0 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
+              'absolute inset-0 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
             )}
           />
         )}
