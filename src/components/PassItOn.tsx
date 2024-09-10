@@ -3,9 +3,9 @@ import {mockPassItOn} from '@/lib/mock';
 import {cn} from '@/lib/utils';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
 import {FC, useState} from 'react';
-import {Button} from './ui';
-import {BackButton} from './NavBar/BackButton';
 import {HomeButton} from './HomeButton';
+import {BackButton} from './NavBar/BackButton';
+import {Button} from './ui';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -56,10 +56,11 @@ export const PassItOn: FC = () => {
               currentStep === 0 ? 'bg-yellow' : '',
               currentStep === 1 ? 'bg-pink' : '',
               currentStep === 2 ? 'bg-green' : '',
-              'aspect-square rounded-full border-2 border-black p-1 text-2xl font-semibold text-black',
+              'aspect-square h-11 w-11 rounded-full border-2 border-black p-1 text-2xl font-semibold text-black',
             )}>
             {currentStep + 1}
           </div>
+
           {mockPassItOn[currentStep].illustration()}
           <p>{mockPassItOn[currentStep].instruction}</p>
           {currentStep < mockPassItOn.length - 1 && (

@@ -7,21 +7,16 @@ const containerVariant = cva(
   {
     variants: {
       variant: {
-        icon: 'border-none ',
         ghost: 'border-none ',
-        checkin: 'bg-pink hover:bg-black [&>*:not(svg)]:hover:bg-pink hover:text-white text-black',
-        checkout:
-          'bg-green hover:bg-black [&>*:not(svg)]:hover:bg-green hover:text-white text-black',
-        pass: 'bg-blue hover:bg-black [&>*:not(svg)]:hover:bg-blue text-white',
-        back: 'bg-yellow hover:bg-black [&>*:not(svg)]:hover:bg-yellow hover:text-white text-black',
+        default: 'bg-white text-black',
       },
       size: {
         default: 'p-4',
-        icon: 'p-4',
+        icon: 'p-1 h-11 w-11',
       },
     },
     defaultVariants: {
-      variant: 'checkin',
+      variant: 'default',
       size: 'default',
     },
   },
