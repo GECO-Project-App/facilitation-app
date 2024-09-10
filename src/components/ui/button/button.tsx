@@ -28,7 +28,7 @@ const buttonVariants = cva(
         back: 'bg-yellow hover:bg-black [&>*:not(svg)]:hover:bg-yellow hover:text-white text-black',
       },
       size: {
-        default: 'p-2 px-6',
+        default: 'p-4 px-6',
         icon: 'p-4',
         ghost: 'p-0',
       },

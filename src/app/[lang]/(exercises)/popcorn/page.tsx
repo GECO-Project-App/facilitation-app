@@ -13,7 +13,7 @@ export default async function Popcorn({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
-    <main className="page-padding flex min-h-screen flex-col justify-between bg-blue">
+    <main className="bg-blue">
       <PassItOn />
     </main>
   );

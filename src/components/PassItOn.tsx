@@ -5,6 +5,7 @@ import {ArrowLeft, ArrowRight} from 'lucide-react';
 import {FC, useState} from 'react';
 import {Button} from './ui';
 import {BackButton} from './NavBar/BackButton';
+import {HomeButton} from './HomeButton';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -46,9 +47,9 @@ export const PassItOn: FC = () => {
   );
 
   return (
-    <section className="flex h-full min-h-screen flex-col">
+    <section className="flex min-h-screen flex-col justify-between p-4">
       <Navigation />
-      <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="">
         <div className="flex flex-col items-center justify-center space-y-8 text-center text-white">
           <div
             className={cn(
@@ -62,11 +63,14 @@ export const PassItOn: FC = () => {
           {mockPassItOn[currentStep].illustration()}
           <p>{mockPassItOn[currentStep].instruction}</p>
           {currentStep < mockPassItOn.length - 1 && (
-            <Button onClick={goToNextStep}>
+            <Button onClick={goToNextStep} variant="checkin">
               Next step <ArrowRight size={32} />
             </Button>
           )}
         </div>
+      </div>
+      <div className="self-end">
+        <HomeButton />
       </div>
     </section>
   );
