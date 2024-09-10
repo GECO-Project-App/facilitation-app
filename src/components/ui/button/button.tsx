@@ -5,7 +5,7 @@ import {cva, type VariantProps} from 'class-variance-authority';
 import {cn} from '@/lib/utils';
 
 const buttonVariants = cva(
-  'flex flex-row items-center rounded-full border-2 border-black uppercase font-bold text-xl gap-2 whitespace-nowrap justify-center w-fit',
+  'z-10 flex flex-row items-center rounded-full border-2 border-black uppercase font-bold text-xl gap-2 whitespace-nowrap justify-center w-fit',
   {
     variants: {
       variant: {
@@ -50,20 +50,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({className, variant, size, asChild = false, hasShadow = false, ...props}, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
-      <Comp
-        className={cn(buttonVariants({variant, size, className}), 'group relative')}
-        ref={ref}
-        {...props}>
-        {props.children}
-
+      <div className={cn(className, 'relative w-fit')}>
         {hasShadow && (
           <div
             className={cn(
-              'absolute inset-0 -z-10 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
+              'absolute inset-0 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
             )}
           />
         )}
-      </Comp>
+        <Comp
+          className={cn(buttonVariants({variant, size}), 'group relative')}
+          ref={ref}
+          {...props}>
+          {props.children}
+        </Comp>
+      </div>
     );
   },
 );

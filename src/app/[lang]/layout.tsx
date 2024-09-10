@@ -7,7 +7,7 @@ const jetbrains_mono = JetBrains_Mono({subsets: ['latin']});
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
-  title: 'Create next app',
+  title: 'GECO',
 };
 
 export default function RootLayout({
