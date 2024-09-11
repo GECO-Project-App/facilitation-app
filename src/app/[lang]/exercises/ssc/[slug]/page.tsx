@@ -14,15 +14,16 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
 export default async function SSC({params}: {params: {lang: string; slug: string; query: string}}) {
   const t = await getDictionary(params.lang);
   const data = getSsdData(params.slug);
-  console.log(data)
+  console.log(data);
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-green">
+    <main
+      className={`page-padding flex min-h-screen flex-col ${params.slug === 'start' ? 'bg-green' : params.slug === 'stop' ? 'bg-orange' : params.slug === 'continue' ? 'bg-pink' : 'bg-blue'}`}>
       <section className="flex flex-1 flex-col items-center justify-evenly">
         {data && <SSCExercise data={data} />}
       </section>
-      <Button variant="checkin" hasShadow className="mx-auto">
+      {/* <Button variant="checkin" hasShadow className="mx-auto">
         Next Step
-      </Button>
+      </Button> */}
     </main>
   );
 }
