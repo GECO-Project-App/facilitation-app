@@ -1,11 +1,10 @@
 'use client';
-import {ShapeColors} from '@/lib/constants';
 import {mockQuestions} from '@/lib/mock';
-import {getRandomColor, getRandomUniqueItem} from '@/lib/utils';
+import {getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
-import {Rounded, Star, StarAlt2} from '../icons/shapes';
+import {Rounded, Star, StarAlt2, Polygon, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
 
-const QuestionShapes = [Rounded, Star, StarAlt2];
+const QuestionShapes = [Rounded, Star, StarAlt2, Polygon, PolygonAlt2, PolygonAlt3];
 
 type RandomQuestionProps = {
   items?: string[];

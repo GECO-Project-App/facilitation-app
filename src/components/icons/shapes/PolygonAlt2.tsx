@@ -39,7 +39,7 @@ export const PolygonAlt2: FC<React.SVGProps<SVGSVGElement>> = ({
               padding: 0,
               fontSize: '0.9rem',
               fontWeight: 'bold',
-              color: 'black',
+              color: fill == Colors.Blue || Colors.Green ? 'white' : 'black',
               wordBreak: 'break-word',
             }}>
             {children}
