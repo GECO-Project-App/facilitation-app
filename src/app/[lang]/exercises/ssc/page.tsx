@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {getDictionary} from '../../dictionaries';
 import {Light} from '@/components/Light/Light';
 import './ssc.css';
-import SscExplanations from '@/components/ssc-exercise/SscExplanations';
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -19,8 +18,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
     <main className="page-padding flex min-h-screen flex-col bg-blue">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        <SscExplanations />
-        {/* <Link href={'/exercises/ssc/tips'} className='self-end pr-[10%]'>
+         <Link href={'/exercises/ssc/tips'} className='self-end pr-[10%]'>
           <Light />
         </Link>
         <Link href={'/exercises/ssc/start'}>
@@ -33,7 +31,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
             STOP
           </Button>
         </Link>
-        <Link href={'/ssc/continue'}>
+        <Link href={'/exercises/ssc/continue'}>
           <Button variant="checkin" hasShadow className="mx-auto" size="circle">
             CONTINUE
           </Button>
@@ -42,7 +40,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
           <Button variant="back" hasShadow className="mx-auto">
             Feedback
           </Button>
-        </Link> */}
+        </Link> 
       </section>
     </main>
   );

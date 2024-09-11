@@ -21,7 +21,7 @@ export default async function Home({params}: {params: {lang: string}}) {
         <Geco />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
       </div>
-      <Link href={'/exercises/ssc'}>
+      <Link href={'/exercises/ssc/land-page'}>
         <Button variant="back" hasShadow>
           Start / Stop / Continue <ArrowRight size={28} />
         </Button>
