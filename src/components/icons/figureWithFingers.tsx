@@ -71,7 +71,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         d="M86.2446 69.2399L74.6792 58.9595"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <path
         d="M70.5806 76.8658C70.0462 77.0055 69.7262 77.5518 69.8659 78.0862C70.0055 78.6205 70.5518 78.9405 71.0862 78.8009L70.5806 76.8658ZM81.9264 65.4121C80.1472 69.2426 78.6671 71.7293 76.9715 73.4471C75.3079 75.1326 73.3793 76.1345 70.5806 76.8658L71.0862 78.8009C74.1321 78.0049 76.4143 76.8588 78.395 74.8521C80.3436 72.8777 81.9412 70.1281 83.7403 66.2546L81.9264 65.4121Z"
@@ -92,7 +92,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         d="M37 39C37 50.5 58 50.5 58 39"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -102,7 +102,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         transform="matrix(-0.857493 -0.514496 -0.514496 0.857493 29 10)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -112,7 +112,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         transform="matrix(-0.998177 0.0603586 0.0603586 0.998177 29 12)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -122,7 +122,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         transform="matrix(-0.522784 -0.852465 -0.852465 0.522784 30 7.97069)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="65.5227"
@@ -131,7 +131,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="6.65702"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="66.2382"
@@ -140,7 +140,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="11.2934"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="63.85"
@@ -149,7 +149,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="3.32969"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <rect
         x="29"

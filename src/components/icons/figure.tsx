@@ -18,7 +18,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         d="M37 39C37 50.5 58 50.5 58 39"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -28,7 +28,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         transform="matrix(-0.857493 -0.514496 -0.514496 0.857493 29 10)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -38,7 +38,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         transform="matrix(-0.998177 0.0603586 0.0603586 0.998177 29 12)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -48,7 +48,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         transform="matrix(-0.522784 -0.852465 -0.852465 0.522784 30 7.97069)"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="65.5227"
@@ -57,7 +57,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         y2="6.65702"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="66.2382"
@@ -66,7 +66,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         y2="11.2934"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="63.85"
@@ -75,7 +75,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         y2="3.32969"
         stroke="black"
         stroke-width="2"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <rect
         x="29"
