@@ -1,11 +1,10 @@
 'use client';
-import {ShapeColors} from '@/lib/constants';
 import {mockQuestions} from '@/lib/mock';
-import {getRandomColor, getRandomUniqueItem} from '@/lib/utils';
+import {getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
-import {Star, StarAlt3, StarAlt4, Triangle} from '../icons/shapes';
+import {Rounded, Star, StarAlt2, Polygon, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
 
-const QuestionShapes = [Triangle, Star, StarAlt3, StarAlt4];
+const QuestionShapes = [Rounded, Star, StarAlt2, Polygon, PolygonAlt2, PolygonAlt3];
 
 type RandomQuestionProps = {
   items?: string[];
@@ -53,9 +52,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
 
   return (
     <div onClick={getNextQuestion} className="w-fit">
-      <CurrentShape fill={defaultColor ?? getRandomColor(ShapeColors)}>
-        {currentQuestion}
-      </CurrentShape>
+      <CurrentShape>{currentQuestion}</CurrentShape>
     </div>
   );
 };
