@@ -32,7 +32,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
             STOP
           </Button>
         </Link>
-        <Link href={'/ssc/continue'}>
+        <Link href={'/exercises/ssc/continue'}>
           <Button variant="checkin" hasShadow className="mx-auto" size="circle">
             CONTINUE
           </Button>

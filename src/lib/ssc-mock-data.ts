@@ -77,7 +77,7 @@ const continueData = [
     timer: 0,
 },
 {
-    id: 'continue-12',
+    id: 'continue-2',
     title: 'Silent Brainstorm',
     step: 2,
     imageOne:'',
@@ -87,7 +87,7 @@ const continueData = [
     timer: 3,
   },
   {
-    id: 'continue-13',
+    id: 'continue-3',
     title: 'Review & Discussion',
     step: 3,
     imageOne:'',
