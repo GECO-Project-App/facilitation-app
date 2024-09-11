@@ -15,7 +15,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         d="M62.304 88.0355L62.0051 87.6927H61.5502H58.3334C55.7675 87.6927 53.8334 85.7988 53.8334 83.6353V66.7773C53.8334 64.6138 55.7675 62.7199 58.3334 62.7199H59.4081H60.0458L60.3148 62.1416C60.7842 61.1324 61.4248 60.1938 62.2436 59.3661C63.8607 57.7312 66.6283 55.2297 69.5242 53.0682C70.9717 51.9878 72.4348 51.0047 73.7901 50.2589C75.1626 49.5036 76.3503 49.0338 77.2625 48.9072C81.7509 48.2845 86.6193 50.7405 90.5769 54.2745C92.5349 56.023 94.2191 57.9923 95.4637 59.8771C96.6973 61.7452 97.4521 63.4589 97.6667 64.7491V80.2751C97.6667 87.0928 91.6297 92.7501 84 92.7501H73C68.653 92.7501 64.7991 90.8977 62.304 88.0355Z"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="85"
@@ -25,7 +25,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="5.41667"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="80.4167"
@@ -35,7 +35,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="5.41667"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="86.8334"
@@ -45,7 +45,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="5.41667"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="86.8334"
@@ -55,13 +55,13 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="5.41667"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M85.8373 68.5494L85.7646 68.1997L85.4868 67.9751L74.1458 58.809C71.8573 56.9594 71.5015 53.6049 73.3511 51.3164C75.2887 48.9191 78.1453 47.9372 81.8698 48.0031C84.0125 48.041 86.5385 49.4624 88.6529 51.0451C89.6823 51.8156 90.5641 52.5856 91.1889 53.1637C91.5007 53.4522 91.7471 53.6916 91.9144 53.8575C91.9979 53.9405 92.0616 54.005 92.1037 54.0481L92.1504 54.0961L92.1612 54.1073L92.1634 54.1096L92.1636 54.1098L92.1637 54.1098L92.235 54.1847L92.3185 54.2423L92.3189 54.2425L92.3195 54.243L92.32 54.2432L92.3202 54.2434L92.3204 54.2436L92.321 54.244L92.3383 54.2563C92.3553 54.2685 92.3828 54.2886 92.4197 54.3164C92.4934 54.372 92.6043 54.4583 92.7426 54.5739C93.0198 54.8056 93.4039 55.1527 93.8193 55.6046C94.789 56.6599 95.217 58.028 95.4702 59.673C95.5748 60.3528 95.6457 61.0478 95.7197 61.7744C95.7355 61.9289 95.7514 62.0849 95.7678 62.2424C95.8597 63.1254 95.9665 64.0467 96.1537 64.9475L98.5776 76.615C99.1861 79.544 97.305 82.4117 94.3759 83.0202C91.4469 83.6287 88.5792 81.7476 87.9707 78.8186L85.8373 68.5494Z"
         fill="#0CAC56"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M70.8241 54.8194C70.8241 54.2671 71.2718 53.8194 71.8241 53.8194H86.5174C87.0745 53.8194 87.5241 54.2746 87.5173 54.8316L87.345 68.8861C87.3385 69.4174 86.9178 69.8508 86.387 69.873L71.866 70.4813C71.2977 70.5051 70.8241 70.0509 70.8241 69.4822V54.8194Z"
@@ -70,8 +70,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
       <path
         d="M86.2446 69.2399L74.6792 58.9595"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M70.5806 76.8658C70.0462 77.0055 69.7262 77.5518 69.8659 78.0862C70.0055 78.6205 70.5518 78.9405 71.0862 78.8009L70.5806 76.8658ZM81.9264 65.4121C80.1472 69.2426 78.6671 71.7293 76.9715 73.4471C75.3079 75.1326 73.3793 76.1345 70.5806 76.8658L71.0862 78.8009C74.1321 78.0049 76.4143 76.8588 78.395 74.8521C80.3436 72.8777 81.9412 70.1281 83.7403 66.2546L81.9264 65.4121Z"
@@ -86,13 +86,13 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         d="M49 52.9754V52.0235L49.9508 51.9766C59.3679 51.5129 66.9838 44.1907 67.9061 34.9012L67.9956 34H68.9012H71.5C76.7467 34 81 29.7467 81 24.5C81 19.2533 76.7467 15 71.5 15H68.0844H67.3503L67.1303 14.2996C64.709 6.59024 57.506 1 49 1H33C24.494 1 17.291 6.59024 14.8697 14.2997L14.6497 15H13.9156H10.5C5.2533 15 1 19.2533 1 24.5C1 29.7467 5.2533 34 10.5 34H13.0987H14.0044L14.0939 34.9012C15.0162 44.1907 22.6321 51.5129 32.0492 51.9766L33 52.0235V52.9754V88H49V52.9754Z"
         fill="#FE94C1"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M37 39C37 50.5 58 50.5 58 39"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -101,8 +101,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="-1"
         transform="matrix(-0.857493 -0.514496 -0.514496 0.857493 29 10)"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -111,8 +111,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="-1"
         transform="matrix(-0.998177 0.0603586 0.0603586 0.998177 29 12)"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -121,8 +121,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         y2="-1"
         transform="matrix(-0.522784 -0.852465 -0.852465 0.522784 30 7.97069)"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="65.5227"
@@ -130,8 +130,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         x2="68.8077"
         y2="6.65702"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="66.2382"
@@ -139,8 +139,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         x2="70.0622"
         y2="11.2934"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="63.85"
@@ -148,8 +148,8 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         x2="65.8528"
         y2="3.32969"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <rect
         x="29"
@@ -159,7 +159,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="8.5"
         fill="white"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="33.75"
@@ -169,7 +169,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="6.125"
         fill="black"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="48"
@@ -179,7 +179,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="8.5"
         fill="white"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="52.75"
@@ -189,7 +189,7 @@ export const FigureWithFingers: FC<React.SVGProps<SVGSVGElement>> = ({
         rx="6.125"
         fill="black"
         stroke="black"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );

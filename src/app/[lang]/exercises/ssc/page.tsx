@@ -2,7 +2,7 @@ import {Button, NavBar} from '@/components';
 import Link from 'next/link';
 import {getDictionary} from '../../dictionaries';
 import {Light} from '@/components/Light/Light';
-import './start-stop-continue.css';
+import './ssc.css';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
