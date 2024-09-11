@@ -1,4 +1,7 @@
 import {getDictionary} from '../../../dictionaries';
+import {getSsdData} from '@/lib/ssc-mock-data';
+import {Button} from '@/components/ui/button';
+import SSCExercise from '@/components/ssc-exercise';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -8,14 +11,15 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Checkin({params}: {params: {lang: string}}) {
+export default async function SSC({params}: {params: {lang: string; slug: string; query: string}}) {
   const t = await getDictionary(params.lang);
-
+  const data = getSsdData(params.slug);
+  
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-blue">
+    <main className="page-padding flex min-h-screen flex-col bg-green">
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        Start Stop Continue Details
+        {data && <SSCExercise data={data} />}
       </section>
-    </main>
+         </main>
   );
 }

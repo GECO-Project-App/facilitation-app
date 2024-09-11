@@ -19,25 +19,25 @@ export default async function Checkin({params}: {params: {lang: string}}) {
     <main className="page-padding flex min-h-screen flex-col bg-blue">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        <Link href={'/start-stop-continue/tips'} className='self-end pr-[10%]'>
+        <Link href={'/exercises/ssc/tips'} className='self-end pr-[10%]'>
           <Light />
         </Link>
-        <Link href={'/start-stop-continue/start'}>
+        <Link href={'/exercises/ssc/start'}>
           <Button variant="checkout" hasShadow className="mx-auto" size="circle">
             START
           </Button>
         </Link>
-        <Link href={'/start-stop-continue/stop'}>
+        <Link href={'/exercises/ssc/stop'}>
           <Button variant="stop" hasShadow className="mx-auto" size="circle">
             STOP
           </Button>
         </Link>
-        <Link href={'/start-stop-continue/continue'}>
+        <Link href={'/ssc/continue'}>
           <Button variant="checkin" hasShadow className="mx-auto" size="circle">
             CONTINUE
           </Button>
         </Link>
-        <Link href={'/start-stop-continue/feedback'}>
+        <Link href={'/exercises/ssc/feedback'}>
           <Button variant="back" hasShadow className="mx-auto">
             Feedback
           </Button>
