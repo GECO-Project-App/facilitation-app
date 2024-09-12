@@ -5,27 +5,16 @@ import {cva, type VariantProps} from 'class-variance-authority';
 import {cn} from '@/lib/utils';
 
 const buttonVariants = cva(
-  'z-10 flex flex-row items-center rounded-full border-2 border-black  font-bold text-xl gap-2 whitespace-nowrap justify-center w-fit',
+  'z-10 flex flex-row items-center rounded-full border-2 border-black font-bold text-xl gap-2 whitespace-nowrap justify-center w-fit',
   {
     variants: {
       variant: {
-        // default:
-        //   "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        // destructive:
-        //   "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        // outline:
-        //   "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        // secondary:
-        //   "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        // ghost: "hover:bg-accent hover:text-accent-foreground",
-        // link: "text-primary underline-offset-4 hover:underline",
-        icon: 'border-none ',
-        ghost: 'border-none ',
-        checkin: 'bg-pink hover:bg-black [&>*:not(svg)]:hover:bg-pink hover:text-white text-black',
-        checkout:
-          'bg-green hover:bg-black [&>*:not(svg)]:hover:bg-green hover:text-white text-black',
-        pass: 'bg-blue hover:bg-black [&>*:not(svg)]:hover:bg-blue text-white',
-        back: 'bg-yellow hover:bg-black [&>*:not(svg)]:hover:bg-yellow hover:text-white text-black',
+        icon: 'border-none',
+        ghost: 'border-none',
+        checkin: 'bg-pink hover:bg-black hover:text-white text-black ',
+        checkout: 'bg-green hover:bg-black hover:text-white text-black',
+        pass: 'bg-blue hover:bg-black text-white',
+        back: 'bg-yellow hover:bg-black hover:text-white text-black',
       },
       size: {
         default: 'p-4 px-6',
@@ -36,6 +25,26 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: 'checkin',
       size: 'default',
+    },
+  },
+);
+
+// These need to be named the same as the button variants
+const shadowVariants = cva(
+  'absolute inset-0 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
+  {
+    variants: {
+      variant: {
+        checkin: 'group-hover:bg-pink',
+        checkout: ' group-hover:bg-green',
+        pass: 'group-hover:bg-blue',
+        back: ' group-hover:bg-yellow',
+        icon: '',
+        ghost: '',
+      },
+    },
+    defaultVariants: {
+      variant: 'checkin',
     },
   },
 );
@@ -51,20 +60,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({className, variant, size, asChild = false, hasShadow = false, ...props}, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
-      <div className={cn(className, 'relative w-fit')}>
-        {hasShadow && (
-          <div
-            className={cn(
-              'absolute inset-0 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black',
-            )}
-          />
-        )}
-        <Comp
-          className={cn(buttonVariants({variant, size}), 'group relative')}
-          ref={ref}
-          {...props}>
+      <div className={cn(className, 'group relative w-fit')}>
+        <Comp className={cn(buttonVariants({variant, size}), 'relative')} ref={ref} {...props}>
           {props.children}
         </Comp>
+        {hasShadow && <div className={cn(shadowVariants({variant}))} />}
       </div>
     );
   },
