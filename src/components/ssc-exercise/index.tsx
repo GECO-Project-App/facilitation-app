@@ -15,7 +15,7 @@ export interface SSCExerciseProps {
     Instructions: string;
     imageTwo: string;
     description: string;
-    timer: number;
+    timer?: number;
   }[];
 }
 
