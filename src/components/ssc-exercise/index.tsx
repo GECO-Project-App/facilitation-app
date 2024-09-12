@@ -2,9 +2,7 @@
 import React, {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
-import Image from 'next/image';
 import {useRouter} from 'next/navigation';
-import { useParams } from 'next/navigation';
 import { Timer } from '@/components';
 
 export interface SSCExerciseProps {
@@ -12,17 +10,14 @@ export interface SSCExerciseProps {
     id: string;
     title: string;
     step: number;
-    imageOne: string | null | undefined;
-    Instructions: string;
-    imageTwo: string | null | undefined;
-    description: string;
+    sticker: string | null;
+    description: string | null;
     timer?: number;
   }[];
 }
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
   const router = useRouter();
-  const { slug } = useParams();
   const [step, setStep] = useState(1);
   const stepData = data.find((item) => item.step === step);
   const goToNextStep = () => {
@@ -45,15 +40,14 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
           </h1>
         </header>
         <section className="text-center">
-          <h2 className="mb-2 text-xl font-semibold">{stepData.step}</h2>
-          <p className="mb-4 text-lg">{stepData.Instructions}</p>
-          <p className="text-base">{stepData.description}</p>
+          <h2 className="mb-2 text-xl font-semibold border-2 border-black rounded-full p-2 w-12 h-12 items-center m-auto">{stepData.step}</h2>
         </section>
-        {stepData.imageOne && (
+        {stepData.sticker && (
           <figure className="my-4">
-            <img src={`/assets/png/${stepData.imageOne}`} alt="Step illustration"  />
+            <img src={`/assets/svg/${stepData.sticker}`} alt="Step illustration"  />
           </figure>
         )}
+        <p className="text-base">{stepData.description}</p>
         {stepData.timer && <Timer seconds = {stepData.timer}/>}
         <footer className="mt-8">
           <Button variant="checkin" onClick={goToNextStep} hasShadow>
