@@ -21,17 +21,17 @@ export default async function Checkin({params}: {params: {lang: string}}) {
          <Link href={'/exercises/ssc/tips'} className='self-end pr-[10%]'>
           <Light />
         </Link>
-        <Link href={'/exercises/ssc/start'}>
+        <Link href={'/exercises/ssc/introduction?step=start'}>
           <Button variant="checkout" hasShadow className="mx-auto" size="circle">
             START
           </Button>
         </Link>
-        <Link href={'/exercises/ssc/stop'}>
+        <Link href={'/exercises/ssc/introduction?step=stop'}>
           <Button variant="stop" hasShadow className="mx-auto" size="circle">
             STOP
           </Button>
         </Link>
-        <Link href={'/exercises/ssc/continue'}>
+        <Link href={'/exercises/ssc/introduction?step=continue'}>
           <Button variant="checkin" hasShadow className="mx-auto" size="circle">
             CONTINUE
           </Button>
