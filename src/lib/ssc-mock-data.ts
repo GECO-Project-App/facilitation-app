@@ -1,5 +1,5 @@
 
-interface SSCExerciseProps {
+interface SSCExerciseType {
     id: string;
     title: string;
     step: number;
@@ -8,7 +8,7 @@ interface SSCExerciseProps {
     timer?: number;
 }
 
-const startData: SSCExerciseProps[] = [
+const startData: SSCExerciseType[] = [
   {
     id: 'start-1',
     title: 'Formulate',
@@ -47,7 +47,7 @@ const startData: SSCExerciseProps[] = [
   },
 ];
 
-const stopData: SSCExerciseProps[] = [
+const stopData: SSCExerciseType[] = [
   {
     id: 'stop-1',
     title: 'Formulate',
@@ -72,7 +72,7 @@ const stopData: SSCExerciseProps[] = [
   },
 ];
 
-const continueData: SSCExerciseProps[] = [
+const continueData: SSCExerciseType[] = [
   {
     id: 'continue-1',
     title: 'Formulate',
