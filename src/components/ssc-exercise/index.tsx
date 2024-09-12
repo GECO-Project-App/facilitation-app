@@ -27,13 +27,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
   const goToNextStep = () => {
     setStep(step + 1);
     if (step === data.length) {
-      if (slug === 'start') {
-        router.push('/exercises/ssc/stop');
-      } else if (slug === 'stop') {
-        router.push('/exercises/ssc/continue');
-      } else if (slug === 'continue') {
         router.push('/exercises/ssc');
-      }
     }
   };
 
