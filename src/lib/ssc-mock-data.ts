@@ -1,9 +1,11 @@
+
+
 const startData = [
   {
     id: 'start-1',
     title: 'Formulate',
     step: 1,
-    imageOne: '',
+    imageOne: 'topic.png',
     Instructions: 'Pick a main topic on what you wanna discuss today with the community.',
     imageTwo: '',
     description: 'What are we not doing that we might start doing as a community?',

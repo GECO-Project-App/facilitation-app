@@ -6,14 +6,15 @@ import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { Timer } from '@/components';
+
 export interface SSCExerciseProps {
   data: {
     id: string;
     title: string;
     step: number;
-    imageOne: string;
+    imageOne: string | null | undefined;
     Instructions: string;
-    imageTwo: string;
+    imageTwo: string | null | undefined;
     description: string;
     timer?: number;
   }[];
@@ -50,7 +51,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
         </section>
         {stepData.imageOne && (
           <figure className="my-4">
-            <Image src={stepData.imageOne} alt="Step illustration" width={300} height={200} />
+            <img src={`/assets/png/${stepData.imageOne}`} alt="Step illustration"  />
           </figure>
         )}
         {stepData.timer && <Timer seconds = {stepData.timer}/>}
