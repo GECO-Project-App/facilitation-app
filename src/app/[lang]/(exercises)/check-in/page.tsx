@@ -19,11 +19,11 @@ export default async function Checkin({params}: {params: {lang: string}}) {
     <main className="page-padding flex min-h-screen flex-col bg-orange">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-center">
-        <div className="mx-auto w-fit space-y-16">
+        <div className="mx-auto flex w-fit flex-col items-center space-y-16">
           <RandomQuestion defaultColor={Colors.Yellow} />
           <div>
             <Link href={'/popcorn'}>
-              <Button variant="pass" hasShadow className="mx-auto">
+              <Button variant="blue">
                 Pass it on <ArrowRight size={28} />
               </Button>
             </Link>

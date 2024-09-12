@@ -6,9 +6,9 @@ import Link from 'next/link';
 export const HomeButton: FC = () => {
   return (
     <Link href="/">
-      <Button variant="ghost" size="ghost">
+      <button>
         <Home />
-      </Button>
+      </button>
     </Link>
   );
 };

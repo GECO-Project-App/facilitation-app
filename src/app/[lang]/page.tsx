@@ -23,7 +23,7 @@ export default async function Home({params}: {params: {lang: string}}) {
       </div>
 
       <Link href={'/check-in'}>
-        <Button variant="checkin" hasShadow>
+        <Button variant="pink">
           Check in <ArrowRight size={28} />
         </Button>
       </Link>
