@@ -19,7 +19,7 @@ export default async function SSC({params}: {params: {lang: string; slug: string
 
   return (
     <main
-      className={`page-padding flex min-h-screen flex-col ${params.slug === 'start' ? 'bg-yellow' : params.slug === 'stop' ? 'bg-orange' : params.slug === 'continue' ? 'bg-pink' : 'bg-blue'}`}>
+      className={`page-padding flex min-h-screen flex-col ${params.slug === 'start' ? 'bg-yellow' : params.slug === 'stop' ? 'bg-red-400' : params.slug === 'continue' ? 'bg-green' : 'bg-blue'}`}>
       <section className="flex flex-1 flex-col items-center justify-evenly">
         {data && <SSCExercise data={data} />}
       </section>
