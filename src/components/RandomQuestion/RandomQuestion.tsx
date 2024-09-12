@@ -24,29 +24,41 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     if (!items || !shapes) {
       return;
     }
-    getNextQuestion();
+    const savedQuestion = localStorage.getItem('currentQuestion');
+    if (savedQuestion) {
+      setCurrentQuestion(savedQuestion);
+      setCurrentShapeIdx(parseInt(localStorage.getItem('currentShapeIdx') || '0'));
+    } else {
+      getNextQuestion();
+    }
   }, []);
 
   const CurrentShape = useMemo(() => shapes[currentShapeIdx], [currentShapeIdx, shapes]);
 
-  let previousPicks: (typeof items)[number][] = [];
-
   const getNextQuestion = () => {
+    let previousPicks: string[] = JSON.parse(localStorage.getItem('previousPicks') || '[]');
+
     const nextQuestion = getRandomUniqueItem(items, previousPicks);
-    setCurrentShapeIdx((prevIndex) => (prevIndex + 1) % shapes.length);
+    const nextShapeIdx = (currentShapeIdx + 1) % shapes.length;
 
     if (nextQuestion) {
       previousPicks.push(nextQuestion);
-
+      localStorage.setItem('previousPicks', JSON.stringify(previousPicks));
+      localStorage.setItem('currentQuestion', nextQuestion);
+      localStorage.setItem('currentShapeIdx', nextShapeIdx.toString());
       setCurrentQuestion(nextQuestion);
+      setCurrentShapeIdx(nextShapeIdx);
     } else {
       // All questions have been used, reset previousPicks
-      previousPicks = [];
-      const question = getRandomUniqueItem(items, previousPicks);
+      localStorage.setItem('previousPicks', '[]');
+      const question = getRandomUniqueItem(items, []);
       if (!question) {
         return;
       }
+      localStorage.setItem('currentQuestion', question);
+      localStorage.setItem('currentShapeIdx', '0');
       setCurrentQuestion(question);
+      setCurrentShapeIdx(0);
     }
   };
 

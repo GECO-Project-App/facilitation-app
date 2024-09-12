@@ -64,7 +64,7 @@ export const PassItOn: FC = () => {
           {mockPassItOn[currentStep].illustration()}
           <p>{mockPassItOn[currentStep].instruction}</p>
           {currentStep < mockPassItOn.length - 1 && (
-            <Button onClick={goToNextStep} variant="checkin">
+            <Button onClick={goToNextStep} variant="checkin" hasShadow>
               Next step <ArrowRight size={32} />
             </Button>
           )}
