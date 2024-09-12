@@ -3,7 +3,7 @@ import {useRive} from '@rive-app/react-canvas';
 
 export default function SscRivLandPage() {
   const {RiveComponent: TheSSC} = useRive({
-    src: '/ssc.riv',
+    src: '/startstopcontinue.riv',
     autoplay: true,
   });
 
