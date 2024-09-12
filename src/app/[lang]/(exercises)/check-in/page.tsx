@@ -1,7 +1,6 @@
 import {Button, NavBar, RandomQuestion} from '@/components';
 import {Colors} from '@/lib/constants';
 import {ArrowRight} from 'lucide-react';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {getDictionary} from '../../dictionaries';
 
