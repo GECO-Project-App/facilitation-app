@@ -1,3 +1,4 @@
+
 import {getDictionary} from '../../../dictionaries';
 import {getSsdData} from '@/lib/ssc-mock-data';
 import SSCExercise from '@/components/ssc-exercise';
