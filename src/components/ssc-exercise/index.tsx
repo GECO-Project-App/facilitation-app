@@ -23,7 +23,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
   const goToNextStep = () => {
     setStep(step + 1);
     if (step === data.length) {
-        router.push('/exercises/ssc');
+        router.push('/exercises/ssc/accomplishment');
     }
   };
 
