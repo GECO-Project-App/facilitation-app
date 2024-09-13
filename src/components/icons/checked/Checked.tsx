@@ -15,8 +15,8 @@ export const Checked: FC<React.SVGProps<SVGSVGElement>> = ({
       <path
         d="M3 19L10.5368 32.5663C10.9004 33.2208 11.8278 33.2583 12.243 32.6354L32 3"
         stroke="black"
-        stroke-width="5"
-        stroke-linecap="round"
+        strokeWidth="5"
+        strokeLinecap="round"
       />
     </svg>
   );
