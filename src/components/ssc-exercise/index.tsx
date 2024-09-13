@@ -6,6 +6,7 @@ import {useRouter} from 'next/navigation';
 import { Timer } from '@/components';
 
 export interface SSCExerciseProps {
+  chapter: string;
   data: {
     id: string;
     title: string;
@@ -16,7 +17,7 @@ export interface SSCExerciseProps {
   }[];
 }
 
-const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
+const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const stepData = data.find((item) => item.step === step);
@@ -24,9 +25,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data}) => {
     setStep(step + 1);
     if (step === data.length) {
         router.push('/exercises/ssc/accomplishment');
+        const localStorageChaptersData = localStorage.getItem('chapterDone');
+        const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
+        doneChapters.push(chapter);
+        localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
     }
   };
-
   if (!stepData) {
     return <div>Loading...</div>;
   }
