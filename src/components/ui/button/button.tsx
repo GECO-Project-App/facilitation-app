@@ -19,7 +19,8 @@ const buttonVariants = cva(
         purple: 'bg-purple',
       },
       size: {
-        default: ' px-6 py-2',
+        default: 'px-6 py-2',
+        large: 'px-8 py-4',
         icon: '',
       },
     },

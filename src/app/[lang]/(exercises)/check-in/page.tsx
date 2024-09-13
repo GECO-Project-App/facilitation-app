@@ -22,11 +22,11 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         <div className="mx-auto flex w-fit flex-col items-center space-y-16">
           <RandomQuestion defaultColor={Colors.Yellow} />
           <div>
-            <Link href={'/popcorn'}>
-              <Button variant="blue">
+            <Button variant="blue" asChild>
+              <Link href={'/popcorn'}>
                 Pass it on <ArrowRight size={28} />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
