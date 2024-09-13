@@ -15,12 +15,14 @@ const buttonVariants = cva(
         checkout: 'bg-green hover:bg-black hover:text-white text-black',
         pass: 'bg-blue hover:bg-black text-white',
         back: 'bg-yellow hover:bg-black hover:text-white text-black',
+        stop: 'bg-red-500 hover:bg-black hover:text-white text-black',
       },
       size: {
         default: 'p-4 px-6',
         icon: 'p-4',
         ghost: 'p-0',
-      },
+        circle: 'w-32 h-32',
+      }
     },
     defaultVariants: {
       variant: 'checkin',
@@ -39,6 +41,7 @@ const shadowVariants = cva(
         checkout: ' group-hover:bg-green',
         pass: 'group-hover:bg-blue',
         back: ' group-hover:bg-yellow',
+        stop: ' group-hover:bg-red-500',
         icon: '',
         ghost: '',
       },
