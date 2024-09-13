@@ -66,10 +66,10 @@
     @apply overscroll-none border-border;
   }
   body {
-    @apply font-jetbrains_mono overscroll-none bg-background text-foreground;
+    @apply overscroll-none bg-background font-jetbrains_mono text-foreground;
   }
   p {
-    @apply font-poppins;
+    @apply font-roboto;
   }
 }
 

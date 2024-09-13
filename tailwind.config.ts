@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: 'var(--font-poppins)',
+        roboto: 'var(--font-roboto)',
         jetbrains_mono: 'var(--font-jetbrains_mono)',
       },
       backgroundImage: {
