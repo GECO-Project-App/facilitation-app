@@ -4,8 +4,7 @@ import type {Metadata} from 'next';
 import {cn} from '@/lib/utils';
 import {PHProvider} from '@/lib/providers/PHProvider';
 import dynamic from 'next/dynamic';
-
-const jetbrains_mono = JetBrains_Mono({subsets: ['latin']});
+import {jetbrains_mono, poppins} from './fonts';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -24,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <PHProvider>
-        <body className={cn(jetbrains_mono.className, '')}>
+        <body className={cn(jetbrains_mono.variable, poppins.variable, '')}>
           <PostHogPageView />
           {children}
         </body>
