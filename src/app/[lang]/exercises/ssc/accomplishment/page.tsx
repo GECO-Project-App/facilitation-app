@@ -28,7 +28,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
             </div>
             <Link href={'/exercises/ssc/'}>
               <Button variant="stop" hasShadow className="mx-auto">
-                Pass it on <ArrowRight size={28} />
+                Next Phase <ArrowRight size={28} />
               </Button>
             </Link>
           </div>
