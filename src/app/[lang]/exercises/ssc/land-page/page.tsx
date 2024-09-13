@@ -1,6 +1,6 @@
 import {Button, NavBar} from '@/components';
 import {getDictionary} from '../../../dictionaries';
-import SscRivLandPage from '@/components/ssc-exercise/SscRivLandPage';
+import SscRivLandPage from '@/components/ssc-exercise/rives/SscRivLandPage';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
