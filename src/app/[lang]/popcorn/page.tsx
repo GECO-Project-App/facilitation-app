@@ -1,5 +1,5 @@
 import {PassItOn} from '@/components';
-import {getDictionary} from '../../dictionaries';
+import {getDictionary} from '../dictionaries';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);

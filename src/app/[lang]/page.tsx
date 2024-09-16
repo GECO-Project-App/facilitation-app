@@ -21,8 +21,12 @@ export default async function Home({params}: {params: {lang: string}}) {
         <Geco />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
       </div>
-
-      <Link href={'/check-in'}>
+      <Link href={'/exercises/ssc/land-page'}>
+        <Button variant="yellow">
+          Start / Stop / Continue <ArrowRight size={28} />
+        </Button>
+      </Link>
+      <Link href={'/exercises/check-in'}>
         <Button variant="pink">
           Check in <ArrowRight size={28} />
         </Button>
