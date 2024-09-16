@@ -28,29 +28,27 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         </Link>
       </section>
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        <Link href={'/exercises/ssc/introduction?step=start'}>
-          <Button variant="green" className="mx-auto">
+        <Button variant="green" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=start'}>
             <CheckBox chapter="start" />
             START
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/introduction?step=stop'}>
-          <Button variant="red" className="mx-auto">
+          </Link>
+        </Button>
+        <Button variant="red" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=stop'}>
             <CheckBox chapter="stop" />
             STOP
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/introduction?step=continue'}>
-          <Button variant="pink" className="mx-auto">
+          </Link>
+        </Button>
+        <Button variant="pink" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=continue'}>
             <CheckBox chapter="continue" />
             CONTINUE
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/feedback'}>
-          <Button variant="yellow" className="mx-auto">
-            Feedback
-          </Button>
-        </Link>
+          </Link>
+        </Button>
+        <Button variant="yellow" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/feedback'}>Feedback</Link>
+        </Button>
       </section>
     </main>
   );
