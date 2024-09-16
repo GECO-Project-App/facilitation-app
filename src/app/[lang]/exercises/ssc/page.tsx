@@ -19,11 +19,11 @@ export default async function Checkin({params}: {params: {lang: string}}) {
 
   return (
     <main className="page-padding flex min-h-screen flex-col" style={{backgroundColor: 'rgb(147 51 234)'}}>
-      <section className="flex flex-row justify-between">
+      <section className="flex flex-row justify-evenly">
         <Link href={'/'}>
           <ArrowLeft size={60} />
         </Link>
-        <Link href={'/exercises/ssc/tips'} className="self-end pr-[10%]">
+        <Link href={'/exercises/ssc/tips'} className="self-end">
           <Light />
         </Link>
       </section>
