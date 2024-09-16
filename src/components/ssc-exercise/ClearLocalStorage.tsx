@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import useRemoveLocalStorageItem from '@/hooks/useRemoveLocalStorageItem'; // Adjust path as needed
 
-const ClearLockalStorage = () => {
+const ClearLocalStorage = () => {
   const removeItem = useRemoveLocalStorageItem('chapterDone');
 
   useEffect(() => {
@@ -13,4 +13,4 @@ const ClearLockalStorage = () => {
   return null;
 };
 
-export default ClearLockalStorage;
+export default ClearLocalStorage;
