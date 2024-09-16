@@ -1,8 +1,10 @@
 import {Button, NavBar} from '@/components';
 import {getDictionary} from '../../../dictionaries';
-import SscRivLandPage from '@/components/ssc-exercise/SscRivLandPage';
+import SscRivLandPage from '@/components/ssc-exercise/rives/SscRivLandPage';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -13,9 +15,9 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
 
 export default async function Checkin({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
-
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
+      <ClearLocalStorage />
       <NavBar />
       <section>
         <SscRivLandPage />

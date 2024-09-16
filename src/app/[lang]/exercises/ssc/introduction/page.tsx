@@ -10,7 +10,6 @@ import Continue from '@/components/ssc-exercise/introduction/Continue';
 export default function Introduction() {
   const searchParams = useSearchParams();
   const step = searchParams.get('step'); 
-console.log(step);
   return (
     <main className="page-padding flex min-h-screen flex-col bg-white">
       <section className="flex flex-1 flex-col items-center justify-evenly">
