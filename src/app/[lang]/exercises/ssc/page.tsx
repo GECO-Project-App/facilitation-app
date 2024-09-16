@@ -5,7 +5,7 @@ import {Light} from '@/components/Light/Light';
 import './ssc.css';
 import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-
+import {Lock} from '@/components/icons/lock';
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -48,6 +48,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         </Link>
         <Link href={'/exercises/ssc/feedback'}>
           <Button variant="back" hasShadow className="mx-auto">
+            <Lock />
             Feedback
           </Button>
         </Link>
