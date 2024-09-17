@@ -1,10 +1,11 @@
 import React from 'react';
+import ContinueGecko from '@/components/rives/ContinueGecko';
 
 const Continue: React.FC = () => {
   return (
     <section>
       <header>
-        <img src="/assets/svg/continue-intro.svg" alt="Continue" />
+        <ContinueGecko />
         <h1 className="text-2xl font-bold">
           Chapter 3:<span className="text-green">Continue</span>
         </h1>

@@ -1,11 +1,12 @@
 import React from 'react';
+import StopGecko from '@/components/rives/StopGecko';
 
 const Stop: React.FC = () => {
   return (
     <section>
       <header>
-        <img src="/assets/svg/stop-intro.svg" alt="Start" />
-        <h1 className="text-2xl font-bold">
+      <StopGecko />
+      <h1 className="text-2xl font-bold">
           Chapter 2:<span className="text-red-600">Stop</span>
         </h1>
         <span className="text-sm text-gray-500">4-5 minutes | 2-20 members</span>
