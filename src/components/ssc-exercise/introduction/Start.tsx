@@ -1,10 +1,11 @@
 import React from 'react';
-
+import StartGecko from '@/components/rives/StartGecko';
 const Start: React.FC = () => {
   return (
     <section>
         <header>
-        <img src="/assets/svg/start-intro.svg" alt="Start" />
+        {/* <img src="/assets/svg/start-intro.svg" alt="Start" /> */}
+        <StartGecko />
             <h1 className="text-2xl font-bold">Chapter 1:<span className="text-amber-300">Start</span></h1>
             <span className="text-sm text-gray-500">4-5 minutes | 2-20 members</span>
         </header>
