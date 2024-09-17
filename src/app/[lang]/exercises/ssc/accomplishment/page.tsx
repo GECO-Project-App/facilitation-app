@@ -28,7 +28,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
             </div>
             <Link href={'/exercises/ssc/'}>
               <Button variant="red" className="mx-auto">
-                Next Phase <ArrowRight size={28} />
+                Go to home<ArrowRight size={28} />
               </Button>
             </Link>
           </div>
