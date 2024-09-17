@@ -16,7 +16,7 @@ export default function Introduction() {
         {chapter === 'stop' && <Stop />}
         {chapter === 'continue' && <Continue />}
         <Link href={`/exercises/ssc/${chapter}`}>
-          <Button variant="checkin" hasShadow className="mx-auto">
+          <Button variant="blue" className="mx-auto">
             Let's start
           </Button>
         </Link>

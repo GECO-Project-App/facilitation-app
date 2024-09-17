@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import { Timer } from '@/components';
+import StepCounter from '@/components/ssc-exercise/StepCounter';
 
 export interface SSCExerciseProps {
   chapter: string;
