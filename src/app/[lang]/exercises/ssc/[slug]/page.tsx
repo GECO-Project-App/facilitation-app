@@ -2,6 +2,8 @@ import {getDictionary} from '../../../dictionaries';
 import {getSsdData} from '@/lib/ssc-mock-data';
 import SSCExercise from '@/components/ssc-exercise';
 import Tips from '@/components/ssc-exercise/Tips';
+import FeedBack from '@/components/ssc-exercise/FeedBack';
+
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -16,6 +18,7 @@ export default async function SSC({params}: {params: {lang: string; slug: string
   const data = getSsdData(slug);
 
   if (slug === 'tips') return <Tips />;
+  if (slug === 'feedback') return <FeedBack />;
 
   return (
     <main
