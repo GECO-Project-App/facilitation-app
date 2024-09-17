@@ -17,15 +17,21 @@ export default async function SSC({params}: {params: {lang: string; slug: string
   const slug = params.slug;
   const data = getSsdData(slug);
 
-  if (slug === 'tips') return <Tips />;
-  if (slug === 'feedback') return <FeedBack />;
-
-  return (
-    <main
-      className={`page-padding flex min-h-screen flex-col ${params.slug === 'start' ? 'bg-yellow' : params.slug === 'stop' ? 'bg-red-400' : params.slug === 'continue' ? 'bg-green' : 'bg-blue'}`}>
-      <section className="flex flex-1 flex-col items-center justify-evenly">
-        {data && <SSCExercise data={data} chapter={slug} />}
-      </section>
-    </main>
-  );
+  switch (slug) {
+    case 'tips':
+      return <Tips />;
+    case 'feedback':
+      return <FeedBack />;
+    default:
+      return (
+        <main
+          className={`flex min-h-screen flex-col ${
+            slug === 'start' ? 'bg-yellow' :
+            slug === 'stop' ? 'bg-red-400' :
+            slug === 'continue' ? 'bg-green' : 'bg-blue'
+          }`}>
+            {data && <SSCExercise data={data} chapter={slug} />}
+        </main>
+      );
+  }
 }
