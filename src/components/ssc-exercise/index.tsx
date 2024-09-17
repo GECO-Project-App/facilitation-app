@@ -4,7 +4,7 @@ import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import { Timer } from '@/components';
-import StepCounter from './StepCounter';
+
 export interface SSCExerciseProps {
   chapter: string;
   data: {
@@ -24,11 +24,11 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   const goToNextStep = () => {
     setStep(step + 1);
     if (step === data.length) {
-        router.push('/exercises/ssc/accomplishment');
-        const localStorageChaptersData = localStorage.getItem('chapterDone');
-        const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
-        doneChapters.push(chapter);
-        localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
+      router.push('/exercises/ssc/accomplishment');
+      const localStorageChaptersData = localStorage.getItem('chapterDone');
+      const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
+      doneChapters.push(chapter);
+      localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
     }
   };
   if (!stepData) {
@@ -48,13 +48,13 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
         </section>
         {stepData.sticker && (
           <figure className="my-4">
-            <img src={`/assets/svg/${stepData.sticker}`} alt="Step illustration"  />
+            <img src={`/assets/svg/${stepData.sticker}`} alt="Step illustration" />
           </figure>
         )}
         <p className="text-base">{stepData.description}</p>
         {stepData.timer && <Timer seconds = {stepData.timer}/>}
-        <footer className='pb-6'>
-          <Button variant="checkin" onClick={goToNextStep} hasShadow>
+        <footer className="mt-8">
+          <Button variant="pink" onClick={goToNextStep}>
             Next Step <ArrowRight size={28} />
           </Button>
         </footer>

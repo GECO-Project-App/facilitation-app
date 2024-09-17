@@ -18,7 +18,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
     <main className="page-padding flex min-h-screen flex-col bg-blue">
       <section className="flex flex-1 flex-col items-center justify-center">
         <div className="mx-auto w-fit text-center text-white">
-          <div className='mb-12'>
+          <div className="mb-12">
             <h1 className="text-4xl font-bold">GREAT JOB!</h1>
             <h2 className="text-xl font-bold">YOU DID IT! GRATTIS!</h2>
           </div>
@@ -27,7 +27,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
               <AccomplishmentRiv />
             </div>
             <Link href={'/exercises/ssc/'}>
-              <Button variant="stop" hasShadow className="mx-auto">
+              <Button variant="red" className="mx-auto">
                 Next Phase <ArrowRight size={28} />
               </Button>
             </Link>

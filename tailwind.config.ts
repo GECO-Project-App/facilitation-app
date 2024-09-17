@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: 'var(--font-roboto)',
+        jetbrains_mono: 'var(--font-jetbrains_mono)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
@@ -19,6 +23,7 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        darkBorder: '#000',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -67,6 +72,15 @@ const config: Config = {
         orange: 'hsl(var(--orange))',
         yellow: 'hsl(var(--yellow))',
         blue: 'hsl(var(--blue))',
+        red: 'hsl(var(--red))',
+      },
+      boxShadow: {
+        light: '0px 6px 0px 0px #000',
+        dark: '0px 6px 0px 0px #000',
+      },
+      translate: {
+        boxShadowX: '0px',
+        boxShadowY: '6px',
       },
     },
   },

@@ -23,26 +23,20 @@ export const PassItOn: FC = () => {
       {currentStep === 0 ? (
         <BackButton />
       ) : (
-        <Button
-          variant="ghost"
-          size="ghost"
-          onClick={goToPreviousStep}
-          disabled={currentStep === 0}>
+        <button onClick={goToPreviousStep} disabled={currentStep === 0}>
           <ArrowLeft size={42} />
-        </Button>
+        </button>
       )}
 
       <div className="whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
         Pass It On Method
       </div>
 
-      <Button
-        variant="ghost"
-        size="ghost"
+      <button
         onClick={goToNextStep}
         className={cn(currentStep === mockPassItOn.length - 1 ? 'invisible' : '')}>
         <ArrowRight size={42} />
-      </Button>
+      </button>
     </nav>
   );
 
@@ -50,7 +44,7 @@ export const PassItOn: FC = () => {
     <section className="flex min-h-screen flex-col justify-between p-4">
       <Navigation />
       <div className="">
-        <div className="flex flex-col items-center justify-center space-y-8 text-center text-white">
+        <div className="flex flex-col items-center justify-center space-y-8 text-center">
           <div
             className={cn(
               currentStep === 0 ? 'bg-yellow' : '',
@@ -62,9 +56,9 @@ export const PassItOn: FC = () => {
           </div>
 
           {mockPassItOn[currentStep].illustration()}
-          <p>{mockPassItOn[currentStep].instruction}</p>
+          <p className="text-white">{mockPassItOn[currentStep].instruction}</p>
           {currentStep < mockPassItOn.length - 1 && (
-            <Button onClick={goToNextStep} variant="checkin" hasShadow>
+            <Button onClick={goToNextStep} variant="pink">
               Next step <ArrowRight size={32} />
             </Button>
           )}

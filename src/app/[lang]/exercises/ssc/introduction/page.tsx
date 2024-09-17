@@ -1,11 +1,10 @@
-'use client'; 
+'use client';
 import {Button, NavBar} from '@/components';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 import Start from '@/components/ssc-exercise/introduction/Start';
 import Stop from '@/components/ssc-exercise/introduction/Stop';
 import Continue from '@/components/ssc-exercise/introduction/Continue';
-
 
 export default function Introduction() {
   const searchParams = useSearchParams();
