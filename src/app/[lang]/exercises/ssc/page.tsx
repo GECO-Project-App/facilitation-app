@@ -18,7 +18,9 @@ export default async function Checkin({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
-    <main className="page-padding flex min-h-screen flex-col" style={{backgroundColor: 'rgb(147 51 234)'}}>
+    <main
+      className="page-padding flex min-h-screen flex-col"
+      style={{backgroundColor: 'rgb(147 51 234)'}}>
       <section className="flex flex-row justify-evenly">
         <Link href={'/'}>
           <ArrowLeft size={60} />
@@ -28,30 +30,30 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         </Link>
       </section>
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        <Link href={'/exercises/ssc/introduction?step=start'}>
-          <Button variant="checkout" hasShadow className="mx-auto">
-            <CheckBox chapter="start"/>
+        <Button variant="green" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=start'}>
+            <CheckBox chapter="start" />
             START
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/introduction?step=stop'}>
-          <Button variant="stop" hasShadow className="mx-auto">
-            <CheckBox chapter="stop"/>
+          </Link>
+        </Button>
+        <Button variant="red" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=stop'}>
+            <CheckBox chapter="stop" />
             STOP
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/introduction?step=continue'}>
-          <Button variant="checkin" hasShadow className="mx-auto">
-            <CheckBox chapter="continue"/>
+          </Link>
+        </Button>
+        <Button variant="pink" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/introduction?step=continue'}>
+            <CheckBox chapter="continue" />
             CONTINUE
-          </Button>
-        </Link>
-        <Link href={'/exercises/ssc/feedback'}>
-          <Button variant="back" hasShadow className="mx-auto">
+          </Link>
+        </Button>
+        <Button variant="yellow" className="mx-auto" asChild>
+          <Link href={'/exercises/ssc/feedback'}>
             <Lock />
             Feedback
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </section>
     </main>
   );

@@ -13,7 +13,7 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: 'select',
       description: 'Button variants',
-      options: ['checkin', 'checkout', 'back', 'pass'],
+      options: ['green', 'blue', 'yellow', 'red', 'orange', 'purple'],
     },
     size: {
       control: 'select',
@@ -36,55 +36,70 @@ const meta: Meta<typeof Button> = {
       control: 'text',
       description: 'Custom tailwind classes applied to button',
     },
-
-    hasShadow: {
-      control: 'boolean',
-    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Checkin: Story = {
+export const Pink: Story = {
   args: {
-    variant: 'checkin',
+    variant: 'pink',
     disabled: false,
     onClick: action('default click'),
     children: 'Check in',
-    hasShadow: true,
+
     className: '',
   },
 };
 
-export const Checkout: Story = {
+export const Green: Story = {
   args: {
-    variant: 'checkout',
-    hasShadow: true,
+    variant: 'green',
+
     disabled: false,
     onClick: action('default click'),
     children: 'Check out',
     className: '',
   },
 };
-export const Pass: Story = {
+export const Blue: Story = {
   args: {
-    variant: 'pass',
+    variant: 'blue',
     disabled: false,
     onClick: action('default click'),
     children: 'Pass it on',
-    hasShadow: true,
     className: '',
   },
 };
 
-export const Back: Story = {
+export const Yellow: Story = {
   args: {
-    variant: 'back',
+    variant: 'yellow',
     disabled: false,
     onClick: action('default click'),
-    children: 'Back',
-    hasShadow: true,
+    children: 'Start',
+    className: '',
+  },
+};
+
+export const Purple: Story = {
+  args: {
+    variant: 'purple',
+    disabled: false,
+    onClick: action('default click'),
+    children: 'Purple',
+    className: '',
+  },
+};
+
+export const Red: Story = {
+  args: {
+    variant: 'red',
+    disabled: false,
+    onClick: action('default click'),
+    children: 'Stop',
+
     className: '',
   },
 };
