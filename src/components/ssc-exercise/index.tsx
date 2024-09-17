@@ -37,9 +37,9 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
 
   return (
     <main className="page-padding flex min-h-screen flex-col">
-      <article className="flex flex-1 flex-col items-center justify-evenly">
-        <header>
-          <h1 className="w-fit rounded-full border-2 border-black bg-yellow p-4 text-3xl font-bold">
+      <article className="flex flex-1 flex-col items-center justify-between">
+        <header className='pt-6'>
+          <h1 className="rounded-full border-2 border-black bg-yellow p-4 text-xl font-bold mt-2">
             {stepData.title}
           </h1>
         </header>
@@ -53,7 +53,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
         )}
         <p className="text-base">{stepData.description}</p>
         {stepData.timer && <Timer seconds = {stepData.timer}/>}
-        <footer className="mt-8">
+        <footer className='pb-6'>
           <Button variant="checkin" onClick={goToNextStep} hasShadow>
             Next Step <ArrowRight size={28} />
           </Button>

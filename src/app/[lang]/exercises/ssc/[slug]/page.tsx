@@ -25,14 +25,12 @@ export default async function SSC({params}: {params: {lang: string; slug: string
     default:
       return (
         <main
-          className={`page-padding flex min-h-screen flex-col ${
+          className={`flex min-h-screen flex-col ${
             slug === 'start' ? 'bg-yellow' :
             slug === 'stop' ? 'bg-red-400' :
             slug === 'continue' ? 'bg-green' : 'bg-blue'
           }`}>
-          <section className="flex flex-1 flex-col items-center justify-evenly">
             {data && <SSCExercise data={data} chapter={slug} />}
-          </section>
         </main>
       );
   }
