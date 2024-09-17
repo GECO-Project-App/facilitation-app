@@ -4,7 +4,7 @@ import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import { Timer } from '@/components';
-
+import StepCounter from './StepCounter';
 export interface SSCExerciseProps {
   chapter: string;
   data: {
@@ -44,7 +44,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
           </h1>
         </header>
         <section className="text-center">
-          <h2 className="mb-2 text-xl font-semibold border-2 border-black rounded-full p-2 w-12 h-12 items-center m-auto">{stepData.step}</h2>
+          <StepCounter currentStep={step} length={data.length} />
         </section>
         {stepData.sticker && (
           <figure className="my-4">
