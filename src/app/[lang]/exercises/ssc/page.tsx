@@ -5,7 +5,7 @@ import {Light} from '@/components/Light/Light';
 import './ssc.css';
 import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-
+import {Lock} from '@/components/icons/lock';
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -18,12 +18,12 @@ export default async function Checkin({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-blue">
-      <section className="flex flex-row justify-between">
+    <main className="page-padding flex min-h-screen flex-col" style={{backgroundColor: 'rgb(147 51 234)'}}>
+      <section className="flex flex-row justify-evenly">
         <Link href={'/'}>
           <ArrowLeft size={60} />
         </Link>
-        <Link href={'/exercises/ssc/tips'} className="self-end pr-[10%]">
+        <Link href={'/exercises/ssc/tips'} className="self-end">
           <Light />
         </Link>
       </section>
@@ -48,6 +48,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         </Link>
         <Link href={'/exercises/ssc/feedback'}>
           <Button variant="back" hasShadow className="mx-auto">
+            <Lock />
             Feedback
           </Button>
         </Link>
