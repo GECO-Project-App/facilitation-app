@@ -9,14 +9,14 @@ import Continue from '@/components/ssc-exercise/introduction/Continue';
 
 export default function Introduction() {
   const searchParams = useSearchParams();
-  const step = searchParams.get('step'); 
+  const chapter = searchParams.get('chapter'); 
   return (
     <main className="page-padding flex min-h-screen flex-col bg-white">
       <section className="flex flex-1 flex-col items-center justify-evenly">
-        {step === 'start' && <Start />}
-        {step === 'stop' && <Stop />}
-        {step === 'continue' && <Continue />}
-        <Link href={`/exercises/ssc/${step}`}>
+        {chapter === 'start' && <Start />}
+        {chapter === 'stop' && <Stop />}
+        {chapter === 'continue' && <Continue />}
+        <Link href={`/exercises/ssc/${chapter}`}>
           <Button variant="checkin" hasShadow className="mx-auto">
             Let's start
           </Button>
