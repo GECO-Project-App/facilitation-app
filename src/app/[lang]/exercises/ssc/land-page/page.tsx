@@ -1,9 +1,8 @@
-import {Button, NavBar} from '@/components';
-import {getDictionary} from '../../../dictionaries';
-import SscRivLandPage from '@/components/ssc-exercise/rives/SscRivLandPage';
-import Link from 'next/link';
-import {ArrowRight} from 'lucide-react';
+import {Button, NavBar, RiveAnimation} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+import {ArrowRight} from 'lucide-react';
+import Link from 'next/link';
+import {getDictionary} from '../../../dictionaries';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -20,7 +19,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
       <ClearLocalStorage />
       <NavBar />
       <section>
-        <SscRivLandPage />
+        <RiveAnimation src="/assets/riv/startstopcontinue.riv" />
       </section>
       <section>
         <header>
