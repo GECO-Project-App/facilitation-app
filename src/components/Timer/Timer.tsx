@@ -3,7 +3,7 @@ import {FC, useCallback, useEffect, useState} from 'react';
 import {StylizedContainer} from '../StylizedContainer';
 import {AnimatedEyes} from '../AnimatedEyes/AnimatedEyes';
 import {cn} from '@/lib/utils';
-import {Restart} from '@/components/icons/timer';
+import {Restart, Start, Pause} from '@/components/icons/timer';
 
 type TimerProps = {
   seconds?: number;
@@ -45,9 +45,9 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
   }, [countdown]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col items-center gap-4">
       <StylizedContainer className="bg-white">
-        <button onClick={toggle}>
+        <section>
           <p
             className={cn(
               seconds === countdown ? 'text-green-500' : '',
@@ -58,12 +58,16 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
           <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
             <AnimatedEyes />
           </div>
-        </button>
+        </section>
       </StylizedContainer>
+      <section className="flex">
       <button onClick={resetTimer}>
         <Restart />
       </button>
-      <button onClick={toggle}>Start</button>
+      <button onClick={toggle}>
+        {isRunning ? <Pause /> : <Start />}
+      </button>
+      </section>
     </div>
   );
 };
