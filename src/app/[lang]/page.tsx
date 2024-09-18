@@ -23,7 +23,7 @@ export default async function Home({params}: {params: {lang: string}}) {
       </div>
       <div className="flex flex-col gap-6">
         <Button variant="purple" asChild className="w-full">
-          <Link href={'/exercises/checkin-checkout'}>Check In - Check Out</Link>
+          <Link href={'/exercises/cc/introduction'}>Check In - Check Out</Link>
         </Button>
         <Button variant="blue" asChild>
           <Link href={'/exercises/ssc/land-page'}>Start - Stop - Continue</Link>

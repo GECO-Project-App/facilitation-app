@@ -19,13 +19,13 @@ export default async function CheckInCheckOutPage({params}: {params: {lang: stri
       <NavBar />
       <section className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center space-y-16">
         <Button variant="orange" className="self-end" asChild>
-          <Link href={'/exercises/check-in'}>
+          <Link href={'/exercises/check-in/introduction'}>
             1.Check In <ArrowRight size={28} />
           </Link>
         </Button>
         <RiveAnimation src="/assets/riv/timer.riv" height={160} width={160} />
         <Button variant="green" className="self-start" asChild>
-          <Link href={'/exercises/check-out'}>
+          <Link href={'/exercises/check-out/introduction'}>
             <ArrowLeft size={28} /> 2.Check Out
           </Link>
         </Button>
