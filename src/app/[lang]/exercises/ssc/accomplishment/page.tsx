@@ -23,7 +23,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
           </div>
           <div className="flex flex-col items-center space-y-12">
             <div className="m-2 mx-auto rounded-full bg-pink p-2">
-              <ReusableRive src="/assets/rive/geckograttis.riv" />
+              <ReusableRive src="/assets/riv/geckograttis.riv" />
             </div>
             <Link href={'/exercises/ssc/'}>
               <Button variant="red" className="mx-auto">
