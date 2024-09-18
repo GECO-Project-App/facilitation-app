@@ -1,21 +1,22 @@
 'use client';
-import {mockQuestions} from '@/lib/mock';
-import {getRandomUniqueItem} from '@/lib/utils';
+import {mockCheckInQuestions} from '@/lib/mock';
+import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
 import {Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
+import {Colors, ShapeColors} from '@/lib/constants';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
 type RandomQuestionProps = {
   items?: string[];
   shapes?: FC<SVGProps<SVGSVGElement>>[];
-  defaultColor?: string;
+  excludeShapeColor?: string;
 };
 
 export const RandomQuestion: FC<RandomQuestionProps> = ({
   shapes = QuestionShapes,
-  items = mockQuestions,
-  defaultColor,
+  items = mockCheckInQuestions,
+  excludeShapeColor,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
@@ -33,7 +34,10 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     }
   }, []);
 
-  const CurrentShape = useMemo(() => shapes[currentShapeIdx], [currentShapeIdx, shapes]);
+  const CurrentShape = useMemo(
+    () => shapes[currentShapeIdx],
+    [currentShapeIdx, shapes, excludeShapeColor],
+  );
 
   const getNextQuestion = () => {
     let previousPicks: string[] = JSON.parse(localStorage.getItem('previousPicks') || '[]');
@@ -62,9 +66,20 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     }
   };
 
+  const getRandomShapeColor = (colors: {[key: string]: string}, exclude?: string): string => {
+    const colorKeys = Object.values(colors).filter((color) => color !== exclude);
+
+    const randomIndex = generateRandomNumberInRange(colorKeys.length);
+    console.log(colorKeys[randomIndex]);
+
+    return colorKeys[randomIndex];
+  };
+
   return (
     <div onClick={getNextQuestion} className="w-fit">
-      <CurrentShape>{currentQuestion}</CurrentShape>
+      <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
+        {currentQuestion}
+      </CurrentShape>
     </div>
   );
 };
