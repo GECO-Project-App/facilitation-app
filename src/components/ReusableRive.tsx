@@ -7,7 +7,7 @@ type RiveComponentProps = UseRiveParameters & {
 };
 
 export const ReusableRive = ({
-  src = 'assets/rive/placeholder.riv',
+  src = 'assets/riv/placeholder.riv',
   autoplay = true,
   width = '200px',
   height = '200px',
