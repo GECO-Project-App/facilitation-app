@@ -64,9 +64,16 @@ export const PassItOn: FC = () => {
           )}
         </div>
       </div>
-      <div className="self-end">
+      <nav className="flex items-center justify-between gap-4">
+        {currentStep === 0 ? (
+          <BackButton />
+        ) : (
+          <button onClick={goToPreviousStep} disabled={currentStep === 0}>
+            <ArrowLeft size={42} />
+          </button>
+        )}
         <HomeButton />
-      </div>
+      </nav>
     </section>
   );
 };

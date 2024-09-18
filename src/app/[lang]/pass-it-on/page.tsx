@@ -9,7 +9,7 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Popcorn({params}: {params: {lang: string}}) {
+export default async function PassItOnPage({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (

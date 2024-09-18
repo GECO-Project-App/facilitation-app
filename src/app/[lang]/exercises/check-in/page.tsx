@@ -23,7 +23,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
           <RandomQuestion defaultColor={Colors.Yellow} />
           <div>
             <Button variant="blue" asChild>
-              <Link href={'/popcorn'}>
+              <Link href={'/pass-it-on'}>
                 Pass it on <ArrowRight size={28} />
               </Link>
             </Button>
