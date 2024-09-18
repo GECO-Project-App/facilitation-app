@@ -5,7 +5,7 @@ const Continue: React.FC = () => {
   return (
     <section>
       <header>
-        <RiveAnimation src="/assets/riv/continuegecko.riv" width="160px" height="160px" />
+        <RiveAnimation src="/assets/riv/ssc_continuegecko.riv" width="160px" height="160px" />
         <h1 className="text-2xl font-bold">
           Chapter 3:<span className="text-green">Continue</span>
         </h1>

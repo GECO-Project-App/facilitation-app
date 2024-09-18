@@ -5,7 +5,7 @@ const Stop: React.FC = () => {
   return (
     <section>
       <header>
-        <RiveAnimation src="/assets/riv/stopgecko.riv" width="160px" height="160px" />
+        <RiveAnimation src="/assets/riv/ssc_stopgecko.riv" width="160px" height="160px" />
         <h1 className="text-2xl font-bold">
           Chapter 2:<span className="text-red-600">Stop</span>
         </h1>
