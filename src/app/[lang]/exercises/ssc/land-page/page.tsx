@@ -1,4 +1,4 @@
-import {Button, NavBar, ReusableRive} from '@/components';
+import {Button, NavBar, RiveAnimation} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
       <ClearLocalStorage />
       <NavBar />
       <section>
-        <ReusableRive src="/assets/riv/startstopcontinue.riv" />
+        <RiveAnimation src="/assets/riv/startstopcontinue.riv" />
       </section>
       <section>
         <header>

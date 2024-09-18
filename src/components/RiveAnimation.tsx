@@ -6,7 +6,7 @@ type RiveComponentProps = UseRiveParameters & {
   height?: string | number;
 };
 
-export const ReusableRive = ({
+export const RiveAnimation = ({
   src = 'assets/riv/placeholder.riv',
   autoplay = true,
   width = '200px',
