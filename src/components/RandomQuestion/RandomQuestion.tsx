@@ -70,7 +70,6 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     const colorKeys = Object.values(colors).filter((color) => color !== exclude);
 
     const randomIndex = generateRandomNumberInRange(colorKeys.length);
-    console.log(colorKeys[randomIndex]);
 
     return colorKeys[randomIndex];
   };
