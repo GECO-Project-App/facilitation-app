@@ -5,4 +5,5 @@ export * from './RandomQuestion';
 export * from './NavBar';
 export * from './PassItOn';
 export * from './HomeButton';
-export * from './ReusableRive';
+export * from './RiveAnimation';
+export * from './About';

@@ -1,5 +1,5 @@
 'use client';
-import {mockCheckInQuestions} from '@/lib/mock';
+import {ccMock} from '@/lib/mock';
 import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
 import {Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
@@ -15,7 +15,7 @@ type RandomQuestionProps = {
 
 export const RandomQuestion: FC<RandomQuestionProps> = ({
   shapes = QuestionShapes,
-  items = mockCheckInQuestions,
+  items = ccMock.checkIn.questions,
   excludeShapeColor,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
