@@ -34,7 +34,7 @@ export const StarAlt2: FC<React.SVGProps<SVGSVGElement>> = ({
             textAlign: 'center',
             padding: 20,
           }}>
-          <p
+          <h4
             style={{
               margin: 0,
               padding: 0,
@@ -44,7 +44,7 @@ export const StarAlt2: FC<React.SVGProps<SVGSVGElement>> = ({
               wordBreak: 'break-word',
             }}>
             {children}
-          </p>
+          </h4>
         </div>
       </foreignObject>
     </svg>
