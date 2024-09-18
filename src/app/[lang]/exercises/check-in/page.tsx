@@ -12,7 +12,7 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Checkin({params}: {params: {lang: string}}) {
+export default async function CheckInPage({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (

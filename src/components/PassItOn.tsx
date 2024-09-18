@@ -6,7 +6,7 @@ import {FC, useCallback, useState} from 'react';
 import {HomeButton} from './HomeButton';
 import {BackButton} from './NavBar/BackButton';
 import {Button} from './ui';
-import {RiveAnimation} from './RiveAnimation';
+import {RiveAnimation} from './ReusableRive';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
