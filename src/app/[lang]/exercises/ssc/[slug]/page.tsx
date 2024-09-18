@@ -27,7 +27,7 @@ export default async function SSC({params}: {params: {lang: string; slug: string
         <main
           className={`flex min-h-screen flex-col ${
             slug === 'start' ? 'bg-yellow' :
-            slug === 'stop' ? 'bg-red-400' :
+            slug === 'stop' ? 'bg-red' :
             slug === 'continue' ? 'bg-green' : 'bg-blue'
           }`}>
             {data && <SSCExercise data={data} chapter={slug} />}

@@ -5,6 +5,7 @@ import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import { Timer } from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
+import { ArrowLeft } from 'lucide-react';
 
 export interface SSCExerciseProps {
   chapter: string;
@@ -36,13 +37,23 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
     return <div>Loading...</div>;
   }
 
+  const handleBack = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    } else {
+      router.back();
+    }
+  };
+
   return (
     <main className="page-padding flex min-h-screen flex-col">
       <article className="flex flex-1 flex-col items-center justify-between">
-        <header className='pt-6'>
-          <h1 className="rounded-full border-2 border-black bg-yellow p-4 text-xl font-bold mt-2">
+        <header className='pt-6 flex flex-row items-center w-full justify-between'>
+          <ArrowLeft size={40} onClick={handleBack} />
+          <h1 className="rounded-full border-2 border-black bg-yellow p-4 text-xl font-bold">
             {stepData.title}
           </h1>
+          <div></div>
         </header>
         <section className="text-center">
           <StepCounter currentStep={step} length={data.length} />
