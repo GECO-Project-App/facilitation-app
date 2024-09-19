@@ -21,16 +21,14 @@ export default async function Home({params}: {params: {lang: string}}) {
         <Geco />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
       </div>
-      <Button variant="yellow" asChild>
-        <Link href={'/exercises/ssc/land-page'}>
-          Start / Stop / Continue <ArrowRight size={28} />
-        </Link>
-      </Button>
-      <Button variant="pink" asChild>
-        <Link href={'/exercises/check-in'}>
-          Check in <ArrowRight size={28} />
-        </Link>
-      </Button>
+      <div className="flex flex-col gap-6">
+        <Button variant="purple" asChild className="w-full">
+          <Link href={'/exercises/cc/introduction'}>Check In - Check Out</Link>
+        </Button>
+        <Button variant="blue" asChild>
+          <Link href={'/exercises/ssc/land-page'}>Start - Stop - Continue</Link>
+        </Button>
+      </div>
     </main>
   );
 }
