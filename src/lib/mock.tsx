@@ -15,8 +15,8 @@ export const ccMock = {
       title: 'Check In Exercise',
       subtitle: '5-15 minutes | 2-20 members',
       description:
-        'Check Ins are activities that help facilitators gather insights into the current            thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.',
-      rive: '/assets/riv/checkinout.riv',
+        'Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.',
+      illustration: '/assets/svg/checkin-geco.svg',
       button: () => (
         <Button variant="yellow" asChild>
           <Link href={'/exercises/cc/check-in'}>
@@ -44,7 +44,7 @@ export const ccMock = {
       subtitle: '5-15 minutes | 2-20 members',
       description:
         'Check Outs are used to close out a session and recap the experience. They help participants reflect on the entire session and express any final thoughts or feelings. Examples include; what was your biggest takeaway from todays session?, what would you like to see more or less of? show some appreciation to someone in this group who has inspired or supported you today, what next step do you plan to take?',
-      rive: '/assets/riv/checkinout.riv',
+      illustration: '/assets/svg/checkout-geco.svg',
       button: () => (
         <Button variant="yellow" asChild>
           <Link href={'/exercises/cc/check-out'}>
@@ -62,14 +62,6 @@ export const ccMock = {
     ],
   },
 };
-
-export const mockPopcorn = [
-  'who has a dog',
-  'who has a cat',
-  'who has met a celebrity',
-  'who has a daughter',
-  'who likes herring',
-];
 
 export type PassItOnItem = {
   id: number;
