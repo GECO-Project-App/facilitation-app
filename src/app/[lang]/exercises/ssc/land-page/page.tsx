@@ -19,7 +19,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
       <ClearLocalStorage />
       <NavBar />
       <section>
-        <RiveAnimation src="/assets/riv/startstopcontinue.riv" />
+        <RiveAnimation src="/assets/riv/ssc_main.riv" />
       </section>
       <section>
         <header>
