@@ -6,6 +6,8 @@ import {useRouter} from 'next/navigation';
 import {Timer} from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
 import {ArrowLeft} from 'lucide-react';
+import StyledWrapper from '@/components/styles/StyledWrapper';
+
 
 export interface SSCExerciseProps {
   chapter: string;
@@ -46,7 +48,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   };
 
   return (
-    <main className="page-padding flex min-h-screen flex-col">
+    <StyledWrapper>
       <article className="flex flex-col items-center justify-between h-52">
         <header className="flex w-full flex-row items-center justify-between pt-6">
           <ArrowLeft size={40} onClick={handleBack} />
@@ -73,7 +75,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
           </Button>
         </footer>
       </article>
-    </main>
+    </StyledWrapper>
   );
 };
 
