@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/i18n": ["./src/i18n/"]
     }
   },
   "include": [
@@ -26,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/[lang]/dictionaries.js"
+    "src/app/[locale]/dictionaries.js"
   ],
   "exclude": ["node_modules"]
 }

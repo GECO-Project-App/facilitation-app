@@ -1,4 +1,3 @@
-import {getDictionary} from '../../../dictionaries';
 import {getSsdData} from '@/lib/ssc-mock-data';
 import SSCExercise from '@/components/ssc-exercise';
 import Tips from '@/components/ssc-exercise/Tips';
@@ -10,16 +9,7 @@ import {ArrowRight} from 'lucide-react';
 import {cn} from '@/lib/utils';
 import {ccMock} from '@/lib/mock';
 
-export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
-  const t = await getDictionary(lang);
-  return {
-    title: t.page.title,
-    description: t.page.desc,
-  };
-}
-
-export default async function CCPage({params}: {params: {lang: string; slug: string}}) {
-  const t = await getDictionary(params.lang);
+export default async function CCPage({params}: {params: {locale: string; slug: string}}) {
   const slug = params.slug;
 
   return (

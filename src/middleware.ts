@@ -1,27 +1,50 @@
+import createMiddleware from 'next-intl/middleware';
 import Negotiator from 'negotiator';
 import {match} from '@formatjs/intl-localematcher';
 import {NextRequest, NextResponse} from 'next/server';
-import {i18n} from '@/lib/i18n-config';
+import {i18n} from './i18n';
 
 const PUBLIC_FILE = /\.(.*)$/;
-
 const cookieName = 'i18nlang';
-// Get the preferred locale, similar to the above or using a library
+
 function getLocale(request: NextRequest): string {
-  // Get locale from cookie
-  if (request.cookies.has(cookieName)) return request.cookies.get(cookieName)!.value;
-  // Get accept language from HTTP headers
+  // Kontrollera först om URL:en innehåller en giltig lokal
+  const pathname = request.nextUrl.pathname;
+  const pathnameLocale = i18n.locales.find(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
+  );
+  if (pathnameLocale) {
+    console.log('Lokal hittad i URL:', pathnameLocale);
+    return pathnameLocale;
+  }
+
+  // Sedan kontrollera cookien
+  if (request.cookies.has(cookieName)) {
+    const cookieLocale = request.cookies.get(cookieName)!.value;
+    console.log('Lokal hittad i cookie:', cookieLocale);
+    return cookieLocale;
+  }
+
+  // Fallback till Accept-Language header
   const acceptLang = request.headers.get('Accept-Language');
   if (!acceptLang) return i18n.defaultLocale;
-  // Get match locale
   const headers = {'accept-language': acceptLang};
   const languages = new Negotiator({headers}).languages();
-  return match(languages, i18n.locales, i18n.defaultLocale);
+  const detectedLocale = match(languages, i18n.locales, i18n.defaultLocale);
+  console.log('Lokal detekterad från Accept-Language:', detectedLocale);
+  return detectedLocale;
 }
-export function middleware(request: NextRequest) {
+
+const intlMiddleware = createMiddleware({
+  locales: i18n.locales,
+  defaultLocale: i18n.defaultLocale,
+});
+
+export default function middleware(request: NextRequest) {
+  const locale = getLocale(request);
+
   const pathname = request.nextUrl.pathname;
 
-  // Allow direct access to manifest.json and other necessary files
   if (
     pathname.startsWith('/_next') ||
     pathname === '/manifest.json' ||
@@ -33,24 +56,22 @@ export function middleware(request: NextRequest) {
   }
 
   const pathnameHasLocale = i18n.locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
+    (loc) => pathname.startsWith(`/${loc}/`) || pathname === `/${loc}`,
   );
-  if (pathnameHasLocale) return;
-  // Redirect if there is no locale
-  const locale = getLocale(request);
-  request.nextUrl.pathname = `/${locale}${pathname}`;
-  // e.g. incoming request is /products
-  // The new URL is now /en-US/products
-  const response = NextResponse.redirect(request.nextUrl);
-  // Set locale to cookie
-  response.cookies.set(cookieName, locale);
-  return response;
+
+  if (!pathnameHasLocale) {
+    console.log('Omdirigerar till:', `/${locale}${pathname}`);
+    const response = NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
+    response.cookies.set(cookieName, locale, {
+      maxAge: 60 * 60 * 24 * 30, // 30 dagar
+      path: '/',
+    });
+    return response;
+  }
+
+  return intlMiddleware(request);
 }
+
 export const config = {
-  matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next).*)',
-    // Optional: only run on root (/) URL
-    // '/'
-  ],
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 };

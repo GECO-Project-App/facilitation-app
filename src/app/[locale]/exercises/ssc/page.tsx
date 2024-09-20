@@ -1,22 +1,12 @@
 import {Button, NavBar} from '@/components';
 import Link from 'next/link';
-import {getDictionary} from '../../dictionaries';
 import {Light} from '@/components/Light/Light';
 import './ssc.css';
 import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {Lock} from '@/components/icons/lock';
-export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
-  const t = await getDictionary(lang);
-  return {
-    title: t.page.title,
-    description: t.page.desc,
-  };
-}
 
-export default async function Checkin({params}: {params: {lang: string}}) {
-  const t = await getDictionary(params.lang);
-
+export default async function Checkin({params}: {params: {locale: string}}) {
   return (
     <main
       className="page-padding flex min-h-screen flex-col"

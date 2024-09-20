@@ -2,18 +2,8 @@ import {Button, NavBar, RiveAnimation} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
-import {getDictionary} from '../../../dictionaries';
 
-export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
-  const t = await getDictionary(lang);
-  return {
-    title: t.page.title,
-    description: t.page.desc,
-  };
-}
-
-export default async function Checkin({params}: {params: {lang: string}}) {
-  const t = await getDictionary(params.lang);
+export default async function Checkin({params}: {params: {locale: string}}) {
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
       <ClearLocalStorage />
