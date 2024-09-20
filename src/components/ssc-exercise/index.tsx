@@ -32,7 +32,9 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
       router.push('/exercises/ssc/accomplishment');
       const localStorageChaptersData = localStorage.getItem('chapterDone');
       const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
-      doneChapters.push(chapter);
+      if (!doneChapters.includes(chapter)) {
+        doneChapters.push(chapter);
+      }
       localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
     }
   };
