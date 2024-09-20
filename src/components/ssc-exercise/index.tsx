@@ -1,5 +1,5 @@
 'use client';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
@@ -7,7 +7,7 @@ import {Timer} from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
 import {ArrowLeft} from 'lucide-react';
 import StyledWrapper from '@/components/styles/StyledWrapper';
-
+import {RiveAnimation} from '@/components';
 
 export interface SSCExerciseProps {
   chapter: string;
@@ -25,6 +25,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const stepData = data.find((item) => item.step === step);
+
   const goToNextStep = () => {
     setStep(step + 1);
     if (step === data.length) {
@@ -46,6 +47,13 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
       router.back();
     }
   };
+  console.log(stepData);
+
+  const getRiv = () => {
+    if (stepData.sticker) {
+      return <RiveAnimation src={`/assets/riv/${stepData.sticker}`} />;
+    }
+  };
 
   return (
     <StyledWrapper>
@@ -64,7 +72,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
       <article className="flex flex-1 flex-col items-center justify-evenly">
         {stepData.sticker && (
           <figure className="my-4">
-            <img src={`/assets/svg/${stepData.sticker}`} alt="Step illustration" />
+            <RiveAnimation key={stepData.sticker} src={`/assets/riv/${stepData.sticker}`} />
           </figure>
         )}
         <p className="text-base">{stepData.description}</p>
