@@ -49,13 +49,13 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
 
   return (
     <StyledWrapper>
-      <article className="flex flex-col items-center justify-between h-52">
-        <header className="flex w-full flex-row items-center justify-between pt-6">
+      <article className="flex flex-col items-center justify-between h-40">
+        <header className="flex w-full flex-row items-center justify-between pt-2">
           <ArrowLeft size={40} onClick={handleBack} />
-          <h1 className="rounded-full border-2 border-black bg-yellow p-4 text-xl font-bold">
+          <h1 className="rounded-full border-2 border-black bg-yellow pr-4 pl-4 pt-1 pb-1 text-xl font-bold">
             {stepData.title}
           </h1>
-          <div></div>
+          <div className="h-10 w-10 rounded-full bg-yellow"></div>
         </header>
         <section className="text-center">
           <StepCounter currentStep={step} length={data.length} />
