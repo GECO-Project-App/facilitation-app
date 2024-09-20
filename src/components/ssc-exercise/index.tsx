@@ -49,7 +49,6 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
       router.back();
     }
   };
-  console.log(stepData);
 
   const getRiv = () => {
     if (stepData.sticker) {
@@ -74,7 +73,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
       <article className="flex flex-1 flex-col items-center justify-evenly">
         {stepData.sticker && (
           <figure className="my-4">
-            <RiveAnimation key={stepData.sticker} src={`/assets/riv/${stepData.sticker}`} />
+            <RiveAnimation key={stepData.sticker} src={`/assets/riv/${stepData.sticker}`} width={300}/>
           </figure>
         )}
         <p className="text-base">{stepData.description}</p>
