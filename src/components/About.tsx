@@ -25,9 +25,12 @@ export const About: FC<AboutProps> = ({
       <NavBar />
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
         {rive && <RiveAnimation src={rive} width={300} />}
-        <div className="relative aspect-video w-full self-start md:w-2/3">
-          {illustration && <Image src={illustration} alt={title} fill />}
-        </div>
+        {illustration && (
+          <div className="relative aspect-video w-full self-start md:w-2/3">
+            <Image src={illustration} alt={title} fill />
+          </div>
+        )}
+
         <div className="space-y-6">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold">{title} </h2>

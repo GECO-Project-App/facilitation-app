@@ -63,6 +63,57 @@ export const ccMock = {
   },
 };
 
+export const sscMock = {
+  start: {
+    about: {
+      title: 'Chapter 1: Start',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
+      rive: '/assets/riv/ssc_startgecko.riv',
+      button: () => (
+        <Button variant="yellow" asChild>
+          <Link href={`/exercises/ssc/start`}>
+            Let's Start <ArrowRight size={28} />
+          </Link>
+        </Button>
+      ),
+    },
+  },
+  stop: {
+    about: {
+      title: 'Chapter 2: Stop',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.',
+      rive: '/assets/riv/ssc_stopgecko.riv',
+      button: () => (
+        <Button variant="red" asChild>
+          <Link href={`/exercises/ssc/stop`}>
+            Let's Stop <ArrowRight size={28} />
+          </Link>
+        </Button>
+      ),
+    },
+  },
+  continue: {
+    about: {
+      title: 'Chapter 3: Continue',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
+      rive: '/assets/riv/ssc_continuegecko.riv',
+      button: () => (
+        <Button variant="green" asChild>
+          <Link href={`/exercises/ssc/continue`}>
+            Let's Continue <ArrowRight size={28} />
+          </Link>
+        </Button>
+      ),
+    },
+  },
+};
+
 export type PassItOnItem = {
   id: number;
   instruction: string;
