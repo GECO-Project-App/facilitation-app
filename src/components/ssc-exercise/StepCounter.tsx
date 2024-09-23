@@ -10,11 +10,11 @@ const StepCounter: React.FC<StepCounterProps> = ({ currentStep, length }) => {
   const dotsAfter = '.'.repeat(length - currentStep);
 
   return (
-    <div className="flex items-center justify-center">
+    <section className="flex items-center justify-center text-center">
       <div className="text-5xl pb-5">{dotsBefore}</div>
       <h2 className="text-4xl font-semibold border-2 border-black rounded-full p-1 w-12 h-12">{currentStep}</h2>
       <div className="text-5xl pb-5">{dotsAfter}</div>
-    </div>
+    </section>
   );
 };
 

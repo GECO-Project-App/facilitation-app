@@ -8,6 +8,8 @@ import StepCounter from '@/components/ssc-exercise/StepCounter';
 import {ArrowLeft} from 'lucide-react';
 import StyledWrapper from '@/components/styles/StyledWrapper';
 import {RiveAnimation} from '@/components';
+import HeaderWrapper from '@/components/styles/HeaderWrapper';
+import DescriptionWrapper from '@/components/styles/DescriptionWrapper';
 
 export interface SSCExerciseProps {
   chapter: string;
@@ -58,25 +60,19 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
 
   return (
     <StyledWrapper>
-      <article className="flex flex-col items-center justify-between h-40">
-        <header className="flex w-full flex-row items-center justify-between pt-2">
-          <ArrowLeft size={40} onClick={handleBack} />
-          <h1 className="rounded-full border-2 border-black bg-yellow pr-4 pl-4 pt-1 pb-1 text-xl font-bold">
-            {stepData.title}
-          </h1>
-          <div className="h-10 w-10 rounded-full bg-yellow"></div>
-        </header>
-        <section className="text-center">
-          <StepCounter currentStep={step} length={data.length} />
-        </section>
+      <article className="flex h-40 flex-col items-center justify-between">
+        <HeaderWrapper title={stepData.title} handleBack={handleBack} />
+        <StepCounter currentStep={step} length={data.length} />
       </article>
       <article className="flex flex-1 flex-col items-center justify-evenly">
         {stepData.sticker && (
-          <figure className="my-4">
-            <RiveAnimation key={stepData.sticker} src={`/assets/riv/${stepData.sticker}`} width={300}/>
-          </figure>
+            <RiveAnimation
+              key={stepData.sticker}
+              src={`/assets/riv/${stepData.sticker}`}
+              width={300}
+            />
         )}
-        <p className="text-base">{stepData.description}</p>
+        <DescriptionWrapper>{stepData.description}</DescriptionWrapper>
         {stepData.timer && <Timer seconds={stepData.timer} />}
         <footer className="mt-8">
           <Button variant="pink" onClick={goToNextStep}>
