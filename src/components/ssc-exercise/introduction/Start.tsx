@@ -1,10 +1,11 @@
 import React from 'react';
 import {RiveAnimation} from '@/components';
+
 const Start: React.FC = () => {
+  
   return (
-    <section>
+    <section className="max-w-xl">
       <header>
-        {/* <img src="/assets/svg/start-intro.svg" alt="Start" /> */}
         <div className="text-center">
           <div className="flex justify-center">
             <RiveAnimation src="/assets/riv/ssc_startgecko.riv" />
