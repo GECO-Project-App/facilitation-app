@@ -17,7 +17,7 @@ export default async function Home({params}: {params: {lang: string}}) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
       <div className="flex flex-col items-center gap-4">
-        <RiveAnimation src="/assets/riv/bulbgecko.riv" width="160px" height="160px" />
+        <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
       </div>
       <div className="flex flex-col gap-6">

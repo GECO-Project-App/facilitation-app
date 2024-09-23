@@ -5,7 +5,7 @@ const Start: React.FC = () => {
     <section>
       <header>
         {/* <img src="/assets/svg/start-intro.svg" alt="Start" /> */}
-        <RiveAnimation src="/assets/riv/ssc_startgecko.riv" width="160px" height="160px" />
+        <RiveAnimation src="ssc_startgecko.riv" />
         <h1 className="text-2xl font-bold">
           Chapter 1:<span className="text-amber-300">Start</span>
         </h1>
