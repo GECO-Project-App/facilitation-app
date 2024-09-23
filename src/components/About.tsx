@@ -1,15 +1,16 @@
-import PostHogClient from '@/lib/PostHogClient';
+'use client';
+import {AboutProps} from '@/lib/mock';
+import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {FC} from 'react';
 import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
-import type {ButtonProps} from './ui/button';
-import Link from 'next/link';
-import {ArrowRight} from 'lucide-react';
-import {AboutProps} from '@/lib/mock';
+import {usePostHog} from 'posthog-js/react';
+import {usePathname} from 'next/navigation';
 
-export const About: FC<AboutProps> = async ({
+export const About: FC<AboutProps> = ({
   title,
   subtitle,
   description,
@@ -17,15 +18,15 @@ export const About: FC<AboutProps> = async ({
   illustration,
   button,
 }) => {
-  const posthog = PostHogClient();
+  const posthog = usePostHog();
+  const pathname = usePathname();
 
-  await posthog.capture({
-    distinctId: 'exercise_tracking',
-    event: 'exercise_start',
-    properties: {
-      title,
-    },
-  });
+  const handleClick = () => {
+    posthog.capture('exercise_start', {
+      name: title,
+      slug: pathname,
+    });
+  };
 
   return (
     <section className="page-padding flex min-h-screen flex-col justify-between">
@@ -47,7 +48,7 @@ export const About: FC<AboutProps> = async ({
         </div>
       </div>
       <div className="flex justify-center">
-        <Button variant={button.variant} asChild>
+        <Button variant={button.variant} asChild onClick={handleClick}>
           <Link href={button.link}>
             {button.text} <ArrowRight size={28} />
           </Link>
