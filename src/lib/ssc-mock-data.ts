@@ -1,12 +1,4 @@
-
-interface SSCExerciseType {
-    id: string;
-    title: string;
-    step: number;
-    sticker: string | null;
-    description: string | null;
-    timer?: number;
-}
+import { ButtonType, SSCExerciseType } from "./types";
 
 const startData: SSCExerciseType[] = [
   {
@@ -123,3 +115,22 @@ export const getSsdData = (type: string)=> {
       return undefined;
   }
 };
+
+
+export const buttons: ButtonType[] = [
+  {
+    title: 'START',
+    href: '/exercises/ssc/introduction?chapter=start',
+    variant: 'green',
+  },
+  {
+    title: 'STOP',
+    href: '/exercises/ssc/introduction?chapter=stop',
+    variant: 'red',
+  },
+  {
+    title: 'CONTINUE',
+    href: '/exercises/ssc/introduction?chapter=continue',
+    variant: 'pink',
+  },
+];
