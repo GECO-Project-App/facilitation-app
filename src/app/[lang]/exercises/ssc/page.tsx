@@ -30,22 +30,22 @@ export default async function Checkin({params}: {params: {lang: string}}) {
         </Link>
       </section>
       <section className="mx-auto flex flex-1 flex-col items-center justify-evenly">
-        <Button variant="green" className="mx-auto w-full justify-between" asChild>
+        <Button variant="green" className="mx-10 w-full justify-between" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=start'}>
-            START
             <CheckBox chapter="start" />
+            <span className="mx-auto">START</span>
           </Link>
         </Button>
         <Button variant="red" className="mx-auto w-full justify-between" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=stop'}>
-            STOP
             <CheckBox chapter="stop" />
+            <span className="mx-auto">STOP</span>
           </Link>
         </Button>
         <Button variant="pink" className="mx-auto w-full justify-between" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=continue'}>
-            CONTINUE
             <CheckBox chapter="continue" />
+            <span className="mx-auto">CONTINUE</span>
           </Link>
         </Button>
         <Button variant="yellow" className="mx-auto" asChild>
