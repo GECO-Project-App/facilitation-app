@@ -3,7 +3,7 @@ import {RiveAnimation} from '@/components';
 
 const Stop: React.FC = () => {
   return (
-    <section>
+    <section className="max-w-xl">
       <header>
         <div className="flex justify-center">
           <RiveAnimation src="/assets/riv/ssc_stopgecko.riv" />

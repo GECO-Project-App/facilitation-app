@@ -22,7 +22,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
     <main
       className="page-padding flex min-h-screen flex-col"
       style={{backgroundColor: 'rgb(147 51 234)'}}>
-      <section className="flex flex-row justify-evenly">
+      <section className="flex flex-row justify-between">
         <Link href={'/'}>
           <ArrowLeft size={60} />
         </Link>
