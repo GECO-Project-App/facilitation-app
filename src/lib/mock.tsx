@@ -1,6 +1,17 @@
-import {Button} from '@/components';
-import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
+import type {ButtonProps} from '@/components';
+
+export type AboutProps = {
+  title: string;
+  subtitle: string;
+  description: string;
+  rive?: string;
+  illustration?: string;
+  button: {
+    variant: ButtonProps['variant'];
+    link: string | URL;
+    text: string;
+  };
+};
 
 export const ccMock = {
   about: {
@@ -9,7 +20,7 @@ export const ccMock = {
     description:
       'The "Check In-Check Out" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.',
     rive: '/assets/riv/checkinout.riv',
-  },
+  } as AboutProps,
   checkIn: {
     about: {
       title: 'Check In Exercise',
@@ -17,13 +28,12 @@ export const ccMock = {
       description:
         'Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.',
       illustration: '/assets/svg/checkin-geco.svg',
-      button: () => (
-        <Button variant="yellow" asChild>
-          <Link href={'/exercises/cc/check-in'}>
-            Let's Start <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
+
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/cc/check-in' as string | URL,
+        text: "Let's Start",
+      },
     },
     questions: [
       'If you could describe your current state of mind in three words, what would they be?',
@@ -45,14 +55,12 @@ export const ccMock = {
       description:
         'Check Outs are used to close out a session and recap the experience. They help participants reflect on the entire session and express any final thoughts or feelings. Examples include; what was your biggest takeaway from todays session?, what would you like to see more or less of? show some appreciation to someone in this group who has inspired or supported you today, what next step do you plan to take?',
       illustration: '/assets/svg/checkout-geco.svg',
-      button: () => (
-        <Button variant="yellow" asChild>
-          <Link href={'/exercises/cc/check-out'}>
-            Let's Start <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/cc/check-out',
+        text: "Let's Start",
+      },
+    } as AboutProps,
     questions: [
       'In two words… how was the experience from the session today?',
       'In one word… tell us how you are  feeling at the moment',
@@ -71,14 +79,12 @@ export const sscMock = {
       description:
         'In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
       rive: '/assets/riv/ssc_startgecko.riv',
-      button: () => (
-        <Button variant="yellow" asChild>
-          <Link href={`/exercises/ssc/start`}>
-            Let's Start <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/ssc/start',
+        text: "Let's Start",
+      },
+    } as AboutProps,
   },
   stop: {
     about: {
@@ -87,14 +93,12 @@ export const sscMock = {
       description:
         'In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.',
       rive: '/assets/riv/ssc_stopgecko.riv',
-      button: () => (
-        <Button variant="red" asChild>
-          <Link href={`/exercises/ssc/stop`}>
-            Let's Stop <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+      button: {
+        variant: 'red' as ButtonProps['variant'],
+        link: '/exercises/ssc/stop',
+        text: "Let's Stop",
+      },
+    } as AboutProps,
   },
   continue: {
     about: {
@@ -103,14 +107,12 @@ export const sscMock = {
       description:
         'In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
       rive: '/assets/riv/ssc_continuegecko.riv',
-      button: () => (
-        <Button variant="green" asChild>
-          <Link href={`/exercises/ssc/continue`}>
-            Let's Continue <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+      button: {
+        variant: 'green' as ButtonProps['variant'],
+        link: '/exercises/ssc/continue',
+        text: "Let's Continue",
+      },
+    } as AboutProps,
   },
 };
 
