@@ -1,10 +1,10 @@
 import {Button, NavBar, RiveAnimation} from '@/components';
+import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import Link from 'next/link';
 
 export default function IntroductionPage() {
-  const t = useTranslations('exercises.checkInOut');
+  const t = useTranslations('exercises.cc.about');
 
   return (
     <main className="page-padding flex min-h-screen flex-col justify-between bg-purple">
@@ -18,7 +18,7 @@ export default function IntroductionPage() {
         </div>
         <Button variant="yellow" asChild className="mx-auto">
           <Link href={'/exercises/cc'}>
-            Start <ArrowRight size={28} />
+            {t('button')} <ArrowRight size={28} />
           </Link>
         </Button>
       </div>

@@ -1,13 +1,9 @@
-import {getSsdData} from '@/lib/ssc-mock-data';
-import SSCExercise from '@/components/ssc-exercise';
-import Tips from '@/components/ssc-exercise/Tips';
-import FeedBack from '@/components/ssc-exercise/FeedBack';
-import {About, Button, NavBar, RandomQuestion} from '@/components';
+import {Button, NavBar, RandomQuestion} from '@/components';
 import {Colors} from '@/lib/constants';
-import Link from 'next/link';
-import {ArrowRight} from 'lucide-react';
-import {cn} from '@/lib/utils';
 import {ccMock} from '@/lib/mock';
+import {cn} from '@/lib/utils';
+import {Link} from '@/navigation';
+import {ArrowRight} from 'lucide-react';
 
 export default async function CCPage({params}: {params: {locale: string; slug: string}}) {
   const slug = params.slug;

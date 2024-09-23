@@ -7,15 +7,22 @@
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer",
     "buttons": {
-      "checkInOut": "Incheckning - Utcheckning",
-      "startStopContinue": "Börja - Sluta - Fortsätta"
+      "cc": "Incheckning - Utcheckning",
+      "ssc": "Börja - Sluta - Fortsätta"
     }
   },
   "exercises": {
-    "checkInOut": {
-      "title": "Incheckning-Utcheckning Övning",
-      "subtitle": "5-15 minuter | 2-20 deltagare",
-      "description": "\"Incheckning-Utcheckning\" övningen är en faciliteringsstrategi som används för att förbättra gruppdeltagande, samarbete och övergripande teamengagemang. Den består av två huvudkomponenter: Incheckningar och Utcheckningar.",
+    "cc": {
+      "button": {
+        "checkIn": "1.Incheckning",
+        "checkOut": "2.Utcheckning"
+      },
+      "about": {
+        "title": "Incheckning-Utcheckning Övning",
+        "subtitle": "5-15 minuter | 2-20 deltagare",
+        "description": "\"Incheckning-Utcheckning\" övningen är en faciliteringsstrategi som används för att förbättra gruppdeltagande, samarbete och övergripande teamengagemang. Den består av två huvudkomponenter: Incheckningar och Utcheckningar.",
+        "button": "Starta"
+      },
       "checkIn": {
         "title": "Incheckningsövning",
         "subtitle": "5-15 minuter | 2-20 deltagare",
@@ -57,7 +64,7 @@
         "button": "Nästa steg"
       }
     },
-    "startStopContinue": {
+    "ssc": {
       "title": "Börja-Sluta-Fortsätta Övning",
       "subtitle": "Reflektera och Förbättra",
       "description": "Börja, Sluta, Fortsätta (BSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",

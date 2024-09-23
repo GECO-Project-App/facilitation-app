@@ -1,8 +1,10 @@
 import {Button, RiveAnimation} from '@/components';
-import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '@/navigation';
+import {getTranslations} from 'next-intl/server';
 
-export default async function Home({params}: {params: {locale: string}}) {
+export default async function Home() {
+  const t = await getTranslations('home.buttons');
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
       <div className="flex flex-col items-center gap-4">
@@ -11,12 +13,10 @@ export default async function Home({params}: {params: {locale: string}}) {
       </div>
       <div className="flex flex-col gap-6">
         <Button variant="purple" asChild className="w-full">
-          <Link href={'/exercises/cc/introduction'} locale={params.locale}>
-            Check In - Check Out
-          </Link>
+          <Link href={'/exercises/cc/introduction'}>{t('cc')}</Link>
         </Button>
         <Button variant="blue" asChild>
-          <Link href={'/exercises/ssc/land-page'}>Start - Stop - Continue</Link>
+          <Link href={'/exercises/ssc/land-page'}>{t('ssc')}</Link>
         </Button>
       </div>
     </main>

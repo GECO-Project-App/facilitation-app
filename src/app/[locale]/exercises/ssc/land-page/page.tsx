@@ -1,7 +1,7 @@
 import {Button, NavBar, RiveAnimation} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
 
 export default async function Checkin({params}: {params: {locale: string}}) {
   return (

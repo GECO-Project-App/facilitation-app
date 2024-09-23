@@ -7,15 +7,22 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
     "buttons": {
-      "checkInOut": "Check In - Check Out",
-      "startStopContinue": "Start - Stop - Continue"
+      "cc": "Check In - Check Out",
+      "ssc": "Start - Stop - Continue"
     }
   },
   "exercises": {
-    "checkInOut": {
-      "title": "Check In-Check Out Exercise",
-      "subtitle": "5-15 minutes | 2-20 members",
-      "description": "The \"Check In-Check Out\" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.",
+    "cc": {
+      "button": {
+        "checkIn": "1.Check In",
+        "checkOut": "2.Check Out"
+      },
+      "about": {
+        "title": "Check In-Check Out Exercise",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "The \"Check In-Check Out\" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.",
+        "button": "Start"
+      },
       "checkIn": {
         "title": "Check In Exercise",
         "subtitle": "5-15 minutes | 2-20 members",
@@ -57,7 +64,7 @@
         "button": "Next step"
       }
     },
-    "startStopContinue": {
+    "ssc": {
       "title": "Start-Stop-Continue Exercise",
       "subtitle": "Reflect and Improve",
       "description": "The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and teams reflect on what activities they should start, stop, or continue doing. It can be used for a variety of purposes, such as, create a framework for feedback, encourage new ideas, focus on action and collaboration, and promote broader thinking.",

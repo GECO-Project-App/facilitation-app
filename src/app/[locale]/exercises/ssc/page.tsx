@@ -1,12 +1,12 @@
 import {Button, NavBar} from '@/components';
-import Link from 'next/link';
 import {Light} from '@/components/Light/Light';
 import './ssc.css';
 import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {Lock} from '@/components/icons/lock';
+import {Link} from '@/navigation';
 
-export default async function Checkin({params}: {params: {locale: string}}) {
+export default async function SSCPage() {
   return (
     <main
       className="page-padding flex min-h-screen flex-col"

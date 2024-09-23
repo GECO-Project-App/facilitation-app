@@ -1,6 +1,6 @@
 import {Button, RiveAnimation} from '@/components';
+import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
 
 export default async function Accomplishment({params}: {params: {locale: string}}) {
   return (

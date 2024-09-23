@@ -1,13 +1,13 @@
 import React from 'react';
 import {ArrowLeft} from 'lucide-react';
-import Link from 'next/link';
-import { Lamp } from '@/components/icons/lamp';
+import {Lamp} from '@/components/icons/lamp';
+import {Link} from '@/navigation';
 
 const Tips: React.FC = () => {
   return (
     <main className="page-padding flex min-h-screen flex-col bg-yellow">
       <section className="flex flex-1 flex-col items-center justify-evenly text-black">
-        <div className="w-full flex flex-row items-center justify-between">
+        <div className="flex w-full flex-row items-center justify-between">
           <Link href={'/exercises/ssc'}>
             <ArrowLeft size={42} />
           </Link>

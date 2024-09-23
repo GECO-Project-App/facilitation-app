@@ -26,15 +26,15 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <PHProvider>
-        <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
-          <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider messages={messages}>
+      <html lang={locale}>
+        <PHProvider>
+          <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
             <PostHogPageView />
-          </NextIntlClientProvider>
-          {children}
-        </body>
-      </PHProvider>
-    </html>
+            {children}
+          </body>
+        </PHProvider>
+      </html>
+    </NextIntlClientProvider>
   );
 }
