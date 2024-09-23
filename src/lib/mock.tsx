@@ -16,7 +16,7 @@ export const ccMock = {
       subtitle: '5-15 minutes | 2-20 members',
       description:
         'Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.',
-      rive: 'cc_main.riv',
+      illustration: '/assets/svg/checkin-geco.svg',
       button: () => (
         <Button variant="yellow" asChild>
           <Link href={'/exercises/cc/check-in'}>
