@@ -61,7 +61,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   return (
     <StyledWrapper>
       <article className="flex h-40 flex-col items-center justify-between">
-        <HeaderWrapper title={stepData.title} handleBack={handleBack} />
+        <HeaderWrapper title={stepData.title} handleBack={handleBack} currentStep={step}/>
         <StepCounter currentStep={step} length={data.length} />
       </article>
       <article className="flex flex-1 flex-col items-center justify-evenly">
