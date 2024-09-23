@@ -14,7 +14,7 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
   };
 }
 
-export default async function Checkin({params}: {params: {lang: string}}) {
+export default async function SSCPage({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
 
   return (
@@ -31,19 +31,19 @@ export default async function Checkin({params}: {params: {lang: string}}) {
       </section>
       <section className="flex flex-1 flex-col items-center justify-evenly">
         <Button variant="green" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=start'}>
+          <Link href={'/exercises/ssc/start/introduction'}>
             <CheckBox chapter="start" />
             START
           </Link>
         </Button>
         <Button variant="red" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=stop'}>
+          <Link href={'/exercises/ssc/stop/introduction'}>
             <CheckBox chapter="stop" />
             STOP
           </Link>
         </Button>
         <Button variant="pink" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=continue'}>
+          <Link href={'/exercises/ssc/continue/introduction'}>
             <CheckBox chapter="continue" />
             CONTINUE
           </Link>

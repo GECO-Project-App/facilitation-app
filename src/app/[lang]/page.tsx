@@ -25,7 +25,7 @@ export default async function Home({params}: {params: {lang: string}}) {
           <Link href={'/exercises/cc/introduction'}>Check In - Check Out</Link>
         </Button>
         <Button variant="blue" asChild>
-          <Link href={'/exercises/ssc/land-page'}>Start - Stop - Continue</Link>
+          <Link href={'/exercises/ssc/introduction'}>Start - Stop - Continue</Link>
         </Button>
       </div>
     </main>
