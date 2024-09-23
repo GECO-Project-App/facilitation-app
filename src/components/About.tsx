@@ -8,7 +8,6 @@ import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
 import {usePostHog} from 'posthog-js/react';
-import {usePathname} from 'next/navigation';
 
 export const About: FC<AboutProps> = ({
   title,
@@ -19,12 +18,10 @@ export const About: FC<AboutProps> = ({
   button,
 }) => {
   const posthog = usePostHog();
-  const pathname = usePathname();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
-      name: title,
-      slug: pathname,
+      exercise_name: title,
     });
   };
 

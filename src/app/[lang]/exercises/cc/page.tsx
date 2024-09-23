@@ -2,6 +2,7 @@ import {Button, NavBar, RiveAnimation} from '@/components';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
 import {getDictionary} from '../../dictionaries';
 import Link from 'next/link';
+import {useEffect} from 'react';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
