@@ -5,8 +5,10 @@ import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {Lock} from '@/components/icons/lock';
 import {Link} from '@/navigation';
+import {getTranslations} from 'next-intl/server';
 
 export default async function SSCPage() {
+  const t = await getTranslations('exercises.ssc.buttons');
   return (
     <main
       className="page-padding flex min-h-screen flex-col"
@@ -23,25 +25,25 @@ export default async function SSCPage() {
         <Button variant="green" className="mx-auto" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=start'}>
             <CheckBox chapter="start" />
-            START
+            {t('start')}
           </Link>
         </Button>
         <Button variant="red" className="mx-auto" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=stop'}>
             <CheckBox chapter="stop" />
-            STOP
+            {t('stop')}
           </Link>
         </Button>
         <Button variant="pink" className="mx-auto" asChild>
           <Link href={'/exercises/ssc/introduction?chapter=continue'}>
             <CheckBox chapter="continue" />
-            CONTINUE
+            {t('continue')}
           </Link>
         </Button>
         <Button variant="yellow" className="mx-auto" asChild>
           <Link href={'/exercises/ssc/feedback'}>
             <Lock />
-            Feedback
+            {t('feedback')}
           </Link>
         </Button>
       </section>

@@ -7,9 +7,12 @@ import {HomeButton} from './HomeButton';
 import {BackButton} from './NavBar/BackButton';
 import {Button} from './ui';
 import {RiveAnimation} from './RiveAnimation';
+import {useTranslations} from 'next-intl';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const t = useTranslations('exercises.cc.passItOn');
+  const steps: string[] = t.raw('steps').map((step: string) => step);
 
   const goToPreviousStep = () => {
     setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
@@ -35,7 +38,7 @@ export const PassItOn: FC = () => {
   return (
     <section className="flex min-h-screen flex-col justify-between p-4">
       <div className="mx-auto w-fit whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
-        Pass It On Method
+        {t('title')}
       </div>
       <div className="">
         <div className="flex flex-col items-center justify-center space-y-8 text-center">
@@ -49,10 +52,10 @@ export const PassItOn: FC = () => {
             {currentStep + 1}
           </div>
           <Illustration />
-          <p className="text-white">{mockPassItOn[currentStep].instruction}</p>
-          {currentStep < mockPassItOn.length - 1 && (
+          <p className="text-white">{steps[currentStep]}</p>
+          {currentStep < steps.length - 1 && (
             <Button onClick={goToNextStep} variant="pink">
-              Next step <ArrowRight size={32} />
+              {t('button')} <ArrowRight size={32} />
             </Button>
           )}
         </div>
