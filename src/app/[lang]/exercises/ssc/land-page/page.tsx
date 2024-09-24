@@ -17,7 +17,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
       <ClearLocalStorage />
-      <NavBar />
+      <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
       <section>
         <RiveAnimation src="/ssc_main.riv" />
       </section>
@@ -38,6 +38,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
           Start <ArrowRight size={28} />
         </Button>
       </Link>
+</div>
     </main>
   );
 }
