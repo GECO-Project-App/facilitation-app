@@ -68,7 +68,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
         {stepData.sticker && (
             <RiveAnimation
               key={stepData.sticker}
-              src={`/assets/riv/${stepData.sticker}`}
+              src={stepData.sticker}
               width={300}
             />
         )}
