@@ -58,8 +58,7 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
             {formatTime()}
           </p>
           <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-            {/* <AnimatedEyes /> */}
-            <RiveAnimation src="/assets/riv/eyes.riv" width={60}/>
+            <RiveAnimation src="eyes.riv" width={60}/>
           </div>
         </section>
       </StylizedContainer>
