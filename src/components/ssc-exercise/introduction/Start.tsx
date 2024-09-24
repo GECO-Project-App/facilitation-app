@@ -6,12 +6,14 @@ const Start: React.FC = () => {
   return (
     <section className="max-w-xl">
       <header>
+
         <div className="text-center">
           <div className="flex justify-center">
-            <RiveAnimation src="/assets/riv/ssc_startgecko.riv" />
+         <RiveAnimation src="ssc_startgecko.riv" />
           </div>
         </div>
         <h1 className="text-2xl font-bold pt-2">
+
           Chapter 1:<span className="text-amber-300">Start</span>
         </h1>
         <span className="text-sm text-gray-500">4-5 minutes | 2-20 members</span>

@@ -19,7 +19,7 @@ export default async function Checkin({params}: {params: {lang: string}}) {
       <ClearLocalStorage />
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
       <section>
-        <RiveAnimation src="/assets/riv/ssc_main.riv" />
+        <RiveAnimation src="/ssc_main.riv" />
       </section>
       <section>
         <header>
