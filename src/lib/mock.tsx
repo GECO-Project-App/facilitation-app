@@ -19,8 +19,8 @@ export const ccMock = {
     subtitle: '5-15 minutes | 2-20 members',
     description:
       'The "Check In-Check Out" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.',
-    rive: '/assets/riv/checkinout.riv',
-  } as AboutProps,
+    rive: 'cc_main.riv',
+  },
   checkIn: {
     about: {
       title: 'Check In Exercise',
@@ -125,16 +125,16 @@ export const mockPassItOn: PassItOnItem[] = [
   {
     id: 1,
     instruction: 'Pick a person to answer the question first.',
-    rive: '/assets/riv/pick.riv',
+    rive: 'pick.riv',
   },
   {
     id: 2,
     instruction: 'Once that person gave their answer, they pick who should answer next.',
-    rive: '/assets/riv/passit.riv',
+    rive: 'passit.riv',
   },
   {
     id: 3,
     instruction: 'Repeat this process until everyone has answered the question.',
-    rive: '/assets/riv/repeat2.riv',
+    rive: 'repeat2.riv',
   },
 ];

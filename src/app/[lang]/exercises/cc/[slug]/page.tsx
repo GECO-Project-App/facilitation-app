@@ -1,10 +1,14 @@
-import {Button, NavBar, RandomQuestion} from '@/components';
-import {Colors} from '@/lib/constants';
-import {ccMock} from '@/lib/mock';
-import {cn} from '@/lib/utils';
-import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
 import {getDictionary} from '../../../dictionaries';
+import {getSsdData} from '@/lib/ssc-mock-data';
+import SSCExercise from '@/components/ssc-exercise';
+import Tips from '@/components/ssc-exercise/Tips';
+import FeedBack from '@/components/ssc-exercise/FeedBack';
+import {About, Button, NavBar, RandomQuestion} from '@/components';
+import {Colors} from '@/lib/constants';
+import Link from 'next/link';
+import {ArrowRight} from 'lucide-react';
+import {cn} from '@/lib/utils';
+import {ccMock} from '@/lib/mock';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -28,7 +32,6 @@ export default async function CCPage({params}: {params: {lang: string; slug: str
       <section className="flex flex-1 flex-col items-center justify-center">
         <div className="mx-auto flex w-fit flex-col items-center space-y-16">
           <RandomQuestion
-            type={slug as 'check-in' | 'check-out'}
             excludeShapeColor={slug == 'check-in' ? Colors.Orange : Colors.Green}
             items={slug == 'check-in' ? ccMock.checkIn.questions : ccMock.checkOut.questions}
           />

@@ -8,6 +8,7 @@ import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
 import {usePostHog} from 'posthog-js/react';
+import {usePathname} from 'next/navigation';
 
 export const About: FC<AboutProps> = ({
   title,
@@ -18,10 +19,12 @@ export const About: FC<AboutProps> = ({
   button,
 }) => {
   const posthog = usePostHog();
+  const pathname = usePathname();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
-      exercise_name: title,
+      name: title,
+      slug: pathname,
     });
   };
 
@@ -29,13 +32,10 @@ export const About: FC<AboutProps> = ({
     <section className="page-padding flex min-h-screen flex-col justify-between">
       <NavBar />
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
-        {rive && <RiveAnimation src={rive} width={300} />}
-        {illustration && (
-          <div className="relative aspect-video w-full self-start md:w-2/3">
-            <Image src={illustration} alt={title} fill />
-          </div>
-        )}
-
+        <div className="relative aspect-video w-full self-start md:w-2/3">
+          {rive && <RiveAnimation src={rive} />}
+          {illustration && <Image src={illustration} alt={title} fill />}
+        </div>
         <div className="space-y-6">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold">{title} </h2>

@@ -2,7 +2,6 @@ import {Button, NavBar, RiveAnimation} from '@/components';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
 import {getDictionary} from '../../dictionaries';
 import Link from 'next/link';
-import {useEffect} from 'react';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -24,7 +23,7 @@ export default async function CheckInCheckOutPage({params}: {params: {lang: stri
             1.Check In <ArrowRight size={28} />
           </Link>
         </Button>
-        <RiveAnimation src="/assets/riv/timer.riv" height={160} width={160} />
+        <RiveAnimation src="timer.riv" height={160} width={160} />
         <Button variant="green" className="self-start" asChild>
           <Link href={'/exercises/cc/check-out/introduction'}>
             <ArrowLeft size={28} /> 2.Check Out

@@ -1,10 +1,9 @@
 'use client';
-import {ShapeColors} from '@/lib/constants';
 import {ccMock} from '@/lib/mock';
 import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
-import {usePostHog} from 'posthog-js/react';
 import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
-import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
+import {Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
+import {Colors, ShapeColors} from '@/lib/constants';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
@@ -12,18 +11,15 @@ type RandomQuestionProps = {
   items?: string[];
   shapes?: FC<SVGProps<SVGSVGElement>>[];
   excludeShapeColor?: string;
-  type: 'check-in' | 'check-out';
 };
 
 export const RandomQuestion: FC<RandomQuestionProps> = ({
   shapes = QuestionShapes,
   items = ccMock.checkIn.questions,
-  type,
   excludeShapeColor,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
-  const posthog = usePostHog();
 
   useEffect(() => {
     if (!items || !shapes) {
@@ -68,10 +64,6 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
       setCurrentQuestion(question);
       setCurrentShapeIdx(0);
     }
-    posthog.capture('generate_question', {
-      question: currentQuestion,
-      type: type,
-    });
   };
 
   const getRandomShapeColor = (colors: {[key: string]: string}, exclude?: string): string => {
