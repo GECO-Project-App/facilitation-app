@@ -1,11 +1,18 @@
+'use client'
 import React from 'react';
 import Link from 'next/link';
 import {ArrowLeft} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-
+import Survey from './Survey';
 
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
+
+  const handleSubmit = (value: number | null) => {
+    // setShowSurvey(false);
+    console.log('Test');
+  };
+  console.log(slug);
 
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-yellow">
@@ -21,7 +28,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
     <h4 className="text-lg font-semibold">
       Have some thoughts, comments and suggestions about the app? Share your thought with us.
     </h4>
-    <section className="flex justify-center">
+    <Survey title="Feedback" onSubmit={handleSubmit} />
+        <section className="flex justify-center">
       <Button variant="yellow">Send Us Feedback</Button>
     </section>
   </main>
