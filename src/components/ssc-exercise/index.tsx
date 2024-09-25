@@ -61,16 +61,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
   return (
     <StyledWrapper>
       <article className="flex h-40 flex-col items-center justify-between">
-        <HeaderWrapper title={stepData.title} handleBack={handleBack} currentStep={step}/>
+        <HeaderWrapper title={stepData.title} handleBack={handleBack} currentStep={step} />
         <StepCounter currentStep={step} length={data.length} />
       </article>
       <article className="flex flex-1 flex-col items-center justify-evenly">
         {stepData.sticker && (
-            <RiveAnimation
-              key={stepData.sticker}
-              src={`/assets/riv/${stepData.sticker}`}
-              width={300}
-            />
+          <RiveAnimation key={stepData.sticker} src={stepData.sticker} width={300} />
         )}
         <DescriptionWrapper>{stepData.description}</DescriptionWrapper>
         {stepData.timer && <Timer seconds={stepData.timer} />}
