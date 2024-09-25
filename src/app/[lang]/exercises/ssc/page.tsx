@@ -24,7 +24,7 @@ export default async function SSCPage({params}: {params: {lang: string}}) {
           <ArrowLeft size={60} />
         </Link>
         <Link href={'/exercises/ssc/tips'} className="self-end">
-          <Lamp className="hover:animate-shake fill-white hover:fill-yellow" />
+          <Lamp className="fill-white hover:animate-shake hover:fill-yellow" />
         </Link>
       </section>
       <section className="mx-auto flex flex-1 flex-col items-center justify-evenly">

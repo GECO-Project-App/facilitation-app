@@ -4,7 +4,7 @@ export const Lamp: FC<React.SVGProps<SVGSVGElement>> = ({
   height = 66,
   width = 43,
   fill = 'inherit',
-  className
+  className,
 }) => {
   return (
     <svg
