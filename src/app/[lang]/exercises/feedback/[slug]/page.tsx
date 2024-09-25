@@ -9,10 +9,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   const slug = params.slug;
 
   const handleSubmit = (value: string | null) => {
-    // setShowSurvey(false);
-    console.log('Test');
+    console.log(value);
   };
-  console.log(slug);
 
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-yellow">

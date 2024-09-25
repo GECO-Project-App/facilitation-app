@@ -14,6 +14,7 @@ function Survey({title, onSubmit}: SurveyProps) {
 
   const handleSubmit = () => {
     onSubmit(selectedValue);
+    setSelectedValue('');
   };
 
   return (
