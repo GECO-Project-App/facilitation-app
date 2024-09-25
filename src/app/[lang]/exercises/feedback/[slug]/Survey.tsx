@@ -30,7 +30,7 @@ function Survey({title, onSubmit}: SurveyProps) {
         </section>
         <div>
           <textarea
-            className="h-40 w-full rounded-lg border-2 border-black bg-amber-50 p-4"
+            className="h-40 w-full rounded-3xl border-2 border-black bg-amber-50 p-4 shadow-[0px_6px_0px_rgb(0,0,0)]"
             placeholder="Have some thoughts, comments and suggestions about the app? Share your thought with us."
             value={selectedValue}
             onChange={(e) => setSelectedValue(e.target.value)}
