@@ -44,7 +44,7 @@ export default async function SSCPage({params}: {params: {lang: string}}) {
           </Button>
         ))}
         <Button variant="yellow" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/feedback'}>
+          <Link href={'/exercises/feedback/ssc'}>
             <Lock />
             Feedback
           </Link>
