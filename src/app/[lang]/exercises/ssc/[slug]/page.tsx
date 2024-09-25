@@ -26,11 +26,15 @@ export default async function SSC({params}: {params: {lang: string; slug: string
       return (
         <main
           className={`flex min-h-screen flex-col ${
-            slug === 'start' ? 'bg-yellow' :
-            slug === 'stop' ? 'bg-red' :
-            slug === 'continue' ? 'bg-green' : 'bg-blue'
+            slug === 'start'
+              ? 'bg-yellow'
+              : slug === 'stop'
+                ? 'bg-red'
+                : slug === 'continue'
+                  ? 'bg-green'
+                  : 'bg-blue'
           }`}>
-            {data && <SSCExercise data={data} chapter={slug} />}
+          {data && <SSCExercise data={data} chapter={slug} />}
         </main>
       );
   }

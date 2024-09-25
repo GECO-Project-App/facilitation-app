@@ -1,5 +1,5 @@
-''
-import { useCallback } from 'react';
+('');
+import {useCallback} from 'react';
 
 // Custom hook to remove an item from localStorage
 const useRemoveLocalStorageItem = (key: string) => {
