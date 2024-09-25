@@ -10,7 +10,7 @@ export default function IntroductionPage() {
     <main className="page-padding flex min-h-screen flex-col justify-between bg-purple">
       <NavBar />
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
-        <RiveAnimation src="/assets/riv/cc_main.riv" width={300} />
+        <RiveAnimation src="cc_main.riv" width={300} />
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">{t('title')}</h1>
           <p className="text-sm font-light">{t('subtitle')}</p>

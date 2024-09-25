@@ -22,6 +22,24 @@ export const PassItOn: FC = () => {
     setCurrentStep((prev) => (prev < mockPassItOn.length - 1 ? prev + 1 : prev));
   };
 
+  const Navigation = () => (
+    <nav className={cn('relative flex w-full flex-row items-center justify-center')}>
+      <div className="absolute left-0 top-0">
+        {currentStep === 0 ? (
+          <BackButton />
+        ) : (
+          <button onClick={goToPreviousStep} disabled={currentStep === 0}>
+            <ArrowLeft size={42} />
+          </button>
+        )}
+      </div>
+
+      <div className="mx-auto whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
+        Pass It On Method
+      </div>
+    </nav>
+  );
+
   const Illustration = useCallback(() => {
     switch (currentStep) {
       case 0:
@@ -37,9 +55,8 @@ export const PassItOn: FC = () => {
 
   return (
     <section className="flex min-h-screen flex-col justify-between p-4">
-      <div className="mx-auto w-fit whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
-        {t('title')}
-      </div>
+      <Navigation />
+
       <div className="">
         <div className="flex flex-col items-center justify-center space-y-8 text-center">
           <div
@@ -60,16 +77,9 @@ export const PassItOn: FC = () => {
           )}
         </div>
       </div>
-      <nav className="flex items-center justify-between gap-4">
-        {currentStep === 0 ? (
-          <BackButton />
-        ) : (
-          <button onClick={goToPreviousStep} disabled={currentStep === 0}>
-            <ArrowLeft size={42} />
-          </button>
-        )}
+      <div className="self-end">
         <HomeButton />
-      </nav>
+      </div>
     </section>
   );
 };

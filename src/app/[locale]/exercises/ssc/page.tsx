@@ -4,16 +4,17 @@ import './ssc.css';
 import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {Lock} from '@/components/icons/lock';
+import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 
-export default async function SSCPage() {
-  const t = await getTranslations('exercises.ssc.buttons');
+export default async function SSCPage({params}: {params: {lang: string}}) {
+  const t = await getTranslations('exercises.ssc');
   return (
     <main
       className="page-padding flex min-h-screen flex-col"
       style={{backgroundColor: 'rgb(147 51 234)'}}>
-      <section className="flex flex-row justify-evenly">
+      <section className="flex flex-row justify-between">
         <Link href={'/'}>
           <ArrowLeft size={60} />
         </Link>
@@ -21,25 +22,19 @@ export default async function SSCPage() {
           <Light />
         </Link>
       </section>
-      <section className="flex flex-1 flex-col items-center justify-evenly">
-        <Button variant="green" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=start'}>
-            <CheckBox chapter="start" />
-            {t('start')}
-          </Link>
-        </Button>
-        <Button variant="red" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=stop'}>
-            <CheckBox chapter="stop" />
-            {t('stop')}
-          </Link>
-        </Button>
-        <Button variant="pink" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/introduction?chapter=continue'}>
-            <CheckBox chapter="continue" />
-            {t('continue')}
-          </Link>
-        </Button>
+      <section className="mx-auto flex flex-1 flex-col items-center justify-evenly">
+        {buttons.map((button) => (
+          <Button
+            variant={button.variant}
+            className="mx-10 w-full justify-between"
+            asChild
+            key={button.title}>
+            <Link href={button.href}>
+              <CheckBox chapter={button.title.toLowerCase()} />
+              <span className="mx-auto">{button.title}</span>
+            </Link>
+          </Button>
+        ))}
         <Button variant="yellow" className="mx-auto" asChild>
           <Link href={'/exercises/ssc/feedback'}>
             <Lock />

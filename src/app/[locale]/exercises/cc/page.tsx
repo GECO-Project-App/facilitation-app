@@ -14,7 +14,7 @@ export default async function CheckInCheckOutPage() {
             {t('button.checkIn')} <ArrowRight size={28} />
           </Link>
         </Button>
-        <RiveAnimation src="/assets/riv/timer.riv" height={160} width={160} />
+        <RiveAnimation src="timer.riv" height={160} width={160} />
         <Button variant="green" className="self-start" asChild>
           <Link href={'/exercises/cc/check-out/introduction'}>
             <ArrowLeft size={28} /> {t('button.checkOut')}
