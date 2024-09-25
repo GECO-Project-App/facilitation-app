@@ -78,7 +78,7 @@ export const sscMock = {
       subtitle: '4-5 minutes | 2-20 members',
       description:
         'In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
-      rive: '/assets/riv/ssc_startgecko.riv',
+      rive: 'ssc_startgecko.riv',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
         link: '/exercises/ssc/start',
@@ -92,7 +92,7 @@ export const sscMock = {
       subtitle: '4-5 minutes | 2-20 members',
       description:
         'In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.',
-      rive: '/assets/riv/ssc_stopgecko.riv',
+      rive: 'ssc_stopgecko.riv',
       button: {
         variant: 'red' as ButtonProps['variant'],
         link: '/exercises/ssc/stop',
@@ -106,7 +106,7 @@ export const sscMock = {
       subtitle: '4-5 minutes | 2-20 members',
       description:
         'In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
-      rive: '/assets/riv/ssc_continuegecko.riv',
+      rive: 'ssc_continuegecko.riv',
       button: {
         variant: 'green' as ButtonProps['variant'],
         link: '/exercises/ssc/continue',

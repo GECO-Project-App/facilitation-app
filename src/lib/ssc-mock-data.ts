@@ -1,4 +1,4 @@
-import { ButtonType, SSCExerciseType } from "./types";
+import {ButtonType, SSCExerciseType} from './types';
 
 const startData: SSCExerciseType[] = [
   {
@@ -20,7 +20,8 @@ const startData: SSCExerciseType[] = [
     title: 'Silent Brainstorm',
     step: 3,
     sticker: null,
-    description: 'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
+    description:
+      'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
     timer: 180,
   },
   {
@@ -52,7 +53,8 @@ const stopData: SSCExerciseType[] = [
     title: 'Silent Brainstorm',
     step: 2,
     sticker: null,
-    description: 'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
+    description:
+      'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
     timer: 180,
   },
   {
@@ -84,7 +86,8 @@ const continueData: SSCExerciseType[] = [
     title: 'Silent Brainstorm',
     step: 2,
     sticker: null,
-    description: 'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
+    description:
+      'Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.',
     timer: 180,
   },
   {
@@ -103,7 +106,7 @@ const continueData: SSCExerciseType[] = [
   },
 ];
 
-export const getSsdData = (type: string)=> {
+export const getSsdData = (type: string) => {
   switch (type) {
     case 'start':
       return startData;
@@ -116,21 +119,20 @@ export const getSsdData = (type: string)=> {
   }
 };
 
-
 export const buttons: ButtonType[] = [
   {
     title: 'START',
-    href: '/exercises/ssc/introduction?chapter=start',
+    href: '/exercises/ssc/start/introduction',
     variant: 'green',
   },
   {
     title: 'STOP',
-    href: '/exercises/ssc/introduction?chapter=stop',
+    href: '/exercises/ssc/stop/introduction',
     variant: 'red',
   },
   {
     title: 'CONTINUE',
-    href: '/exercises/ssc/introduction?chapter=continue',
+    href: '/exercises/ssc/continue/introduction',
     variant: 'pink',
   },
 ];

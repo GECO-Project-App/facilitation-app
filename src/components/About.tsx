@@ -32,11 +32,13 @@ export const About: FC<AboutProps> = ({
     <section className="page-padding flex min-h-screen flex-col justify-between">
       <NavBar />
       <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
-        <div className="relative aspect-video w-full self-start md:w-2/3">
-          {rive && <RiveAnimation src={rive} />}
-          {illustration && <Image src={illustration} alt={title} fill />}
-        </div>
-        <div className="space-y-6">
+        {rive && <RiveAnimation src={rive} />}
+        {illustration && (
+          <div className="relative aspect-video w-full self-start md:w-2/3">
+            <Image src={illustration} alt={title} fill />
+          </div>
+        )}
+        <div className="space-y-4">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold">{title} </h2>
             <p className="text-sm font-light">{subtitle}</p>

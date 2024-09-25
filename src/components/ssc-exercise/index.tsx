@@ -52,12 +52,6 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({data, chapter}) => {
     }
   };
 
-  const getRiv = () => {
-    if (stepData.sticker) {
-      return <RiveAnimation src={`/assets/riv/${stepData.sticker}`} />;
-    }
-  };
-
   return (
     <StyledWrapper>
       <article className="flex h-40 flex-col items-center justify-between">
