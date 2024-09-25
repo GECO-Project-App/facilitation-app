@@ -12,7 +12,6 @@ interface HeaderWrapperProps {
 
 
 const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack , currentStep}) => {
-console.log(currentStep)
   return (
     <header className="flex w-full flex-row items-center justify-between pt-2">
     <ArrowLeft size={40} onClick={handleBack} />
