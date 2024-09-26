@@ -16,7 +16,7 @@ export default async function Home() {
           <Link href={'/exercises/cc/introduction'}>{t('cc')}</Link>
         </Button>
         <Button variant="blue" asChild>
-          <Link href={'/exercises/ssc/land-page'}>{t('ssc')}</Link>
+          <Link href={'/exercises/ssc/introduction'}>{t('ssc')}</Link>
         </Button>
       </div>
     </main>

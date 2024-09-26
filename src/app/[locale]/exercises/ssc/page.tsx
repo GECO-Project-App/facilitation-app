@@ -1,15 +1,16 @@
-import {Button, NavBar} from '@/components';
+import {Button} from '@/components';
 import {Light} from '@/components/Light/Light';
-import './ssc.css';
-import {ArrowLeft} from 'lucide-react';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-import {Lock} from '@/components/icons/lock';
 import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
+import {ArrowLeft} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
+import './ssc.css';
 
-export default async function SSCPage({params}: {params: {lang: string}}) {
+export default async function SSCPage() {
   const t = await getTranslations('exercises.ssc');
+  const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
+
   return (
     <main
       className="page-padding flex min-h-screen flex-col"
@@ -22,25 +23,19 @@ export default async function SSCPage({params}: {params: {lang: string}}) {
           <Light />
         </Link>
       </section>
-      <section className="mx-auto flex flex-1 flex-col items-center justify-evenly">
-        {buttons.map((button) => (
+      <section className="mx-auto flex flex-1 flex-col items-center justify-center space-y-10">
+        {buttons.map((button, i) => (
           <Button
             variant={button.variant}
-            className="mx-10 w-full justify-between"
+            className="w-full justify-between"
             asChild
             key={button.title}>
             <Link href={button.href}>
-              <CheckBox chapter={button.title.toLowerCase()} />
-              <span className="mx-auto">{button.title}</span>
+              <CheckBox chapter={buttonText[i].toLowerCase()} />
+              <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
             </Link>
           </Button>
         ))}
-        <Button variant="yellow" className="mx-auto" asChild>
-          <Link href={'/exercises/ssc/feedback'}>
-            <Lock />
-            {t('feedback')}
-          </Link>
-        </Button>
       </section>
     </main>
   );

@@ -1,9 +1,12 @@
 import {Button, NavBar, RiveAnimation} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
-import Link from 'next/link';
+import {getTranslations} from 'next-intl/server';
 
-export default async function SSCIntroductionPage({params}: {params: {lang: string}}) {
+export default async function SSCIntroductionPage() {
+  const t = await getTranslations('exercises.ssc.about');
+
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
       <ClearLocalStorage />
@@ -13,19 +16,14 @@ export default async function SSCIntroductionPage({params}: {params: {lang: stri
       </section>
       <section>
         <header>
-          <h1 className="mb-2 text-2xl font-bold">Start-Stop-Continue Exercise</h1>
-          <h2 className="mb-4 text-xl">Reflect and Improve</h2>
+          <h1 className="mb-2 text-2xl font-bold">{t('title')}</h1>
+          <h2 className="mb-4 text-xl">{t('subtitle')}</h2>
         </header>
-        <p>
-          The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and
-          teams reflect on what activities they should start, stop, or continue doing.It can be used
-          for a variety of purposes, such as,create a framework for feedback, encourage new ideas,
-          focus on action and collaboration, and promote broader thinking.
-        </p>
+        <p>{t('description')}</p>
       </section>
       <Link href={'/exercises/ssc'}>
         <Button variant="pink" className="mx-auto">
-          Start <ArrowRight size={28} />
+          {t('button')} <ArrowRight size={28} />
         </Button>
       </Link>
     </main>

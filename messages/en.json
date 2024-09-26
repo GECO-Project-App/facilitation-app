@@ -66,30 +66,31 @@
       }
     },
     "ssc": {
-      "title": "Start-Stop-Continue Exercise",
-      "subtitle": "Reflect and Improve",
-      "description": "The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and teams reflect on what activities they should start, stop, or continue doing. It can be used for a variety of purposes, such as, create a framework for feedback, encourage new ideas, focus on action and collaboration, and promote broader thinking.",
-      "button": "Start",
-      "buttons": {
-        "start": "START",
-        "stop": "STOP",
-        "continue": "CONTINUE",
-        "feedback": "Feedback"
+      "about": {
+        "title": "Start-Stop-Continue Exercise",
+        "subtitle": "Reflect and Improve",
+        "description": "The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and teams reflect on what activities they should start, stop, or continue doing. It can be used for a variety of purposes, such as, create a framework for feedback, encourage new ideas, focus on action and collaboration, and promote broader thinking.",
+        "button": "Start"
       },
+      "buttons": ["Start", "Stop", "Continue"],
+
       "start": {
         "title": "Chapter 1: Start",
         "subtitle": "4-5 minutes | 2-20 members",
-        "description": "In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive."
+        "description": "In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.",
+        "button": "Let's Start"
       },
       "stop": {
         "title": "Chapter 2: Stop",
         "subtitle": "4-5 minutes | 2-20 members",
-        "description": "In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive."
+        "description": "In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.",
+        "button": "Let's Stop"
       },
       "continue": {
         "title": "Chapter 3: Continue",
         "subtitle": "4-5 minutes | 2-20 members",
-        "description": "In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive."
+        "description": "In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.",
+        "button": "Let's Continue"
       },
       "tips": {
         "title": "GECO App Start-Stop-Continue Exercise: Tips",

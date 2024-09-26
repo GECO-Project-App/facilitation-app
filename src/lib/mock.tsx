@@ -24,7 +24,6 @@ export const ccMock = {
   checkIn: {
     about: {
       illustration: '/assets/svg/checkin-geco.svg',
-
       button: {
         variant: 'yellow' as ButtonProps['variant'],
         link: '/exercises/cc/check-in' as string | URL,

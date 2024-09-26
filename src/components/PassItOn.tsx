@@ -35,7 +35,7 @@ export const PassItOn: FC = () => {
       </div>
 
       <div className="mx-auto whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
-        Pass It On Method
+        {t('title')}
       </div>
     </nav>
   );
