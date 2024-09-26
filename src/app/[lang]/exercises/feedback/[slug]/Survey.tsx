@@ -29,7 +29,7 @@ function Survey({title, onSubmit}: SurveyProps) {
       <HeaderWrapper title="Feedback" handleBack={handleBack} />
       <div>
         <div className="relative">
-          <div className="absolute left-0 top-0 w-full rounded-t-3xl border-l-2 border-r-2 border-t-2 border-black bg-amber-50 bg-pink p-4 text-lg font-bold text-black">
+          <div className="absolute left-0 top-0 w-full rounded-t-3xl border-l-2 border-r-2 border-t-2 border-black bg-amber-50 bg-pink p-2 text-lg font-bold text-black">
             {title}
             <div className="text-xs font-normal text-gray-700">
               What worked well during this exercise?
@@ -37,7 +37,7 @@ function Survey({title, onSubmit}: SurveyProps) {
             <div className="text-xs font-normal text-gray-700">What didn't?</div>
           </div>
           <textarea
-            className="h-80 w-full rounded-3xl border-2 border-black p-4 pt-16 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+            className="h-80 w-full rounded-3xl border-2 border-black p-1 pt-20 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
             value={selectedValue}
             onChange={(e) => setSelectedValue(e.target.value)}
           />
