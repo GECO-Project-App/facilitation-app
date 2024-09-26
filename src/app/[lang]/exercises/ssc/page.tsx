@@ -1,12 +1,11 @@
-import {Button, NavBar} from '@/components';
+import {Button} from '@/components';
+import {Lamp} from '@/components/icons/lamp';
+import {Lock} from '@/components/icons/lock';
+import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
+import {buttons} from '@/lib/ssc-mock-data';
+import {ArrowLeft} from 'lucide-react';
 import Link from 'next/link';
 import {getDictionary} from '../../dictionaries';
-import {Light} from '@/components/Light/Light';
-import './ssc.css';
-import {ArrowLeft} from 'lucide-react';
-import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-import {Lock} from '@/components/icons/lock';
-import {buttons} from '@/lib/ssc-mock-data';
 
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
@@ -19,15 +18,13 @@ export async function generateMetadata({params: {lang}}: {params: {lang: string}
 export default async function SSCPage({params}: {params: {lang: string}}) {
   const t = await getDictionary(params.lang);
   return (
-    <main
-      className="page-padding flex min-h-screen flex-col"
-      style={{backgroundColor: 'rgb(147 51 234)'}}>
+    <main className="page-padding flex min-h-screen flex-col bg-deepPurple">
       <section className="flex flex-row justify-between">
         <Link href={'/'}>
           <ArrowLeft size={60} />
         </Link>
         <Link href={'/exercises/ssc/tips'} className="self-end">
-          <Light />
+          <Lamp className="fill-white hover:animate-shake hover:fill-yellow" />
         </Link>
       </section>
       <section className="mx-auto flex flex-1 flex-col items-center justify-evenly">

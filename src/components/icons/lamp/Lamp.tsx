@@ -1,8 +1,19 @@
 import React, {FC} from 'react';
 
-export const Lamp: FC<React.SVGProps<SVGSVGElement>> = ({height = 66, width = 43, fill = 'white'}) => {
+export const Lamp: FC<React.SVGProps<SVGSVGElement>> = ({
+  height = 66,
+  width = 43,
+  fill = 'inherit',
+  className,
+}) => {
   return (
-    <svg width={width} height={height} viewBox="0 0 43 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 43 66"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}>
       <path
         d="M30.0078 45.335L29.4305 45.6043V46.2413V54.2002H13.4488V46.2413V45.6043L12.8715 45.335C5.86391 42.0672 1 34.9147 1 26.614C1 15.2215 10.1588 6 21.4397 6C32.7206 6 41.8793 15.2215 41.8793 26.614C41.8793 34.9147 37.0154 42.0672 30.0078 45.335Z"
         fill={fill}
