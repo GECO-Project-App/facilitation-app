@@ -17,9 +17,8 @@ export default async function SSCIntroductionPage({params}: {params: {lang: stri
   return (
     <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
       <ClearLocalStorage />
-      <NavBar />
       <section>
-        <RiveAnimation src="ssc_main.riv" />
+        <RiveAnimation src="ssc_main.riv" width={240} height={240} />
       </section>
       <section>
         <header>
