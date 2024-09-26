@@ -18,7 +18,7 @@ const Tips: React.FC = async () => {
           <div className="text-xl font-bold">
             <h2>{t('title')}</h2>
           </div>
-          <Lamp />
+          <Lamp className="fill-white" />
         </div>
         <h4 className="text-md font-semibold">{t('subtitle')}</h4>
         <ol className="list-decimal pl-8">

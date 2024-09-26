@@ -64,5 +64,5 @@ To run tests:
 The project is licensed under AGPLv3. You can read the full license in the LICENSE file.
 
 ## About the Project
-You can read about the project's background (and much more) in our [Wiki](https://github.com/GECO-Project-App/facilitation-app/wiki).
 
+You can read about the project's background (and much more) in our [Wiki](https://github.com/GECO-Project-App/facilitation-app/wiki).
