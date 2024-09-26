@@ -40,6 +40,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
 
   const handleSubmit = (value: string | null) => {
     console.log(value);
+    setShowSurvey(false);
   };
 
   console.log(surveyID, surveyTitle);
