@@ -6,7 +6,7 @@ interface HeaderWrapperProps {
   //   children: ReactNode;
   title: string;
   handleBack: () => void;
-  currentStep: number;
+  currentStep?: number;
 }
 
 const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack, currentStep}) => {
@@ -25,7 +25,7 @@ const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack, currentStep})
                   ? 'bg-blue text-white'
                   : currentStep === 5
                     ? 'bg-blue text-white'
-                    : ''
+                    : 'bg-purple'
         }`}>
         {title}
       </h1>
