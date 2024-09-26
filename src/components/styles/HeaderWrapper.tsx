@@ -1,18 +1,19 @@
-// components/StyledWrapper.tsx
-import React, {FC, ReactNode} from 'react';
-import {ArrowLeft} from 'lucide-react';
+import React, {FC} from 'react';
+import {ArrowLeft, ArrowRight} from 'lucide-react';
 
 interface HeaderWrapperProps {
-  //   children: ReactNode;
   title: string;
-  handleBack: () => void;
+  handleBack?: () => void;
+  handleForward?: () => void;
   currentStep?: number;
 }
 
-const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack, currentStep}) => {
+const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack, handleForward, currentStep}) => {
   return (
     <header className="flex w-full flex-row items-center justify-between pt-2">
-      <ArrowLeft size={40} onClick={handleBack} />
+      <div className="h-10 w-10 rounded-full">
+        {handleBack && <ArrowLeft size={40} onClick={handleBack} />}
+      </div>
       <h1
         className={`rounded-full border-2 border-black pb-1 pl-4 pr-4 pt-1 text-xl font-bold ${
           currentStep === 1
@@ -29,7 +30,9 @@ const HeaderWrapper: FC<HeaderWrapperProps> = ({title, handleBack, currentStep})
         }`}>
         {title}
       </h1>
-      <div className="h-10 w-10 rounded-full"></div>
+      <div className="h-10 w-10 rounded-full">
+        {handleForward && <ArrowRight size={40} onClick={handleForward} />}
+      </div>
     </header>
   );
 };
