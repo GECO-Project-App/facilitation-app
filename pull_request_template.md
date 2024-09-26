@@ -1,5 +1,3 @@
-Fixes #(issue number)
-
 ### What has been changed?
 
 _Please write a short description of what has been changed._
