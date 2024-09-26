@@ -2,7 +2,12 @@ import React, {FC} from 'react';
 
 export const Pause: FC<React.SVGProps<SVGSVGElement>> = ({height = 50, width = 50}) => {
   return (
-    <svg width={width} height={height} viewBox="18 24 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      viewBox="18 24 50 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
       <rect
         x="45.8335"
         y="37"

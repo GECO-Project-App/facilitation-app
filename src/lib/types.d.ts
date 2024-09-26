@@ -7,8 +7,8 @@ export interface SSCExerciseType {
   timer?: number;
 }
 
-  export interface ButtonType {
-    variant: "green" | "red" | "pink" | "blue" | "orange" | "purple" | "yellow" | null | undefined;
-    title: string;
-    href: string;
-  }
+export interface ButtonType {
+  variant: 'green' | 'red' | 'pink' | 'blue' | 'orange' | 'purple' | 'yellow' | null | undefined;
+  title: string;
+  href: string;
+}

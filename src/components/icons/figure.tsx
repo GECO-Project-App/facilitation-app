@@ -14,12 +14,7 @@ export const Figure: FC<React.SVGProps<SVGSVGElement>> = ({height = 89, width = 
         stroke="black"
         strokeWidth="2"
       />
-      <path
-        d="M37 39C37 50.5 58 50.5 58 39"
-        stroke="black"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="M37 39C37 50.5 58 50.5 58 39" stroke="black" strokeWidth="2" strokeLinecap="round" />
       <line
         x1="1"
         y1="-1"
