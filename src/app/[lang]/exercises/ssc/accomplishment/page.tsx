@@ -2,6 +2,7 @@ import {Button, RiveAnimation} from '@/components';
 import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
 import {getDictionary} from '../../../dictionaries';
+
 export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
   const t = await getDictionary(lang);
   return {
@@ -23,7 +24,7 @@ export default async function Accomplishment({params}: {params: {lang: string}})
           </div>
           <div className="flex flex-col items-center space-y-12">
             <div className="m-2 mx-auto rounded-full bg-pink p-2">
-              <RiveAnimation src="/assets/riv/geckograttis.riv" />
+              <RiveAnimation src="geckograttis.riv" />
             </div>
             <Link href={'/exercises/ssc/'}>
               <Button variant="red" className="mx-auto">

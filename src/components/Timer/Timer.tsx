@@ -4,6 +4,7 @@ import {StylizedContainer} from '../StylizedContainer';
 import {AnimatedEyes} from '../AnimatedEyes/AnimatedEyes';
 import {cn} from '@/lib/utils';
 import {Restart, Start, Pause} from '@/components/icons/timer';
+import {RiveAnimation} from '@/components/';
 
 type TimerProps = {
   seconds?: number;
@@ -50,23 +51,22 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
         <section>
           <p
             className={cn(
-              seconds === countdown ? 'text-green-500' : '',
-              countdown === 0 ? 'text-amber-500' : '',
+              'text-3xl',
+              seconds === countdown ? 'text-red' : '',
+              countdown === 0 ? 'text-amber' : '',
             )}>
             {formatTime()}
           </p>
           <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-            <AnimatedEyes />
+            <RiveAnimation src="eyes.riv" width={60} />
           </div>
         </section>
       </StylizedContainer>
       <section className="flex">
-      <button onClick={resetTimer}>
-        <Restart />
-      </button>
-      <button onClick={toggle}>
-        {isRunning ? <Pause /> : <Start />}
-      </button>
+        <button onClick={resetTimer}>
+          <Restart />
+        </button>
+        <button onClick={toggle}>{isRunning ? <Pause /> : <Start />}</button>
       </section>
     </div>
   );

@@ -7,14 +7,14 @@ type RiveComponentProps = UseRiveParameters & {
 };
 
 export const RiveAnimation = ({
-  src = 'assets/riv/placeholder.riv',
   autoplay = true,
-  width = '200px',
-  height = '200px',
+  width = 160,
+  height = 160,
+  src,
   ...riveProps
 }: RiveComponentProps) => {
   const {RiveComponent} = useRive({
-    src,
+    src: `/assets/riv/${src}`,
     autoplay,
     ...riveProps,
   });

@@ -1,26 +1,43 @@
-'use client';
-import {Button, NavBar} from '@/components';
+import {Button, NavBar, RiveAnimation} from '@/components';
+import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
-import {useSearchParams} from 'next/navigation';
-import Start from '@/components/ssc-exercise/introduction/Start';
-import Stop from '@/components/ssc-exercise/introduction/Stop';
-import Continue from '@/components/ssc-exercise/introduction/Continue';
+import {getDictionary} from '../../../dictionaries';
 
-export default function Introduction() {
-  const searchParams = useSearchParams();
-  const chapter = searchParams.get('chapter'); 
+export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
+  const t = await getDictionary(lang);
+  return {
+    title: t.page.title,
+    description: t.page.desc,
+  };
+}
+
+export default async function SSCIntroductionPage({params}: {params: {lang: string}}) {
+  const t = await getDictionary(params.lang);
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-white">
-      <section className="flex flex-1 flex-col items-center justify-evenly">
-        {chapter === 'start' && <Start />}
-        {chapter === 'stop' && <Stop />}
-        {chapter === 'continue' && <Continue />}
-        <Link href={`/exercises/ssc/${chapter}`}>
-          <Button variant="blue" className="mx-auto">
-            Let's start
-          </Button>
-        </Link>
+    <main className="page-padding flex min-h-screen flex-col items-center justify-evenly bg-blue text-white">
+      <ClearLocalStorage />
+      <NavBar />
+      <section>
+        <RiveAnimation src="ssc_main.riv" />
       </section>
+      <section>
+        <header>
+          <h1 className="mb-2 text-2xl font-bold">Start-Stop-Continue Exercise</h1>
+          <h2 className="mb-4 text-xl">Reflect and Improve</h2>
+        </header>
+        <p>
+          The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and
+          teams reflect on what activities they should start, stop, or continue doing.It can be used
+          for a variety of purposes, such as,create a framework for feedback, encourage new ideas,
+          focus on action and collaboration, and promote broader thinking.
+        </p>
+      </section>
+      <Link href={'/exercises/ssc'}>
+        <Button variant="pink" className="mx-auto">
+          Start <ArrowRight size={28} />
+        </Button>
+      </Link>
     </main>
   );
 }
