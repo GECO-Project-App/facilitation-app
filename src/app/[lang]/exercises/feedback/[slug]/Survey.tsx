@@ -25,7 +25,7 @@ function Survey({title, onSubmit}: SurveyProps) {
   };
 
   return (
-    <article className="page-padding flex min-h-screen flex-col justify-between">
+    <article className="page-padding flex min-h-screen flex-col justify-evenly">
       <HeaderWrapper title="Feedback" handleBack={handleBack} />
       <div>
         <div className="relative h-[60vh]">
