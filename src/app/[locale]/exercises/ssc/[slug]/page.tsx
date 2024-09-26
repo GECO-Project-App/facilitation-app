@@ -1,11 +1,27 @@
-import {getSsdData} from '@/lib/ssc-mock-data';
 import SSCExercise from '@/components/ssc-exercise';
-import Tips from '@/components/ssc-exercise/Tips';
 import FeedBack from '@/components/ssc-exercise/FeedBack';
+import Tips from '@/components/ssc-exercise/Tips';
+import {Step} from '@/lib/mock';
+import {getTranslations} from 'next-intl/server';
+import {useMemo} from 'react';
 
 export default async function SSC({params}: {params: {locale: string; slug: string}}) {
   const slug = params.slug;
-  const data = getSsdData(slug);
+
+  const t = await useMemo(async () => {
+    switch (slug) {
+      case 'start':
+        return await getTranslations('exercises.ssc.start');
+      case 'stop':
+        return await getTranslations('exercises.ssc.stop');
+      case 'continue':
+        return await getTranslations('exercises.ssc.continue');
+      default:
+        return await getTranslations('exercises.ssc.start');
+    }
+  }, [slug]);
+
+  const steps: Step[] = t.raw('steps').map((step: Step) => step);
 
   switch (slug) {
     case 'tips':
@@ -24,7 +40,7 @@ export default async function SSC({params}: {params: {locale: string; slug: stri
                   ? 'bg-green'
                   : 'bg-blue'
           }`}>
-          {data && <SSCExercise data={data} chapter={slug} />}
+          <SSCExercise chapter={slug} steps={steps} />
         </main>
       );
   }

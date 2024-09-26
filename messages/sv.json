@@ -72,24 +72,91 @@
         "description": "Start, Stop, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
         "button": "Starta"
       },
+
       "buttons": ["Starta", "Stoppa", "Fortsätt"],
       "start": {
         "title": "Kapitel 1: Start",
         "subtitle": "4-5 minuter | 2-20 deltagare",
         "description": "I detta kapitel kommer ni att brainstorma och diskutera vilka saker ni skulle kunna börja göra som gemenskap för att bättre stödja produktivitet, kommunikation, etc. Ge ett exempel på hur detta kan hjälpa dig och gemenskapen att blomstra.",
-        "button": "Gå till Starta"
+        "button": "Gå till Starta",
+        "steps": [
+          {
+            "title": "Starta",
+            "description": "Vad är det vi inte gör som vi kanske borde börja göra som grupp?",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Tyst Brainstorm",
+            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja börja göra. De har tre minuter att brainstorma tyst.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Sammanfatta",
+            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Prioritera",
+            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          }
+        ]
       },
       "stop": {
         "title": "Kapitel 2: Stop",
         "subtitle": "4-5 minuter | 2-20 deltagare",
         "description": "I detta kapitel kommer ni att brainstorma och diskutera vilka saker ni borde sluta göra som gemenskap för att bättre stödja produktivitet, kommunikation, etc. Ge ett exempel på hur denna punkt kan hjälpa dig och gemenskapen att blomstra.",
-        "button": "Gå till Stoppa"
+        "button": "Gå till Stoppa",
+        "steps": [
+          {
+            "title": "Stop",
+            "description": "Vad har vi varit inne på som vi kanske borde sluta göra som grupp?",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Tyst Brainstorm",
+            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja sluta göra. De har tre minuter att brainstorma tyst.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Sammanfatta",
+            "description": "Sammanfatta vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Prioritera",
+            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          }
+        ]
       },
       "continue": {
         "title": "Kapitel 3: Fortsätt",
         "subtitle": "4-5 minuter | 2-20 deltagare",
         "description": "I detta kapitel kommer ni att brainstorma och diskutera vilka saker ni borde fortsätta göra som gemenskap för att bättre stödja produktivitet, kommunikation, etc. Ge ett exempel på hur detta kan hjälpa dig och gemenskapen att blomstra.",
-        "button": "Gå til Fortsätt"
+        "button": "Gå til Fortsätt",
+        "steps": [
+          {
+            "title": "Fortsätt",
+            "description": "Vad kan vi fortsätta göra?",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Tyst Brainstorm",
+            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja fortsätta göra. De har tre minuter att brainstorma tyst.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Sammanfatta",
+            "description": "Sammanfatta vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          },
+          {
+            "title": "Prioritera",
+            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "button": "Nästa steg"
+          }
+        ]
       },
       "tips": {
         "title": "GECO App Start-Stop-Fortsätt Övning: Tips",
@@ -110,7 +177,7 @@
       "accomplishment": {
         "title": "BRA JOBBAT!",
         "subtitle": "DU KLARADE DET! GRATTIS!",
-        "button": "Gå till hem"
+        "button": "Gå til hem"
       }
     }
   },

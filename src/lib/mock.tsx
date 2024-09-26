@@ -1,5 +1,16 @@
 import type {ButtonProps} from '@/components';
 
+export type Step = {
+  title: string;
+  description: string;
+  button: string;
+};
+
+export type StepContent = {
+  sticker?: string;
+  timer?: number;
+};
+
 export type AboutProps = {
   title: string;
   subtitle: string;
@@ -76,6 +87,23 @@ export const sscMock = {
         text: "Let's Start",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'topic.riv',
+      },
+      {
+        sticker: 'ssc_start.riv',
+      },
+      {
+        timer: 180,
+      },
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
   stop: {
     about: {
@@ -90,6 +118,22 @@ export const sscMock = {
         text: "Let's Stop",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'ssc_stop.riv',
+      },
+
+      {
+        timer: 180,
+      },
+
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
   continue: {
     about: {
@@ -104,6 +148,22 @@ export const sscMock = {
         text: "Let's Continue",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'ssc_continue.riv',
+      },
+
+      {
+        timer: 180,
+      },
+
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
 };
 

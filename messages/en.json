@@ -78,19 +78,86 @@
         "title": "Chapter 1: Start",
         "subtitle": "4-5 minutes | 2-20 members",
         "description": "In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.",
-        "button": "Let's Start"
+        "button": "Let's Start",
+        "steps": [
+          {
+            "title": "Start",
+            "description": "Pick a main topic on what you wanna discuss today with the community.",
+            "button": "Next step"
+          },
+
+          {
+            "title": "Silent Brainstorm",
+            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "button": "Next step"
+          },
+          {
+            "title": "Review & Discussion",
+            "description": "Prioritize which issues, and what can we propose.",
+            "button": "Next step"
+          },
+          {
+            "title": "Proritize",
+            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "button": "Next step"
+          }
+        ]
       },
       "stop": {
         "title": "Chapter 2: Stop",
         "subtitle": "4-5 minutes | 2-20 members",
         "description": "In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.",
-        "button": "Let's Stop"
+        "button": "Let's Stop",
+        "steps": [
+          {
+            "title": "Stop",
+            "description": "What have we been doing that we might/should stop doing as a community",
+            "button": "Next step"
+          },
+          {
+            "title": "Silent Brainstorm",
+            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "button": "Next step"
+          },
+          {
+            "title": "Review & Discussion",
+            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "button": "Next step"
+          },
+          {
+            "title": "Proritize",
+            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "button": "Next step"
+          }
+        ]
       },
       "continue": {
         "title": "Chapter 3: Continue",
         "subtitle": "4-5 minutes | 2-20 members",
         "description": "In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.",
-        "button": "Let's Continue"
+        "button": "Let's Continue",
+        "steps": [
+          {
+            "title": "Continue",
+            "description": "What can we continue doing?",
+            "button": "Next step"
+          },
+          {
+            "title": "Silent Brainstorm",
+            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "button": "Next step"
+          },
+          {
+            "title": "Review & Discussion",
+            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "button": "Next step"
+          },
+          {
+            "title": "Proritize",
+            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "button": "Next step"
+          }
+        ]
       },
       "tips": {
         "title": "GECO App Start-Stop-Continue Exercise: Tips",
