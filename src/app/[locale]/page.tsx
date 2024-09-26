@@ -2,6 +2,14 @@ import {Button, RiveAnimation} from '@/components';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 
+export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
+  const t = await getTranslations('home');
+  return {
+    title: t('title'),
+    description: t('desc'),
+  };
+}
+
 export default async function Home() {
   const t = await getTranslations('home.buttons');
 
