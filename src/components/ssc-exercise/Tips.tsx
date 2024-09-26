@@ -21,7 +21,7 @@ const Tips: React.FC = async () => {
           <Lamp />
         </div>
         <h4 className="text-md font-semibold">{t('subtitle')}</h4>
-        <ol className="list-decimal">
+        <ol className="list-decimal pl-8">
           {t.raw('points').map((point: string) => (
             <li key={point} className="font-bold">
               {point}
