@@ -6,7 +6,7 @@ import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {useRouter} from 'next/navigation';
-
+import TextArea from './TextArea';
 interface SurveyProps {
   title: string;
   onSubmit: (value: string | null) => void;
@@ -24,10 +24,11 @@ function Survey({title, onSubmit}: SurveyProps) {
     router.back();
   };
 
+
   return (
     <article className="page-padding flex min-h-screen flex-col justify-evenly">
       <HeaderWrapper title="Feedback" handleBack={handleBack} />
-      <div>
+      {/* <div>
         <div className="relative h-[60vh]">
           <div className="absolute left-0 top-0 w-full rounded-t-3xl border-l-2 border-r-2 border-t-2 border-black bg-amber-50 bg-pink p-2 text-lg font-bold text-black">
             {title}
@@ -43,7 +44,13 @@ function Survey({title, onSubmit}: SurveyProps) {
             onChange={(e) => setSelectedValue(e.target.value)}
           />
         </div>
-      </div>
+      </div> */}
+      <TextArea
+        title={title}
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+        
+      />
       <section className="flex justify-center">
         <Button variant="pink" onClick={handleSubmit}>
           Send <ArrowRight />
