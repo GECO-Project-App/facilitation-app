@@ -4,7 +4,6 @@ import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import TextArea from '../views/TextArea';
-import {useKeyboardResize} from '@/hooks/useKeyboardResize';
 import {useKeyboardStatus} from '@/hooks/useKeyboardStatus';
 
 interface SurveyProps {
@@ -13,7 +12,6 @@ interface SurveyProps {
 }
 
 function Survey({title, onSubmit}: SurveyProps) {
-  const keyboardHeight = useKeyboardResize();
   const keyboardStatus = useKeyboardStatus();
   const [selectedValue, setSelectedValue] = useState('');
   const router = useRouter();
@@ -27,7 +25,7 @@ function Survey({title, onSubmit}: SurveyProps) {
   };
 
   return (
-    <article className={`page-padding flex flex-col 
+    <article className={`page-padding flex flex-col overflow-y-hidden
       ${keyboardStatus.isKeyboardOpen ? 'justify-between h-[54vh]' : 'min-h-screen justify-evenly'} 
     `}>
       <TextArea

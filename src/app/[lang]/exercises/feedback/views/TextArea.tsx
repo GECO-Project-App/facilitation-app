@@ -15,7 +15,7 @@ const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   return (
     <>
-      <HeaderWrapper title="Title" handleBack={handleBack} />
+      <HeaderWrapper title="Feedback" handleBack={handleBack} />
       <div className={`relative h-[60vh]`}>
       {/* <div className={`relative h-full`} style={{ height: `70%` }}> */}
         <div className="absolute left-0 top-0 w-full rounded-t-3xl border-l-2 border-r-2 border-t-2 border-black bg-amber-50 bg-pink p-2 text-lg font-bold text-black">
