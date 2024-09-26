@@ -7,12 +7,17 @@ import {ArrowRight} from 'lucide-react';
 import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {useRouter} from 'next/navigation';
 import TextArea from './TextArea';
+import { useKeyboardResize,  } from '@/hooks/useKeyboardResize';
+import { useKeyboardStatus,  } from '@/hooks/useKeyboardStatus';
+
 interface SurveyProps {
   title: string;
   onSubmit: (value: string | null) => void;
 }
 
 function Survey({title, onSubmit}: SurveyProps) {
+  const keyboardHeight = useKeyboardResize();
+  const keyboardStatus = useKeyboardStatus();
   const [selectedValue, setSelectedValue] = useState('');
   const router = useRouter();
 
@@ -24,32 +29,19 @@ function Survey({title, onSubmit}: SurveyProps) {
     router.back();
   };
 
+  console.log(keyboardHeight);
+
 
   return (
     <article className="page-padding flex min-h-screen flex-col justify-evenly">
-      <HeaderWrapper title="Feedback" handleBack={handleBack} />
-      {/* <div>
-        <div className="relative h-[60vh]">
-          <div className="absolute left-0 top-0 w-full rounded-t-3xl border-l-2 border-r-2 border-t-2 border-black bg-amber-50 bg-pink p-2 text-lg font-bold text-black">
-            {title}
-            <div className="text-xs font-normal text-gray-700">
-              What worked well during this exercise?
-            </div>
-            <div className="text-xs font-normal text-gray-700">What didn't?</div>
-          </div>
-          <textarea
-            className="h-full w-full rounded-3xl border-2 border-black p-1 pt-20 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
-            value={selectedValue}
-            placeholder="Write your feedback here..."
-            onChange={(e) => setSelectedValue(e.target.value)}
-          />
-        </div>
-      </div> */}
+      <HeaderWrapper title={keyboardStatus.isKeyboardOpen.toString()} handleBack={handleBack} />
+
       <TextArea
+        key={title}
         title={title}
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
-        
+        height={keyboardStatus.isKeyboardOpen ? '20vh' : '60vh'}
       />
       <section className="flex justify-center">
         <Button variant="pink" onClick={handleSubmit}>
