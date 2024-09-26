@@ -58,17 +58,15 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
             {formatTime()}
           </p>
           <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-            <RiveAnimation src="eyes.riv" width={60}/>
+            <RiveAnimation src="eyes.riv" width={60} />
           </div>
         </section>
       </StylizedContainer>
       <section className="flex">
-      <button onClick={resetTimer}>
-        <Restart />
-      </button>
-      <button onClick={toggle}>
-        {isRunning ? <Pause /> : <Start />}
-      </button>
+        <button onClick={resetTimer}>
+          <Restart />
+        </button>
+        <button onClick={toggle}>{isRunning ? <Pause /> : <Start />}</button>
       </section>
     </div>
   );

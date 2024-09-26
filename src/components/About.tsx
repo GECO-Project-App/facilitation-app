@@ -1,18 +1,28 @@
+'use client';
+import {AboutProps, ccMock, sscMock} from '@/lib/mock';
+import {ArrowRight} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import {FC, useMemo} from 'react';
 import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
-import Image from 'next/image';
-import {getTranslations} from 'next-intl/server';
 import {Button} from './ui';
-import {Link} from '@/navigation';
-import {ArrowRight} from 'lucide-react';
-import {ccMock} from '@/lib/mock';
+import {usePostHog} from 'posthog-js/react';
+import {usePathname} from 'next/navigation';
+import {useTranslations} from 'next-intl';
 
-type AboutProps = {
+export const About: FC<{
   slug: string;
-};
+}> = ({slug}) => {
+  const posthog = usePostHog();
+  const pathname = usePathname();
 
-export const About: FC<AboutProps> = async ({slug}) => {
+  const handleClick = () => {
+    posthog.capture('exercise_start', {
+      name: slug,
+    });
+  };
+
   const mock = useMemo(() => {
     switch (slug) {
       case 'check-in':
@@ -20,42 +30,44 @@ export const About: FC<AboutProps> = async ({slug}) => {
       case 'check-out':
         return ccMock.checkOut.about;
       case 'start':
-        return ccMock.checkOut.about;
+        return sscMock.start.about;
       case 'stop':
-        return ccMock.checkOut.about;
+        return sscMock.stop.about;
       case 'continue':
-        return ccMock.checkOut.about;
+        return sscMock.continue.about;
       default:
         return ccMock.checkOut.about;
     }
   }, [slug]);
 
-  const t = await useMemo(async () => {
+  const t = useMemo(() => {
     switch (slug) {
       case 'check-in':
-        return getTranslations('exercises.cc.checkIn');
+        return useTranslations('exercises.cc.checkIn.about');
       case 'check-out':
-        return getTranslations('exercises.cc.checkOut');
+        return useTranslations('exercises.cc.checkOut.about');
       case 'start':
-        return getTranslations('exercises.ssc.start');
+        return useTranslations('exercises.ssc.start.about');
       case 'stop':
-        return getTranslations('exercises.ssc.stop');
+        return useTranslations('exercises.ssc.stop.about');
       case 'continue':
-        return getTranslations('exercises.ssc.continue');
+        return useTranslations('exercises.ssc.continue.about');
       default:
-        return getTranslations('exercises.cc.checkIn');
+        return useTranslations('exercises.cc.checkIn.about');
     }
   }, [slug]);
 
   return (
     <section className="page-padding flex min-h-screen flex-col justify-between">
       <NavBar />
-      <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center gap-4">
-        {/* {mock?.rive && <RiveAnimation src={mock.rive} width={300} />} */}
-        <div className="relative aspect-video w-full self-start md:w-2/3">
-          {mock?.illustration && <Image src={mock.illustration} alt="illustration" fill priority />}
-        </div>
-        <div className="space-y-6">
+      <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
+        {mock?.rive && <RiveAnimation src={mock.rive} />}
+        {mock?.illustration && (
+          <div className="relative aspect-video w-full self-start md:w-2/3">
+            <Image src={mock.illustration} alt={t('title')} fill />
+          </div>
+        )}
+        <div className="space-y-4">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold">{t('title')} </h2>
             <p className="text-sm font-light">{t('subtitle')}</p>
@@ -63,7 +75,13 @@ export const About: FC<AboutProps> = async ({slug}) => {
           <p>{t('description')}</p>
         </div>
       </div>
-      <div className="flex justify-center">{mock.button(t('button'))}</div>
+      <div className="flex justify-center">
+        <Button variant={mock.button.variant} asChild onClick={handleClick}>
+          <Link href={mock.button.link}>
+            {mock.button.text} <ArrowRight size={28} />
+          </Link>
+        </Button>
+      </div>
     </section>
   );
 };

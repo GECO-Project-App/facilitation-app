@@ -1,6 +1,17 @@
-import {Button} from '@/components';
-import {Link} from '@/navigation';
-import {ArrowRight} from 'lucide-react';
+import type {ButtonProps} from '@/components';
+
+export type AboutProps = {
+  title: string;
+  subtitle: string;
+  description: string;
+  rive?: string;
+  illustration?: string;
+  button: {
+    variant: ButtonProps['variant'];
+    link: string | URL;
+    text: string;
+  };
+};
 
 export const ccMock = {
   about: {
@@ -13,14 +24,13 @@ export const ccMock = {
   checkIn: {
     about: {
       illustration: '/assets/svg/checkin-geco.svg',
-      button: (text: string) => (
-        <Button variant="yellow" asChild>
-          <Link href={'/exercises/cc/check-in'}>
-            {text} <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/cc/check-in' as string | URL,
+        text: "Let's Start",
+      },
+    } as AboutProps,
     questions: [
       'If you could describe your current state of mind in three words, what would they be?',
       "What's one thing you're looking forward to this week?",
@@ -37,14 +47,12 @@ export const ccMock = {
   checkOut: {
     about: {
       illustration: '/assets/svg/checkout-geco.svg',
-      button: (text: string) => (
-        <Button variant="yellow" asChild>
-          <Link href={'/exercises/cc/check-out'}>
-            {text} <ArrowRight size={28} />
-          </Link>
-        </Button>
-      ),
-    },
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/cc/check-out',
+        text: "Let's Start",
+      },
+    } as AboutProps,
     questions: [
       'In two words… how was the experience from the session today?',
       'In one word… tell us how you are  feeling at the moment',
@@ -52,6 +60,51 @@ export const ccMock = {
       'Tell us one fun thing about the session!',
       'In one sentence…tell us what’s your concern today',
     ],
+  },
+};
+
+export const sscMock = {
+  start: {
+    about: {
+      title: 'Chapter 1: Start',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
+      rive: 'ssc_startgecko.riv',
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/ssc/start',
+        text: "Let's Start",
+      },
+    } as AboutProps,
+  },
+  stop: {
+    about: {
+      title: 'Chapter 2: Stop',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.',
+      rive: 'ssc_stopgecko.riv',
+      button: {
+        variant: 'red' as ButtonProps['variant'],
+        link: '/exercises/ssc/stop',
+        text: "Let's Stop",
+      },
+    } as AboutProps,
+  },
+  continue: {
+    about: {
+      title: 'Chapter 3: Continue',
+      subtitle: '4-5 minutes | 2-20 members',
+      description:
+        'In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
+      rive: 'ssc_continuegecko.riv',
+      button: {
+        variant: 'green' as ButtonProps['variant'],
+        link: '/exercises/ssc/continue',
+        text: "Let's Continue",
+      },
+    } as AboutProps,
   },
 };
 

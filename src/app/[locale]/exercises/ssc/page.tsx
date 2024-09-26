@@ -29,6 +29,11 @@ export default async function SSCPage({params}: {params: {lang: string}}) {
             className="mx-10 w-full justify-between"
             asChild
             key={button.title}>
+          <Button
+            variant={button.variant}
+            className="mx-10 w-full justify-between"
+            asChild
+            key={button.title}>
             <Link href={button.href}>
               <CheckBox chapter={button.title.toLowerCase()} />
               <span className="mx-auto">{button.title}</span>
