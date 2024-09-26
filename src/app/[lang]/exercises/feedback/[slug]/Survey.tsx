@@ -1,14 +1,11 @@
 'use client';
 import {useState} from 'react';
-import Link from 'next/link';
-import {ArrowLeft} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
-import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {useRouter} from 'next/navigation';
-import TextArea from './TextArea';
-import { useKeyboardResize,  } from '@/hooks/useKeyboardResize';
-import { useKeyboardStatus,  } from '@/hooks/useKeyboardStatus';
+import TextArea from '../views/TextArea';
+import {useKeyboardResize} from '@/hooks/useKeyboardResize';
+import {useKeyboardStatus} from '@/hooks/useKeyboardStatus';
 
 interface SurveyProps {
   title: string;
@@ -29,21 +26,18 @@ function Survey({title, onSubmit}: SurveyProps) {
     router.back();
   };
 
-  console.log(keyboardHeight);
-
-
   return (
-    <article className="page-padding flex min-h-screen flex-col justify-evenly">
-      <HeaderWrapper title={keyboardStatus.isKeyboardOpen.toString()} handleBack={handleBack} />
-
+    <article className={`page-padding flex flex-col 
+      ${keyboardStatus.isKeyboardOpen ? 'justify-between h-[54vh]' : 'min-h-screen justify-evenly'} 
+    `}>
       <TextArea
         key={title}
         title={title}
         selectedValue={selectedValue}
         setSelectedValue={setSelectedValue}
-        height={keyboardStatus.isKeyboardOpen ? '20vh' : '60vh'}
+        handleBack={handleBack}
       />
-      <section className="flex justify-center">
+      <section className="flex justify-center my-2">
         <Button variant="pink" onClick={handleSubmit}>
           Send <ArrowRight />
         </Button>
