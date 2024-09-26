@@ -2,7 +2,7 @@ import {Button, RiveAnimation} from '@/components';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 
-export async function generateMetadata({params: {lang}}: {params: {lang: string}}) {
+export async function generateMetadata() {
   const t = await getTranslations('home');
   return {
     title: t('title'),
