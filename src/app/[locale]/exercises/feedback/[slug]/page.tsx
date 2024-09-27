@@ -54,7 +54,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
           onSubmit={handleSubmit}
         />
       ) : (
-        <ThankyouDialog />
+        <ThankyouDialog destinationRoute="/" />
       )}
     </main>
   );
