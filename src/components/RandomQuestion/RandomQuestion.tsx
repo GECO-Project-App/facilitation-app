@@ -1,28 +1,35 @@
 'use client';
+import {ShapeColors} from '@/lib/constants';
 import {ccMock} from '@/lib/mock';
 import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
-import {FC, SVGProps, useEffect, useMemo, useState} from 'react';
-import {Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3} from '../icons/shapes';
-import {Colors, ShapeColors} from '@/lib/constants';
+import {FC, SVGProps, useCallback, useEffect, useMemo, useState} from 'react';
+import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
+import {useTranslations} from 'next-intl';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
 type RandomQuestionProps = {
-  items?: string[];
+  slug: string;
   shapes?: FC<SVGProps<SVGSVGElement>>[];
   excludeShapeColor?: string;
 };
 
 export const RandomQuestion: FC<RandomQuestionProps> = ({
   shapes = QuestionShapes,
-  items = ccMock.checkIn.questions,
+  slug,
   excludeShapeColor,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
+  const t =
+    slug === 'check-in'
+      ? useTranslations('exercises.cc.checkIn')
+      : useTranslations('exercises.cc.checkOut');
+
+  const questions: string[] = t.raw('questions').map((question: string) => question);
 
   useEffect(() => {
-    if (!items || !shapes) {
+    if (!questions || !shapes) {
       return;
     }
     const savedQuestion = localStorage.getItem('currentQuestion');
@@ -34,15 +41,14 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     }
   }, []);
 
-  const CurrentShape = useMemo(
-    () => shapes[currentShapeIdx],
-    [currentShapeIdx, shapes, excludeShapeColor],
-  );
+  const CurrentShape = useMemo(() => {
+    return shapes[currentShapeIdx];
+  }, [currentShapeIdx, shapes, excludeShapeColor]);
 
   const getNextQuestion = () => {
     let previousPicks: string[] = JSON.parse(localStorage.getItem('previousPicks') || '[]');
 
-    const nextQuestion = getRandomUniqueItem(items, previousPicks);
+    const nextQuestion = getRandomUniqueItem(questions, previousPicks);
     const nextShapeIdx = (currentShapeIdx + 1) % shapes.length;
 
     if (nextQuestion) {
@@ -55,7 +61,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     } else {
       // All questions have been used, reset previousPicks
       localStorage.setItem('previousPicks', '[]');
-      const question = getRandomUniqueItem(items, []);
+      const question = getRandomUniqueItem(questions, []);
       if (!question) {
         return;
       }

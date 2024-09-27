@@ -6,7 +6,7 @@ interface StepCounterProps {
 }
 
 const StepCounter: React.FC<StepCounterProps> = ({currentStep, length}) => {
-  const dotsBefore = '.'.repeat(currentStep - 1);
+  const dotsBefore = '.'.repeat(currentStep);
   const dotsAfter = '.'.repeat(length - currentStep);
 
   return (
@@ -26,7 +26,7 @@ const StepCounter: React.FC<StepCounterProps> = ({currentStep, length}) => {
                     ? 'bg-blue text-white'
                     : ''
         }`}>
-        {currentStep}
+        {currentStep + 1}
       </h2>
       <div className="pb-5 text-5xl">{dotsAfter}</div>
     </section>

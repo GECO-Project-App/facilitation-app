@@ -1,5 +1,16 @@
 import type {ButtonProps} from '@/components';
 
+export type Step = {
+  title: string;
+  description: string;
+  button: string;
+};
+
+export type StepContent = {
+  sticker?: string;
+  timer?: number;
+};
+
 export type AboutProps = {
   title: string;
   subtitle: string;
@@ -23,18 +34,13 @@ export const ccMock = {
   },
   checkIn: {
     about: {
-      title: 'Check In Exercise',
-      subtitle: '5-15 minutes | 2-20 members',
-      description:
-        'Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.',
       illustration: '/assets/svg/checkin-geco.svg',
-
       button: {
         variant: 'yellow' as ButtonProps['variant'],
         link: '/exercises/cc/check-in' as string | URL,
         text: "Let's Start",
       },
-    },
+    } as AboutProps,
     questions: [
       'If you could describe your current state of mind in three words, what would they be?',
       "What's one thing you're looking forward to this week?",
@@ -50,10 +56,6 @@ export const ccMock = {
   },
   checkOut: {
     about: {
-      title: 'Check Out Exercise',
-      subtitle: '5-15 minutes | 2-20 members',
-      description:
-        'Check Outs are used to close out a session and recap the experience. They help participants reflect on the entire session and express any final thoughts or feelings. Examples include; what was your biggest takeaway from todays session?, what would you like to see more or less of? show some appreciation to someone in this group who has inspired or supported you today, what next step do you plan to take?',
       illustration: '/assets/svg/checkout-geco.svg',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
@@ -85,6 +87,23 @@ export const sscMock = {
         text: "Let's Start",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'topic.riv',
+      },
+      {
+        sticker: 'ssc_start.riv',
+      },
+      {
+        timer: 180,
+      },
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
   stop: {
     about: {
@@ -99,6 +118,22 @@ export const sscMock = {
         text: "Let's Stop",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'ssc_stop.riv',
+      },
+
+      {
+        timer: 180,
+      },
+
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
   continue: {
     about: {
@@ -113,6 +148,22 @@ export const sscMock = {
         text: "Let's Continue",
       },
     } as AboutProps,
+    steps: [
+      {
+        sticker: 'ssc_continue.riv',
+      },
+
+      {
+        timer: 180,
+      },
+
+      {
+        sticker: 'discuss.riv',
+      },
+      {
+        sticker: 'priority.riv',
+      },
+    ] as StepContent[],
   },
 };
 
