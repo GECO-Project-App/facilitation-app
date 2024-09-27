@@ -40,8 +40,12 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   }, [posthog]);
 
   const handleSubmit = (value: string | null) => {
-    console.log(value);
+    console.log('VALUE',value);
     setShowSurvey(false);
+    posthog.capture("survey sent", {
+      $survey_id: surveyID, // required
+      $survey_response: value // required
+    })
   };
   
   console.log(surveyID, surveyTitle);
