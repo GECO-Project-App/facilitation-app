@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
-import {Button} from './ui';
 import {Home} from './icons';
-import Link from 'next/link';
+import {Link} from '@/navigation';
 
 export const HomeButton: FC = () => {
   return (
