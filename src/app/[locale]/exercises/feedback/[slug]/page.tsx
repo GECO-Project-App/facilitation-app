@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Survey from './Survey';
 import {usePostHog} from 'posthog-js/react';
 import { SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID } from '@/lib/surveys-id';
+import ThankyouDialog from '../ThankyouDialog';
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
   const [showSurvey, setShowSurvey] = useState(true);
@@ -42,16 +43,18 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
     console.log(value);
     setShowSurvey(false);
   };
-
+  
   console.log(surveyID, surveyTitle);
-
+  
   return (
     <main className="bg-yellow min-h-screen">
-      {showSurvey && (
+      {showSurvey ? (
         <Survey
           title={slug === 'ssc' ? 'Start-Stop-Continue' : slug === 'check-in' ? 'Check-In' : slug === 'check-out' ? 'Check-Out' : ''}
           onSubmit={handleSubmit}
         />
+      ) : (
+        <ThankyouDialog />
       )}
     </main>
   );
