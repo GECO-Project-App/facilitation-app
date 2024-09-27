@@ -47,7 +47,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   console.log(surveyID, surveyTitle);
   
   return (
-    <main className="bg-yellow min-h-screen">
+    <main className="page-padding bg-yellow min-h-screen">
       {showSurvey ? (
         <Survey
           title={slug === 'ssc' ? 'Start-Stop-Continue' : slug === 'check-in' ? 'Check-In' : slug === 'check-out' ? 'Check-Out' : ''}
