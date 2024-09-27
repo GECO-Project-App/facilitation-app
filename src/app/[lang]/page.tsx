@@ -1,4 +1,4 @@
-import {Button, RiveAnimation} from '@/components';
+import {Button, LanguageSelector, RiveAnimation} from '@/components';
 import {ArrowRight} from 'lucide-react';
 import Link from 'next/link';
 import {getDictionary} from './dictionaries';
@@ -16,6 +16,7 @@ export default async function Home({params}: {params: {lang: string}}) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
+      <LanguageSelector />
       <div className="flex flex-col items-center gap-4">
         <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
