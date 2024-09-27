@@ -12,7 +12,7 @@ export default async function SSCIntroductionPage() {
       <ClearLocalStorage />
       <NavBar />
       <section>
-        <RiveAnimation src="ssc_main.riv" />
+        <RiveAnimation src="ssc_main.riv" width={240} height={240} />
       </section>
       <section>
         <header>

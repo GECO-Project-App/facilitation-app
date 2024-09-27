@@ -170,17 +170,18 @@
           "Analyze feedback and create a plan of action"
         ]
       },
-      "feedback": {
-        "title": "GECO App Start-Stop-Continue Exercise",
-        "description": "Have some thoughts, comments and suggestions about the app? Share your thought with us.",
-        "button": "Send Us Feedback"
-      },
       "accomplishment": {
         "title": "GREAT JOB!",
         "subtitle": "YOU DID IT! GRATTIS!",
-        "button": "Go to home"
+        "button": "Send us feedback"
       }
     }
+  },
+  "feedback": {
+    "title": " What worked well during this exercise?",
+    "subtitle": "What didn't?",
+    "placeholder": "Write your feedback here...",
+    "button": "Send"
   },
   "common": {
     "nextStep": "Next Step",

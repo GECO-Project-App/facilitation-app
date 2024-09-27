@@ -177,9 +177,15 @@
       "accomplishment": {
         "title": "BRA JOBBAT!",
         "subtitle": "DU KLARADE DET! GRATTIS!",
-        "button": "Gå till hem"
+        "button": "Ge oss feedback"
       }
     }
+  },
+  "feedback": {
+    "title": "Vad fungerade bra under övningen?",
+    "subtitle": "Vad fungerade inte?",
+    "placeholder": "Skriv din feedback här...",
+    "button": "Skicka"
   },
   "common": {
     "nextStep": "Nästa steg",
