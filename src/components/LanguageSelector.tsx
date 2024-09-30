@@ -68,7 +68,7 @@ export const LanguageSelector: FC = () => {
       onOpenChange={setOpen}>
       <SelectTrigger className="w-[180px]">
         <div className="flex w-full items-center justify-between">
-          <span className="bg-red-100 flex w-fit items-center gap-2">
+          <span className="bg-red-100 flex w-fit items-center gap-2 font-semibold">
             {selectedCountry?.smFlag} {selectedCountry?.label}
           </span>
           <span className="w-fit transition-transform duration-200">
@@ -85,7 +85,7 @@ export const LanguageSelector: FC = () => {
               index < countries.length - 1 && 'border-b-2 border-black',
               'data-[state=checked]:bg-pink',
             )}>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 font-semibold">
               {lang.lgFlag} {lang.label}
             </span>
           </SelectItem>
