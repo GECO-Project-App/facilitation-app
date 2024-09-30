@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import Survey from './Survey';
 import {usePostHog} from 'posthog-js/react';
-import { SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID } from '@/lib/surveys-id';
+import {SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID} from '@/lib/surveys-id';
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
   const [showSurvey, setShowSurvey] = useState(true);
@@ -23,16 +23,16 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
       default:
         return '';
     }
-  }
+  };
 
   useEffect(() => {
     posthog.getActiveMatchingSurveys((surveys) => {
       console.log(surveys);
       if (surveys.length > 0) {
-        const survey = surveys.find(survey => survey.id === getCurrentSurvey(slug));
+        const survey = surveys.find((survey) => survey.id === getCurrentSurvey(slug));
         if (survey) {
           setSurveyID(survey.id);
-          setSurveyTitle(survey.questions[0].question)
+          setSurveyTitle(survey.questions[0].question);
         }
       }
     });
@@ -46,10 +46,18 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   console.log(surveyID, surveyTitle);
 
   return (
-    <main className="bg-yellow min-h-screen">
+    <main className="min-h-screen bg-yellow">
       {showSurvey && (
         <Survey
-          title={slug === 'ssc' ? 'Start-Stop-Continue' : slug === 'check-in' ? 'Check-In' : slug === 'check-out' ? 'Check-Out' : ''}
+          title={
+            slug === 'ssc'
+              ? 'Start-Stop-Continue'
+              : slug === 'check-in'
+                ? 'Check-In'
+                : slug === 'check-out'
+                  ? 'Check-Out'
+                  : ''
+          }
           onSubmit={handleSubmit}
         />
       )}
