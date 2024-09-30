@@ -190,6 +190,16 @@
   "common": {
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
-    "goToHome": "Gå till hem"
+    "goToHome": "Gå till hem",
+    "languages": [
+      {
+        "label": "English",
+        "locale": "en"
+      },
+      {
+        "label": "Svenska",
+        "locale": "sv"
+      }
+    ]
   }
 }

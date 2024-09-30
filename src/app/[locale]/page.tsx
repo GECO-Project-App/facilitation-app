@@ -1,4 +1,4 @@
-import {Button, RiveAnimation} from '@/components';
+import {Button, LanguageSelector, RiveAnimation} from '@/components';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 
@@ -15,6 +15,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
+      <LanguageSelector />
       <div className="flex flex-col items-center gap-4">
         <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
