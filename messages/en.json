@@ -39,7 +39,8 @@
           "If your mood was a color right now, what color would it be?",
           "What's one thing you're grateful for today?",
           "If you could teleport anywhere for your next break, where would you go?",
-          "What's one goal you're working towards right now?"
+          "What's one goal you're working towards right now?",
+          "What is a pleasure you maybe shouldn’t do but can’t resist doing?"
         ]
       },
       "checkOut": {

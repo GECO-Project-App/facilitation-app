@@ -2,7 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import Survey from './Survey';
 import {usePostHog} from 'posthog-js/react';
-import {SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID} from '@/lib/surveys-id';
+import {SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
+import ThankyouDialog from '../ThankyouDialog';
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
   const [showSurvey, setShowSurvey] = useState(true);
@@ -20,6 +21,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
         return CH_IN_SURVEY_ID;
       case 'check-out':
         return CH_OUT_SURVEY_ID;
+      case 'test':
+        return TEST_SURVEY_ID;
       default:
         return '';
     }
@@ -39,15 +42,19 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   }, [posthog]);
 
   const handleSubmit = (value: string | null) => {
-    console.log(value);
+    console.log('VALUE', value);
     setShowSurvey(false);
+    posthog.capture('survey sent', {
+      $survey_id: surveyID, // required
+      $survey_response: value, // required
+    });
   };
 
   console.log(surveyID, surveyTitle);
 
   return (
-    <main className="min-h-screen bg-yellow">
-      {showSurvey && (
+    <main className="page-padding min-h-screen bg-yellow">
+      {showSurvey ? (
         <Survey
           title={
             slug === 'ssc'
@@ -60,6 +67,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
           }
           onSubmit={handleSubmit}
         />
+      ) : (
+        <ThankyouDialog destinationRoute="/" />
       )}
     </main>
   );
