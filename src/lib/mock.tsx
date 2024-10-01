@@ -14,18 +14,6 @@ export const ccMock = {
         text: "Let's Start",
       },
     } as AboutProps,
-    questions: [
-      'If you could describe your current state of mind in three words, what would they be?',
-      "What's one thing you're looking forward to this week?",
-      'If you were a weather phenomenon, what would you be today and why?',
-      "What's one small win you've had recently?",
-      'If you could have any superpower for just today, what would it be?',
-      "What's one thing you've learned in the past week?",
-      'If your mood was a color right now, what color would it be?',
-      "What's one thing you're grateful for today?",
-      'If you could teleport anywhere for your next break, where would you go?',
-      "What's one goal you're working towards right now?",
-    ],
   },
   checkOut: {
     about: {
@@ -36,20 +24,18 @@ export const ccMock = {
         text: "Let's Start",
       },
     } as AboutProps,
-    questions: [
-      'In two words… how was the experience from the session today?',
-      'In one word… tell us how you are  feeling at the moment',
-      'Think of three things that highlight this session',
-      'Tell us one fun thing about the session!',
-      'In one sentence…tell us what’s your concern today',
-    ],
   },
 };
 
 export const sscMock = {
   about: {
     rive: 'ssc_main.riv',
-  },
+    button: {
+      variant: 'yellow' as ButtonProps['variant'],
+      link: '/exercises/ssc',
+      text: "Let's Start",
+    },
+  } as AboutProps,
   start: {
     about: {
       rive: 'ssc_startgecko.riv',
@@ -120,7 +106,6 @@ export const sscMock = {
       {
         timer: 180,
       },
-
       {
         sticker: 'discuss.riv',
       },

@@ -5,16 +5,16 @@ import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 
-export default async function CheckInPage({params}: {params: {slug: string}}) {
+export default async function CheckOutPage({params}: {params: {slug: string}}) {
   const slug = params.slug;
-  const t = await getTranslations('exercises.checkIn');
+  const t = await getTranslations('exercises.checkOut');
 
   return (
-    <main className={cn('page-padding flex min-h-screen flex-col bg-orange')}>
+    <main className={cn('page-padding flex min-h-screen flex-col bg-green')}>
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-center">
         <div className="mx-auto flex w-fit flex-col items-center space-y-16">
-          <RandomQuestion slug={slug} excludeShapeColor={Colors.Orange} />
+          <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} />
           <div>
             <Button variant="blue" asChild>
               <Link href={'/pass-it-on'}>

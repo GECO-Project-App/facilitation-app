@@ -12,21 +12,24 @@
         "subtitle": "5-15 minuter | 2-20 deltagare",
         "description": "Börja era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
         "button": "Starta",
-        "link": "/exercises/check-in/introduction"
+        "link": "/exercises/introduction/check-in",
+        "type": "check-in"
       },
       {
         "title": "Start-Stopp-Fortsätta",
         "subtitle": "30-45 minuter | 2-20 deltagare",
         "description": "Förbättra ert sätt att arbeta som team. Dela vad som fungerar bra och vad som behöver förbättras för att samarbeta mer effektivt framöver.",
         "button": "Starta",
-        "link": "/exercises/ssc/introduction"
+        "link": "/exercises/introduction/ssc",
+        "type": "ssc"
       },
       {
         "title": "Utcheckning",
         "subtitle": "5-15 minuter | 2-20 deltagare",
         "description": "Avsluta era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
         "button": "Starta",
-        "link": "/exercises/check-out/introduction"
+        "link": "/exercises/introduction/check-out",
+        "type": "check-out"
       }
     ]
   },

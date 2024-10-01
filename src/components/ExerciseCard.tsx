@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {Button} from './ui';
 import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
@@ -11,9 +11,21 @@ export const ExerciseCard: FC<ExerciseCardType> = ({
   description,
   button,
   link,
+  type,
 }) => {
+  const background: string = useMemo(() => {
+    switch (type) {
+      case 'check-in':
+        return 'bg-purple';
+      case 'check-out':
+        return 'bg-green';
+      case 'ssc':
+        return 'bg-orange';
+    }
+  }, [type]);
+
   return (
-    <div className={cn('flex max-w-sm flex-col space-y-6 bg-purple p-6 pb-8')}>
+    <div className={cn(background, 'flex max-w-sm flex-col space-y-6 p-6 pb-8')}>
       <div className="space-y-1">
         <h4 className="text-2xl font-bold">{title}</h4>
         <p className="text-sm font-light">{subtitle}</p>

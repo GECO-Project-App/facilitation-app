@@ -8,9 +8,9 @@ export default async function IntroductionPage({params}: {params: {locale: strin
   const t = await useMemo(async () => {
     switch (slug) {
       case 'check-in':
-        return await getTranslations('exercises.cc.checkIn');
+        return await getTranslations('exercises.checkIn');
       case 'check-out':
-        return await getTranslations('exercises.cc.checkOut');
+        return await getTranslations('exercises.checkOut');
       case 'ssc':
         return await getTranslations('exercises.ssc.about');
       case 'start':
@@ -20,7 +20,7 @@ export default async function IntroductionPage({params}: {params: {locale: strin
       case 'continue':
         return await getTranslations('exercises.ssc.continue');
       default:
-        return await getTranslations('exercises.cc.checkIn');
+        return await getTranslations('exercises.checkIn');
     }
   }, [slug]);
 
