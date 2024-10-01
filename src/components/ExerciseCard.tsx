@@ -25,7 +25,7 @@ export const ExerciseCard: FC<ExerciseCardType> = ({
   }, [type]);
 
   return (
-    <div className={cn(background, 'flex max-w-sm flex-col space-y-6 p-6 pb-8')}>
+    <div className={cn(background, 'flex flex-col space-y-6 p-6 pb-8')}>
       <div className="space-y-1">
         <h4 className="text-2xl font-bold">{title}</h4>
         <p className="text-sm font-light">{subtitle}</p>

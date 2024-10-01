@@ -46,7 +46,7 @@ export const About: FC<{
   return (
     <section className="page-padding flex min-h-screen flex-col justify-between">
       <NavBar />
-      <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
+      <div className="mx-auto flex flex-1 flex-col items-center justify-center space-y-6">
         {mock?.rive && <RiveAnimation src={mock.rive} />}
         {mock?.illustration && (
           <div className="relative aspect-video w-full self-start md:w-2/3">
