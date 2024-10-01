@@ -2,15 +2,17 @@ import {About} from '@/components';
 import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
 
-export default async function SSCIntroductionPage({
-  params,
-}: {
-  params: {locale: string; slug: string};
-}) {
+export default async function IntroductionPage({params}: {params: {locale: string; slug: string}}) {
   const {slug} = params;
 
   const t = await useMemo(async () => {
     switch (slug) {
+      case 'check-in':
+        return await getTranslations('exercises.checkIn');
+      case 'check-out':
+        return await getTranslations('exercises.checkOut');
+      case 'ssc':
+        return await getTranslations('exercises.ssc.about');
       case 'start':
         return await getTranslations('exercises.ssc.start');
       case 'stop':
@@ -18,7 +20,7 @@ export default async function SSCIntroductionPage({
       case 'continue':
         return await getTranslations('exercises.ssc.continue');
       default:
-        return await getTranslations('exercises.ssc.star');
+        return await getTranslations('exercises.checkIn');
     }
   }, [slug]);
 

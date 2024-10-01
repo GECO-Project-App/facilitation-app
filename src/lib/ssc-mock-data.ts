@@ -1,19 +1,19 @@
-import {ButtonType, SSCExerciseType} from './types';
+import {ButtonType} from './types';
 
 export const buttons: ButtonType[] = [
   {
     title: 'START',
-    href: '/exercises/ssc/start/introduction',
+    href: '/exercises/introduction/start',
     variant: 'green',
   },
   {
     title: 'STOP',
-    href: '/exercises/ssc/stop/introduction',
+    href: '/exercises/introduction/stop',
     variant: 'red',
   },
   {
     title: 'CONTINUE',
-    href: '/exercises/ssc/continue/introduction',
+    href: '/exercises/introduction/continue',
     variant: 'pink',
   },
 ];

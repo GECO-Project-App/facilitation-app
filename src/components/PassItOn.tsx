@@ -11,7 +11,7 @@ import {useTranslations} from 'next-intl';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const t = useTranslations('exercises.cc.passItOn');
+  const t = useTranslations('exercises.passItOn');
   const steps: string[] = t.raw('steps').map((step: string) => step);
 
   const goToPreviousStep = () => {

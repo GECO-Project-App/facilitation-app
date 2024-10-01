@@ -6,71 +6,83 @@
   "home": {
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer",
-    "buttons": {
-      "cc": "Incheckning - Utcheckning",
-      "ssc": "Börja - Sluta - Fortsätta"
-    }
+    "catalogue": [
+      {
+        "title": "Incheckning",
+        "subtitle": "5-15 minuter | 2-20 deltagare",
+        "description": "Börja era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
+        "button": "Starta",
+        "link": "/exercises/introduction/check-in",
+        "type": "check-in"
+      },
+      {
+        "title": "Start-Stopp-Fortsätta",
+        "subtitle": "30-45 minuter | 2-20 deltagare",
+        "description": "Förbättra ert sätt att arbeta som team. Dela vad som fungerar bra och vad som behöver förbättras för att samarbeta mer effektivt framöver.",
+        "button": "Starta",
+        "link": "/exercises/introduction/ssc",
+        "type": "ssc"
+      },
+      {
+        "title": "Utcheckning",
+        "subtitle": "5-15 minuter | 2-20 deltagare",
+        "description": "Avsluta era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
+        "button": "Starta",
+        "link": "/exercises/introduction/check-out",
+        "type": "check-out"
+      }
+    ]
   },
   "exercises": {
-    "cc": {
-      "button": {
-        "checkIn": "1.Incheckning",
-        "checkOut": "2.Utcheckning"
-      },
-      "passItOnButton": "Skicka vidare",
-      "about": {
-        "title": "Incheckning-Utcheckning Övning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "\"Incheckning-Utcheckning\" övningen är en faciliteringsstrategi som används för att förbättra gruppdeltagande, samarbete och övergripande teamengagemang. Den består av två huvudkomponenter: Incheckningar och Utcheckningar.",
-        "button": "Starta"
-      },
-      "checkIn": {
-        "title": "Incheckningsövning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "Incheckningar är aktiviteter som hjälper facilitatorer att samla insikter om varje gruppmedlems nuvarande tankar eller känslor. Dessa kan variera från enkla till mer djupgående aktiviteter, såsom tummen upp/tummen ner, känslokoll, betygsätt min dag.",
-        "button": "Starta nu",
-        "questions": [
-          "Om du kunde beskriva ditt nuvarande sinnestillstånd med tre ord, vilka skulle de vara?",
-          "Vad ser du fram emot den här veckan?",
-          "Om du var ett väderfenomen idag, vad skulle du vara och varför?",
-          "Vad är en liten seger du har haft nyligen?",
-          "Om du kunde ha vilken superkraft som helst bara idag, vilken skulle det vara?",
-          "Vad är en sak du har lärt dig den senaste veckan?",
-          "Om ditt humör var en färg just nu, vilken färg skulle det vara?",
-          "Vad är en sak du är tacksam för idag?",
-          "Om du kunde teleportera dig var som helst för din nästa paus, vart skulle du åka?",
-          "Vad är ett mål du arbetar mot just nu?",
-          "Vad är ett av dina nöjen som du kanske inte borde göra men inte kan motstå?"
-        ]
-      },
-      "checkOut": {
-        "title": "Utcheckningsövning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "Utcheckningar används för att avsluta en session och sammanfatta upplevelsen. De hjälper deltagarna att reflektera över hela sessionen och uttrycka eventuella slutliga tankar eller känslor. Exempel inkluderar; vad var din största lärdom från dagens session?, vad skulle du vilja se mer eller mindre av? visa uppskattning till någon i denna grupp som har inspirerat eller stöttat dig idag, vilket nästa steg planerar du att ta?",
-        "button": "Starta nu",
-        "questions": [
-          "Med två ord... hur var upplevelsen från dagens session?",
-          "Med ett ord... berätta hur du känner dig just nu",
-          "Tänk på tre saker som utmärker denna session",
-          "Berätta en rolig sak om sessionen!",
-          "I en mening... berätta vad din oro är idag"
-        ]
-      },
-      "passItOn": {
-        "title": "Skicka vidare-metoden",
-        "steps": [
-          "Välj en person som ska svara på frågan först.",
-          "När den personen har gett sitt svar väljer de vem som ska svara näst.",
-          "Upprepa denna process tills alla har svarat på frågan."
-        ],
-        "button": "Nästa steg"
-      }
+    "checkIn": {
+      "title": "Incheckningsövning",
+      "subtitle": "5-15 minuter | 2-20 deltagare",
+      "description": "Incheckningar är aktiviteter som hjälper facilitatorer att samla insikter om varje gruppmedlems nuvarande tankar eller känslor. Dessa kan variera från enkla till mer djupgående aktiviteter, såsom tummen upp/tummen ner, känslokoll, betygsätt min dag.",
+      "button": "Starta nu",
+      "questions": [
+        "Om du kunde beskriva ditt nuvarande sinnestillstånd med tre ord, vilka skulle de vara?",
+        "Vad ser du fram emot den här veckan?",
+        "Om du var ett väderfenomen idag, vad skulle du vara och varför?",
+        "Vad är en liten seger du har haft nyligen?",
+        "Om du kunde ha vilken superkraft som helst bara idag, vilken skulle det vara?",
+        "Vad är en sak du har lärt dig den senaste veckan?",
+        "Om ditt humör var en färg just nu, vilken färg skulle det vara?",
+        "Vad är en sak du är tacksam för idag?",
+        "Om du kunde teleportera dig var som helst för din nästa paus, vart skulle du åka?",
+        "Vad är ett mål du arbetar mot just nu?",
+        "Vad är ett av dina nöjen som du kanske inte borde göra men inte kan motstå?"
+      ],
+      "passItOnButton": "Skicka vidare"
     },
+    "checkOut": {
+      "title": "Utcheckningsövning",
+      "subtitle": "5-15 minuter | 2-20 deltagare",
+      "description": "Utcheckningar används för att avsluta en session och sammanfatta upplevelsen. De hjälper deltagarna att reflektera över hela sessionen och uttrycka eventuella slutliga tankar eller känslor. Exempel inkluderar; vad var din största lärdom från dagens session?, vad skulle du vilja se mer eller mindre av? visa uppskattning till någon i denna grupp som har inspirerat eller stöttat dig idag, vilket nästa steg planerar du att ta?",
+      "button": "Starta nu",
+      "questions": [
+        "Med två ord... hur var upplevelsen från dagens session?",
+        "Med ett ord... berätta hur du känner dig just nu",
+        "Tänk på tre saker som utmärker denna session",
+        "Berätta en rolig sak om sessionen!",
+        "I en mening... berätta vad din oro är idag"
+      ],
+      "passItOnButton": "Skicka vidare"
+    },
+    "passItOn": {
+      "title": "Skicka vidare-metoden",
+      "steps": [
+        "Välj en person som ska svara på frågan först.",
+        "När den personen har gett sitt svar väljer de vem som ska svara näst.",
+        "Upprepa denna process tills alla har svarat på frågan."
+      ],
+      "button": "Nästa steg"
+    },
+
     "ssc": {
       "about": {
-        "title": "Start-Stop-Fortsätt Övning",
+        "title": "Start-p-Fortsätt Övning",
         "subtitle": "Reflektera och Förbättra",
-        "description": "Start, Stop, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
+        "description": "Start, Stopp, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
         "button": "Starta"
       },
 
@@ -104,13 +116,13 @@
         ]
       },
       "stop": {
-        "title": "Kapitel 2: Stop",
+        "title": "Kapitel 2: Stopp",
         "subtitle": "4-5 minuter | 2-20 deltagare",
         "description": "I detta kapitel kommer ni att brainstorma och diskutera vilka saker ni borde sluta göra som gemenskap för att bättre stödja produktivitet, kommunikation, etc. Ge ett exempel på hur denna punkt kan hjälpa dig och gemenskapen att blomstra.",
-        "button": "Gå till Stop",
+        "button": "Gå till Stopp",
         "steps": [
           {
-            "title": "Stop",
+            "title": "Stopp",
             "description": "Vad har vi varit inne på som vi kanske borde sluta göra som grupp?",
             "button": "Nästa steg"
           },
@@ -160,7 +172,7 @@
         ]
       },
       "tips": {
-        "title": "GECO App Start-Stop-Fortsätt Övning: Tips",
+        "title": "GECO App Start-Stopp-Fortsätt Övning: Tips",
         "subtitle": "Punkter att ha i åtanke när du gör övningen,",
         "points": [
           "Sätt tydliga förväntningar",
@@ -171,7 +183,7 @@
         ]
       },
       "feedback": {
-        "title": "GECO App Start-Stop-Fortsätt Övning",
+        "title": "GECO App Start-Stopp-Fortsätt Övning",
         "description": "Har du några tankar, kommentarer och förslag om appen? Dela dina tankar med oss.",
         "button": "Skicka oss feedback"
       },
