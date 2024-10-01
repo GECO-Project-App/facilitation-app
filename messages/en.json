@@ -187,10 +187,16 @@
   "common": {
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
-    "goToHome": "Go to home"
-  },
-  "language": {
-    "english": "English",
-    "swedish": "Swedish"
+    "goToHome": "Go to home",
+    "languages": [
+      {
+        "label": "English",
+        "locale": "en"
+      },
+      {
+        "label": "Svenska",
+        "locale": "sv"
+      }
+    ]
   }
 }

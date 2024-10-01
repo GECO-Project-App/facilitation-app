@@ -6,3 +6,5 @@ export * from './fingers';
 export * from './home';
 export * from './people';
 export * from './shapes';
+export * from './svflag';
+export * from './enflag';

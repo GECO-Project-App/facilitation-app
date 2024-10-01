@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
 interface UseKeyboardStatusResult {
   isKeyboardOpen: boolean;
@@ -40,5 +40,5 @@ export const useKeyboardStatus = (): UseKeyboardStatusResult => {
     };
   }, [initialHeight]);
 
-  return { isKeyboardOpen };
+  return {isKeyboardOpen};
 };
