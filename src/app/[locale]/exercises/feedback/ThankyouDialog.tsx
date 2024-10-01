@@ -23,8 +23,8 @@ export default function ThankyouDialog({destinationRoute}: ThankyouDialogProps) 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
       <DialogContent className="bg-pink">
-        <DialogHeader className="flex flex-col items-center justify-center h-full">
-          <DialogTitle className="text-2xl font-bold text-black flex flex-col items-center gap-2">
+        <DialogHeader className="flex h-full flex-col items-center justify-center">
+          <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">
             <>
               <Confetti />
               Thank you for your feedback!
