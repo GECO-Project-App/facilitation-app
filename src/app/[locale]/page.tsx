@@ -1,4 +1,3 @@
-
 import {ExerciseCard, RiveAnimation, LanguageSelector} from '@/components';
 import {ExerciseCardType} from '@/lib/types';
 
@@ -17,7 +16,6 @@ export default async function Home() {
   const catalogue: ExerciseCardType[] = t.raw('catalogue');
 
   return (
-
     <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
       <LanguageSelector />
       <div className="flex flex-col items-center gap-4">
