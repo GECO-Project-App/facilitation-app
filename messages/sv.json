@@ -34,60 +34,50 @@
     ]
   },
   "exercises": {
-    "cc": {
-      "button": {
-        "checkIn": "1.Incheckning",
-        "checkOut": "2.Utcheckning"
-      },
-      "passItOnButton": "Skicka vidare",
-      "about": {
-        "title": "Incheckning-Utcheckning Övning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "\"Incheckning-Utcheckning\" övningen är en faciliteringsstrategi som används för att förbättra gruppdeltagande, samarbete och övergripande teamengagemang. Den består av två huvudkomponenter: Incheckningar och Utcheckningar.",
-        "button": "Starta"
-      },
-      "checkIn": {
-        "title": "Incheckningsövning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "Incheckningar är aktiviteter som hjälper facilitatorer att samla insikter om varje gruppmedlems nuvarande tankar eller känslor. Dessa kan variera från enkla till mer djupgående aktiviteter, såsom tummen upp/tummen ner, känslokoll, betygsätt min dag.",
-        "button": "Starta nu",
-        "questions": [
-          "Om du kunde beskriva ditt nuvarande sinnestillstånd med tre ord, vilka skulle de vara?",
-          "Vad ser du fram emot den här veckan?",
-          "Om du var ett väderfenomen idag, vad skulle du vara och varför?",
-          "Vad är en liten seger du har haft nyligen?",
-          "Om du kunde ha vilken superkraft som helst bara idag, vilken skulle det vara?",
-          "Vad är en sak du har lärt dig den senaste veckan?",
-          "Om ditt humör var en färg just nu, vilken färg skulle det vara?",
-          "Vad är en sak du är tacksam för idag?",
-          "Om du kunde teleportera dig var som helst för din nästa paus, vart skulle du åka?",
-          "Vad är ett mål du arbetar mot just nu?",
-          "Vad är ett av dina nöjen som du kanske inte borde göra men inte kan motstå?"
-        ]
-      },
-      "checkOut": {
-        "title": "Utcheckningsövning",
-        "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "Utcheckningar används för att avsluta en session och sammanfatta upplevelsen. De hjälper deltagarna att reflektera över hela sessionen och uttrycka eventuella slutliga tankar eller känslor. Exempel inkluderar; vad var din största lärdom från dagens session?, vad skulle du vilja se mer eller mindre av? visa uppskattning till någon i denna grupp som har inspirerat eller stöttat dig idag, vilket nästa steg planerar du att ta?",
-        "button": "Starta nu",
-        "questions": [
-          "Med två ord... hur var upplevelsen från dagens session?",
-          "Med ett ord... berätta hur du känner dig just nu",
-          "Tänk på tre saker som utmärker denna session",
-          "Berätta en rolig sak om sessionen!",
-          "I en mening... berätta vad din oro är idag"
-        ]
-      },
-      "passItOn": {
-        "title": "Skicka vidare-metoden",
-        "steps": [
-          "Välj en person som ska svara på frågan först.",
-          "När den personen har gett sitt svar väljer de vem som ska svara näst.",
-          "Upprepa denna process tills alla har svarat på frågan."
-        ],
-        "button": "Nästa steg"
-      }
+    "checkIn": {
+      "title": "Incheckningsövning",
+      "subtitle": "5-15 minuter | 2-20 deltagare",
+      "description": "Incheckningar är aktiviteter som hjälper facilitatorer att samla insikter om varje gruppmedlems nuvarande tankar eller känslor. Dessa kan variera från enkla till mer djupgående aktiviteter, såsom tummen upp/tummen ner, känslokoll, betygsätt min dag.",
+      "button": "Starta nu",
+      "questions": [
+        "Om du kunde beskriva ditt nuvarande sinnestillstånd med tre ord, vilka skulle de vara?",
+        "Vad ser du fram emot den här veckan?",
+        "Om du var ett väderfenomen idag, vad skulle du vara och varför?",
+        "Vad är en liten seger du har haft nyligen?",
+        "Om du kunde ha vilken superkraft som helst bara idag, vilken skulle det vara?",
+        "Vad är en sak du har lärt dig den senaste veckan?",
+        "Om ditt humör var en färg just nu, vilken färg skulle det vara?",
+        "Vad är en sak du är tacksam för idag?",
+        "Om du kunde teleportera dig var som helst för din nästa paus, vart skulle du åka?",
+        "Vad är ett mål du arbetar mot just nu?",
+        "Vad är ett av dina nöjen som du kanske inte borde göra men inte kan motstå?"
+      ],
+      "passItOnButton": "Skicka vidare"
     },
+    "checkOut": {
+      "title": "Utcheckningsövning",
+      "subtitle": "5-15 minuter | 2-20 deltagare",
+      "description": "Utcheckningar används för att avsluta en session och sammanfatta upplevelsen. De hjälper deltagarna att reflektera över hela sessionen och uttrycka eventuella slutliga tankar eller känslor. Exempel inkluderar; vad var din största lärdom från dagens session?, vad skulle du vilja se mer eller mindre av? visa uppskattning till någon i denna grupp som har inspirerat eller stöttat dig idag, vilket nästa steg planerar du att ta?",
+      "button": "Starta nu",
+      "questions": [
+        "Med två ord... hur var upplevelsen från dagens session?",
+        "Med ett ord... berätta hur du känner dig just nu",
+        "Tänk på tre saker som utmärker denna session",
+        "Berätta en rolig sak om sessionen!",
+        "I en mening... berätta vad din oro är idag"
+      ],
+      "passItOnButton": "Skicka vidare"
+    },
+    "passItOn": {
+      "title": "Skicka vidare-metoden",
+      "steps": [
+        "Välj en person som ska svara på frågan först.",
+        "När den personen har gett sitt svar väljer de vem som ska svara näst.",
+        "Upprepa denna process tills alla har svarat på frågan."
+      ],
+      "button": "Nästa steg"
+    },
+
     "ssc": {
       "about": {
         "title": "Start-p-Fortsätt Övning",
