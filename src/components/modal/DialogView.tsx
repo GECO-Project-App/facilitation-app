@@ -10,11 +10,11 @@ import {useRouter} from '@/navigation';
 
 import {Confetti} from '@/components/icons/confetti';
 
-interface ThankyouDialogProps {
+interface DialogViewProps {
   destinationRoute?: string;
 }
 
-export default function ThankyouDialog({destinationRoute}: ThankyouDialogProps) {
+export default function DialogView({destinationRoute}: DialogViewProps) {
   const router = useRouter();
   const handleDialogClose = () => {
     router.push(destinationRoute || '/');
