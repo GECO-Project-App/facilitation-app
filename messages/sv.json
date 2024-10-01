@@ -16,7 +16,7 @@
         "type": "check-in"
       },
       {
-        "title": "Start-Stopp-Fortsätta",
+        "title": "Start-Stopp-Fortsätt",
         "subtitle": "30-45 minuter | 2-20 deltagare",
         "description": "Förbättra ert sätt att arbeta som team. Dela vad som fungerar bra och vad som behöver förbättras för att samarbeta mer effektivt framöver.",
         "button": "Starta",
@@ -80,7 +80,7 @@
 
     "ssc": {
       "about": {
-        "title": "Start-p-Fortsätt Övning",
+        "title": "Start-Stopp-Fortsätt Övning",
         "subtitle": "Reflektera och Förbättra",
         "description": "Start, Stopp, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
         "button": "Starta"
