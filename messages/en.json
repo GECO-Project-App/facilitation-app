@@ -6,10 +6,29 @@
   "home": {
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
-    "buttons": {
-      "cc": "Check In - Check Out",
-      "ssc": "Start - Stop - Continue"
-    }
+    "catalogue": [
+      {
+        "title": "Check In",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "Start your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/check-in/introduction"
+      },
+      {
+        "title": "Start-Stop-Continue",
+        "subtitle": "30-45 minutes | 2-20 members",
+        "description": "Improve the way you work as a team. Share what works well and what needs to improve to collaborate more effectively going forward.",
+        "button": "Start",
+        "link": "/exercises/ssc/introduction"
+      },
+      {
+        "title": "Check Out",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "End your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/check-out/introduction"
+      }
+    ]
   },
   "exercises": {
     "cc": {

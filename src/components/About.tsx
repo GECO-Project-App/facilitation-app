@@ -23,6 +23,7 @@ export const About: FC<{
       name: slug,
     });
   };
+  console.log(slug);
 
   const mock = useMemo(() => {
     switch (slug) {
@@ -35,6 +36,8 @@ export const About: FC<{
       case 'stop':
         return sscMock.stop.about;
       case 'continue':
+        return sscMock.continue.about;
+      case 'ssc':
         return sscMock.continue.about;
       default:
         return ccMock.checkOut.about;

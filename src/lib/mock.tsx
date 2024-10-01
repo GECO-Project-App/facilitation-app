@@ -1,35 +1,8 @@
 import type {ButtonProps} from '@/components';
-
-export type Step = {
-  title: string;
-  description: string;
-  button: string;
-};
-
-export type StepContent = {
-  sticker?: string;
-  timer?: number;
-};
-
-export type AboutProps = {
-  title: string;
-  subtitle: string;
-  description: string;
-  rive?: string;
-  illustration?: string;
-  button: {
-    variant: ButtonProps['variant'];
-    link: string | URL;
-    text: string;
-  };
-};
+import {AboutProps, StepContent} from './types';
 
 export const ccMock = {
   about: {
-    title: 'Check In-Check Out Exercise',
-    subtitle: '5-15 minutes | 2-20 members',
-    description:
-      'The "Check In-Check Out" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.',
     rive: 'cc_main.riv',
   },
   checkIn: {
@@ -37,7 +10,7 @@ export const ccMock = {
       illustration: '/assets/svg/checkin-geco.svg',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
-        link: '/exercises/cc/check-in' as string | URL,
+        link: '/exercises/check-in' as string | URL,
         text: "Let's Start",
       },
     } as AboutProps,
@@ -59,7 +32,7 @@ export const ccMock = {
       illustration: '/assets/svg/checkout-geco.svg',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
-        link: '/exercises/cc/check-out',
+        link: '/exercises/check-out',
         text: "Let's Start",
       },
     } as AboutProps,
@@ -74,12 +47,11 @@ export const ccMock = {
 };
 
 export const sscMock = {
+  about: {
+    rive: 'ssc_main.riv',
+  },
   start: {
     about: {
-      title: 'Chapter 1: Start',
-      subtitle: '4-5 minutes | 2-20 members',
-      description:
-        'In this chapter, you will brainstorm and discuss what are the things you could start doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
       rive: 'ssc_startgecko.riv',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
@@ -107,10 +79,6 @@ export const sscMock = {
   },
   stop: {
     about: {
-      title: 'Chapter 2: Stop',
-      subtitle: '4-5 minutes | 2-20 members',
-      description:
-        'In this chapter, you will brainstorm and discuss what are the things you should stop doing as a community to better support the productivity, communication, etc. Give an example of how this point might help you and the community to thrive.',
       rive: 'ssc_stopgecko.riv',
       button: {
         variant: 'red' as ButtonProps['variant'],
@@ -137,10 +105,6 @@ export const sscMock = {
   },
   continue: {
     about: {
-      title: 'Chapter 3: Continue',
-      subtitle: '4-5 minutes | 2-20 members',
-      description:
-        'In this chapter, you will brainstorm and discuss what are the things you should continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive.',
       rive: 'ssc_continuegecko.riv',
       button: {
         variant: 'green' as ButtonProps['variant'],
