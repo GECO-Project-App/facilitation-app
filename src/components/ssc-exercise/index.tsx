@@ -32,15 +32,27 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     }
   }, [chapter]);
 
+  const areAllChaptersComplete = (chapters: string[]): boolean => {
+    const requiredChapters = ['start', 'stop', 'continue'];
+    return requiredChapters.every((chapter) => chapters.includes(chapter));
+  };
+
   const goToNextStep = () => {
     if (step === steps.length - 1) {
-      router.push('/exercises/ssc/accomplishment');
       const localStorageChaptersData = localStorage.getItem('chapterDone');
       const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
       if (!doneChapters.includes(chapter)) {
         doneChapters.push(chapter);
+        localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
       }
-      localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
+      const localStorageChaptersData2 = localStorage.getItem('chapterDone');
+      const doneChapters2 = localStorageChaptersData2 ? JSON.parse(localStorageChaptersData2) : [];
+      const isAllChaptersComplete = areAllChaptersComplete(doneChapters2);
+      if (isAllChaptersComplete) {
+        router.push('/exercises/feedback/ssc');
+      } else {
+        router.push('/exercises/ssc/accomplishment');
+      }
     }
     setStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
   };
