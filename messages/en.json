@@ -6,65 +6,76 @@
   "home": {
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
-    "buttons": {
-      "cc": "Check In - Check Out",
-      "ssc": "Start - Stop - Continue"
-    }
+    "catalogue": [
+      {
+        "title": "Check In",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "Start your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/introduction/check-in",
+        "type": "check-in"
+      },
+      {
+        "title": "Start-Stop-Continue",
+        "subtitle": "30-45 minutes | 2-20 members",
+        "description": "Improve the way you work as a team. Share what works well and what needs to improve to collaborate more effectively going forward.",
+        "button": "Start",
+        "link": "/exercises/introduction/ssc",
+        "type": "ssc"
+      },
+      {
+        "title": "Check Out",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "End your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/introduction/check-out",
+        "type": "check-out"
+      }
+    ]
   },
   "exercises": {
-    "cc": {
-      "button": {
-        "checkIn": "1.Check In",
-        "checkOut": "2.Check Out"
-      },
-      "passItOnButton": "Pass it on",
-      "about": {
-        "title": "Check In-Check Out Exercise",
-        "subtitle": "5-15 minutes | 2-20 members",
-        "description": "The \"Check In-Check Out\" exercise is a facilitation strategy used to enhance group participation, collaboration, and overall team engagement. It involves two main components: Check Ins and Check Outs.",
-        "button": "Start"
-      },
-      "checkIn": {
-        "title": "Check In Exercise",
-        "subtitle": "5-15 minutes | 2-20 members",
-        "description": "Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.",
-        "button": "Let's Start",
-        "questions": [
-          "If you could describe your current state of mind in three words, what would they be?",
-          "What's one thing you're looking forward to this week?",
-          "If you were a weather phenomenon, what would you be today and why?",
-          "What's one small win you've had recently?",
-          "If you could have any superpower for just today, what would it be?",
-          "What's one thing you've learned in the past week?",
-          "If your mood was a color right now, what color would it be?",
-          "What's one thing you're grateful for today?",
-          "If you could teleport anywhere for your next break, where would you go?",
-          "What's one goal you're working towards right now?",
-          "What is a pleasure you maybe shouldn’t do but can’t resist doing?"
-        ]
-      },
-      "checkOut": {
-        "title": "Check Out Exercise",
-        "subtitle": "5-15 minutes | 2-20 members",
-        "description": "Check Outs are used to close out a session and recap the experience. They help participants reflect on the entire session and express any final thoughts or feelings. Examples include; what was your biggest takeaway from todays session?, what would you like to see more or less of? show some appreciation to someone in this group who has inspired or supported you today, what next step do you plan to take?",
-        "button": "Let's Start",
-        "questions": [
-          "In two words… how was the experience from the session today?",
-          "In one word… tell us how you are  feeling at the moment",
-          "Think of three things that highlight this session",
-          "Tell us one fun thing about the session!",
-          "In one sentence…tell us what's your concern today"
-        ]
-      },
-      "passItOn": {
-        "title": "Pass It On Method",
-        "steps": [
-          "Pick a person to answer the question first.",
-          "Once that person gave their answer, they pick who should answer next.",
-          "Repeat this process until everyone has answered the question."
-        ],
-        "button": "Next step"
-      }
+    "checkIn": {
+      "title": "Check In Exercise",
+      "subtitle": "5-15 minutes | 2-20 members",
+      "description": "Check Ins are activities that help facilitators gather insights into the current thoughts or emotions of each group member. These can range from simple to more in-dept activities, such as, thumbs Up/thumbs Down, feelings check in, rate my day.",
+      "button": "Let's Start",
+      "questions": [
+        "If you could describe your current state of mind in three words, what would they be?",
+        "What's one thing you're looking forward to this week?",
+        "If you were a weather phenomenon, what would you be today and why?",
+        "What's one small win you've had recently?",
+        "If you could have any superpower for just today, what would it be?",
+        "What's one thing you've learned in the past week?",
+        "If your mood was a color right now, what color would it be?",
+        "What's one thing you're grateful for today?",
+        "If you could teleport anywhere for your next break, where would you go?",
+        "What's one goal you're working towards right now?",
+        "What is a pleasure you maybe shouldn’t do but can’t resist doing?"
+      ],
+      "passItOnButton": "Pass it on"
+    },
+    "checkOut": {
+      "title": "Check Out Exercise",
+      "subtitle": "5-15 minutes | 2-20 members",
+      "description": "Check Outs are used to close out a session and recap the experience. They help participants reflect on the entire session and express any final thoughts or feelings. Examples include; what was your biggest takeaway from todays session?, what would you like to see more or less of? show some appreciation to someone in this group who has inspired or supported you today, what next step do you plan to take?",
+      "button": "Let's Start",
+      "questions": [
+        "In two words… how was the experience from the session today?",
+        "In one word… tell us how you are  feeling at the moment",
+        "Think of three things that highlight this session",
+        "Tell us one fun thing about the session!",
+        "In one sentence…tell us what's your concern today"
+      ],
+      "passItOnButton": "Pass it on"
+    },
+    "passItOn": {
+      "title": "Pass It On Method",
+      "steps": [
+        "Pick a person to answer the question first.",
+        "Once that person gave their answer, they pick who should answer next.",
+        "Repeat this process until everyone has answered the question."
+      ],
+      "button": "Next step"
     },
     "ssc": {
       "about": {
@@ -187,10 +198,16 @@
   "common": {
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
-    "goToHome": "Go to home"
-  },
-  "language": {
-    "english": "English",
-    "swedish": "Swedish"
+    "goToHome": "Go to home",
+    "languages": [
+      {
+        "label": "English",
+        "locale": "en"
+      },
+      {
+        "label": "Svenska",
+        "locale": "sv"
+      }
+    ]
   }
 }

@@ -77,7 +77,7 @@
 
 @layer utilities {
   .page-padding {
-    @apply p-4;
+    @apply p-4 pb-8;
   }
 
   .stylized-container {

@@ -9,6 +9,12 @@ import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import StyledWrapper from '@/components/styles/StyledWrapper';
 import { Button } from '@/components/ui/button';
 import { sscMock, Step } from '@/lib/mock';
+import {Button} from '@/components/ui/button';
+import {sscMock} from '@/lib/mock';
+import {Step} from '@/lib/types';
+import {useRouter} from '@/navigation';
+import {ArrowRight} from 'lucide-react';
+import React, {useMemo, useState} from 'react';
 
 export interface SSCExerciseProps {
   chapter: string;

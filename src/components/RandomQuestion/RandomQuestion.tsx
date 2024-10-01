@@ -23,8 +23,8 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
   const t =
     slug === 'check-in'
-      ? useTranslations('exercises.cc.checkIn')
-      : useTranslations('exercises.cc.checkOut');
+      ? useTranslations('exercises.checkIn')
+      : useTranslations('exercises.checkOut');
 
   const questions: string[] = t.raw('questions').map((question: string) => question);
 
