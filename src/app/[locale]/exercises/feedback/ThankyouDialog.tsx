@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -19,6 +19,14 @@ export default function ThankyouDialog({destinationRoute}: ThankyouDialogProps) 
   const handleDialogClose = () => {
     router.push(destinationRoute);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleDialogClose();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
