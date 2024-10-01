@@ -28,7 +28,7 @@ export const ExerciseCard: FC<ExerciseCardType> = ({
     <div className={cn(background, 'flex flex-col space-y-6 p-6 pb-8')}>
       <div className="space-y-1">
         <h4 className="text-2xl font-bold">{title}</h4>
-        <p className="text-sm font-light">{subtitle}</p>
+        <p className="font-light">{subtitle}</p>
       </div>
       <p>{description}</p>
       <Button variant="white" asChild className="mx-auto">
