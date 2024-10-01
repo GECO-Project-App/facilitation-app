@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
-
 import {Confetti} from '@/components/icons/confetti';
 
 interface DialogViewProps {
