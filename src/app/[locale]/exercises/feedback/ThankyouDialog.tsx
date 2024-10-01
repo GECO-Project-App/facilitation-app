@@ -11,13 +11,13 @@ import {useRouter} from '@/navigation';
 import {Confetti} from '@/components/icons/confetti';
 
 interface ThankyouDialogProps {
-  destinationRoute: string;
+  destinationRoute?: string;
 }
 
 export default function ThankyouDialog({destinationRoute}: ThankyouDialogProps) {
   const router = useRouter();
   const handleDialogClose = () => {
-    router.push(destinationRoute);
+    router.push(destinationRoute || '/');
   };
 
   useEffect(() => {
