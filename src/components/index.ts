@@ -1,4 +1,5 @@
 export * from './ui';
+export * from './LanguageSelector';
 export * from './Timer';
 export * from './RandomQuestion';
 export * from './NavBar';

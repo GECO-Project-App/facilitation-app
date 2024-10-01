@@ -1,4 +1,5 @@
-import {ExerciseCard, RiveAnimation} from '@/components';
+
+import {ExerciseCard, RiveAnimation, LanguageSelector} from '@/components';
 import {ExerciseCardType} from '@/lib/types';
 
 import {getTranslations} from 'next-intl/server';
@@ -16,7 +17,9 @@ export default async function Home() {
   const catalogue: ExerciseCardType[] = t.raw('catalogue');
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-orange">
+
+    <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
+      <LanguageSelector />
       <div className="flex flex-col items-center gap-4">
         <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
         <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
