@@ -79,7 +79,7 @@ export const PassItOn: FC = () => {
               {t('button')} <ArrowRight size={32} />
             </Button>
           ) : (
-            <Button onClick={goToNextStep} variant="pink">
+            <Button onClick={goToNextStep} variant="pink" asChild>
               <Link href={'/'}>{t('home')}</Link>
             </Button>
           )}

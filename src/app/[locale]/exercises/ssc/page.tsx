@@ -1,4 +1,4 @@
-import {Button} from '@/components';
+import {Button, PageLayout} from '@/components';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
@@ -11,7 +11,7 @@ export default async function SSCPage() {
   const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
 
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-deepPurple">
+    <PageLayout backgroundColor="bg-deepPurple">
       <section className="flex flex-row justify-between">
         <Link href={'/'}>
           <ArrowLeft size={60} />
@@ -34,6 +34,6 @@ export default async function SSCPage() {
           </Button>
         ))}
       </section>
-    </main>
+    </PageLayout>
   );
 }
