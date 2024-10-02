@@ -10,6 +10,19 @@ export default async function SSCPage() {
   const t = await getTranslations('exercises.ssc');
   const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
 
+  const getEngButtonText = (text: string) => {
+    switch (text) {
+      case 'starta':
+        return 'start';
+      case 'stoppa':
+        return 'stop';
+      case 'fortsätt':
+        return 'continue';
+      default:
+        return text;
+    }
+  };
+
   return (
     <main className="page-padding flex min-h-screen flex-col bg-deepPurple">
       <section className="flex flex-row justify-between">
@@ -28,7 +41,7 @@ export default async function SSCPage() {
             asChild
             key={button.title}>
             <Link href={button.href}>
-              <CheckBox chapter={buttonText[i].toLowerCase()} />
+              <CheckBox chapter={getEngButtonText(buttonText[i].toLowerCase())} />
               <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
             </Link>
           </Button>
