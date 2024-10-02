@@ -6,7 +6,7 @@ interface StyledWrapperProps {
 }
 
 const StyledWrapper: FC<StyledWrapperProps> = ({children}) => {
-  return <main className="page-padding flex min-h-screen flex-col">{children}</main>;
+  return <main className="page-padding flex min-h-svh flex-col">{children}</main>;
 };
 
 export default StyledWrapper;

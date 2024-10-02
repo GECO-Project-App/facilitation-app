@@ -7,11 +7,11 @@ export const PageLayout: FC<{
   hasPadding?: boolean;
 }> = ({children, backgroundColor = 'bg-white', hasPadding = true}) => {
   return (
-    <main className={cn(backgroundColor, 'min-h-screen')}>
+    <main className={cn(backgroundColor, 'min-h-svh')}>
       <section
         className={cn(
           hasPadding ? 'page-padding' : '',
-          'page-constraints flex min-h-screen flex-col justify-between',
+          'page-constraints flex min-h-svh flex-col justify-between space-y-4',
         )}>
         {children}
       </section>

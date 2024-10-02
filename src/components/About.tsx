@@ -62,13 +62,12 @@ export const About: FC<{
           <p>{description}</p>
         </div>
       </div>
-      <div className="flex justify-center">
-        <Button variant={mock.button.variant} asChild onClick={handleClick}>
-          <Link href={mock.button.link}>
-            {buttonText} <ArrowRight size={28} />
-          </Link>
-        </Button>
-      </div>
+
+      <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
+        <Link href={mock.button.link}>
+          {buttonText} <ArrowRight size={28} />
+        </Link>
+      </Button>
     </PageLayout>
   );
 };
