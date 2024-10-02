@@ -38,7 +38,7 @@ function Survey({title, onSubmit}: SurveyProps) {
         handleBack={handleBack}
       />
       <section className="my-2 flex justify-center">
-        <Button variant="pink" onClick={handleSubmit}>
+        <Button variant="pink" onClick={handleSubmit} disabled={!selectedValue}>
           {t('button')} <ArrowRight />
         </Button>
       </section>

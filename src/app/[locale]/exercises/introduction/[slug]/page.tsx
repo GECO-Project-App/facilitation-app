@@ -1,7 +1,7 @@
 import {About} from '@/components';
 import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
-
+import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 export default async function IntroductionPage({params}: {params: {locale: string; slug: string}}) {
   const {slug} = params;
 
@@ -25,12 +25,15 @@ export default async function IntroductionPage({params}: {params: {locale: strin
   }, [slug]);
 
   return (
-    <About
-      slug={slug}
-      title={t('title')}
-      subtitle={t('subtitle')}
-      description={t('description')}
-      buttonText={t('button')}
-    />
+    <>
+      {slug === 'ssc' && <ClearLocalStorage />}
+      <About
+        slug={slug}
+        title={t('title')}
+        subtitle={t('subtitle')}
+        description={t('description')}
+        buttonText={t('button')}
+      />
+    </>
   );
 }
