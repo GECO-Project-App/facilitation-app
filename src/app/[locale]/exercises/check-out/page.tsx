@@ -1,6 +1,5 @@
 import {Button, NavBar, PageLayout, RandomQuestion} from '@/components';
 import {Colors} from '@/lib/constants';
-import {cn} from '@/lib/utils';
 import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
@@ -10,7 +9,7 @@ export default async function CheckOutPage({params}: {params: {slug: string}}) {
   const t = await getTranslations('exercises.checkOut');
 
   return (
-    <PageLayout backgroundColor="bg-orange">
+    <PageLayout backgroundColor="bg-green">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-center">
         <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} />
