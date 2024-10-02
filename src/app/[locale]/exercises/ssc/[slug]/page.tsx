@@ -27,16 +27,7 @@ export default async function SSC({params}: {params: {locale: string; slug: stri
       return <Tips />;
     default:
       return (
-        <main
-          className={`flex min-h-screen flex-col ${
-            slug === 'start'
-              ? 'bg-yellow'
-              : slug === 'stop'
-                ? 'bg-red'
-                : slug === 'continue'
-                  ? 'bg-green'
-                  : 'bg-blue'
-          }`}>
+        <main className="">
           <SSCExercise chapter={slug} steps={steps} />
         </main>
       );

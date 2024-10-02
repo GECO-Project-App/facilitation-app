@@ -4,6 +4,7 @@ import Survey from './Survey';
 import {usePostHog} from 'posthog-js/react';
 import {SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
 import DialogView from '@/components/modal/DialogView';
+import {PageLayout} from '@/components';
 
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
@@ -54,7 +55,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   console.log(surveyID, surveyTitle);
 
   return (
-    <main className="page-padding min-h-screen bg-yellow">
+    <PageLayout backgroundColor="bg-yellow">
       {showSurvey ? (
         <Survey
           title={
@@ -71,6 +72,6 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
       ) : (
         <DialogView destinationRoute="/" />
       )}
-    </main>
+    </PageLayout>
   );
 }

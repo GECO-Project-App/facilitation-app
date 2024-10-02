@@ -75,7 +75,8 @@
         "När den personen har gett sitt svar väljer de vem som ska svara näst.",
         "Upprepa denna process tills alla har svarat på frågan."
       ],
-      "button": "Nästa steg"
+      "button": "Nästa steg",
+      "home": "Gå tillbaka"
     },
 
     "ssc": {
@@ -172,8 +173,9 @@
         ]
       },
       "tips": {
-        "title": "GECO App Start-Stopp-Fortsätt Övning: Tips",
-        "subtitle": "Punkter att ha i åtanke när du gör övningen,",
+        "title": "GECO App",
+        "subtitle": "Start-Stopp-Fortsätt Övning: Tips",
+        "description": "Punkter att ha i åtanke när du gör övningen",
         "points": [
           "Sätt tydliga förväntningar",
           "Tillhandahåll ett visuellt hjälpmedel",
@@ -183,14 +185,17 @@
         ]
       },
       "feedback": {
-        "title": "GECO App Start-Stopp-Fortsätt Övning",
+        "title": "GECO App",
+        "subtitle": "Start-Stopp-Fortsätt Övning: Feedback",
         "description": "Har du några tankar, kommentarer och förslag om appen? Dela dina tankar med oss.",
-        "button": "Gå till Hem"
+        "feedbackButton": "Skicka feedback",
+        "button": "Skicka feedback"
       },
       "accomplishment": {
-        "title": "BRA JOBBAT!",
-        "subtitle": "DU KLARADE DET! GRATTIS!",
-        "button": "Ge oss feedback"
+        "title": "BRA JOBBAT! DU KLARADE DET!",
+        "button": "Skicka feedback",
+        "feedbackButton": "Skicka feedback",
+        "homeButton": "Gå tillbaka"
       }
     }
   },

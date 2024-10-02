@@ -2,6 +2,7 @@ import {About} from '@/components';
 import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
+
 export default async function IntroductionPage({params}: {params: {locale: string; slug: string}}) {
   const {slug} = params;
 
