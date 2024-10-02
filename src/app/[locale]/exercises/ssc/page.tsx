@@ -2,9 +2,9 @@ import {Button, PageLayout} from '@/components';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
-import {ArrowLeft} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 import {Lamp} from '@/components/icons/lamp';
+import {BackButton} from '@/components/NavBar/BackButton';
 
 export default async function SSCPage() {
   const t = await getTranslations('exercises.ssc');
@@ -12,10 +12,8 @@ export default async function SSCPage() {
 
   return (
     <PageLayout backgroundColor="bg-deepPurple">
-      <section className="flex flex-row justify-between">
-        <Link href={'/'}>
-          <ArrowLeft size={60} />
-        </Link>
+      <section className="flex flex-row items-center justify-between">
+        <BackButton />
         <Link href={'/exercises/ssc/tips'} className="self-end">
           <Lamp className="fill-white hover:animate-shake hover:fill-yellow" />
         </Link>

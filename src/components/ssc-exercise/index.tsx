@@ -1,9 +1,8 @@
 'use client';
-import {RiveAnimation, Timer} from '@/components';
+import {PageLayout, RiveAnimation, Timer} from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
 import DescriptionWrapper from '@/components/styles/DescriptionWrapper';
 import HeaderWrapper from '@/components/styles/HeaderWrapper';
-import StyledWrapper from '@/components/styles/StyledWrapper';
 import {Button} from '@/components/ui/button';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
@@ -58,7 +57,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   };
 
   return (
-    <StyledWrapper>
+    <PageLayout>
       <article className="flex h-40 flex-col items-center justify-between">
         <HeaderWrapper title={steps[step].title} handleBack={goToPreviousStep} currentStep={step} />
         <StepCounter currentStep={step} length={steps.length - 1} />
@@ -75,7 +74,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
           </Button>
         </footer>
       </article>
-    </StyledWrapper>
+    </PageLayout>
   );
 };
 

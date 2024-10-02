@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {ArrowLeft} from 'lucide-react';
 import {Lamp} from '@/components/icons/lamp';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 import {PageLayout} from '../PageLayout';
 
-const Tips: React.FC = async () => {
+const Tips: FC = async () => {
   const t = await getTranslations('exercises.ssc.tips');
-  const points = t.raw('points').map((point: string) => point);
 
   return (
     <PageLayout backgroundColor="bg-yellow">

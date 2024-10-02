@@ -188,6 +188,12 @@
         "title": "GREAT JOB!",
         "subtitle": "YOU DID IT! GRATTIS!",
         "button": "Send us feedback"
+      },
+      "feedback": {
+        "title": "GECO App",
+        "subtitle": "Start-Stop-Continue Exercise: Feedback",
+        "description": "Have some thoughts, comments and suggestions about the app? Share your thought with us",
+        "button": "Send Feedback"
       }
     }
   },
