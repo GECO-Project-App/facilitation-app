@@ -189,11 +189,13 @@
         "subtitle": "Start-Stopp-Fortsätt Övning: Feedback",
         "description": "Har du några tankar, kommentarer och förslag om appen? Dela dina tankar med oss.",
         "feedbackButton": "Skicka feedback",
-        "homeButton": "Gå till Hem"
+        "button": "Skicka feedback"
       },
       "accomplishment": {
         "title": "BRA JOBBAT! DU KLARADE DET!",
-        "button": "Skicka feedback"
+        "button": "Skicka feedback",
+        "feedbackButton": "Skicka feedback",
+        "homeButton": "Gå tillbaka"
       }
     }
   },

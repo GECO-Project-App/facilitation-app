@@ -37,6 +37,7 @@ export const sscMock = {
     },
   } as AboutProps,
   start: {
+    backgroundColor: 'bg-yellow',
     about: {
       rive: 'ssc_startgecko.riv',
       button: {
@@ -64,6 +65,7 @@ export const sscMock = {
     ] as StepContent[],
   },
   stop: {
+    backgroundColor: 'bg-red',
     about: {
       rive: 'ssc_stopgecko.riv',
       button: {
@@ -90,6 +92,7 @@ export const sscMock = {
     ] as StepContent[],
   },
   continue: {
+    backgroundColor: 'bg-green',
     about: {
       rive: 'ssc_continuegecko.riv',
       button: {

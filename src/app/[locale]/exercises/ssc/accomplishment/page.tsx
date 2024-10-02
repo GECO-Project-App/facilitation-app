@@ -14,9 +14,9 @@ export default async function Accomplishment() {
             <RiveAnimation src="geckograttis.riv" width={300} height={300} />
           </div>
         </div>
-        <Link href={'/exercises/feedback/ssc'}>
+        <Link href={'/exercises/ssc'}>
           <Button variant="pink" className="mx-auto">
-            {t('button')}
+            {t('homeButton')}
             <ArrowRight size={28} />
           </Button>
         </Link>

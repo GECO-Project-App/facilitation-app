@@ -186,15 +186,15 @@
       },
       "accomplishment": {
         "title": "GREAT JOB! YOU DID IT!",
-
-        "button": "Send us feedback"
+        "button": "Send us feedback",
+        "feedbackButton": "Send Feedback",
+        "homeButton": "Go to Home"
       },
       "feedback": {
         "title": "GECO App",
         "subtitle": "Start-Stop-Continue Exercise: Feedback",
         "description": "Have some thoughts, comments and suggestions about the app? Share your thought with us",
-        "feedbackButton": "Send Feedback",
-        "homeButton": "Go to Home"
+        "button": "Send Feedback"
       }
     }
   },

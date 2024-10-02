@@ -1,7 +1,4 @@
 'use client';
-import React, {useMemo, useState} from 'react';
-import {useRouter} from '@/navigation';
-import {ArrowRight} from 'lucide-react';
 import {PageLayout, RiveAnimation, Timer} from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
 import DescriptionWrapper from '@/components/styles/DescriptionWrapper';
@@ -9,22 +6,26 @@ import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {Button} from '@/components/ui/button';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
+import {useRouter} from '@/navigation';
+import {ArrowRight} from 'lucide-react';
+import React, {useMemo, useState} from 'react';
 
-export interface SSCExerciseProps {
+export type SSCExerciseProps = {
   chapter: string;
   steps: Step[];
-}
+};
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
 
+  const chapterMap = {
+    start: sscMock.start.steps,
+    stop: sscMock.stop.steps,
+    continue: sscMock.continue.steps,
+  };
+
   const chapterSteps = useMemo(() => {
-    const chapterMap = {
-      start: sscMock.start.steps,
-      stop: sscMock.stop.steps,
-      continue: sscMock.continue.steps,
-    };
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
   }, [chapter]);
 
@@ -66,7 +67,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const currentStepData = steps[currentStep];
 
   return (
-    <PageLayout>
+    <PageLayout backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}>
       <article className="flex h-40 flex-col items-center justify-between">
         <HeaderWrapper
           title={currentStepData.title}
