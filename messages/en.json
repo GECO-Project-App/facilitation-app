@@ -193,7 +193,8 @@
         "title": "GECO App",
         "subtitle": "Start-Stop-Continue Exercise: Feedback",
         "description": "Have some thoughts, comments and suggestions about the app? Share your thought with us",
-        "button": "Send Feedback"
+        "feedbackButton": "Send Feedback",
+        "homeButton": "Go to Home"
       }
     }
   },

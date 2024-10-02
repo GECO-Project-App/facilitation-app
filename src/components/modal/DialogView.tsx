@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -7,18 +7,25 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
-
 import {Confetti} from '@/components/icons/confetti';
 
-interface ThankyouDialogProps {
-  destinationRoute: string;
+interface DialogViewProps {
+  destinationRoute?: string;
 }
 
-export default function ThankyouDialog({destinationRoute}: ThankyouDialogProps) {
+export default function DialogView({destinationRoute}: DialogViewProps) {
   const router = useRouter();
   const handleDialogClose = () => {
-    router.push(destinationRoute);
+    router.push(destinationRoute || '/');
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleDialogClose();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>

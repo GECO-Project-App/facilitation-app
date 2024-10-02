@@ -1,5 +1,4 @@
 import SSCExercise from '@/components/ssc-exercise';
-import FeedBack from '@/components/ssc-exercise/FeedBack';
 import Tips from '@/components/ssc-exercise/Tips';
 import {Step} from '@/lib/types';
 import {getTranslations} from 'next-intl/server';
@@ -26,8 +25,6 @@ export default async function SSC({params}: {params: {locale: string; slug: stri
   switch (slug) {
     case 'tips':
       return <Tips />;
-    case 'feedback':
-      return <FeedBack />;
     default:
       return (
         <main className="">

@@ -8,11 +8,12 @@ export default async function CheckOutPage({params}: {params: {slug: string}}) {
   const slug = params.slug;
   const t = await getTranslations('exercises.checkOut');
 
+  const questions: string[] = t.raw('questions').map((question: string) => question);
   return (
     <PageLayout backgroundColor="bg-green">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-center">
-        <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} />
+        <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} questions={questions} />
       </section>
 
       <Button variant="blue" asChild className="mx-auto">

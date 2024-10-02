@@ -1,4 +1,7 @@
 'use client';
+import React, {useMemo, useState} from 'react';
+import {useRouter} from '@/navigation';
+import {ArrowRight} from 'lucide-react';
 import {PageLayout, RiveAnimation, Timer} from '@/components';
 import StepCounter from '@/components/ssc-exercise/StepCounter';
 import DescriptionWrapper from '@/components/styles/DescriptionWrapper';
@@ -6,9 +9,6 @@ import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {Button} from '@/components/ui/button';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
-import {useRouter} from '@/navigation';
-import {ArrowRight} from 'lucide-react';
-import React, {useMemo, useState} from 'react';
 
 export interface SSCExerciseProps {
   chapter: string;
@@ -17,60 +17,77 @@ export interface SSCExerciseProps {
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const router = useRouter();
-  const [step, setStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
 
-  const mock = useMemo(() => {
-    switch (chapter) {
-      case 'start':
-        return sscMock.start.steps;
-      case 'stop':
-        return sscMock.stop.steps;
-      case 'continue':
-        return sscMock.continue.steps;
-      default:
-        return sscMock.start.steps;
-    }
+  const chapterSteps = useMemo(() => {
+    const chapterMap = {
+      start: sscMock.start.steps,
+      stop: sscMock.stop.steps,
+      continue: sscMock.continue.steps,
+    };
+    return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
   }, [chapter]);
 
-  const goToNextStep = () => {
-    if (step === steps.length - 1) {
-      router.push('/exercises/ssc/accomplishment');
-      const localStorageChaptersData = localStorage.getItem('chapterDone');
-      const doneChapters = localStorageChaptersData ? JSON.parse(localStorageChaptersData) : [];
-      if (!doneChapters.includes(chapter)) {
-        doneChapters.push(chapter);
+  const areAllChaptersComplete = (completedChapters: string[]): boolean => {
+    const requiredChapters = ['start', 'stop', 'continue'];
+    return requiredChapters.every((chapter) => completedChapters.includes(chapter));
+  };
+
+  const handleNextStep = () => {
+    if (currentStep === steps.length - 1) {
+      const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
+      if (!completedChapters.includes(chapter)) {
+        completedChapters.push(chapter);
+        localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
       }
-      localStorage.setItem('chapterDone', JSON.stringify(doneChapters));
+
+      router.push(
+        areAllChaptersComplete(completedChapters)
+          ? '/exercises/feedback/ssc'
+          : '/exercises/ssc/accomplishment',
+      );
+    } else {
+      setCurrentStep((prev) => prev + 1);
     }
-    setStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+  };
+
+  const handlePreviousStep = () => {
+    if (currentStep === 0) {
+      router.back();
+    } else {
+      setCurrentStep((prev) => prev - 1);
+    }
   };
 
   if (!steps) {
     return <div>Loading...</div>;
   }
 
-  const goToPreviousStep = () => {
-    if (step === 0) {
-      router.back();
-    }
-    setStep((prev) => (prev > 0 ? prev - 1 : prev));
-  };
+  const currentStepData = steps[currentStep];
 
   return (
     <PageLayout>
       <article className="flex h-40 flex-col items-center justify-between">
-        <HeaderWrapper title={steps[step].title} handleBack={goToPreviousStep} currentStep={step} />
-        <StepCounter currentStep={step} length={steps.length - 1} />
+        <HeaderWrapper
+          title={currentStepData.title}
+          handleBack={handlePreviousStep}
+          currentStep={currentStep}
+        />
+        <StepCounter currentStep={currentStep} length={steps.length - 1} />
       </article>
       <article className="flex flex-1 flex-col items-center justify-evenly">
-        {mock[step]?.sticker && (
-          <RiveAnimation key={mock[step].sticker} src={mock[step].sticker} width={300} />
+        {chapterSteps[currentStep]?.sticker && (
+          <RiveAnimation
+            key={chapterSteps[currentStep].sticker}
+            src={chapterSteps[currentStep].sticker}
+            width={300}
+          />
         )}
-        <DescriptionWrapper>{steps[step].description}</DescriptionWrapper>
-        {mock[step]?.timer && <Timer seconds={mock[step].timer} />}
+        <DescriptionWrapper>{currentStepData.description}</DescriptionWrapper>
+        {chapterSteps[currentStep]?.timer && <Timer seconds={chapterSteps[currentStep].timer} />}
         <footer className="mt-8">
-          <Button variant="pink" onClick={goToNextStep}>
-            {steps[step].button} <ArrowRight size={28} />
+          <Button variant="pink" onClick={handleNextStep}>
+            {currentStepData.button} <ArrowRight size={28} />
           </Button>
         </footer>
       </article>

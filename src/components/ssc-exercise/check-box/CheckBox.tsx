@@ -5,9 +5,6 @@ import {Checked} from '@/components/icons/checked';
 const CheckBox: React.FC<{chapter: string}> = ({chapter}) => {
   const [doneChapters, setDoneChapters] = useState<string[]>([]);
 
-  // const value = localStorage.getItem('chapterDone') ;
-  // const doneChapters = value ? JSON.parse(value) : [];
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedValue = localStorage.getItem('chapterDone') || '[]';

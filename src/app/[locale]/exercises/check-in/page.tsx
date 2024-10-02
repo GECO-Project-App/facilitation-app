@@ -9,11 +9,13 @@ export default async function CheckInPage({params}: {params: {slug: string}}) {
   const slug = params.slug;
   const t = await getTranslations('exercises.checkIn');
 
+  const questions: string[] = t.raw('questions').map((question: string) => question);
+
   return (
     <PageLayout backgroundColor="bg-orange">
       <NavBar />
       <section className="flex flex-1 flex-col items-center justify-center">
-        <RandomQuestion slug={slug} excludeShapeColor={Colors.Orange} />
+        <RandomQuestion slug={slug} excludeShapeColor={Colors.Orange} questions={questions} />
       </section>
 
       <Button variant="blue" asChild className="mx-auto">

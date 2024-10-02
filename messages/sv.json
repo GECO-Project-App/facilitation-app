@@ -185,9 +185,11 @@
         ]
       },
       "feedback": {
-        "title": "GECO App Start-Stopp-Fortsätt Övning",
+        "title": "GECO App",
+        "subtitle": "Start-Stopp-Fortsätt Övning: Feedback",
         "description": "Har du några tankar, kommentarer och förslag om appen? Dela dina tankar med oss.",
-        "button": "Skicka oss feedback"
+        "feedbackButton": "Skicka feedback",
+        "homeButton": "Gå till Hem"
       },
       "accomplishment": {
         "title": "BRA JOBBAT! DU KLARADE DET!",
