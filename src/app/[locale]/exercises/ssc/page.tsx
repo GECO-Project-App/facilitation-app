@@ -4,25 +4,11 @@ import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
 import {getTranslations} from 'next-intl/server';
 import {Lamp} from '@/components/icons/lamp';
-import {BackButton} from '@/components/NavBar/BackButton';
 import {ArrowLeft} from 'lucide-react';
 
 export default async function SSCPage() {
   const t = await getTranslations('exercises.ssc');
   const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
-
-  const getEngButtonText = (text: string) => {
-    switch (text) {
-      case 'starta':
-        return 'start';
-      case 'stoppa':
-        return 'stop';
-      case 'fortsätt':
-        return 'continue';
-      default:
-        return text;
-    }
-  };
 
   return (
     <PageLayout backgroundColor="bg-deepPurple">
@@ -43,7 +29,7 @@ export default async function SSCPage() {
             asChild
             key={button.title}>
             <Link href={button.href}>
-              <CheckBox chapter={getEngButtonText(buttonText[i].toLowerCase())} />
+              <CheckBox chapter={button.chapter || ''} />
               <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
             </Link>
           </Button>

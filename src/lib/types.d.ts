@@ -11,6 +11,7 @@ export type ButtonType = {
   variant: 'green' | 'red' | 'pink' | 'blue' | 'orange' | 'purple' | 'yellow' | null | undefined;
   title: string;
   href: string;
+  chapter?: 'start' | 'stop' | 'continue';
 };
 
 export type ExerciseCardType = {
