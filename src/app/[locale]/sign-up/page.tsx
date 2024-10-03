@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-// import { useRouter } from 'next/router';
+import { Button } from '@/components/ui/button';
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +8,6 @@ const SignUpPage = () => {
     password: '',
     confirmPassword: ''
   });
-//   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,9 +15,6 @@ const SignUpPage = () => {
       alert('Passwords do not match');
       return;
     }
-    // TODO: Implement sign up logic here
-    // For example: await signUp(formData.email, formData.password);
-    // router.push('/');
     console.log('Sign up submitted:', formData);
   };
 
@@ -31,73 +27,56 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign Up
-          </h2>
+    <div className="container mx-auto flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-md bg-white rounded-lg p-6">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold">Sign Up</h2>
+          <p className="text-gray-600">Create a new account to get started</p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <input type="hidden" name="remember" defaultValue="true" />
-          <div className="rounded-md shadow-sm space-y-4">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
               <input
-                id="email-address"
+                id="email"
                 name="email"
                 type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+            <div className="space-y-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
               <input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
               />
             </div>
-            <div>
-              <label htmlFor="confirm-password" className="sr-only">
-                Confirm password
-              </label>
+            <div className="space-y-2">
+              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">Confirm Password</label>
               <input
                 id="confirm-password"
                 name="confirmPassword"
                 type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Confirm password"
+                placeholder="Confirm your password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
               />
             </div>
           </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign Up
-            </button>
+          <div className="mt-6 flex justify-center">
+            <Button type="submit">Sign Up</Button>
           </div>
         </form>
       </div>
