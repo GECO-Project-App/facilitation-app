@@ -77,7 +77,15 @@
 
 @layer utilities {
   .page-padding {
-    @apply p-4;
+    @apply p-4 pb-8;
+  }
+
+  .page-constraints {
+    @apply mx-auto h-fit max-w-lg;
+  }
+
+  .page-layout {
+    @apply mx-auto h-fit max-w-lg p-4 pb-8;
   }
 
   .stylized-container {

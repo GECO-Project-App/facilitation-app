@@ -1,5 +1,6 @@
 'use client';
 import {ccMock, sscMock} from '@/lib/mock';
+import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -7,7 +8,7 @@ import {FC, useMemo} from 'react';
 import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
-import {Link} from '@/navigation';
+import {PageLayout} from './PageLayout';
 
 export const About: FC<{
   slug: string;
@@ -36,15 +37,17 @@ export const About: FC<{
         return sscMock.stop.about;
       case 'continue':
         return sscMock.continue.about;
+      case 'ssc':
+        return sscMock.about;
       default:
         return ccMock.checkOut.about;
     }
   }, [slug]);
 
   return (
-    <section className="page-padding flex min-h-screen flex-col justify-between">
+    <PageLayout>
       <NavBar />
-      <div className="mx-auto flex max-w-xl flex-1 flex-col items-center justify-center space-y-6">
+      <div className="space-y-6">
         {mock?.rive && <RiveAnimation src={mock.rive} />}
         {mock?.illustration && (
           <div className="relative aspect-video w-full self-start md:w-2/3">
@@ -59,13 +62,12 @@ export const About: FC<{
           <p>{description}</p>
         </div>
       </div>
-      <div className="flex justify-center">
-        <Button variant={mock.button.variant} asChild onClick={handleClick}>
-          <Link href={mock.button.link}>
-            {buttonText} <ArrowRight size={28} />
-          </Link>
-        </Button>
-      </div>
-    </section>
+
+      <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
+        <Link href={mock.button.link}>
+          {buttonText} <ArrowRight size={28} />
+        </Link>
+      </Button>
+    </PageLayout>
   );
 };

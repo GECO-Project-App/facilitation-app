@@ -12,21 +12,17 @@ type RandomQuestionProps = {
   slug: string;
   shapes?: FC<SVGProps<SVGSVGElement>>[];
   excludeShapeColor?: string;
+  questions: string[];
 };
 
 export const RandomQuestion: FC<RandomQuestionProps> = ({
   shapes = QuestionShapes,
   slug,
   excludeShapeColor,
+  questions,
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
-  const t =
-    slug === 'check-in'
-      ? useTranslations('exercises.cc.checkIn')
-      : useTranslations('exercises.cc.checkOut');
-
-  const questions: string[] = t.raw('questions').map((question: string) => question);
 
   useEffect(() => {
     if (!questions || !shapes) {

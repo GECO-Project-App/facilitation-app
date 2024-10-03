@@ -8,10 +8,12 @@ import {BackButton} from './NavBar/BackButton';
 import {Button} from './ui';
 import {RiveAnimation} from './RiveAnimation';
 import {useTranslations} from 'next-intl';
+import {PageLayout} from './PageLayout';
+import {Link} from '@/navigation';
 
 export const PassItOn: FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const t = useTranslations('exercises.cc.passItOn');
+  const t = useTranslations('exercises.passItOn');
   const steps: string[] = t.raw('steps').map((step: string) => step);
 
   const goToPreviousStep = () => {
@@ -54,11 +56,10 @@ export const PassItOn: FC = () => {
   }, [currentStep]);
 
   return (
-    <section className="flex min-h-screen flex-col justify-between p-4">
+    <PageLayout backgroundColor="bg-blue">
       <Navigation />
-
-      <div className="">
-        <div className="flex flex-col items-center justify-center space-y-8 text-center">
+      <section className="flex flex-1 flex-col items-center justify-between">
+        <div className="flex flex-1 flex-col items-center justify-center space-y-8 text-center">
           <div
             className={cn(
               currentStep === 0 ? 'bg-yellow' : '',
@@ -70,16 +71,20 @@ export const PassItOn: FC = () => {
           </div>
           <Illustration />
           <p className="text-white">{steps[currentStep]}</p>
-          {currentStep < steps.length - 1 && (
+        </div>
+
+        <div>
+          {currentStep < steps.length - 1 ? (
             <Button onClick={goToNextStep} variant="pink">
               {t('button')} <ArrowRight size={32} />
             </Button>
+          ) : (
+            <Button onClick={goToNextStep} variant="pink" asChild>
+              <Link href={'/'}>{t('home')}</Link>
+            </Button>
           )}
         </div>
-      </div>
-      <div className="self-end">
-        <HomeButton />
-      </div>
-    </section>
+      </section>
+    </PageLayout>
   );
 };

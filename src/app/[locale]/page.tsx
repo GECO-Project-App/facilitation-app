@@ -1,5 +1,6 @@
-import {Button, RiveAnimation} from '@/components';
-import {Link} from '@/navigation';
+import {ExerciseCard, LanguageSelector, PageLayout, RiveAnimation} from '@/components';
+import {ExerciseCardType} from '@/lib/types';
+
 import {getTranslations} from 'next-intl/server';
 
 export async function generateMetadata() {
@@ -11,22 +12,27 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-  const t = await getTranslations('home.buttons');
+  const t = await getTranslations('home');
+  const catalogue: ExerciseCardType[] = t.raw('catalogue');
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-orange p-24">
-      <div className="flex flex-col items-center gap-4">
-        <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
-        <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
-      </div>
-      <div className="flex flex-col gap-6">
-        <Button variant="purple" asChild className="w-full">
-          <Link href={'/exercises/cc/introduction'}>{t('cc')}</Link>
-        </Button>
-        <Button variant="blue" asChild>
-          <Link href={'/exercises/ssc/introduction'}>{t('ssc')}</Link>
-        </Button>
-      </div>
-    </main>
+    <PageLayout backgroundColor="bg-yellow" hasPadding={false}>
+      <section className="flex flex-col items-center justify-between">
+        <div className="space-y-6 p-6">
+          <header className="flex w-full flex-row items-center justify-center">
+            <LanguageSelector />
+          </header>
+          <div className="flex flex-col items-center gap-4 p-4">
+            <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
+            <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
+          </div>
+        </div>
+        <div className="divide-y-2 divide-black border-y-2 border-black md:border-x-2">
+          {catalogue.map((exercise, index) => (
+            <ExerciseCard key={index} {...exercise} />
+          ))}
+        </div>
+      </section>
+    </PageLayout>
   );
 }

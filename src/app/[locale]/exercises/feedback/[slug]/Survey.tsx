@@ -29,7 +29,7 @@ function Survey({title, onSubmit}: SurveyProps) {
 
   return (
     <article
-      className={`page-padding flex flex-col overflow-y-hidden ${keyboardStatus.isKeyboardOpen ? 'h-[54vh] justify-between' : 'min-h-screen justify-evenly'} `}>
+      className={`flex flex-col gap-4 overflow-y-hidden ${keyboardStatus.isKeyboardOpen ? 'h-[54vh] justify-between' : 'min-h-screen justify-between'} `}>
       <TextArea
         key={title}
         title={title}
@@ -38,7 +38,7 @@ function Survey({title, onSubmit}: SurveyProps) {
         handleBack={handleBack}
       />
       <section className="my-2 flex justify-center">
-        <Button variant="pink" onClick={handleSubmit}>
+        <Button variant="pink" onClick={handleSubmit} disabled={!selectedValue}>
           {t('button')} <ArrowRight />
         </Button>
       </section>

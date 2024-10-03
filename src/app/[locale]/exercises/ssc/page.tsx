@@ -1,21 +1,22 @@
-import {Button} from '@/components';
+import {Button, PageLayout} from '@/components';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
 import {buttons} from '@/lib/ssc-mock-data';
 import {Link} from '@/navigation';
-import {ArrowLeft} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 import {Lamp} from '@/components/icons/lamp';
+import {ArrowLeft} from 'lucide-react';
 
 export default async function SSCPage() {
   const t = await getTranslations('exercises.ssc');
   const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
 
   return (
-    <main className="page-padding flex min-h-screen flex-col bg-deepPurple">
-      <section className="flex flex-row justify-between">
+    <PageLayout backgroundColor="bg-deepPurple">
+      <section className="flex flex-row items-center justify-between">
         <Link href={'/'}>
-          <ArrowLeft size={60} />
+          <ArrowLeft size={42} />
         </Link>
+
         <Link href={'/exercises/ssc/tips'} className="self-end">
           <Lamp className="fill-white hover:animate-shake hover:fill-yellow" />
         </Link>
@@ -28,12 +29,12 @@ export default async function SSCPage() {
             asChild
             key={button.title}>
             <Link href={button.href}>
-              <CheckBox chapter={buttonText[i].toLowerCase()} />
+              <CheckBox chapter={button.chapter || ''} />
               <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
             </Link>
           </Button>
         ))}
       </section>
-    </main>
+    </PageLayout>
   );
 }

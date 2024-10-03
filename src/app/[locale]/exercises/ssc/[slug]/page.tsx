@@ -1,7 +1,6 @@
 import SSCExercise from '@/components/ssc-exercise';
-import FeedBack from '@/components/ssc-exercise/FeedBack';
 import Tips from '@/components/ssc-exercise/Tips';
-import {Step} from '@/lib/mock';
+import {Step} from '@/lib/types';
 import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
 
@@ -26,20 +25,9 @@ export default async function SSC({params}: {params: {locale: string; slug: stri
   switch (slug) {
     case 'tips':
       return <Tips />;
-    case 'feedback':
-      return <FeedBack />;
     default:
       return (
-        <main
-          className={`flex min-h-screen flex-col ${
-            slug === 'start'
-              ? 'bg-yellow'
-              : slug === 'stop'
-                ? 'bg-red'
-                : slug === 'continue'
-                  ? 'bg-green'
-                  : 'bg-blue'
-          }`}>
+        <main className="">
           <SSCExercise chapter={slug} steps={steps} />
         </main>
       );
