@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { supabase } from "@/lib/supabase/supabaseClient";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,20 @@ const SignUpPage = () => {
       return;
     }
     console.log('Sign up submitted:', formData);
+    try {
+      const { data, error } = await supabase.auth.signUp({        
+        email: formData.email, // Assuming username is an email
+        password: formData.password,
+      });
+  
+      if (error) throw error;
+  
+      alert("Signup successful! Please check your email for verification.");
+      setFormData({ email: "", password: "", confirmPassword: "" });
+      console.log('DATA: ',data);
+    } catch (error) {
+      alert("Error signing up: " + error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +42,8 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="container mx-auto flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md bg-white rounded-lg p-6">
+    <div className="container mx-auto flex items-center justify-center min-h-screen bg-white">
+      <div className="w-full max-w-md rounded-lg p-6">
         <div className="mb-6">
           <h2 className="text-2xl font-bold">Sign Up</h2>
           <p className="text-gray-600">Create a new account to get started</p>
@@ -75,7 +90,7 @@ const SignUpPage = () => {
               />
             </div>
           </div>
-          <div className="mt-6 flex justify-center">
+          <div className="mt-14 flex justify-center">
             <Button type="submit">Sign Up</Button>
           </div>
         </form>
