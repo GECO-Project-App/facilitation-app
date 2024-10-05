@@ -74,7 +74,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
 
   const ReminderText: FC = useCallback(() => {
     return (
-      <div className="absolute left-3/4 top-[20%] z-10 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 lg:top-1/4">
+      <div className="absolute left-3/4 top-[10%] z-10 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 md:top-[20%] xl:top-1/4">
         <div className="relative">
           <h4 className="text-left">Press to get a new question!</h4>
           <span className="absolute right-6 top-5">
