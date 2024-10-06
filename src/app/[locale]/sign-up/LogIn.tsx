@@ -3,35 +3,33 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
+import {useRouter} from '@/navigation';
 
 const LogIn = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    confirmPassword: ''
   });
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    console.log('Sign up submitted:', formData);
-    // try {
-    //   const { data, error } = await supabase.auth.signUp({        
-    //     email: formData.email, // Assuming username is an email
-    //     password: formData.password,
-    //   });
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: formData.email, // Assuming username is an email
+          password: formData.password,
+        }).finally(() => {
+            router.push("/");
+        });
   
-    //   if (error) throw error;
-  
-    //   alert("Signup successful! Please check your email for verification.");
-    //   setFormData({ email: "", password: "", confirmPassword: "" });
-    //   console.log('DATA: ',data);
-    // } catch (error) {
-    //   alert("Error signing up: " + error);
-    // }
+        if (error) throw error;
+        console.log("Logged in successfully!");
+        console.log('User: ',data);
+        setFormData({ email: "", password: "" });
+      } catch (error) {
+        alert("Error signing up: " + error);
+      }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
