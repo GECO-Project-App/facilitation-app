@@ -1,13 +1,18 @@
+'use client';
 import React from 'react';
+import {Setting} from '@/components/icons/setting';
+import {Link} from '@/navigation';
 
 const AppBar: React.FC = () => {
   return (
-    <div className="flex h-[40px] w-full items-center justify-between bg-red border-b-2 border-black p-4">
-      <div className="flex items-center">
-        <h1 className="text-2xl font-bold text-white">GECO</h1>
+    <div className="sticky top-0 flex h-[40px] w-full items-center justify-between border-b-2 border-black bg-yellow p-4">
+      <div>
+        <h1 className="text-2xl font-bold text-white"></h1>
       </div>
-      <div className="flex items-center">
-        <h1 className="text-2xl font-bold text-white">GECO</h1>
+      <div>
+        <Link href={'/log-in'}>
+            <Setting />
+        </Link>
       </div>
     </div>
   );
