@@ -42,12 +42,6 @@ const SignUpPage = () => {
     }));
   };  
 
-  const [isSwitched, setIsSwitched] = useState(false);
-
-  const handleSwitch = () => {
-    setIsSwitched(!isSwitched);
-  };
-  console.log('isSwitched: ', isSwitched);
 
   return (
         <form onSubmit={handleSubmit}>

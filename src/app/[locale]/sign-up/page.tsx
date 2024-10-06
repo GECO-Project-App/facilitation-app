@@ -4,7 +4,7 @@ import {Switch} from '@/components/ui/switch/switch';
 import SignUp from './SignUp';
 const AuthPage = () => {
 
-  const [isSwitched, setIsSwitched] = useState(false);
+  const [isSwitched, setIsSwitched] = useState(true);
   const handleSwitch = () => {
     setIsSwitched(!isSwitched);
   };
