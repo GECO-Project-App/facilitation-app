@@ -14,10 +14,11 @@ const AuthPage = () => {
   return (
     <>
       <div className="container mx-auto min-h-screen overflow-hidden bg-white">
-        <div className="w-full max-w-md rounded-lg p-6">
+        <div className="w-full max-w-md rounded-lg p-6 m-auto">
           <div className="space-y-6 px-4">
             <div className="flex items-center justify-center space-x-4 pt-10">
-              <Switch id="terms" className="h-20 w-[88%]" onClick={handleSwitch} />
+              {/* <Switch id="terms" className="h-20 w-[88%]" onClick={handleSwitch} /> */}
+              <Switch id="terms" className="h-20 w-[280px]" onClick={handleSwitch} />
             </div>
             <div className="pt-[40%]">
               <AnimatePresence mode="wait">

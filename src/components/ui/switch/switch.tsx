@@ -20,7 +20,7 @@ const Switch = React.forwardRef<
       
     <SwitchPrimitives.Thumb
       className={cn(
-        'pointer-events-none block h-20 w-40 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-32 data-[state=unchecked]:translate-x-[-3px] data-[state=checked]:bg-sky-300 data-[state=unchecked]:bg-green  border-4 border-black',
+        'pointer-events-none block h-20 w-40 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-[116px] data-[state=unchecked]:translate-x-[-3px] data-[state=checked]:bg-sky-300 data-[state=unchecked]:bg-green  border-4 border-black',
       )}
       ><div className="text-black text-2xl font-bold mt-4">Login</div></SwitchPrimitives.Thumb>
     <div className="text-black text-2xl font-bold ml-4">Signup</div>
