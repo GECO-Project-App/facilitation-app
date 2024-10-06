@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 
-const SignUp = () => {
+const LogIn = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -71,23 +71,17 @@ const SignUp = () => {
               />
             </div>
             <div className="space-y-2">
-              <Input
-                id="confirm-password"
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm your password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                className="rounded-full h-12"
-              />
+              <div className="flex items-center justify-center space-x-4">
+                Forgot your password?
+              </div>
+                
             </div>
           </div>
           <div className="mt-14 flex justify-center">
-            <Button type="submit">Sign Up</Button>
+            <Button type="submit">Log In</Button>
           </div>
         </form>
   );
 };
 
-export default SignUp;
+export default LogIn;

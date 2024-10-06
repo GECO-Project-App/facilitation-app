@@ -2,6 +2,8 @@
 import {useState} from 'react';
 import {Switch} from '@/components/ui/switch/switch';
 import SignUp from './SignUp';
+import LogIn from './LogIn';
+
 const AuthPage = () => {
 
   const [isSwitched, setIsSwitched] = useState(true);
@@ -17,7 +19,7 @@ const AuthPage = () => {
             <div className="flex items-center justify-center space-x-4">
               <Switch id="terms" className="h-20 w-[88%]" onClick={handleSwitch} />
             </div>
-            <SignUp />
+            {isSwitched ? <LogIn /> : <SignUp />}
           </div>
         </div>
       </div>
