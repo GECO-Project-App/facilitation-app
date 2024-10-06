@@ -18,20 +18,20 @@ const LogIn = () => {
       return;
     }
     console.log('Sign up submitted:', formData);
-    try {
-      const { data, error } = await supabase.auth.signUp({        
-        email: formData.email, // Assuming username is an email
-        password: formData.password,
-      });
+    // try {
+    //   const { data, error } = await supabase.auth.signUp({        
+    //     email: formData.email, // Assuming username is an email
+    //     password: formData.password,
+    //   });
   
-      if (error) throw error;
+    //   if (error) throw error;
   
-      alert("Signup successful! Please check your email for verification.");
-      setFormData({ email: "", password: "", confirmPassword: "" });
-      console.log('DATA: ',data);
-    } catch (error) {
-      alert("Error signing up: " + error);
-    }
+    //   alert("Signup successful! Please check your email for verification.");
+    //   setFormData({ email: "", password: "", confirmPassword: "" });
+    //   console.log('DATA: ',data);
+    // } catch (error) {
+    //   alert("Error signing up: " + error);
+    // }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
