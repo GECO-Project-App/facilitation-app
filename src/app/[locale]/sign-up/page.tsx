@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 
 const SignUpPage = () => {
@@ -49,10 +50,9 @@ const SignUpPage = () => {
           <p className="text-gray-600">Create a new account to get started</p>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
+          <div className="space-y-6 px-4">
             <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <input
+              <Input
                 id="email"
                 name="email"
                 type="email"
@@ -60,12 +60,11 @@ const SignUpPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-              <input
+              <Input
                 id="password"
                 name="password"
                 type="password"
@@ -73,12 +72,11 @@ const SignUpPage = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="rounded-full h-12"
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-              <input
+              <Input
                 id="confirm-password"
                 name="confirmPassword"
                 type="password"
@@ -86,7 +84,7 @@ const SignUpPage = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="rounded-full h-12"
               />
             </div>
           </div>
