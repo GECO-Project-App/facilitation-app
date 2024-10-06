@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch/switch';
 import { supabase } from "@/lib/supabase/supabaseClient";
 
 const SignUpPage = () => {
@@ -51,6 +52,9 @@ const SignUpPage = () => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="space-y-6 px-4">
+            <div className="flex items-center justify-center space-x-4">
+              <Switch id="terms" className="h-20 w-[88%]" />
+            </div>
             <div className="space-y-2">
               <Input
                 id="email"
