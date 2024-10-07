@@ -1,4 +1,4 @@
-import {Button, NavBar, PageLayout, RandomQuestion} from '@/components';
+import {Button, Header, NavBar, PageLayout, RandomQuestion} from '@/components';
 import {Colors} from '@/lib/constants';
 import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
@@ -9,18 +9,19 @@ export default async function CheckOutPage({params}: {params: {slug: string}}) {
   const t = await getTranslations('exercises.checkOut');
 
   const questions: string[] = t.raw('questions').map((question: string) => question);
-  return (
-    <PageLayout backgroundColor="bg-green">
-      <NavBar />
-      <section className="flex flex-1 flex-col items-center justify-center">
-        <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} questions={questions} />
-      </section>
 
-      <Button variant="blue" asChild className="mx-auto">
-        <Link href={'/pass-it-on'}>
-          {t('passItOnButton')} <ArrowRight size={28} />
-        </Link>
-      </Button>
+  return (
+    <PageLayout
+      backgroundColor="bg-green"
+      header={<Header />}
+      footer={
+        <Button variant="blue" asChild className="mx-auto">
+          <Link href={'/pass-it-on'}>
+            {t('passItOnButton')} <ArrowRight size={28} />
+          </Link>
+        </Button>
+      }>
+      <RandomQuestion slug={slug} excludeShapeColor={Colors.Orange} questions={questions} />
     </PageLayout>
   );
 }

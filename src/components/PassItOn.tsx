@@ -15,12 +15,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
+import {Link, useRouter} from '@/navigation';
 
 export const PassItOn: FC = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.passItOn');
   const steps: string[] = t.raw('steps').map((step: string) => step);
+  const router = useRouter();
 
   useEffect(() => {
     if (!api) {
@@ -31,9 +33,7 @@ export const PassItOn: FC = () => {
 
     api.on('select', () => {
       setCurrentStep(api.selectedScrollSnap());
-      console.log(currentStep);
     });
-    console.log(currentStep);
   }, [api]);
 
   return (
@@ -45,8 +45,8 @@ export const PassItOn: FC = () => {
         </Header>
       }
       footer={
-        <Button variant="yellow" className="mx-auto">
-          Back to menu
+        <Button variant="yellow" className="mx-auto" asChild>
+          <Link href="/">Back to menu</Link>
         </Button>
       }>
       <section className="flex h-full w-full flex-1 items-center justify-center">
