@@ -2,7 +2,7 @@
 import {mockPassItOn} from '@/lib/mock';
 import {cn} from '@/lib/utils';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
-import {FC, useCallback, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import {HomeButton} from './HomeButton';
 import {BackButton} from './NavBar/BackButton';
 import {Button} from './ui';
@@ -10,19 +10,29 @@ import {RiveAnimation} from './RiveAnimation';
 import {useTranslations} from 'next-intl';
 import {PageLayout} from './PageLayout';
 import {Link} from '@/navigation';
+import {Carousel, CarouselPrevious, CarouselItem, CarouselNext, CarouselApi} from './ui/carousel';
+import {CarouselContent} from './ui/carousel';
 
 export const PassItOn: FC = () => {
+  const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
+  const [count, setCount] = useState(0);
   const t = useTranslations('exercises.passItOn');
   const steps: string[] = t.raw('steps').map((step: string) => step);
 
-  const goToPreviousStep = () => {
-    setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
-  };
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
 
-  const goToNextStep = () => {
-    setCurrentStep((prev) => (prev < mockPassItOn.length - 1 ? prev + 1 : prev));
-  };
+    setCount(api.scrollSnapList().length);
+    setCurrentStep(api.selectedScrollSnap() + 1);
+
+    api.on('select', () => {
+      setCurrentStep(api.selectedScrollSnap() + 1);
+    });
+    console.log(currentStep);
+  }, [api]);
 
   const Navigation = () => (
     <nav className={cn('relative flex w-full flex-row items-center justify-center')}>
@@ -30,7 +40,7 @@ export const PassItOn: FC = () => {
         {currentStep === 0 ? (
           <BackButton />
         ) : (
-          <button onClick={goToPreviousStep} disabled={currentStep === 0}>
+          <button onClick={() => api?.scrollTo(currentStep - 1)} disabled={currentStep === 0}>
             <ArrowLeft size={42} />
           </button>
         )}
@@ -58,32 +68,19 @@ export const PassItOn: FC = () => {
   return (
     <PageLayout backgroundColor="bg-blue">
       <Navigation />
-      <section className="flex flex-1 flex-col items-center justify-between">
-        <div className="flex flex-1 flex-col items-center justify-center space-y-8 text-center">
-          <div
-            className={cn(
-              currentStep === 0 ? 'bg-yellow' : '',
-              currentStep === 1 ? 'bg-pink' : '',
-              currentStep === 2 ? 'bg-green' : '',
-              'aspect-square h-11 w-11 rounded-full border-2 border-black p-1 text-2xl font-semibold text-black',
-            )}>
-            {currentStep + 1}
-          </div>
-          <Illustration />
-          <p className="text-white">{steps[currentStep]}</p>
-        </div>
-
-        <div>
-          {currentStep < steps.length - 1 ? (
-            <Button onClick={goToNextStep} variant="pink">
-              {t('button')} <ArrowRight size={32} />
-            </Button>
-          ) : (
-            <Button onClick={goToNextStep} variant="pink" asChild>
-              <Link href={'/'}>{t('home')}</Link>
-            </Button>
-          )}
-        </div>
+      <section className="flex h-full w-full flex-1 items-center justify-center bg-red">
+        <Carousel className="h-full w-full flex-1 bg-yellow" setApi={setApi}>
+          <CarouselContent>
+            {steps.map((_, index) => (
+              <CarouselItem key={index}>
+                <p>{steps[index]}</p>
+                <Illustration />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </section>
     </PageLayout>
   );
