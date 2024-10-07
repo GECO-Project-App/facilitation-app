@@ -17,17 +17,14 @@ export const PageLayout: FC<{
   contentColor,
 }) => {
   return (
-    <main
-      className={cn(
-        backgroundColor,
-        hasPadding ? 'page-padding' : '',
-        'flex min-h-svh flex-col justify-between',
-      )}>
+    <main className={cn(backgroundColor, 'page-padding flex min-h-svh flex-col justify-between')}>
       {header}
 
       <section
         className={cn(contentColor ?? 'bg-white', 'flex w-full flex-1 flex-col justify-center')}>
-        <div className="page-constraints w-full px-4 py-8">{children}</div>
+        <div className={cn(hasPadding ? 'px-4' : '', 'page-constraints w-full py-8')}>
+          {children}
+        </div>
       </section>
       <footer className="flex flex-row justify-center pt-4">{footer}</footer>
     </main>
