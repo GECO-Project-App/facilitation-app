@@ -8,3 +8,4 @@ export * from './people';
 export * from './shapes';
 export * from './svflag';
 export * from './enflag';
+export * from './arrow';
