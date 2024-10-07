@@ -4,6 +4,7 @@ import {Switch} from '@/components/ui/switch/switch';
 import SignUp from './SignUp';
 import LogIn from './LogIn';
 import {motion, AnimatePresence} from 'framer-motion';
+import {Tabs, TabsList, TabsTrigger} from '@/components/ui/tabs/tabs';
 
 const AuthPage = () => {
   const [isSwitched, setIsSwitched] = useState(true);
@@ -17,8 +18,13 @@ const AuthPage = () => {
         <div className="w-full max-w-md rounded-lg p-6 m-auto">
           <div className="space-y-6 px-4">
             <div className="flex items-center justify-center space-x-4 pt-10">
-              {/* <Switch id="terms" className="h-20 w-[88%]" onClick={handleSwitch} /> */}
               <Switch id="terms" className="h-20 w-[280px]" onClick={handleSwitch} />
+              <Tabs>
+                <TabsList>
+                  <TabsTrigger value="login">Login</TabsTrigger>
+                  <TabsTrigger value="signup">Signup</TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
             <div className="pt-[40%]">
               <AnimatePresence mode="wait">
