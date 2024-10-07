@@ -9,3 +9,5 @@ export * from './RiveAnimation';
 export * from './About';
 export * from './ExerciseCard';
 export * from './PageLayout';
+export * from './CarouselPagination';
+export * from './Header';

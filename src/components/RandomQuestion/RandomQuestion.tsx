@@ -77,7 +77,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
   };
 
   return (
-    <div onClick={getNextQuestion} className="w-fit">
+    <div onClick={getNextQuestion} className="mx-auto w-fit">
       <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
         {currentQuestion}
       </CurrentShape>

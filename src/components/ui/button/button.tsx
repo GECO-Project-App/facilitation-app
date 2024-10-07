@@ -18,6 +18,8 @@ const buttonVariants = cva(
         orange: 'bg-orange',
         purple: 'bg-purple',
         white: 'bg-white',
+        carousel:
+          'bg-transparent border-none shadow-none active:translate-x-0 active:translate-y-0',
       },
       size: {
         default: 'px-6 py-4',
