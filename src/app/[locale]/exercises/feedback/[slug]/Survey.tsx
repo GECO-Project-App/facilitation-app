@@ -22,7 +22,7 @@ function Survey({title, onSubmit}: SurveyProps) {
     setSelectedValue('');
   };
   const handleBack = () => {
-    router.back();
+    router.push('/');
   };
 
   const t = useTranslations('feedback');
