@@ -68,11 +68,13 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const currentStepData = steps[currentStep];
 
   return (
-    <PageLayout backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}
-    header={<Header>
-                <CarouselPagination steps={steps} currentStep={currentStep} />
-
-    </Header>}>
+    <PageLayout
+      backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}
+      header={
+        <Header>
+          <CarouselPagination steps={steps} currentStep={currentStep} />
+        </Header>
+      }>
       <article className="flex h-40 flex-col items-center justify-between">
         {/* <HeaderWrapper
           title={currentStepData.title}
