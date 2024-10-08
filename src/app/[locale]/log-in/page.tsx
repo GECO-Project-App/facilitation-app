@@ -7,16 +7,16 @@ import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs/tab
 const AuthPage = () => {
   return (
     <Tabs defaultValue="login" className="p-4 ">
-      <TabsList className="h-12 grid w-80 grid-cols-2 m-auto bg-green">
+      <TabsList className="h-12 grid w-80 grid-cols-2 m-auto bg-sky-300">
         <TabsTrigger 
           value="login" 
-          className="h-10 text-green-100 data-[state=active]:bg-blue data-[state=active]:text-white"
+          className="h-10 text-green-100 data-[state=active]:bg-green data-[state=active]:text-black data-[state=active]:border-2 border-black"
         >
           Login
         </TabsTrigger>
         <TabsTrigger 
           value="signup" 
-          className="h-10 text-green-100 data-[state=active]:bg-blue data-[state=active]:text-white"
+          className="h-10 text-green-100 data-[state=active]:bg-green data-[state=active]:text-black data-[state=active]:border-2 border-black"
         >
           Signup
         </TabsTrigger>
