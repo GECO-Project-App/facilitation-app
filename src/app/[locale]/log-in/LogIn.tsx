@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 import {useRouter} from '@/navigation';
+import { useUserStore } from "@/store/userStore";
 
 const LogIn = () => {
+  const setUser = useUserStore((state) => state.setUser);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -24,6 +26,7 @@ const LogIn = () => {
         });
   
         if (error) throw error;
+        setUser(data.user);
         console.log("Logged in successfully!");
         console.log('User: ',data);
         setFormData({ email: "", password: "" });
