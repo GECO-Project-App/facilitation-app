@@ -9,3 +9,4 @@ export * from './shapes';
 export * from './svflag';
 export * from './enflag';
 export * from './complete';
+export * from './arrow';

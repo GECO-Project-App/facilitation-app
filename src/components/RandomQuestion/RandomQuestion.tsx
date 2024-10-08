@@ -1,10 +1,10 @@
 'use client';
 import {ShapeColors} from '@/lib/constants';
-import {ccMock} from '@/lib/mock';
 import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useCallback, useEffect, useMemo, useState} from 'react';
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
-import {useTranslations} from 'next-intl';
+import {RiveAnimation} from '../RiveAnimation';
+import {Arrow} from '../icons';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
@@ -23,48 +23,44 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
 }) => {
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
-
-  useEffect(() => {
-    if (!questions || !shapes) {
-      return;
-    }
-    const savedQuestion = localStorage.getItem('currentQuestion');
-    if (savedQuestion) {
-      setCurrentQuestion(savedQuestion);
-      setCurrentShapeIdx(parseInt(localStorage.getItem('currentShapeIdx') || '0'));
-    } else {
-      getNextQuestion();
-    }
-  }, []);
+  const [isIntervalActive, setIsIntervalActive] = useState(true);
 
   const CurrentShape = useMemo(() => {
     return shapes[currentShapeIdx];
   }, [currentShapeIdx, shapes, excludeShapeColor]);
 
-  const getNextQuestion = () => {
-    let previousPicks: string[] = JSON.parse(localStorage.getItem('previousPicks') || '[]');
-
-    const nextQuestion = getRandomUniqueItem(questions, previousPicks);
+  const generateNewQuestionAndShape = useCallback(() => {
+    const nextQuestion = getRandomUniqueItem(questions, []);
     const nextShapeIdx = (currentShapeIdx + 1) % shapes.length;
 
     if (nextQuestion) {
-      previousPicks.push(nextQuestion);
-      localStorage.setItem('previousPicks', JSON.stringify(previousPicks));
-      localStorage.setItem('currentQuestion', nextQuestion);
-      localStorage.setItem('currentShapeIdx', nextShapeIdx.toString());
       setCurrentQuestion(nextQuestion);
       setCurrentShapeIdx(nextShapeIdx);
-    } else {
-      // All questions have been used, reset previousPicks
-      localStorage.setItem('previousPicks', '[]');
-      const question = getRandomUniqueItem(questions, []);
-      if (!question) {
-        return;
+    }
+  }, [questions, currentShapeIdx, shapes]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (isIntervalActive) {
+      interval = setInterval(() => {
+        generateNewQuestionAndShape();
+      }, 100);
+    }
+    if (!isIntervalActive) {
+      if (interval) {
+        clearInterval(interval);
       }
-      localStorage.setItem('currentQuestion', question);
-      localStorage.setItem('currentShapeIdx', '0');
-      setCurrentQuestion(question);
-      setCurrentShapeIdx(0);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [generateNewQuestionAndShape, isIntervalActive]);
+
+  const handleClick = () => {
+    if (currentQuestion) {
+      setIsIntervalActive((prev) => !prev);
     }
   };
 
@@ -76,11 +72,28 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
     return colorKeys[randomIndex];
   };
 
+  const ReminderText: FC = useCallback(() => {
+    return (
+      <div className="absolute left-3/4 top-[10%] z-10 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 md:top-[20%] xl:top-1/4">
+        <div className="relative">
+          <h4 className="text-left">Press to get a new question!</h4>
+          <span className="absolute right-6 top-5">
+            <RiveAnimation src={'eyes.riv'} width={50} height={50} />
+          </span>
+          <Arrow className="absolute -left-14 top-4" />
+        </div>
+      </div>
+    );
+  }, []);
+
   return (
-    <div onClick={getNextQuestion} className="mx-auto w-fit">
-      <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
-        {currentQuestion}
-      </CurrentShape>
-    </div>
+    <section className="relative flex w-full flex-1 flex-col items-center justify-center">
+      <ReminderText />
+      <button onMouseDown={handleClick} className="cursor-pointer">
+        <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
+          {currentQuestion}
+        </CurrentShape>
+      </button>
+    </section>
   );
 };

@@ -71,6 +71,7 @@ const config: Config = {
         purple: 'hsl(var(--purple))',
         orange: 'hsl(var(--orange))',
         yellow: 'hsl(var(--yellow))',
+        lightBlue: 'hsl(var(--light-blue))',
         deepPurple: 'hsl(var(--deep-purple))',
         blue: 'hsl(var(--blue))',
         red: 'hsl(var(--red))',

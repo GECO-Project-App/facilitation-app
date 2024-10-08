@@ -58,14 +58,14 @@ export const About: FC<{
       <div className="space-y-6">
         {mock?.rive && <RiveAnimation src={mock.rive} />}
         {mock?.illustration && (
-          <div className="relative aspect-video w-full self-start md:w-2/3">
+          <div className="relative mx-auto aspect-video w-2/3">
             <Image src={mock.illustration} alt={title} fill />
           </div>
         )}
-        <div className="space-y-4">
+        <div className="w-full space-y-4">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold">{title} </h2>
-            <p className="text-sm font-light">{subtitle}</p>
+            <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
         </div>

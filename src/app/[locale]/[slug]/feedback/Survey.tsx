@@ -22,14 +22,14 @@ function Survey({title, onSubmit}: SurveyProps) {
     setSelectedValue('');
   };
   const handleBack = () => {
-    router.back();
+    router.push('/');
   };
 
   const t = useTranslations('feedback');
 
   return (
     <article
-      className={`flex flex-col gap-4 overflow-y-hidden ${keyboardStatus.isKeyboardOpen ? 'h-[54vh] justify-between' : 'min-h-screen justify-between'} `}>
+      className={`flex flex-col gap-4 overflow-y-hidden ${keyboardStatus.isKeyboardOpen ? 'h-[54vh] justify-between' : 'min-h-screen justify-evenly'} `}>
       <TextArea
         key={title}
         title={title}
