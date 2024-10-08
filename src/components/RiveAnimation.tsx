@@ -4,12 +4,14 @@ import {useRive, UseRiveParameters} from '@rive-app/react-canvas';
 type RiveComponentProps = UseRiveParameters & {
   width?: string | number;
   height?: string | number;
+  className?: string;
 };
 
 export const RiveAnimation = ({
   autoplay = true,
   width = 160,
   height = 160,
+  className,
   src,
   ...riveProps
 }: RiveComponentProps) => {
@@ -19,5 +21,5 @@ export const RiveAnimation = ({
     ...riveProps,
   });
 
-  return <RiveComponent style={{width, height}} />;
+  return <RiveComponent style={{width, height}} className={className} />;
 };

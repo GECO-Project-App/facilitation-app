@@ -9,6 +9,7 @@ import {NavBar} from './NavBar';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
 import {PageLayout} from './PageLayout';
+import {Header} from './Header';
 
 export const About: FC<{
   slug: string;
@@ -45,8 +46,15 @@ export const About: FC<{
   }, [slug]);
 
   return (
-    <PageLayout>
-      <NavBar />
+    <PageLayout
+      header={<Header />}
+      footer={
+        <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
+          <Link href={mock.button.link}>
+            {buttonText} <ArrowRight size={28} />
+          </Link>
+        </Button>
+      }>
       <div className="space-y-6">
         {mock?.rive && <RiveAnimation src={mock.rive} />}
         {mock?.illustration && (
@@ -62,12 +70,6 @@ export const About: FC<{
           <p>{description}</p>
         </div>
       </div>
-
-      <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-        <Link href={mock.button.link}>
-          {buttonText} <ArrowRight size={28} />
-        </Link>
-      </Button>
     </PageLayout>
   );
 };

@@ -77,8 +77,8 @@ const config: Config = {
         red: 'hsl(var(--red))',
       },
       boxShadow: {
-        light: '0px 6px 0px 0px #000',
         dark: '0px 6px 0px 0px #000',
+        small: '0px 2.5px 0px 0px #000',
       },
       translate: {
         boxShadowX: '0px',

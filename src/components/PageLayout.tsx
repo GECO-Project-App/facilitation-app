@@ -4,17 +4,32 @@ import React, {FC} from 'react';
 export const PageLayout: FC<{
   children: React.ReactNode;
   backgroundColor?: string;
+  contentColor?: string;
   hasPadding?: boolean;
-}> = ({children, backgroundColor = 'bg-white', hasPadding = true}) => {
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
+}> = ({
+  children,
+  backgroundColor = 'bg-white',
+  hasPadding = true,
+  header,
+  footer,
+  contentColor,
+}) => {
   return (
-    <main className={cn(backgroundColor, 'min-h-svh')}>
+    <main className={cn(backgroundColor, 'page-padding flex min-h-svh flex-col justify-between')}>
+      {header}
+
       <section
         className={cn(
-          hasPadding ? 'page-padding' : '',
-          'page-constraints flex min-h-svh flex-col justify-between space-y-4',
+          contentColor ?? 'bg-white',
+          'relative flex w-full flex-1 flex-col justify-center',
         )}>
-        {children}
+        <div className={cn(hasPadding ? 'px-4' : '', 'page-constraints h-full w-full py-8')}>
+          {children}
+        </div>
       </section>
+      <footer className="flex flex-row justify-center pt-4">{footer}</footer>
     </main>
   );
 };
