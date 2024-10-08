@@ -8,8 +8,6 @@ import { Button } from '@/components/ui/button';
 const AuthPage = () => {
   const user = useUserStore((state) => state.user);
   const {signOut} = useUserStore();
-
-  console.log('User: ', user);
   return (
     <>
       {user ? (
