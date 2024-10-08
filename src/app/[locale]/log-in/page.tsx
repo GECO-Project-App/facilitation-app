@@ -6,8 +6,8 @@ import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs/tab
 
 const AuthPage = () => {
   return (
-    <Tabs defaultValue="login" className="p-4 ">
-      <TabsList className="h-12 grid w-80 grid-cols-2 m-auto bg-sky-300">
+    <Tabs defaultValue="login" className="p-4 overflow-hidden">
+      <TabsList className="h-12 grid w-80 grid-cols-2 m-auto bg-sky-300 mt-14">
         <TabsTrigger 
           value="login" 
           className="h-10 text-green-100 data-[state=active]:bg-green data-[state=active]:text-black data-[state=active]:border-2 border-black"
@@ -21,7 +21,7 @@ const AuthPage = () => {
           Signup
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="login">
+      <TabsContent value="login" className="mt-32">
         <motion.div
           key="login"
           initial={{x: -300, opacity: 0}}
@@ -31,7 +31,7 @@ const AuthPage = () => {
           <LogIn />
         </motion.div>
       </TabsContent>
-      <TabsContent value="signup">
+      <TabsContent value="signup" className="mt-32">
         <motion.div
           key="signup"
           initial={{x: 300, opacity: 0}}
