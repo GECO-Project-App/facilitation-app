@@ -1,9 +1,9 @@
 import {paginationColors} from '@/lib/mock';
 import {cn} from '@/lib/utils';
-import React, {FC, useCallback} from 'react';
+import {FC, useCallback} from 'react';
 
 type CarouselPaginationProps = {
-  steps: any[];
+  steps: Array<unknown>;
   currentStep: number;
 };
 

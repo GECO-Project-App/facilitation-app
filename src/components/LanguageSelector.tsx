@@ -1,12 +1,12 @@
 'use client';
-import {useRouter} from '@/navigation';
-import {useParams} from 'next/navigation';
-import {useLocale, useTranslations} from 'next-intl';
-import {FC, useMemo, useState, useTransition} from 'react';
-import {Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue} from './ui';
 import {cn} from '@/lib/utils';
-import {EnFlag, SvFlag} from './icons';
+import {useRouter} from '@/navigation';
 import {ChevronDownIcon, ChevronUpIcon} from 'lucide-react';
+import {useLocale, useTranslations} from 'next-intl';
+import {useParams} from 'next/navigation';
+import {FC, useMemo, useState, useTransition} from 'react';
+import {EnFlag, SvFlag} from './icons';
+import {Select, SelectContent, SelectItem, SelectTrigger} from './ui';
 
 type Language = {
   label: string;

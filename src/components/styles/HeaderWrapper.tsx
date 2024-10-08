@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
 import {ArrowLeft, ArrowRight} from 'lucide-react';
+import {FC} from 'react';
 
 interface HeaderWrapperProps {
   title: string;

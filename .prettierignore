@@ -1,6 +1,6 @@
-# Ignore artifacts:
-build
-coverage
-node_modules
-# Ignore all HTML files:
-*.html
+# Ignore all
+*
+
+# But not the src-folder
+!src
+!src/**/*

@@ -1,7 +1,7 @@
 'use client';
 
-import React, {useEffect} from 'react';
 import useRemoveLocalStorageItem from '@/hooks/useRemoveLocalStorageItem'; // Adjust path as needed
+import {useEffect} from 'react';
 
 const ClearLocalStorage = () => {
   const removeItem = useRemoveLocalStorageItem('chapterDone');

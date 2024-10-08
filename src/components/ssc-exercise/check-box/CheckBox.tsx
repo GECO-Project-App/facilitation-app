@@ -1,6 +1,6 @@
 'use client';
-import React, {useEffect, useState} from 'react';
 import {Checked} from '@/components/icons/checked';
+import React, {useEffect, useState} from 'react';
 
 const CheckBox: React.FC<{chapter: string}> = ({chapter}) => {
   const [doneChapters, setDoneChapters] = useState<string[]>([]);

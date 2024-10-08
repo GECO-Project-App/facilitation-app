@@ -22,15 +22,17 @@ export default async function SSCPage() {
             </Link>
           }
           rightContent={
-            <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
+            <Link href={'/exercises/ssc/tips'}>
+              <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
+            </Link>
           }
         />
       }>
-      <section className="mx-auto flex flex-1 flex-col items-center justify-center space-y-10">
+      <section className="mx-auto flex max-w-xs flex-1 flex-col items-center justify-center space-y-10">
         {buttons.map((button, i) => (
           <Button
             variant={button.variant}
-            className="w-fit justify-between"
+            className="w-full justify-between"
             asChild
             key={button.title}>
             <Link href={button.href}>

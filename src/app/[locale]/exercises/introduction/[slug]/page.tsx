@@ -1,7 +1,7 @@
 import {About} from '@/components';
+import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
-import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 
 export default async function IntroductionPage({params}: {params: {slug: string}}) {
   const {slug} = params;

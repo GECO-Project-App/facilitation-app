@@ -1,7 +1,7 @@
 'use client';
-import React, {useState, useEffect} from 'react';
-import {EyesDown, EyesRight, EyesLeft, EyesDownSlanted} from '../icons';
 import {cn} from '@/lib/utils';
+import React, {useEffect, useState} from 'react';
+import {EyesDown, EyesDownSlanted, EyesLeft, EyesRight} from '../icons';
 
 const eyeComponents = [EyesDown, EyesDownSlanted, EyesLeft, EyesRight];
 

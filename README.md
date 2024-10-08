@@ -34,14 +34,17 @@ We welcome contributions from everyone! See [CONTRIBUTING.md](CONTRIBUTING.md) f
 
 Our project uses the following technologies:
 
+- [Next.js](https://nextjs.org/docs) - React framework for building web applications
+- [React](https://reactjs.org/docs/getting-started.html) - JavaScript library for building user interfaces
+- [TypeScript](https://www.typescriptlang.org/docs/) - Typed superset of JavaScript
 - [Storybook](https://storybook.js.org/docs/react/get-started/introduction) - For component development and testing
-- [i18n](https://nextjs.org/docs/app/building-your-application/routing/internationalization) - For internationalization
-- [shadcn/ui](https://ui.shadcn.com/docs) - For UI components
+- [next-intl](https://next-intl-docs.vercel.app/) - For internationalization
 - [Tailwind CSS](https://tailwindcss.com/docs) - For styling
+- [Lucide React](https://lucide.dev/guide/packages/lucide-react) - For icons
 
 ## Internationalization (i18n)
 
-This project supports multiple languages. To add or update translations, see `/app/[lang]/dictionaries/[code].json`.
+This project supports multiple languages. To add or update translations, see the `messages` directory.
 
 Available languages:
 
