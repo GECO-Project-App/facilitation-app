@@ -1,26 +1,33 @@
-import {Button, NavBar, PageLayout, RandomQuestion} from '@/components';
+'use client';
+import {Button, Header, PageLayout, RandomQuestion} from '@/components';
 import {Colors} from '@/lib/constants';
-import {Link} from '@/navigation';
+import {Link, usePathname} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
-import {getTranslations} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
 
-export default async function CheckOutPage({params}: {params: {slug: string}}) {
-  const slug = params.slug;
-  const t = await getTranslations('exercises.checkOut');
+export default function CheckOutPage() {
+  const pathname = usePathname();
+  const t = useTranslations('exercises.checkOut');
+  const slug = pathname.split('/').pop();
 
   const questions: string[] = t.raw('questions').map((question: string) => question);
-  return (
-    <PageLayout backgroundColor="bg-green">
-      <NavBar />
-      <section className="flex flex-1 flex-col items-center justify-center">
-        <RandomQuestion slug={slug} excludeShapeColor={Colors.Green} questions={questions} />
-      </section>
 
-      <Button variant="blue" asChild className="mx-auto">
-        <Link href={'/pass-it-on'}>
-          {t('passItOnButton')} <ArrowRight size={28} />
-        </Link>
-      </Button>
+  return (
+    <PageLayout
+      backgroundColor="bg-green"
+      header={<Header />}
+      footer={
+        <Button variant="blue" asChild className="mx-auto">
+          <Link href={`/${slug}/pass-it-on`}>
+            {t('passItOnButton')} <ArrowRight size={28} />
+          </Link>
+        </Button>
+      }>
+      <RandomQuestion
+        slug={slug as string}
+        excludeShapeColor={Colors.Orange}
+        questions={questions}
+      />
     </PageLayout>
   );
 }

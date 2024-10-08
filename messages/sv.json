@@ -75,7 +75,8 @@
         "När den personen har gett sitt svar väljer de vem som ska svara näst.",
         "Upprepa denna process tills alla har svarat på frågan."
       ],
-      "button": "Nästa steg",
+      "homeButton": "Tillbaka till menyn",
+      "completeButton": "Slutför",
       "home": "Gå tillbaka"
     },
 

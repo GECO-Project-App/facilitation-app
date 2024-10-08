@@ -120,24 +120,18 @@ export const sscMock = {
 };
 
 export type PassItOnItem = {
-  id: number;
-  instruction: string;
   rive: string;
 };
 export const mockPassItOn: PassItOnItem[] = [
   {
-    id: 1,
-    instruction: 'Pick a person to answer the question first.',
-    rive: 'pick.riv',
+    rive: 'passiton1.riv',
   },
   {
-    id: 2,
-    instruction: 'Once that person gave their answer, they pick who should answer next.',
-    rive: 'passit.riv',
+    rive: 'passiton2.riv',
   },
   {
-    id: 3,
-    instruction: 'Repeat this process until everyone has answered the question.',
-    rive: 'repeat2.riv',
+    rive: 'passiton3.riv',
   },
 ];
+
+export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];

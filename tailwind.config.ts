@@ -71,13 +71,14 @@ const config: Config = {
         purple: 'hsl(var(--purple))',
         orange: 'hsl(var(--orange))',
         yellow: 'hsl(var(--yellow))',
+        lightBlue: 'hsl(var(--light-blue))',
         deepPurple: 'hsl(var(--deep-purple))',
         blue: 'hsl(var(--blue))',
         red: 'hsl(var(--red))',
       },
       boxShadow: {
-        light: '0px 6px 0px 0px #000',
         dark: '0px 6px 0px 0px #000',
+        small: '0px 2.5px 0px 0px #000',
       },
       translate: {
         boxShadowX: '0px',

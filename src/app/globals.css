@@ -59,6 +59,7 @@
     --orange: 30 97% 52%;
     --yellow: 50 98% 61%;
     --blue: 241 99% 66%;
+    --light-blue: 202, 100%, 70%;
     --red: 0 96% 66%;
   }
 }
@@ -77,7 +78,7 @@
 
 @layer utilities {
   .page-padding {
-    @apply p-4 pb-8;
+    @apply py-4 pb-8;
   }
 
   .page-constraints {
@@ -87,11 +88,7 @@
   .page-layout {
     @apply mx-auto h-fit max-w-lg p-4 pb-8;
   }
-
-  .stylized-container {
-    @apply relative gap-2 rounded-full border-2 border-black px-6 py-4 text-xl font-bold uppercase text-black;
-  }
-  .stylized-container-shadow {
-    @apply absolute inset-0 -z-10 translate-x-1.5 translate-y-1.5 transform rounded-full border-2 border-black bg-black;
+  .animation-transition {
+    @apply transition duration-300 ease-in-out;
   }
 }
