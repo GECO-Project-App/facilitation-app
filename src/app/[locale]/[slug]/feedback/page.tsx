@@ -8,6 +8,7 @@ import {PageLayout} from '@/components';
 
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
+
   const [showSurvey, setShowSurvey] = useState(true);
 
   const [surveyTitle, setSurveyTitle] = useState('');
@@ -32,7 +33,6 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
 
   useEffect(() => {
     posthog.getActiveMatchingSurveys((surveys) => {
-      console.log(surveys);
       if (surveys.length > 0) {
         const survey = surveys.find((survey) => survey.id === getCurrentSurvey(slug));
         if (survey) {
@@ -44,7 +44,6 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   }, [posthog]);
 
   const handleSubmit = (value: string | null) => {
-    console.log('VALUE', value);
     setShowSurvey(false);
     posthog.capture('survey sent', {
       $survey_id: surveyID, // required
@@ -52,10 +51,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
     });
   };
 
-  console.log(surveyID, surveyTitle);
-
   return (
-    <PageLayout backgroundColor="bg-yellow">
+    <PageLayout backgroundColor="bg-yellow" contentColor="bg-yellow">
       {showSurvey ? (
         <Survey
           title={

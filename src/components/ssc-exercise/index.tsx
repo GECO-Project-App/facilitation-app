@@ -43,9 +43,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       }
 
       router.push(
-        areAllChaptersComplete(completedChapters)
-          ? '/exercises/feedback/ssc'
-          : '/exercises/ssc/accomplishment',
+        areAllChaptersComplete(completedChapters) ? '/ssc/feedback' : '/ssc/accomplishment',
       );
     } else {
       setCurrentStep((prev) => prev + 1);

@@ -3,7 +3,7 @@ import {getTranslations} from 'next-intl/server';
 import {useMemo} from 'react';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 
-export default async function IntroductionPage({params}: {params: {locale: string; slug: string}}) {
+export default async function IntroductionPage({params}: {params: {slug: string}}) {
   const {slug} = params;
 
   const t = await useMemo(async () => {
