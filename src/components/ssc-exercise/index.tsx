@@ -9,6 +9,9 @@ import {Step} from '@/lib/types';
 import {useRouter} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import React, {useMemo, useState} from 'react';
+import FooterWrapper from '@/components/styles/FooterWrapper';
+import {Header} from '@/components';
+import {CarouselPagination} from '@/components/CarouselPagination';
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -65,14 +68,18 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const currentStepData = steps[currentStep];
 
   return (
-    <PageLayout backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}>
+    <PageLayout backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}
+    header={<Header>
+                <CarouselPagination steps={steps} currentStep={currentStep} />
+
+    </Header>}>
       <article className="flex h-40 flex-col items-center justify-between">
-        <HeaderWrapper
+        {/* <HeaderWrapper
           title={currentStepData.title}
           handleBack={handlePreviousStep}
           currentStep={currentStep}
-        />
-        <StepCounter currentStep={currentStep} length={steps.length - 1} />
+        /> */}
+        {/* <StepCounter currentStep={currentStep} length={steps.length - 1} /> */}
       </article>
       <article className="flex flex-1 flex-col items-center justify-evenly">
         {chapterSteps[currentStep]?.sticker && (
@@ -84,11 +91,17 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
         )}
         <DescriptionWrapper>{currentStepData.description}</DescriptionWrapper>
         {chapterSteps[currentStep]?.timer && <Timer seconds={chapterSteps[currentStep].timer} />}
-        <footer className="mt-8">
+        {/* <footer className="mt-8">
           <Button variant="pink" onClick={handleNextStep}>
             {currentStepData.button} <ArrowRight size={28} />
           </Button>
-        </footer>
+        </footer>  */}
+        <FooterWrapper
+          backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}>
+          <Button variant="pink" onClick={handleNextStep}>
+            {currentStepData.button} <ArrowRight size={28} />
+          </Button>
+        </FooterWrapper>
       </article>
     </PageLayout>
   );
