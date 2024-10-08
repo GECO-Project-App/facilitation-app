@@ -56,9 +56,10 @@ To set up the development environment, follow these steps:
 
 ## Internationalization (i18n)
 
-- Use the i18n system for all user-facing text
-- Add new translations in the respective language file: /app/[lang]/dictionaries/[code].json
-- https://nextjs.org/docs/app/building-your-application/routing/internationalization
+- Use the next-intl system for all user-facing text
+- Add new translations in the respective language file: /messages/[lang].json
+- Use the `useTranslations` hook or the `<Trans>` component for translations in your React components
+- See https://next-intl-docs.vercel.app/ for more information on how to use next-intl
 
 ## Storybook
 
