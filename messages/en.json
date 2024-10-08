@@ -73,9 +73,10 @@
       "steps": [
         "Pick a person to answer the question first.",
         "Once that person gave their answer, they pick who should answer next.",
-        "Repeat this process until everyone has answered the question."
+        "Continue this process until everyone has answered the question."
       ],
-      "button": "Next step",
+      "homeButton": "Back to menu",
+      "completeButton": "Complete",
       "home": "Go to Home"
     },
     "ssc": {

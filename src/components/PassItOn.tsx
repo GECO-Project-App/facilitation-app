@@ -1,89 +1,79 @@
 'use client';
 import {mockPassItOn} from '@/lib/mock';
-import {cn} from '@/lib/utils';
-import {ArrowLeft, ArrowRight} from 'lucide-react';
-import {FC, useCallback, useState} from 'react';
-import {HomeButton} from './HomeButton';
-import {BackButton} from './NavBar/BackButton';
-import {Button} from './ui';
-import {RiveAnimation} from './RiveAnimation';
-import {useTranslations} from 'next-intl';
-import {PageLayout} from './PageLayout';
 import {Link} from '@/navigation';
+import {useTranslations} from 'next-intl';
+import {FC, useEffect, useState} from 'react';
+import {CarouselPagination} from './CarouselPagination';
+import {Header} from './Header';
+import {Complete} from './icons';
+import {PageLayout} from './PageLayout';
+import {RiveAnimation} from './RiveAnimation';
+import {Button} from './ui';
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from './ui/carousel';
 
-export const PassItOn: FC = () => {
+export const PassItOn: FC<{slug: string}> = ({slug}) => {
+  const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.passItOn');
   const steps: string[] = t.raw('steps').map((step: string) => step);
 
-  const goToPreviousStep = () => {
-    setCurrentStep((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
-  const goToNextStep = () => {
-    setCurrentStep((prev) => (prev < mockPassItOn.length - 1 ? prev + 1 : prev));
-  };
-
-  const Navigation = () => (
-    <nav className={cn('relative flex w-full flex-row items-center justify-center')}>
-      <div className="absolute left-0 top-0">
-        {currentStep === 0 ? (
-          <BackButton />
-        ) : (
-          <button onClick={goToPreviousStep} disabled={currentStep === 0}>
-            <ArrowLeft size={42} />
-          </button>
-        )}
-      </div>
-
-      <div className="mx-auto whitespace-nowrap rounded-full border-2 border-black bg-yellow px-6 py-2 font-semibold">
-        {t('title')}
-      </div>
-    </nav>
-  );
-
-  const Illustration = useCallback(() => {
-    switch (currentStep) {
-      case 0:
-        return <RiveAnimation src={mockPassItOn[currentStep].rive} />;
-      case 1:
-        return <RiveAnimation src={mockPassItOn[currentStep].rive} />;
-      case 2:
-        return <RiveAnimation src={mockPassItOn[currentStep].rive} height={160} width={160} />;
-      default:
-        break;
+  useEffect(() => {
+    if (!api) {
+      return;
     }
-  }, [currentStep]);
+
+    setCurrentStep(api.selectedScrollSnap());
+
+    api.on('select', () => {
+      setCurrentStep(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   return (
-    <PageLayout backgroundColor="bg-blue">
-      <Navigation />
-      <section className="flex flex-1 flex-col items-center justify-between">
-        <div className="flex flex-1 flex-col items-center justify-center space-y-8 text-center">
-          <div
-            className={cn(
-              currentStep === 0 ? 'bg-yellow' : '',
-              currentStep === 1 ? 'bg-pink' : '',
-              currentStep === 2 ? 'bg-green' : '',
-              'aspect-square h-11 w-11 rounded-full border-2 border-black p-1 text-2xl font-semibold text-black',
-            )}>
-            {currentStep + 1}
+    <PageLayout
+      backgroundColor="bg-blue"
+      header={
+        <Header>
+          <CarouselPagination steps={steps} currentStep={currentStep} />
+        </Header>
+      }
+      footer={
+        currentStep === steps.length - 1 ? (
+          <Button variant="blue" className="mx-auto" asChild>
+            <Link href={`/${slug}/accomplishment`}>
+              {t('completeButton')} <Complete stroke="white" />
+            </Link>
+          </Button>
+        ) : (
+          <Button variant="yellow" className="mx-auto" asChild>
+            <Link href="/">{t('homeButton')}</Link>
+          </Button>
+        )
+      }>
+      <section className="flex h-full w-full flex-1 items-center justify-center">
+        <Carousel className="h-full w-full flex-1" setApi={setApi}>
+          <CarouselContent>
+            {steps.map((_, index) => (
+              <CarouselItem key={index} className="space-y-6">
+                <p className="text-2xl">{steps[index]}</p>
+                <div className="relative aspect-video">
+                  <RiveAnimation src={mockPassItOn[index].rive} width="100%" height="100%" />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex flex-row items-center justify-between">
+            <CarouselPrevious />
+            <CarouselNext />
           </div>
-          <Illustration />
-          <p className="text-white">{steps[currentStep]}</p>
-        </div>
-
-        <div>
-          {currentStep < steps.length - 1 ? (
-            <Button onClick={goToNextStep} variant="pink">
-              {t('button')} <ArrowRight size={32} />
-            </Button>
-          ) : (
-            <Button onClick={goToNextStep} variant="pink" asChild>
-              <Link href={'/'}>{t('home')}</Link>
-            </Button>
-          )}
-        </div>
+        </Carousel>
       </section>
     </PageLayout>
   );

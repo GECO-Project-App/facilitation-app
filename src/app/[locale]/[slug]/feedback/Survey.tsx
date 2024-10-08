@@ -3,9 +3,9 @@ import {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import TextArea from '../views/TextArea';
 import {useKeyboardStatus} from '@/hooks/useKeyboardStatus';
 import {useTranslations} from 'next-intl';
+import TextArea from './views/TextArea';
 
 interface SurveyProps {
   title: string;
@@ -22,7 +22,7 @@ function Survey({title, onSubmit}: SurveyProps) {
     setSelectedValue('');
   };
   const handleBack = () => {
-    router.back();
+    router.push('/');
   };
 
   const t = useTranslations('feedback');
