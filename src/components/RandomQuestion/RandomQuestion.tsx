@@ -13,7 +13,6 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
   const [displayedQuestion, setDisplayedQuestion] = useState<string | null>(null);
-  const [showArrow, setShowArrow] = useState(false);
   const t = useTranslations('common');
 
   const shuffleShape = useCallback(() => {
@@ -31,21 +30,19 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
     };
   }, [isSpinning, shuffleShape]);
 
-  const spinWheel = () => {
-    if (isSpinning) return;
+  useEffect(() => {
+    spinWheel();
+  }, []);
 
+  const spinWheel = () => {
     setIsSpinning(true);
     setDisplayedQuestion(null);
-    setShowArrow(false);
-    const newRotation = rotation + 1440 + 360;
+    const newRotation = rotation + 720 + 360;
     setRotation(newRotation);
 
     setTimeout(() => {
       setIsSpinning(false);
-      setTimeout(() => {
-        setShowArrow(true);
-      }, 2000);
-    }, 3800);
+    }, 2800);
   };
 
   const CurrentShape = shapes[currentShapeIndex];
@@ -64,7 +61,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
           className="h-full w-full"
           animate={{rotate: rotation}}
           transition={{
-            duration: 3.8,
+            duration: 2.8,
             ease: 'easeOut',
           }}>
           <CurrentShape className="fill-blue-500 stroke-blue-600 h-full w-full">
@@ -74,7 +71,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
       </motion.button>
 
       <AnimatePresence>
-        {showArrow && (
+        {!isSpinning && (
           <div className="absolute bottom-full left-1/2 mb-4 flex -translate-x-1/2 transform items-center gap-4">
             <motion.div
               initial={{y: 30, opacity: 0}}
