@@ -7,7 +7,7 @@ const AppBar: React.FC = () => {
   return (
     <div className="sticky top-0 flex h-[40px] w-full items-center justify-between border-b-2 border-black bg-yellow p-4">
       <div>
-        <Link href={'/log-in'}>
+        <Link href={'/user'}>
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
