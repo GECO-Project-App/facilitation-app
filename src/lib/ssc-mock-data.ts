@@ -4,7 +4,7 @@ export const buttons: ButtonType[] = [
   {
     title: 'START',
     href: '/exercises/introduction/start',
-    variant: 'green',
+    variant: 'yellow',
     chapter: 'start',
   },
   {
@@ -16,7 +16,7 @@ export const buttons: ButtonType[] = [
   {
     title: 'CONTINUE',
     href: '/exercises/introduction/continue',
-    variant: 'pink',
+    variant: 'green',
     chapter: 'continue',
   },
 ];
