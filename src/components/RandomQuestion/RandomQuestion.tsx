@@ -90,7 +90,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
               animate={{opacity: 1, y: -1, rotate: 16}}
               exit={{opacity: 0, y: 20, rotate: 16}}
               transition={{duration: 1, delay: 0.6, type: 'spring', stiffness: 400, damping: 17}}>
-              {t('common.pressToGetNewQuestion')}
+              {t('pressToGetNewQuestion')}
             </motion.h4>
           </div>
         )}
