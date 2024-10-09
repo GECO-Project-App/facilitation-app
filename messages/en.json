@@ -177,13 +177,7 @@
         "title": "GECO App",
         "subtitle": "Start-Stop-Continue Exercise: Tips",
         "description": "Points to keep it mind when doing the exercise",
-        "points": [
-          "Set clear expectations",
-          "Provide a visual aid",
-          "Stay on track",
-          "Record responses",
-          "Analyze feedback and create a plan of action"
-        ]
+        "points": "- Set clear expectations\n- Provide a visual aid\n- Stay on track\n- Record responses\n- Analyze feedback and create an action plan"
       },
       "accomplishment": {
         "title": "GREAT JOB! YOU DID IT!",

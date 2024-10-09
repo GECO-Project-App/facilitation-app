@@ -5,11 +5,10 @@ import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
 import {FC, useMemo} from 'react';
-import {NavBar} from './NavBar';
+import {Header} from './Header';
+import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui';
-import {PageLayout} from './PageLayout';
-import {Header} from './Header';
 
 export const About: FC<{
   slug: string;

@@ -177,13 +177,7 @@
         "title": "GECO App",
         "subtitle": "Start-Stopp-Fortsätt Övning: Tips",
         "description": "Punkter att ha i åtanke när du gör övningen",
-        "points": [
-          "Sätt tydliga förväntningar",
-          "Tillhandahåll ett visuellt hjälpmedel",
-          "Håll dig på rätt spår",
-          "Registrera svar",
-          "Analysera feedback och skapa en handlingsplan"
-        ]
+        "points": "- Sätt tydliga förväntningar\n- Tillhandahåll visuellt stöd\n- Håll dig på rätt spår\n- Anteckna svar\n- Analysera feedback och skapa en handlingsplan"
       },
       "feedback": {
         "title": "GECO App",

@@ -1,9 +1,9 @@
-import React, {FC, useMemo} from 'react';
-import {Button} from './ui';
+import {ExerciseCardType} from '@/lib/types';
+import {cn} from '@/lib/utils';
 import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
-import {cn} from '@/lib/utils';
-import {ExerciseCardType} from '@/lib/types';
+import {FC, useMemo} from 'react';
+import {Button} from './ui';
 
 export const ExerciseCard: FC<ExerciseCardType> = ({
   title,

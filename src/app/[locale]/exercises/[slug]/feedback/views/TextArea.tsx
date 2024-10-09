@@ -1,6 +1,6 @@
 import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {useTranslations} from 'next-intl';
-import {useRef, useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 interface TextAreaProps {
   title: string;
@@ -14,7 +14,7 @@ const TextArea: React.FC<TextAreaProps> = ({
   selectedValue,
   setSelectedValue,
   handleBack,
-}) => {
+}: TextAreaProps) => {
   const t = useTranslations('feedback');
   const titleDivRef = useRef<HTMLDivElement>(null);
   const [paddingTop, setPaddingTop] = useState(0);

@@ -1,17 +1,17 @@
 'use client';
-import React, {useState, useEffect} from 'react';
-import Survey from './Survey';
-import {usePostHog} from 'posthog-js/react';
-import {SSC_SURVEY_ID, CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
-import DialogView from '@/components/modal/DialogView';
 import {PageLayout} from '@/components';
+import DialogView from '@/components/modal/DialogView';
+import {CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, SSC_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
+import {usePostHog} from 'posthog-js/react';
+import {useEffect, useState} from 'react';
+import Survey from './Survey';
 
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
 
   const [showSurvey, setShowSurvey] = useState(true);
 
-  const [surveyTitle, setSurveyTitle] = useState('');
+  // const [surveyTitle, setSurveyTitle] = useState('');
   const [surveyID, setSurveyID] = useState('');
 
   const posthog = usePostHog();
@@ -37,11 +37,11 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
         const survey = surveys.find((survey) => survey.id === getCurrentSurvey(slug));
         if (survey) {
           setSurveyID(survey.id);
-          setSurveyTitle(survey.questions[0].question);
+          // setSurveyTitle(survey.questions[0].question);
         }
       }
     });
-  }, [posthog]);
+  }, [posthog, slug]);
 
   const handleSubmit = (value: string | null) => {
     setShowSurvey(false);

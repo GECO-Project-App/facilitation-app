@@ -19,15 +19,17 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
 
-  const chapterMap = {
-    start: sscMock.start.steps,
-    stop: sscMock.stop.steps,
-    continue: sscMock.continue.steps,
-  };
+  const chapterMap = useMemo(
+    () => ({
+      start: sscMock.start.steps,
+      stop: sscMock.stop.steps,
+    }),
+    [],
+  );
 
   const chapterSteps = useMemo(() => {
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
-  }, [chapter]);
+  }, [chapter, chapterMap]);
 
   const areAllChaptersComplete = (completedChapters: string[]): boolean => {
     const requiredChapters = ['start', 'stop', 'continue'];
@@ -43,7 +45,9 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       }
 
       router.push(
-        areAllChaptersComplete(completedChapters) ? '/ssc/feedback' : '/ssc/accomplishment',
+        areAllChaptersComplete(completedChapters)
+          ? `/exercises/ssc/feedback`
+          : `/exercises/ssc/accomplishment`,
       );
     } else {
       setCurrentStep((prev) => prev + 1);

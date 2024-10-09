@@ -1,4 +1,3 @@
-import {Colors} from '@/lib/constants';
 import React, {FC} from 'react';
 
 export const People: FC<React.SVGProps<SVGSVGElement>> = ({height = 88, width = 88}) => {

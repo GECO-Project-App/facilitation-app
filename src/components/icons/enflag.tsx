@@ -1,4 +1,3 @@
-import {Colors} from '@/lib/constants';
 import React, {FC} from 'react';
 
 export const EnFlag: FC<React.SVGProps<SVGSVGElement>> = ({

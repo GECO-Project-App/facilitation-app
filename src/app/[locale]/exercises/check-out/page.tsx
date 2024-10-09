@@ -18,7 +18,7 @@ export default function CheckOutPage() {
       header={<Header />}
       footer={
         <Button variant="blue" asChild className="mx-auto">
-          <Link href={`/${slug}/pass-it-on`}>
+          <Link href={`/exercises/${slug}/pass-it-on`}>
             {t('passItOnButton')} <ArrowRight size={28} />
           </Link>
         </Button>

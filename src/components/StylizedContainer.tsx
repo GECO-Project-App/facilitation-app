@@ -1,6 +1,6 @@
 import {cn} from '@/lib/utils';
-import React, {FC} from 'react';
 import {cva, type VariantProps} from 'class-variance-authority';
+import React, {FC} from 'react';
 
 const containerVariant = cva(
   'z-10 flex flex-row items-center rounded-full border-2 border-black uppercase font-bold text-xl gap-2 whitespace-nowrap justify-center w-40',

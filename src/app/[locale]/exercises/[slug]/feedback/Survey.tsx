@@ -1,10 +1,10 @@
 'use client';
-import {useState} from 'react';
 import {Button} from '@/components/ui/button';
-import {ArrowRight} from 'lucide-react';
-import {useRouter} from 'next/navigation';
 import {useKeyboardStatus} from '@/hooks/useKeyboardStatus';
+import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/navigation';
+import {useState} from 'react';
 import TextArea from './views/TextArea';
 
 interface SurveyProps {

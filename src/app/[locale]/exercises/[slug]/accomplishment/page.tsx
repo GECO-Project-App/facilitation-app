@@ -10,26 +10,38 @@ export default function ExerciseAccomplishment({params}: {params: {slug: string}
   const {slug} = params;
 
   const isSSCCompleted = useMemo(() => {
+    if (slug !== 'ssc') {
+      return false;
+    }
     const storedValue = localStorage.getItem('chapterDone') || '[]';
     const chaptersDone: string[] = JSON.parse(storedValue);
     return chaptersDone.length === 3;
-  }, []);
+  }, [slug]);
 
   return (
     <PageLayout
       backgroundColor="bg-blue"
       contentColor="bg-blue"
       footer={
-        isSSCCompleted ? (
+        slug === 'ssc' ? (
+          isSSCCompleted ? (
+            <Button variant="pink" className="mx-auto" asChild>
+              <Link href={`/exercises/ssc/${slug}/feedback`}>
+                {t('feedbackButton')}
+                <ArrowRight size={28} />
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="pink" className="mx-auto" asChild>
+              <Link href={`/exercises/ssc`}>{t('homeButton')}</Link>
+            </Button>
+          )
+        ) : (
           <Button variant="pink" className="mx-auto" asChild>
-            <Link href={`/${slug}/feedback`}>
+            <Link href={`/exercises/${slug}/feedback`}>
               {t('feedbackButton')}
               <ArrowRight size={28} />
             </Link>
-          </Button>
-        ) : (
-          <Button variant="pink" className="mx-auto" asChild>
-            <Link href={`/exercises/ssc`}>{t('homeButton')}</Link>
           </Button>
         )
       }>

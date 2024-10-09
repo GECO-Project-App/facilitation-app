@@ -2,9 +2,9 @@
 import {ShapeColors} from '@/lib/constants';
 import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
 import {FC, SVGProps, useCallback, useEffect, useMemo, useState} from 'react';
+import {Arrow} from '../icons';
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
 import {RiveAnimation} from '../RiveAnimation';
-import {Arrow} from '../icons';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
@@ -27,7 +27,7 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
 
   const CurrentShape = useMemo(() => {
     return shapes[currentShapeIdx];
-  }, [currentShapeIdx, shapes, excludeShapeColor]);
+  }, [currentShapeIdx, shapes]);
 
   const generateNewQuestionAndShape = useCallback(() => {
     const nextQuestion = getRandomUniqueItem(questions, []);
