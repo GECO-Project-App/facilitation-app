@@ -2,6 +2,7 @@
 
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '@/components/icons/shapes';
 import {AnimatePresence, motion} from 'framer-motion';
+import {useTranslations} from 'next-intl';
 import {useCallback, useEffect, useState} from 'react';
 import {Arrow} from '../icons';
 
@@ -13,6 +14,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
   const [displayedQuestion, setDisplayedQuestion] = useState<string | null>(null);
   const [showArrow, setShowArrow] = useState(false);
+  const t = useTranslations('common');
 
   const shuffleShape = useCallback(() => {
     setCurrentShapeIndex((prevIndex) => (prevIndex + 1) % shapes.length);
@@ -88,7 +90,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
               animate={{opacity: 1, y: -1, rotate: 16}}
               exit={{opacity: 0, y: 20, rotate: 16}}
               transition={{duration: 1, delay: 0.6, type: 'spring', stiffness: 400, damping: 17}}>
-              Press to get a new question!
+              {t('common.pressToGetNewQuestion')}
             </motion.h4>
           </div>
         )}
