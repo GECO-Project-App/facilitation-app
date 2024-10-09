@@ -83,6 +83,16 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       setCurrentStep(api.selectedScrollSnap());
     });
   }, [api]);
+
+  const handleComplete = () => {
+    console.log('complete');
+    const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
+    if (!completedChapters.includes(chapter)) {
+      completedChapters.push(chapter);
+      localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
+    }
+  };
+
   return (
     <PageLayout
       backgroundColor="bg-blue"
@@ -93,7 +103,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       }
       footer={
         currentStep === steps.length - 1 ? (
-          <Button variant="blue" className="mx-auto" asChild>
+          <Button variant="blue" className="mx-auto" asChild onClick={handleComplete}>
             <Link href={`/ssc/accomplishment`}>
               {/* {t('completeButton')} <Complete stroke="white" /> */}
               Complete Button
@@ -103,7 +113,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
         ) : (
           <Button variant="yellow" className="mx-auto" asChild>
             {/* <Link href="/">{t('homeButton')}</Link> */}
-            <Link href="/">Back to menu</Link>
+            <Link href="/exercises/ssc">Back to menu</Link>
           </Button>
         )
       }>
