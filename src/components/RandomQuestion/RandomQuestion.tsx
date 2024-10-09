@@ -32,13 +32,12 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
 
     setIsSpinning(true);
     setDisplayedQuestion(null);
-    const newRotation = rotation + 1440 + Math.random() * 360;
+    const newRotation = rotation + 1440 + 360;
     setRotation(newRotation);
 
     setTimeout(() => {
-      const selectedIndex = Math.floor((newRotation % 360) / (360 / questions.length));
       setIsSpinning(false);
-    }, 5000);
+    }, 3800);
   };
 
   const CurrentShape = shapes[currentShapeIndex];
@@ -50,14 +49,13 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
       type="button"
       disabled={isSpinning}>
       <motion.div
-        className="relative h-full w-full"
+        className="h-full w-full"
         animate={{rotate: rotation}}
-        transition={{duration: 5, ease: 'easeOut'}}>
-        <CurrentShape className="fill-blue-500 stroke-blue-600 h-full w-full" />
+        transition={{duration: 3.8, ease: 'easeOut'}}>
+        <CurrentShape className="fill-blue-500 stroke-blue-600 h-full w-full">
+          {displayedQuestion ?? 'Press to get a new question!'}
+        </CurrentShape>
       </motion.div>
-      <h4 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-center font-bold">
-        {displayedQuestion ?? 'Press to get a new question!'}
-      </h4>
     </button>
   );
 };
