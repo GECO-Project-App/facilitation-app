@@ -4,17 +4,14 @@ import LogIn from './LogIn';
 import {motion} from 'framer-motion';
 import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs/tabs';
 import {useUserStore} from '@/store/userStore';
-import { Button } from '@/components/ui/button';
+import ProfilePage from '../profile/page';
+
 const AuthPage = () => {
   const user = useUserStore((state) => state.user);
-  const {signOut} = useUserStore();
   return (
     <>
       {user ? (
-        <>
-          <div>Wellcome: {user.email}</div>
-          <Button onClick={() => signOut()}>Sign Out</Button>
-        </>
+        <ProfilePage/>
       ) : (
         <Tabs defaultValue="login" className="overflow-hidden p-4">
           <TabsList className="m-auto mt-14 grid h-12 w-80 grid-cols-2 bg-sky-300">

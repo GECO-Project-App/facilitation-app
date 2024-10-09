@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {supabase} from '@/lib/supabase/supabaseClient';
+import {useRouter} from '@/navigation';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,11 +29,13 @@ const SignUp = () => {
         //     displayName: 'jack',
         //   },
         // },
-      });
+      }).finally(() => {
+        router.push("/");
+    });
 
       if (error) throw error;
 
-      alert('Signup successful! Please check your email for verification.');
+      // alert('Signup successful! Please check your email for verification.');
       setFormData({email: '', password: '', confirmPassword: ''});
       console.log('DATA: ', data);
     } catch (error) {
