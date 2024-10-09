@@ -1,10 +1,9 @@
 'use client';
-import {ShapeColors} from '@/lib/constants';
-import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
-import {FC, SVGProps, useCallback, useEffect, useMemo, useState} from 'react';
+import {useInView, useMotionValue, useSpring} from 'framer-motion';
+import {FC, SVGProps, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Arrow} from '../icons';
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
 import {RiveAnimation} from '../RiveAnimation';
-import {Arrow} from '../icons';
 
 const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
@@ -21,56 +20,36 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
   excludeShapeColor,
   questions,
 }) => {
-  const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
-  const [isIntervalActive, setIsIntervalActive] = useState(true);
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(questions.length);
+  const shapeValue = useMotionValue(shapes.length);
+  const springValue = useSpring(motionValue, {
+    damping: 100,
+    stiffness: 100,
+  });
+  const isInView = useInView(ref, {once: true, margin: '-100px'});
 
   const CurrentShape = useMemo(() => {
     return shapes[currentShapeIdx];
   }, [currentShapeIdx, shapes, excludeShapeColor]);
 
-  const generateNewQuestionAndShape = useCallback(() => {
-    const nextQuestion = getRandomUniqueItem(questions, []);
-    const nextShapeIdx = (currentShapeIdx + 1) % shapes.length;
-
-    if (nextQuestion) {
-      setCurrentQuestion(nextQuestion);
-      setCurrentShapeIdx(nextShapeIdx);
-    }
-  }, [questions, currentShapeIdx, shapes]);
-
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-
-    if (isIntervalActive) {
-      interval = setInterval(() => {
-        generateNewQuestionAndShape();
-      }, 100);
+    if (isInView) {
+      motionValue.set(questions.length);
     }
-    if (!isIntervalActive) {
-      if (interval) {
-        clearInterval(interval);
-      }
-    }
+  }, [motionValue, isInView]);
 
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [generateNewQuestionAndShape, isIntervalActive]);
-
-  const handleClick = () => {
-    if (currentQuestion) {
-      setIsIntervalActive((prev) => !prev);
-    }
-  };
-
-  const getRandomShapeColor = (colors: {[key: string]: string}, exclude?: string): string => {
-    const colorKeys = Object.values(colors).filter((color) => color !== exclude);
-
-    const randomIndex = generateRandomNumberInRange(colorKeys.length);
-
-    return colorKeys[randomIndex];
-  };
+  useEffect(
+    () =>
+      springValue.on('change', (latest) => {
+        if (ref.current) {
+          ref.current.textContent = questions[latest];
+        }
+        setCurrentShapeIdx(latest);
+      }),
+    [springValue],
+  );
 
   const ReminderText: FC = useCallback(() => {
     return (
@@ -89,10 +68,8 @@ export const RandomQuestion: FC<RandomQuestionProps> = ({
   return (
     <div className="mx-auto w-fit">
       <ReminderText />
-      <button onMouseDown={handleClick} className="cursor-pointer">
-        <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
-          {currentQuestion}
-        </CurrentShape>
+      <button className="cursor-pointer">
+        <span ref={ref} className="text-black" />
       </button>
     </div>
   );
