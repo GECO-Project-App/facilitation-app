@@ -25,7 +25,7 @@ export type SSCExerciseProps = {
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const [currentStep, setCurrentStep] = useState(0);
-  const t = useTranslations('exercises.passItOn');
+  const t = useTranslations('exercises.ssc');
   const [api, setApi] = useState<CarouselApi>();
 
   const chapterMap = {
@@ -80,7 +80,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
           </Button>
         ) : (
           <Button variant="yellow" className="mx-auto" asChild>
-            <Link href="/">{t('homeButton')}</Link>
+            <Link href="/exercises/ssc">{t('exerciseButton')}</Link>
           </Button>
         )
       }>

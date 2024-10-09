@@ -196,7 +196,9 @@
         "subtitle": "Start-Stop-Continue Exercise: Feedback",
         "description": "Have some thoughts, comments and suggestions about the app? Share your thought with us",
         "button": "Send Feedback"
-      }
+      },
+      "completeButton": "Complete",
+      "exerciseButton": "Go to exercise"
     }
   },
   "feedback": {

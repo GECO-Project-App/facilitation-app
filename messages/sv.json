@@ -197,7 +197,9 @@
         "button": "Skicka feedback",
         "feedbackButton": "Skicka feedback",
         "homeButton": "Gå tillbaka"
-      }
+      },
+      "completeButton": "Slutför",
+      "exerciseButton": "Go till övningen"
     }
   },
   "feedback": {
