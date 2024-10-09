@@ -118,10 +118,6 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="flex flex-row items-center justify-between">
-            <CarouselPrevious />
-            <CarouselNext />
-          </div>
         </Carousel>
       </section>
     </PageLayout>
