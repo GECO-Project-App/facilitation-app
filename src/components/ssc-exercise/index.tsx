@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/carousel';
 import {Link} from '@/navigation';
 import {Complete} from '@/components/icons';
+import {useTranslations} from 'next-intl';
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -23,9 +24,8 @@ export type SSCExerciseProps = {
 };
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
-  // const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
-  // const t = useTranslations('exercises.ssc');
+  const t = useTranslations('exercises.passItOn');
   const [api, setApi] = useState<CarouselApi>();
 
   const chapterMap = {
@@ -38,40 +38,10 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
   }, [chapter]);
 
-  const areAllChaptersComplete = (completedChapters: string[]): boolean => {
-    const requiredChapters = ['start', 'stop', 'continue'];
-    return requiredChapters.every((chapter) => completedChapters.includes(chapter));
-  };
-
-  // const handleNextStep = () => {
-  //   if (currentStep === steps.length - 1) {
-  //     const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
-  //     if (!completedChapters.includes(chapter)) {
-  //       completedChapters.push(chapter);
-  //       localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
-  //     }
-
-  //     router.push(
-  //       areAllChaptersComplete(completedChapters) ? '/ssc/feedback' : '/ssc/accomplishment',
-  //     );
-  //   } else {
-  //     setCurrentStep((prev) => prev + 1);
-  //   }
-  // };
-
-  // const handlePreviousStep = () => {
-  //   if (currentStep === 0) {
-  //     router.back();
-  //   } else {
-  //     setCurrentStep((prev) => prev - 1);
-  //   }
-  // };
-
   if (!steps) {
     return <div>Loading...</div>;
   }
 
-  // const currentStepData = steps[currentStep];
   useEffect(() => {
     if (!api) {
       return;
@@ -105,15 +75,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
         currentStep === steps.length - 1 ? (
           <Button variant="blue" className="mx-auto" asChild onClick={handleComplete}>
             <Link href={`/ssc/accomplishment`}>
-              {/* {t('completeButton')} <Complete stroke="white" /> */}
-              Complete Button
-              <Complete stroke="white" />
+              {t('completeButton')} <Complete stroke="white" />
             </Link>
           </Button>
         ) : (
           <Button variant="yellow" className="mx-auto" asChild>
-            {/* <Link href="/">{t('homeButton')}</Link> */}
-            <Link href="/exercises/ssc">Back to menu</Link>
+            <Link href="/">{t('homeButton')}</Link>
           </Button>
         )
       }>
@@ -127,7 +94,11 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
                   {chapterSteps[index].sticker && (
                     <RiveAnimation src={chapterSteps[index].sticker} width="100%" height="100%" />
                   )}
-                  {chapterSteps[index].timer && <Timer seconds={chapterSteps[index].timer} />}
+                  {chapterSteps[index].timer && (
+                    <div className="pt-10">
+                      <Timer seconds={chapterSteps[index].timer} />
+                    </div>
+                  )}
                 </div>
               </CarouselItem>
             ))}
