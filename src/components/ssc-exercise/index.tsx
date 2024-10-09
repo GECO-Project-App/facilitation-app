@@ -1,14 +1,24 @@
 'use client';
 import {PageLayout, RiveAnimation, Timer} from '@/components';
-import StepCounter from '@/components/ssc-exercise/StepCounter';
-import DescriptionWrapper from '@/components/styles/DescriptionWrapper';
-import HeaderWrapper from '@/components/styles/HeaderWrapper';
 import {Button} from '@/components/ui/button';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
-import {useRouter} from '@/navigation';
+import React, {useMemo, useState, useEffect} from 'react';
+import {Header} from '@/components';
+import {CarouselPagination} from '@/components/CarouselPagination';
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import {Link} from '@/navigation';
+import {Complete} from '@/components/icons';
+import {useTranslations} from 'next-intl';
 import {ArrowRight} from 'lucide-react';
-import React, {useMemo, useState} from 'react';
+import {useRouter} from '@/navigation';
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -18,6 +28,8 @@ export type SSCExerciseProps = {
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
+  const t = useTranslations('exercises.ssc');
+  const [api, setApi] = useState<CarouselApi>();
 
   const chapterMap = {
     start: sscMock.start.steps,
@@ -29,67 +41,85 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
   }, [chapter]);
 
-  const areAllChaptersComplete = (completedChapters: string[]): boolean => {
-    const requiredChapters = ['start', 'stop', 'continue'];
-    return requiredChapters.every((chapter) => completedChapters.includes(chapter));
-  };
-
-  const handleNextStep = () => {
-    if (currentStep === steps.length - 1) {
-      const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
-      if (!completedChapters.includes(chapter)) {
-        completedChapters.push(chapter);
-        localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
-      }
-
-      router.push(
-        areAllChaptersComplete(completedChapters) ? '/ssc/feedback' : '/ssc/accomplishment',
-      );
-    } else {
-      setCurrentStep((prev) => prev + 1);
-    }
-  };
-
-  const handlePreviousStep = () => {
-    if (currentStep === 0) {
-      router.back();
-    } else {
-      setCurrentStep((prev) => prev - 1);
-    }
-  };
-
   if (!steps) {
     return <div>Loading...</div>;
   }
 
-  const currentStepData = steps[currentStep];
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrentStep(api.selectedScrollSnap());
+
+    api.on('select', () => {
+      setCurrentStep(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const handleComplete = () => {
+    console.log('complete');
+    const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
+    if (!completedChapters.includes(chapter)) {
+      completedChapters.push(chapter);
+      localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
+    }
+  };
+
+  const nextStep = () => {
+    api?.scrollNext();
+  };
+
+  const previousStep = () => {
+    if (currentStep >= 1) {
+      api?.scrollPrev();
+    } else {
+      router.push('/exercises/ssc');
+    }
+  };
 
   return (
-    <PageLayout backgroundColor={sscMock[chapter as keyof typeof chapterMap].backgroundColor}>
-      <article className="flex h-40 flex-col items-center justify-between">
-        <HeaderWrapper
-          title={currentStepData.title}
-          handleBack={handlePreviousStep}
-          currentStep={currentStep}
-        />
-        <StepCounter currentStep={currentStep} length={steps.length - 1} />
-      </article>
-      <article className="flex flex-1 flex-col items-center justify-evenly">
-        {chapterSteps[currentStep]?.sticker && (
-          <RiveAnimation
-            key={chapterSteps[currentStep].sticker}
-            src={chapterSteps[currentStep].sticker}
-            width={300}
-          />
-        )}
-        <DescriptionWrapper>{currentStepData.description}</DescriptionWrapper>
-        {chapterSteps[currentStep]?.timer && <Timer seconds={chapterSteps[currentStep].timer} />}
-        <footer className="mt-8">
-          <Button variant="pink" onClick={handleNextStep}>
-            {currentStepData.button} <ArrowRight size={28} />
+    <PageLayout
+      backgroundColor="bg-blue"
+      header={
+        <Header onBackButton={previousStep}>
+          <CarouselPagination steps={steps} currentStep={currentStep} />
+        </Header>
+      }
+      footer={
+        currentStep === steps.length - 1 ? (
+          <Button variant="blue" className="mx-auto" asChild onClick={handleComplete}>
+            <Link href={`/ssc/accomplishment`}>
+              {t('completeButton')} <Complete stroke="white" />
+            </Link>
           </Button>
-        </footer>
-      </article>
+        ) : (
+          <Button variant="yellow" onClick={nextStep}>
+            {t('nextStep')} <ArrowRight />
+          </Button>
+        )
+      }>
+      <section className="flex h-full w-full flex-1 items-center justify-center">
+        <Carousel className="h-full w-full flex-1" setApi={setApi}>
+          <CarouselContent>
+            {steps.map((_, index) => (
+              <CarouselItem key={index} className="space-y-6">
+                <p className="text-2xl">{steps[index].description}</p>
+                <div className="relative aspect-video">
+                  {chapterSteps[index].sticker && (
+                    <RiveAnimation src={chapterSteps[index].sticker} width="100%" height="100%" />
+                  )}
+                  {chapterSteps[index].timer && (
+                    <div className="pt-10">
+                      <Timer seconds={chapterSteps[index].timer} />
+                    </div>
+                  )}
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </section>
     </PageLayout>
   );
 };

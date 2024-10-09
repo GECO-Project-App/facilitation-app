@@ -19,7 +19,7 @@ export const Header: FC<HeaderProps> = ({rightContent, onBackButton, children, l
         {leftContent ? (
           leftContent
         ) : (
-          <button onClick={() => onBackButton ?? router.back()}>
+          <button onClick={() => (onBackButton ? onBackButton() : router.back())}>
             <ArrowLeft size={42} />
           </button>
         )}
