@@ -94,10 +94,9 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
             </Link>
           </Button>
         ) : (
-          <Button variant="yellow" onClick={nextStep} >
-          {t('nextStep')} <ArrowRight />
-        </Button>
-
+          <Button variant="yellow" onClick={nextStep}>
+            {t('nextStep')} <ArrowRight />
+          </Button>
         )
       }>
       <section className="flex h-full w-full flex-1 items-center justify-center">
