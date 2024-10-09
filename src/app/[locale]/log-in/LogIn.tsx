@@ -4,10 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 import {useRouter} from '@/navigation';
-// import { useUserStore } from "@/store/userStore";
 
 const LogIn = () => {
-  // const setUser = useUserStore((state) => state.setUser);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,7 +15,7 @@ const LogIn = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: formData.email, // Assuming username is an email
@@ -33,6 +32,7 @@ const LogIn = () => {
       } catch (error) {
         alert("Error signing up: " + error);
       }
+      setLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,8 @@ const LogIn = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="rounded-full h-12"
+                className="rounded-full h-12" 
+                disabled={loading}
               />
             </div>
             <div className="space-y-2">
@@ -69,6 +70,7 @@ const LogIn = () => {
                 onChange={handleChange}
                 required
                 className="rounded-full h-12"
+                disabled={loading}
               />
             </div>
             <div className="space-y-2">
@@ -79,7 +81,7 @@ const LogIn = () => {
             </div>
           </div>
           <div className="mt-14 flex justify-center">
-            <Button type="submit">Log In</Button>
+            <Button type="submit" disabled={loading}>{loading ? 'Loading...' : 'Log In'}</Button>
           </div>
         </form>
   );
