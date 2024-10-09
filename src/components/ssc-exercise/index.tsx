@@ -18,7 +18,7 @@ import {Link} from '@/navigation';
 import {Complete} from '@/components/icons';
 import {useTranslations} from 'next-intl';
 import {ArrowRight} from 'lucide-react';
-
+import {useRouter} from '@/navigation';
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -26,6 +26,7 @@ export type SSCExerciseProps = {
 };
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.ssc');
   const [api, setApi] = useState<CarouselApi>();
@@ -69,11 +70,19 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     api?.scrollNext();
   };
 
+  const previousStep = () => {
+    if (currentStep >= 1) {
+      api?.scrollPrev();
+    } else {
+      router.push('/exercises/ssc');
+    }
+  };
+
   return (
     <PageLayout
       backgroundColor="bg-blue"
       header={
-        <Header>
+        <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
         </Header>
       }
