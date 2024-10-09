@@ -17,6 +17,8 @@ import {
 import {Link} from '@/navigation';
 import {Complete} from '@/components/icons';
 import {useTranslations} from 'next-intl';
+import {ArrowRight} from 'lucide-react';
+
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -63,6 +65,10 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     }
   };
 
+  const nextStep = () => {
+    api?.scrollNext();
+  };
+
   return (
     <PageLayout
       backgroundColor="bg-blue"
@@ -79,9 +85,10 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
             </Link>
           </Button>
         ) : (
-          <Button variant="yellow" className="mx-auto" asChild>
-            <Link href="/exercises/ssc">{t('exerciseButton')}</Link>
-          </Button>
+          <Button variant="yellow" onClick={nextStep} >
+          {t('nextStep')} <ArrowRight />
+        </Button>
+
         )
       }>
       <section className="flex h-full w-full flex-1 items-center justify-center">

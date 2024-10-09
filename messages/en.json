@@ -198,7 +198,8 @@
         "button": "Send Feedback"
       },
       "completeButton": "Complete",
-      "exerciseButton": "Go to exercise"
+      "exerciseButton": "Go to exercise",
+      "nextStep": "Next step"
     }
   },
   "feedback": {
