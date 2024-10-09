@@ -20,7 +20,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isSpinning) {
-      intervalId = setInterval(shuffleShape, 100);
+      intervalId = setInterval(shuffleShape, 200);
     }
     return () => {
       if (intervalId) clearInterval(intervalId);
@@ -43,11 +43,14 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   const CurrentShape = shapes[currentShapeIndex];
 
   return (
-    <button
-      className="aspect-square w-full overflow-hidden"
+    <motion.button
+      className="aspect-square w-full"
       onClick={spinWheel}
       type="button"
-      disabled={isSpinning}>
+      disabled={isSpinning}
+      whileTap={{scale: 0.9}}
+      initial={{scale: 0.8}}
+      transition={{type: 'spring', stiffness: 400, damping: 17}}>
       <motion.div
         className="h-full w-full"
         animate={{rotate: rotation}}
@@ -56,6 +59,6 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
           {displayedQuestion ?? 'Press to get a new question!'}
         </CurrentShape>
       </motion.div>
-    </button>
+    </motion.button>
   );
 };
