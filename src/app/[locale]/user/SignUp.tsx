@@ -52,7 +52,7 @@ const SignUp = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="h-96 flex flex-col justify-between">
       <div className="space-y-6 px-4">
         <div className="space-y-2">
           <Input
@@ -91,8 +91,8 @@ const SignUp = () => {
           />
         </div>
       </div>
-      <div className="mt-14 flex justify-center">
-        <Button type="submit">Sign Up</Button>
+      <div className="mt-14 flex justify-center pb-4">
+      <Button type="submit">Sign Up</Button>
       </div>
     </form>
   );
