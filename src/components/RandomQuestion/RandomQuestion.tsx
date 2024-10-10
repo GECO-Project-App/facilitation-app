@@ -23,7 +23,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isSpinning) {
-      intervalId = setInterval(shuffleShape, 200);
+      intervalId = setInterval(shuffleShape, 300);
     }
     return () => {
       if (intervalId) clearInterval(intervalId);
@@ -42,7 +42,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
 
     setTimeout(() => {
       setIsSpinning(false);
-    }, 2800);
+    }, 3000); // Changge spin duration here
   };
 
   const CurrentShape = shapes[currentShapeIndex];
@@ -61,7 +61,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
           className="h-full w-full"
           animate={{rotate: rotation}}
           transition={{
-            duration: 2.8,
+            duration: 3, // Changge spin duration here
             ease: 'easeOut',
           }}>
           <CurrentShape className="fill-blue-500 stroke-blue-600 h-full w-full">
@@ -69,7 +69,6 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
           </CurrentShape>
         </motion.div>
       </motion.button>
-
       <AnimatePresence>
         {!isSpinning && (
           <div className="absolute bottom-full left-1/2 mb-4 flex -translate-x-1/2 transform items-center gap-4">
