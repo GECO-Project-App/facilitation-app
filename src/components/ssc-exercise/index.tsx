@@ -54,8 +54,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       completedChapters.push(chapter);
       localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
     }
-    console.log(completedChapters.length === Object.keys(chapterMap).length);
-    if (completedChapters.length === Object.keys(chapterMap).length) {
+    if (completedChapters.includes('start' && 'stop' && 'continue')) {
       router.replace(`/exercises/ssc/accomplishment`);
     } else {
       router.push(`/exercises/ssc`);
@@ -85,7 +84,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       footer={
         currentStep === steps.length - 1 ? (
           <Button variant="blue" className="mx-auto" onClick={handleComplete}>
-            {t('completeButton')} <Complete stroke="white" />
+            {t('completeButton')} <Complete />
           </Button>
         ) : (
           <Button variant="yellow" onClick={nextStep}>
