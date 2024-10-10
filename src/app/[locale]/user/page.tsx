@@ -31,22 +31,22 @@ const AuthPage = () => {
       {user ? (
         <ProfilePage />
       ) : (
-        <Tabs defaultValue="login" className="overflow-hidden p-4 h-full">
-          <TabsList className="m-auto mt-14 grid h-12 w-80 grid-cols-2 bg-sky-300">
+        <Tabs defaultValue="login" className="overflow-hidden p-4 h-full max-w-[600px] mx-auto">
+          <TabsList className="m-auto mt-14 grid h-12 w-80 grid-cols-2 bg-sky-300  rounded-full">
             <TabsTrigger
               value="login"
-              className="text-green-100 h-10 border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black"
+              className="text-green-100 h-10 border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black  rounded-full"
               onClick={loginTab}>
               Login
             </TabsTrigger>
             <TabsTrigger
               value="signup"
-              className="text-green-100 h-10 border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black"
+              className="text-green-100 h-10 border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black  rounded-full"
               onClick={signupTab}>
               Signup
             </TabsTrigger>
           </TabsList>
-          <Carousel setApi={setApi}>
+          <Carousel setApi={setApi} className="h-full mt-20">
             <CarouselContent>
               <CarouselItem className="space-y-6" key="login">
                   <LogIn />
