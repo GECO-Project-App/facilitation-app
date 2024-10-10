@@ -6,7 +6,6 @@ import {DefaultProfileImage} from '@/components/icons/astro-geco';
 const ProfilePage = () => {
   const {user, signOut} = useUserStore();
 
-  console.log(user);
   return (
     <div className="overflow-hidden bg-sky-300">
       {user ? (
@@ -19,7 +18,7 @@ const ProfilePage = () => {
             <p className="text-xl">Email: {user.email}</p>
           </section>
           <Button onClick={signOut} className="mt-4">
-            Sign Out
+            Log out
           </Button>
         </div>
       ) : (
