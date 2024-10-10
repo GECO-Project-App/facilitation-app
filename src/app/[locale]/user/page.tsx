@@ -3,7 +3,6 @@ import {useState} from 'react';
 import SignUp from './SignUp';
 import LogIn from './LogIn';
 import {Tabs, TabsList, TabsTrigger} from '@/components/ui/tabs/tabs';
-import {useUserStore} from '@/store/userStore';
 import {
   Carousel,
   CarouselApi,
@@ -12,7 +11,6 @@ import {
 } from '@/components/ui/carousel';
 
 const AuthPage = () => {
-  const user = useUserStore((state) => state.user);
   const [api, setApi] = useState<CarouselApi>();
 
   const loginTab = () => {
