@@ -3,15 +3,15 @@ import {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {supabase} from '@/lib/supabase/supabaseClient';
-import {useRouter} from '@/navigation';
+import DialogView from '@/components/modal/DialogView';
 
 const SignUp = () => {
+  const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
   });
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,12 +30,10 @@ const SignUp = () => {
         //   },
         // },
       }).finally(() => {
-        router.push("/");
+        setShowDialog(true);
     });
 
       if (error) throw error;
-
-      // alert('Signup successful! Please check your email for verification.');
       setFormData({email: '', password: '', confirmPassword: ''});
       console.log('DATA: ', data);
     } catch (error) {
@@ -51,7 +49,11 @@ const SignUp = () => {
     }));
   };
 
-  return (
+  return (  
+    <>
+    {showDialog ? (
+      <DialogView destinationRoute="/" message="Thank you for signing up, Your account is ready!" icon="signup" />
+    ) : (
     <form onSubmit={handleSubmit} className="h-96 flex flex-col justify-between">
       <div className="space-y-6 px-4">
         <div className="space-y-2">
@@ -94,7 +96,9 @@ const SignUp = () => {
       <div className="mt-14 flex justify-center pb-4">
       <Button type="submit">Sign Up</Button>
       </div>
-    </form>
+    </form> 
+    )}
+    </>
   );
 };
 

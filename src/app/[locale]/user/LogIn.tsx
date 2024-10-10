@@ -3,25 +3,25 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
-import {useRouter} from '@/navigation';
+import DialogView from '@/components/modal/DialogView';
 
 const LogIn = () => {
+  const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email: formData.email, // Assuming username is an email
+          email: formData.email,
           password: formData.password,
         }).finally(() => {
-            router.push("/");
+            setShowDialog(true);
         });
   
         if (error) throw error;
@@ -45,6 +45,10 @@ const LogIn = () => {
 
 
   return (
+    <>
+    {showDialog ? (
+      <DialogView destinationRoute="/" message="You're logged in!" icon="login" />
+    ) : (
         <form onSubmit={handleSubmit} className="h-96 flex flex-col justify-between">
           <div className="space-y-6 px-4">
             <div className="space-y-2">
@@ -85,6 +89,8 @@ const LogIn = () => {
             </Button>
           </div>
         </form>
+    )}
+    </>
   );
 };
 

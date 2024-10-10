@@ -67,7 +67,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
           onSubmit={handleSubmit}
         />
       ) : (
-        <DialogView destinationRoute="/" />
+        <DialogView destinationRoute="/" message="Thank you for your feedback!" icon='feedback' />
       )}
     </PageLayout>
   );
