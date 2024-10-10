@@ -47,7 +47,7 @@ export const PassItOn: FC<{slug: string}> = ({slug}) => {
       footer={
         currentStep === steps.length - 1 ? (
           <Button variant="blue" className="mx-auto" asChild>
-            <Link href={`/${slug}/accomplishment`}>
+            <Link href={`/exercises/${slug}/accomplishment`}>
               {t('completeButton')} <Complete stroke="white" />
             </Link>
           </Button>

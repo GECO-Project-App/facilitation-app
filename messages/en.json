@@ -12,7 +12,7 @@
         "subtitle": "5-15 minutes | 2-20 members",
         "description": "Start your meetings right by giving each team member the space to share something with the team.",
         "button": "Start",
-        "link": "/exercises/introduction/check-in",
+        "link": "/exercises/check-in/introduction",
         "type": "check-in"
       },
       {
@@ -20,7 +20,7 @@
         "subtitle": "30-45 minutes | 2-20 members",
         "description": "Improve the way you work as a team. Share what works well and what needs to improve to collaborate more effectively going forward.",
         "button": "Start",
-        "link": "/exercises/introduction/ssc",
+        "link": "/exercises/ssc/introduction",
         "type": "ssc"
       },
       {
@@ -28,7 +28,7 @@
         "subtitle": "5-15 minutes | 2-20 members",
         "description": "End your meetings right by giving each team member the space to share something with the team.",
         "button": "Start",
-        "link": "/exercises/introduction/check-out",
+        "link": "/exercises/check-out/introduction",
         "type": "check-out"
       }
     ]
