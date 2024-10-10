@@ -1,6 +1,7 @@
 'use client';
 
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '@/components/icons/shapes';
+import {Colors} from '@/lib/constants';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import {useCallback, useEffect, useState} from 'react';
@@ -23,7 +24,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isSpinning) {
-      intervalId = setInterval(shuffleShape, 300);
+      intervalId = setInterval(shuffleShape, 500);
     }
     return () => {
       if (intervalId) clearInterval(intervalId);
@@ -42,7 +43,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
 
     setTimeout(() => {
       setIsSpinning(false);
-    }, 3000); // Changge spin duration here
+    }, 2000); // Changge spin duration here
   };
 
   const CurrentShape = shapes[currentShapeIndex];
@@ -61,11 +62,33 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
           className="h-full w-full"
           animate={{rotate: rotation}}
           transition={{
-            duration: 3, // Changge spin duration here
-            ease: 'easeOut',
+            duration: 2, // Change spin duration here
+            ease: 'easeInOut',
           }}>
-          <CurrentShape className="fill-blue-500 stroke-blue-600 h-full w-full">
-            {displayedQuestion ?? 'Press to get a new question!'}
+          <CurrentShape
+            className="fill-blue-500 stroke-blue-600 h-full w-full"
+            fill={Colors.Yellow}>
+            {!isSpinning && (
+              <AnimatePresence>
+                <motion.h4
+                  initial={{opacity: 0, scale: 0.5}}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      type: 'spring',
+                      stiffness: 400,
+                      damping: 17,
+                      duration: 0.2,
+                    },
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}>
+                  {displayedQuestion ?? t('pressToGetNewQuestion')}
+                </motion.h4>
+              </AnimatePresence>
+            )}
           </CurrentShape>
         </motion.div>
       </motion.button>
