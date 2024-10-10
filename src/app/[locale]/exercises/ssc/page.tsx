@@ -22,7 +22,9 @@ export default async function SSCPage() {
             </Link>
           }
           rightContent={
-            <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
+            <Link href={'/exercises/ssc/tips'}>
+              <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
+            </Link>
           }
         />
       }>
