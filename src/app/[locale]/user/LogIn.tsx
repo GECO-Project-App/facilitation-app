@@ -20,11 +20,9 @@ const LogIn = () => {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
-        }).finally(() => {
-            setShowDialog(true);
-        });
-  
+        })
         if (error) throw error;
+        setShowDialog(true);
         // setUser(data.user);
         console.log("Logged in successfully!");
         console.log('User: ',data);

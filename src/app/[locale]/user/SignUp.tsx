@@ -29,11 +29,9 @@ const SignUp = () => {
         //     displayName: 'jack',
         //   },
         // },
-      }).finally(() => {
-        setShowDialog(true);
-    });
-
+      });
       if (error) throw error;
+      setShowDialog(true);
       setFormData({email: '', password: '', confirmPassword: ''});
       console.log('DATA: ', data);
     } catch (error) {
