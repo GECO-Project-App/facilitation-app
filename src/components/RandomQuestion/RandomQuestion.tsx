@@ -1,99 +1,119 @@
 'use client';
-import {ShapeColors} from '@/lib/constants';
-import {generateRandomNumberInRange, getRandomUniqueItem} from '@/lib/utils';
-import {FC, SVGProps, useCallback, useEffect, useMemo, useState} from 'react';
-import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '../icons/shapes';
-import {RiveAnimation} from '../RiveAnimation';
+
+import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '@/components/icons/shapes';
+import {Colors} from '@/lib/constants';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useTranslations} from 'next-intl';
+import {useCallback, useEffect, useState} from 'react';
 import {Arrow} from '../icons';
 
-const QuestionShapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
+const shapes = [Rounded, Star, StarAlt2, PolygonAlt2, PolygonAlt3];
 
-type RandomQuestionProps = {
-  slug: string;
-  shapes?: FC<SVGProps<SVGSVGElement>>[];
-  excludeShapeColor?: string;
-  questions: string[];
-};
+export const RandomQuestion = ({questions}: {questions: string[]}) => {
+  const [rotation, setRotation] = useState(0);
+  const [isSpinning, setIsSpinning] = useState(false);
+  const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
+  const [displayedQuestion, setDisplayedQuestion] = useState<string | null>(null);
+  const t = useTranslations('common');
 
-export const RandomQuestion: FC<RandomQuestionProps> = ({
-  shapes = QuestionShapes,
-  slug,
-  excludeShapeColor,
-  questions,
-}) => {
-  const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
-  const [currentShapeIdx, setCurrentShapeIdx] = useState(0);
-  const [isIntervalActive, setIsIntervalActive] = useState(true);
-
-  const CurrentShape = useMemo(() => {
-    return shapes[currentShapeIdx];
-  }, [currentShapeIdx, shapes, excludeShapeColor]);
-
-  const generateNewQuestionAndShape = useCallback(() => {
-    const nextQuestion = getRandomUniqueItem(questions, []);
-    const nextShapeIdx = (currentShapeIdx + 1) % shapes.length;
-
-    if (nextQuestion) {
-      setCurrentQuestion(nextQuestion);
-      setCurrentShapeIdx(nextShapeIdx);
-    }
-  }, [questions, currentShapeIdx, shapes]);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-
-    if (isIntervalActive) {
-      interval = setInterval(() => {
-        generateNewQuestionAndShape();
-      }, 100);
-    }
-    if (!isIntervalActive) {
-      if (interval) {
-        clearInterval(interval);
-      }
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [generateNewQuestionAndShape, isIntervalActive]);
-
-  const handleClick = () => {
-    if (currentQuestion) {
-      setIsIntervalActive((prev) => !prev);
-    }
-  };
-
-  const getRandomShapeColor = (colors: {[key: string]: string}, exclude?: string): string => {
-    const colorKeys = Object.values(colors).filter((color) => color !== exclude);
-
-    const randomIndex = generateRandomNumberInRange(colorKeys.length);
-
-    return colorKeys[randomIndex];
-  };
-
-  const ReminderText: FC = useCallback(() => {
-    return (
-      <div className="absolute left-3/4 top-[10%] z-10 w-44 -translate-x-1/2 -translate-y-1/2 rotate-12 md:top-[20%] lg:left-[60%] xl:top-1/4">
-        <div className="relative">
-          <h4 className="text-left">Press to get a new question!</h4>
-          <span className="absolute right-6 top-5">
-            <RiveAnimation src={'eyes.riv'} width={50} height={50} />
-          </span>
-          <Arrow className="absolute -left-14 top-4" />
-        </div>
-      </div>
-    );
+  const shuffleShape = useCallback(() => {
+    setCurrentShapeIndex((prevIndex) => (prevIndex + 1) % shapes.length);
+    setDisplayedQuestion(() => questions[Math.floor(Math.random() * questions.length)]);
   }, []);
 
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+    if (isSpinning) {
+      intervalId = setInterval(shuffleShape, 500);
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [isSpinning, shuffleShape]);
+
+  useEffect(() => {
+    spinWheel();
+  }, []);
+
+  const spinWheel = () => {
+    setIsSpinning(true);
+    setDisplayedQuestion(null);
+    const newRotation = rotation + 720 + 360;
+    setRotation(newRotation);
+
+    setTimeout(() => {
+      setIsSpinning(false);
+    }, 2000); // Changge spin duration here
+  };
+
+  const CurrentShape = shapes[currentShapeIndex];
+
   return (
-    <div className="mx-auto w-fit">
-      <ReminderText />
-      <button onMouseDown={handleClick} className="cursor-pointer">
-        <CurrentShape fill={getRandomShapeColor(ShapeColors, excludeShapeColor)}>
-          {currentQuestion}
-        </CurrentShape>
-      </button>
+    <div className="relative">
+      <motion.button
+        className="aspect-square w-full"
+        onClick={spinWheel}
+        type="button"
+        disabled={isSpinning}
+        whileTap={{scale: 0.9}}
+        initial={{scale: 1}}
+        transition={{type: 'spring', stiffness: 400, damping: 17}}>
+        <motion.div
+          className="h-full w-full"
+          animate={{rotate: rotation}}
+          transition={{
+            duration: 2, // Change spin duration here
+            ease: 'easeInOut',
+          }}>
+          <CurrentShape
+            className="fill-blue-500 stroke-blue-600 h-full w-full"
+            fill={Colors.Yellow}>
+            {!isSpinning && (
+              <AnimatePresence>
+                <motion.h4
+                  initial={{opacity: 0, scale: 0.5}}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      type: 'spring',
+                      stiffness: 400,
+                      damping: 17,
+                      duration: 0.2,
+                    },
+                  }}
+                  exit={{
+                    opacity: 0,
+                  }}>
+                  {displayedQuestion ?? t('pressToGetNewQuestion')}
+                </motion.h4>
+              </AnimatePresence>
+            )}
+          </CurrentShape>
+        </motion.div>
+      </motion.button>
+      <AnimatePresence>
+        {!isSpinning && (
+          <div className="absolute bottom-full left-1/2 mb-4 flex -translate-x-1/2 transform items-center gap-4">
+            <motion.div
+              initial={{y: 30, opacity: 0}}
+              animate={{y: -10, opacity: 1}}
+              exit={{y: 30, opacity: 0}}
+              transition={{duration: 1, delay: 0.5, type: 'spring', stiffness: 400, damping: 17}}>
+              <Arrow />
+            </motion.div>
+
+            <motion.h4
+              className="w-44"
+              initial={{opacity: 0, y: 20, rotate: 16}}
+              animate={{opacity: 1, y: -1, rotate: 16}}
+              exit={{opacity: 0, y: 20, rotate: 16}}
+              transition={{duration: 1, delay: 0.6, type: 'spring', stiffness: 400, damping: 17}}>
+              {t('pressToGetNewQuestion')}
+            </motion.h4>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
