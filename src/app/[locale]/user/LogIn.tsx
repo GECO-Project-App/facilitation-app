@@ -49,7 +49,7 @@ const LogIn = () => {
           <div className="space-y-6 px-4">
             <div className="space-y-2">
               <Input
-                id="email"
+                id="login-email"
                 name="email"
                 type="email"
                 placeholder="Enter your email"
@@ -62,7 +62,7 @@ const LogIn = () => {
             </div>
             <div className="space-y-2">
               <Input
-                id="password"
+                id="login-password"
                 name="password"
                 type="password"
                 placeholder="Enter your password"

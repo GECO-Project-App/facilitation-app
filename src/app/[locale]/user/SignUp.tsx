@@ -56,7 +56,7 @@ const SignUp = () => {
       <div className="space-y-6 px-4">
         <div className="space-y-2">
           <Input
-            id="email"
+            id="signup-email"
             name="email"
             type="email"
             placeholder="Enter your email"
@@ -68,7 +68,7 @@ const SignUp = () => {
         </div>
         <div className="space-y-2">
           <Input
-            id="password"
+            id="signup-password"
             name="password"
             type="password"
             placeholder="Enter your password"
@@ -80,7 +80,7 @@ const SignUp = () => {
         </div>
         <div className="space-y-2">
           <Input
-            id="confirm-password"
+            id="signup-confirm-password"
             name="confirmPassword"
             type="password"
             placeholder="Confirm your password"
