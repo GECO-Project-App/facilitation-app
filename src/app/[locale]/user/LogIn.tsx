@@ -81,7 +81,7 @@ const LogIn = () => {
               </div>
             </div>
           </div>
-          <div className="mt-14 flex justify-center pb-4">
+          <div className="mt-14 flex justify-center pb-6">
           <Button type="submit" disabled={loading}>
               {loading ? 'Loading...' : 'Log In'}
             </Button>

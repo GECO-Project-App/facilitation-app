@@ -11,6 +11,7 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    nickName: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,15 +25,15 @@ const SignUp = () => {
       const {data, error} = await supabase.auth.signUp({
         email: formData.email, 
         password: formData.password,
-        // options: {
-        //   data: {
-        //     displayName: 'jack',
-        //   },
-        // },
+        options: {
+          data: {
+            displayName: formData.nickName,
+          },
+        },
       });
       if (error) throw error;
       setShowDialog(true);
-      setFormData({email: '', password: '', confirmPassword: ''});
+      setFormData({email: '', password: '', confirmPassword: '', nickName: ''});
       console.log('DATA: ', data);
     } catch (error) {
       alert('Error signing up: ' + error);
@@ -53,7 +54,7 @@ const SignUp = () => {
       <DialogView destinationRoute="/" message="Thank you for signing up, Your account is ready!" icon="signup" />
     ) : (
     <form onSubmit={handleSubmit} className="h-96 flex flex-col justify-between">
-      <div className="space-y-6 px-4">
+      <div className="space-y-4 px-4">
         <div className="space-y-2">
           <Input
             id="signup-email"
@@ -90,8 +91,19 @@ const SignUp = () => {
             className="h-12 rounded-full"
           />
         </div>
+        <div className="space-y-2">
+          <Input
+            id="signup-nickname"
+            name="nickName"
+            type="text"
+            placeholder="Nick Name"
+            value={formData.nickName}
+            onChange={handleChange}
+            className="h-12 rounded-full"
+          />
+        </div>
       </div>
-      <div className="mt-14 flex justify-center pb-4">
+      <div className="mt-14 flex justify-center pb-6">
       <Button type="submit">Sign Up</Button>
       </div>
     </form> 
