@@ -1,5 +1,5 @@
-import type {ButtonProps} from '@/components';
-import {AboutProps, StepContent} from './types';
+import type { ButtonProps } from '@/components';
+import { AboutProps, StepContent } from './types';
 
 export const ccMock = {
   about: {
@@ -134,4 +134,3 @@ export const mockPassItOn: PassItOnItem[] = [
   },
 ];
 
-export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];

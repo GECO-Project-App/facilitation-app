@@ -4,6 +4,7 @@ import {CarouselPagination} from '@/components/CarouselPagination';
 import {Complete} from '@/components/icons';
 import {Button} from '@/components/ui/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {paginationColors} from '@/lib/constants';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
 import {useRouter} from '@/navigation';
@@ -27,6 +28,23 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     stop: sscMock.stop.steps,
     continue: sscMock.continue.steps,
   };
+
+  const getButtonVariant = useMemo(() => {
+    switch (paginationColors[currentStep + 1]) {
+      case 'bg-blue':
+        return 'blue';
+      case 'bg-pink':
+        return 'pink';
+      case 'bg-orange':
+        return 'orange';
+      case 'bg-red':
+        return 'red';
+      case 'bg-green':
+        return 'green';
+      default:
+        return 'pink';
+    }
+  }, [currentStep]);
 
   const chapterSteps = useMemo(() => {
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
@@ -54,11 +72,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       completedChapters.push(chapter);
       localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
     }
-    if (completedChapters.includes('start' && 'stop' && 'continue')) {
-      router.replace(`/exercises/ssc/accomplishment`);
-    } else {
-      router.push(`/exercises/ssc`);
-    }
+    router.push(`/exercises/ssc/accomplishment`);
   };
 
   const nextStep = () => {
@@ -75,7 +89,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
 
   return (
     <PageLayout
-      backgroundColor="bg-blue"
+      backgroundColor={sscMock[chapter as Exclude<keyof typeof sscMock, 'about'>].backgroundColor}
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
@@ -87,7 +101,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
             {t('completeButton')} <Complete />
           </Button>
         ) : (
-          <Button variant="yellow" onClick={nextStep}>
+          <Button variant={getButtonVariant} onClick={nextStep}>
             {t('nextStep')} <ArrowRight />
           </Button>
         )

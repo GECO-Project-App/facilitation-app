@@ -7,6 +7,7 @@ export const Colors = {
   Orange: '#FB8510',
   Yellow: '#FCD548',
   Blue: '#5553FE',
+  LightBlue: '#68C9FF',
 };
 
 export const ShapeColors: ColorObject = {
@@ -16,7 +17,10 @@ export const ShapeColors: ColorObject = {
   Orange: '#FB8510',
   Blue: '#5553FE',
   Yellow: '#FCD548',
+  LightBlue: '#68C9FF',
 };
 export type ColorObject = {
   [key: string]: string;
 };
+
+export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];
