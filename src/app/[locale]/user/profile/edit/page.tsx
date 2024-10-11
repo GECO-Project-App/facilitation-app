@@ -16,17 +16,17 @@ const EditProfile = () => {
     const InsertData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
-      authId: user?.id,
+      userId: user?.id,
       email: user?.email,
     };
     console.log(InsertData);
-  const { error } = await supabase
-  .from('users')
-  .insert(InsertData)
+  // const { error } = await supabase
+  // .from('users')
+  // .insert(InsertData)
 
-  if (error) {
-    console.error('Error updating profile:', error);
-  }
+  // if (error) {
+  //   console.error('Error updating profile:', error);
+  // }
 };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
