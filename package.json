@@ -9,11 +9,14 @@
     "lint": "eslint src",
     "format": "prettier --write src",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky"
   },
   "lint-staged": {
-      "src/**/*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --write"]
-
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.8",
@@ -29,7 +32,7 @@
     "embla-carousel-react": "^8.3.0",
     "lucide-react": "^0.438.0",
     "negotiator": "^0.6.3",
-    "next": "14.2.7",
+    "next": "14.2.15",
     "next-intl": "^3.19.4",
     "posthog-js": "^1.165.0",
     "posthog-node": "^4.2.0",
@@ -42,6 +45,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.8.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@eslint/js": "^9.12.0",
     "@storybook/addon-essentials": "^8.2.9",
     "@storybook/addon-interactions": "^8.2.9",
@@ -61,7 +66,6 @@
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-storybook": "^0.8.0",
     "globals": "^15.10.0",
-    "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "postcss": "^8",
     "prettier": "^3.3.3",
