@@ -8,8 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
  import {Confetti} from '@/components/icons/confetti';
-import {AstroGeco} from '@/components/icons/astro-geco';
-import {AstroGecoStar} from '@/components/icons/astro-geco';
+import {AstroGeco, AstroGecoWithStar} from '@/components/icons/astro-geco';
 
 interface DialogViewProps {
   destinationRoute?: string;
@@ -39,7 +38,7 @@ export default function DialogView({destinationRoute, message, icon}: DialogView
             <>
               {icon === 'feedback' && <Confetti />}
               {icon === 'signup' && <AstroGeco />}
-              {icon === 'login' && <AstroGeco />}
+              {icon === 'login' && <AstroGecoWithStar />}
               {message ? message : 'Thank you...!'}
             </>
           </DialogTitle>

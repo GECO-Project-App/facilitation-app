@@ -1,3 +1,3 @@
 export * from './AstroGeco';
-export * from './AstroGecoStar';
+export * from './AstroGecoWithStar';
 export * from './DefaultProfileImage';

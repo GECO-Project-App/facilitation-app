@@ -2,6 +2,7 @@
 import {useUserStore} from '@/store/userStore';
 import {Button} from '@/components/ui/button';
 import {DefaultProfileImage} from '@/components/icons/astro-geco';
+import Link from 'next/link';
 
 const ProfilePage = () => {
   const {user, signOut} = useUserStore();
@@ -17,9 +18,16 @@ const ProfilePage = () => {
             <p className="text-xl">Last Name: </p>
             <p className="text-xl">Email: {user.email}</p>
           </section>
+          <section>
           <Button onClick={signOut} className="mt-4">
             Log out
           </Button>
+          <Button className="mt-4" variant="yellow">
+            <Link href="./profile/edit/">
+              Edit Profile
+            </Link>
+          </Button>
+          </section>
         </div>
       ) : (
         <h1 className="text-xl font-bold">Please log in to view your profile</h1>
