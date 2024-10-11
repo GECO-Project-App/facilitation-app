@@ -20,3 +20,5 @@ export const ShapeColors: ColorObject = {
 export type ColorObject = {
   [key: string]: string;
 };
+
+export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];
