@@ -1,41 +1,31 @@
 'use client';
 import React from 'react';
-import {Setting} from '@/components/icons/setting';
 import {Link} from '@/navigation';
-import { useUserStore } from "@/store/userStore";
+import {useUserStore} from '@/store/userStore';
+import {Home, Settings, LogIn, ListTodo} from 'lucide-react';
 
 const AppBar: React.FC = () => {
-  const { user } = useUserStore();
+  const {user} = useUserStore();
 
   return (
-    <div className="sticky bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black bg-yellow px-4">
+    <div
+      className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black px-14"
+      style={{backgroundColor: '#facc15'}}>
+      <div>
+        <Link href="/">
+        <Home size={24} />
+        </Link>
+      </div>
       <div>
         <Link href={!user ? '/user' : '/user/profile'}>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round">
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </svg>
-          </div>
+          <LogIn size={24} />
         </Link>
       </div>
       <div>
-        <h1 className="text-2xl font-bold text-white"></h1>
+        <Settings size={24} />
       </div>
       <div>
-        <Link href={'#'}>
-          <Setting />
-        </Link>
+        <ListTodo size={24} />
       </div>
     </div>
   );
