@@ -2,10 +2,15 @@
 import {useUserStore} from '@/store/userStore';
 import {Button} from '@/components/ui/button';
 import {DefaultProfileImage} from '@/components/icons/astro-geco';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const ProfilePage = () => {
   const {user, signOut} = useUserStore();
+  const router = useRouter();
+  const logOut = () => {
+    signOut();
+    router.push('/');
+  }
 
   return (
     <div className="overflow-hidden bg-sky-300">
@@ -19,13 +24,8 @@ const ProfilePage = () => {
             <p className="text-xl">Email: {user.email}</p>
           </section>
           <section>
-          <Button onClick={signOut} className="mt-4">
+          <Button onClick={logOut} className="mt-4">
             Log out
-          </Button>
-          <Button className="mt-4" variant="yellow">
-            <Link href="./profile/edit/">
-              Edit Profile
-            </Link>
           </Button>
           </section>
         </div>

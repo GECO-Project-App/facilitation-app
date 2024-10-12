@@ -47,7 +47,7 @@ const LogIn = () => {
     {showDialog ? (
       <DialogView destinationRoute="/" message="You're logged in!" icon="login" />
     ) : (
-        <form onSubmit={handleSubmit} className="h-96 flex flex-col justify-between">
+        <form onSubmit={handleSubmit} className="h-fit min-h-[448px] flex flex-col justify-between">
           <div className="space-y-6 px-4">
             <div className="space-y-2">
               <Input
