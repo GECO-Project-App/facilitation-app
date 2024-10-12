@@ -1,5 +1,5 @@
-import type {ButtonProps} from '@/components';
-import {AboutProps, StepContent} from './types';
+import type { ButtonProps } from '@/components';
+import { AboutProps, StepContent } from './types';
 
 export const ccMock = {
   about: {
@@ -42,7 +42,7 @@ export const sscMock = {
       rive: 'ssc_startgecko.riv',
       button: {
         variant: 'yellow' as ButtonProps['variant'],
-        link: '/exercises/ssc/start',
+        link: '/exercises/ssc/chapter/start',
         text: "Let's Start",
       },
     } as AboutProps,
@@ -70,7 +70,7 @@ export const sscMock = {
       rive: 'ssc_stopgecko.riv',
       button: {
         variant: 'red' as ButtonProps['variant'],
-        link: '/exercises/ssc/stop',
+        link: '/exercises/ssc/chapter/stop',
         text: "Let's Stop",
       },
     } as AboutProps,
@@ -97,7 +97,7 @@ export const sscMock = {
       rive: 'ssc_continuegecko.riv',
       button: {
         variant: 'green' as ButtonProps['variant'],
-        link: '/exercises/ssc/continue',
+        link: '/exercises/ssc/chapter/continue',
         text: "Let's Continue",
       },
     } as AboutProps,
@@ -134,4 +134,3 @@ export const mockPassItOn: PassItOnItem[] = [
   },
 ];
 
-export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];

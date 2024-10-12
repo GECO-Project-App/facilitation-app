@@ -1,24 +1,16 @@
 'use client';
-import {PageLayout, RiveAnimation, Timer} from '@/components';
+import {Header, PageLayout, RiveAnimation, Timer} from '@/components';
+import {CarouselPagination} from '@/components/CarouselPagination';
+import {Complete} from '@/components/icons';
 import {Button} from '@/components/ui/button';
+import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {paginationColors} from '@/lib/constants';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
-import React, {useMemo, useState, useEffect} from 'react';
-import {Header} from '@/components';
-import {CarouselPagination} from '@/components/CarouselPagination';
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-import {Link} from '@/navigation';
-import {Complete} from '@/components/icons';
-import {useTranslations} from 'next-intl';
-import {ArrowRight} from 'lucide-react';
 import {useRouter} from '@/navigation';
+import {ArrowRight} from 'lucide-react';
+import {useTranslations} from 'next-intl';
+import React, {useEffect, useMemo, useState} from 'react';
 
 export type SSCExerciseProps = {
   chapter: string;
@@ -36,6 +28,23 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     stop: sscMock.stop.steps,
     continue: sscMock.continue.steps,
   };
+
+  const getButtonVariant = useMemo(() => {
+    switch (paginationColors[currentStep + 1]) {
+      case 'bg-blue':
+        return 'blue';
+      case 'bg-pink':
+        return 'pink';
+      case 'bg-orange':
+        return 'orange';
+      case 'bg-red':
+        return 'red';
+      case 'bg-green':
+        return 'green';
+      default:
+        return 'pink';
+    }
+  }, [currentStep]);
 
   const chapterSteps = useMemo(() => {
     return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
@@ -58,12 +67,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   }, [api]);
 
   const handleComplete = () => {
-    console.log('complete');
     const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
     if (!completedChapters.includes(chapter)) {
       completedChapters.push(chapter);
       localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
     }
+    router.push(`/exercises/ssc/accomplishment`);
   };
 
   const nextStep = () => {
@@ -80,7 +89,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
 
   return (
     <PageLayout
-      backgroundColor="bg-blue"
+      backgroundColor={sscMock[chapter as Exclude<keyof typeof sscMock, 'about'>].backgroundColor}
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
@@ -88,13 +97,11 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       }
       footer={
         currentStep === steps.length - 1 ? (
-          <Button variant="blue" className="mx-auto" asChild onClick={handleComplete}>
-            <Link href={`/ssc/accomplishment`}>
-              {t('completeButton')} <Complete stroke="white" />
-            </Link>
+          <Button variant="blue" className="mx-auto" onClick={handleComplete}>
+            {t('completeButton')} <Complete />
           </Button>
         ) : (
-          <Button variant="yellow" onClick={nextStep}>
+          <Button variant={getButtonVariant} onClick={nextStep}>
             {t('nextStep')} <ArrowRight />
           </Button>
         )
