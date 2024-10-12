@@ -31,8 +31,8 @@ export default async function RootLayout({
         <PHProvider>
           <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
             <PostHogPageView />
-            <AppBar />
             {children}
+            <AppBar />
           </body>
         </PHProvider>
       </html>

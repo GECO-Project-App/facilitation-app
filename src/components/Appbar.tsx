@@ -8,7 +8,7 @@ const AppBar: React.FC = () => {
   const { user } = useUserStore();
 
   return (
-    <div className="sticky top-0 flex h-[40px] w-full items-center justify-between border-b-2 border-black bg-yellow p-4">
+    <div className="sticky bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black bg-yellow px-4">
       <div>
         <Link href={!user ? '/user' : '/user/profile'}>
           <div>
