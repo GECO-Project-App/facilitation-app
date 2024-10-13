@@ -1,4 +1,3 @@
-import {Confetti} from '@/components/icons/confetti';
 import {
   Dialog,
   DialogContent,
@@ -8,6 +7,7 @@ import {
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
 import {useCallback, useEffect} from 'react';
+import {Confetti} from '../icons/confetti';
 
 interface DialogViewProps {
   destinationRoute?: string;

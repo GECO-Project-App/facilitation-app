@@ -133,5 +133,3 @@ export const mockPassItOn: PassItOnItem[] = [
     rive: 'passiton3.riv',
   },
 ];
-
-export const paginationColors = ['bg-blue', 'bg-pink', 'bg-orange', 'bg-green', 'bg-red'];

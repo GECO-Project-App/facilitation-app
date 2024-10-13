@@ -1,4 +1,4 @@
-import {paginationColors} from '@/lib/mock';
+import {paginationColors} from '@/lib/constants';
 import {cn} from '@/lib/utils';
 import {FC, useCallback} from 'react';
 

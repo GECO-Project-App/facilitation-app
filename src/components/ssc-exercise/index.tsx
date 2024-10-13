@@ -4,6 +4,7 @@ import {CarouselPagination} from '@/components/CarouselPagination';
 import {Complete} from '@/components/icons';
 import {Button} from '@/components/ui/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {paginationColors} from '@/lib/constants';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
 import {Link, useRouter} from '@/navigation';
@@ -21,6 +22,23 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.ssc');
   const [api, setApi] = useState<CarouselApi>();
+
+  const getButtonVariant = useMemo(() => {
+    switch (paginationColors[currentStep + 1]) {
+      case 'bg-blue':
+        return 'blue';
+      case 'bg-pink':
+        return 'pink';
+      case 'bg-orange':
+        return 'orange';
+      case 'bg-red':
+        return 'red';
+      case 'bg-green':
+        return 'green';
+      default:
+        return 'pink';
+    }
+  }, [currentStep]);
 
   useEffect(() => {
     if (!api) {
@@ -73,7 +91,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
 
   return (
     <PageLayout
-      backgroundColor="bg-blue"
+      backgroundColor={sscMock[chapter as Exclude<keyof typeof sscMock, 'about'>].backgroundColor}
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
@@ -87,7 +105,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
             </Link>
           </Button>
         ) : (
-          <Button variant="yellow" onClick={nextStep}>
+          <Button variant={getButtonVariant} onClick={nextStep}>
             {t('nextStep')} <ArrowRight />
           </Button>
         )
