@@ -4,8 +4,10 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {supabase} from '@/lib/supabase/supabaseClient';
 import {useTranslations} from 'next-intl';
+import { useToast } from "@/hooks/useToast"
 
 const ResetPassword = () => {
+  const { toast } = useToast();
   const t = useTranslations('authenticate');
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,6 +18,10 @@ const ResetPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Reset password for:', formData.email);
+    toast({
+      title: t('emailSent'),
+      description: t('emailSentDescription'),
+    })
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

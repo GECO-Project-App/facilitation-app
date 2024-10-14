@@ -241,6 +241,8 @@
     "confirmPassword": "Confirm the password",
     "forgotPassword": "Forgot your password?",
     "firstName": "First Name",
-    "lastName": "Last Name"
+    "lastName": "Last Name",
+    "emailSent": "Email sent",
+    "emailSentDescription": "Check your email for a link to reset your password"
   }
 }

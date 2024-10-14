@@ -242,6 +242,8 @@
     "confirmPassword": "Bekräfta lösenordet",
     "forgotPassword": "Glömt ditt lösenord?",
     "firstName": "Förnamn",
-    "lastName": "Efternamn"
+    "lastName": "Efternamn",
+    "emailSent": "Email skickat",
+    "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord"
   }
 }

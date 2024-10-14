@@ -7,6 +7,9 @@ import dynamic from 'next/dynamic';
 import {jetbrains_mono, roboto} from './fonts';
 import {getMessages} from 'next-intl/server';
 import AppBar from '@/components/Appbar';
+import { Toaster } from "@/components/ui/toast/toaster"
+
+
 export const metadata: Metadata = {
   manifest: '/manifest.json',
   title: 'GECO',
@@ -32,6 +35,7 @@ export default async function RootLayout({
           <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
             <PostHogPageView />
             {children}
+            <Toaster />
             <AppBar />
           </body>
         </PHProvider>
