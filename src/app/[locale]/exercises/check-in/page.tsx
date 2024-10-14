@@ -1,6 +1,5 @@
 'use client';
 import {Button, Header, PageLayout, RandomQuestion} from '@/components';
-import {Colors} from '@/lib/constants';
 import {Link, usePathname} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
@@ -22,11 +21,7 @@ export default function CheckInPage() {
           </Link>
         </Button>
       }>
-      <RandomQuestion
-        slug={slug as string}
-        excludeShapeColor={Colors.Orange}
-        questions={questions}
-      />
+      <RandomQuestion questions={questions} />
     </PageLayout>
   );
 }
