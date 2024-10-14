@@ -1,30 +1,31 @@
 import {About} from '@/components';
 import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
-import {getTranslations} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
 
-export default async function IntroductionPage({params}: {params: {slug: string}}) {
+export default function IntroductionPage({params}: {params: {slug: string}}) {
   const {slug} = params;
 
-  const t = await useMemo(async () => {
+  const tKey = useMemo(() => {
     switch (slug) {
       case 'check-in':
-        return await getTranslations('exercises.checkIn');
+        return 'exercises.checkIn';
       case 'check-out':
-        return await getTranslations('exercises.checkOut');
+        return 'exercises.checkOut';
       case 'ssc':
-        return await getTranslations('exercises.ssc.about');
+        return 'exercises.ssc.about';
       case 'start':
-        return await getTranslations('exercises.ssc.start');
+        return 'exercises.ssc.start';
       case 'stop':
-        return await getTranslations('exercises.ssc.stop');
+        return 'exercises.ssc.stop';
       case 'continue':
-        return await getTranslations('exercises.ssc.continue');
+        return 'exercises.ssc.continue';
       default:
-        return await getTranslations('exercises.checkIn');
+        return 'exercises.checkIn';
     }
   }, [slug]);
 
+  const t = useTranslations(tKey);
   return (
     <>
       {slug === 'ssc' && <ClearLocalStorage />}

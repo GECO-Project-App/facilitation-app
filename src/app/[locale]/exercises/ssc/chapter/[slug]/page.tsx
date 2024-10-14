@@ -1,24 +1,26 @@
 import SSCExercise from '@/components/ssc-exercise';
 import Tips from '@/components/ssc-exercise/Tips';
 import {Step} from '@/lib/types';
-import {getTranslations} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
 
-export default async function SSC({params}: {params: {locale: string; slug: string}}) {
+export default function SSC({params}: {params: {locale: string; slug: string}}) {
   const slug = params.slug;
 
-  const t = await useMemo(async () => {
+  const tKey = useMemo(() => {
     switch (slug) {
       case 'start':
-        return await getTranslations('exercises.ssc.start');
+        return 'exercises.ssc.start';
       case 'stop':
-        return await getTranslations('exercises.ssc.stop');
+        return 'exercises.ssc.stop';
       case 'continue':
-        return await getTranslations('exercises.ssc.continue');
+        return 'exercises.ssc.continue';
       default:
-        return await getTranslations('exercises.ssc.start');
+        return 'exercises.ssc.start';
     }
   }, [slug]);
+
+  const t = useTranslations(tKey);
 
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
 
