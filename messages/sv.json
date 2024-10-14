@@ -244,6 +244,8 @@
     "firstName": "Förnamn",
     "lastName": "Efternamn",
     "emailSent": "Email skickat",
-    "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord"
+    "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
+    "error": "Fel",
+    "errorDescription": "Ett fel uppstod när lösenordet återställdes. Försök igen."
   }
 }

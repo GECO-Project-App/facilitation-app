@@ -10,26 +10,33 @@ const ResetPassword = () => {
   const { toast } = useToast();
   const t = useTranslations('authenticate');
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
+  const [userEmail, setUserEmail] = useState('');
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Reset password for:', formData.email);
-    toast({
-      title: t('emailSent'),
-      description: t('emailSentDescription'),
-    })
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(userEmail);
+      if (error) throw error;
+      toast({
+        title: t('emailSent'),
+        description: t('emailSentDescription'),
+      });
+      setUserEmail('');
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      toast({
+        title: t('error'),
+        description: t('errorDescription'),
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const {value} = e.target;
+    setUserEmail(value);
   };
 
   return (
@@ -42,7 +49,7 @@ const ResetPassword = () => {
             name="email"
             type="email"
             placeholder={t('enterEmail')}
-            value={formData.email}
+            value={userEmail}
             onChange={handleChange}
             required
             className="h-12 rounded-full"
