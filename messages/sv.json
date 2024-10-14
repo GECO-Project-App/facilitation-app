@@ -207,7 +207,8 @@
     "title": "Vad fungerade bra under övningen?",
     "subtitle": "Vad fungerade inte?",
     "placeholder": "Skriv din feedback här...",
-    "button": "Skicka"
+    "button": "Skicka",
+    "thankYouText": "Tack för din feedback!"
   },
   "common": {
     "nextStep": "Nästa steg",
