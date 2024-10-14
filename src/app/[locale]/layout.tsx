@@ -6,7 +6,6 @@ import {PHProvider} from '@/lib/providers/PHProvider';
 import dynamic from 'next/dynamic';
 import {jetbrains_mono, roboto} from './fonts';
 import {getMessages} from 'next-intl/server';
-import AppBar from '@/components/Appbar';
 import { Toaster } from "@/components/ui/toast/toaster"
 
 
@@ -36,7 +35,6 @@ export default async function RootLayout({
             <PostHogPageView />
             {children}
             <Toaster />
-            <AppBar />
           </body>
         </PHProvider>
       </html>

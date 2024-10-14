@@ -11,22 +11,22 @@ const AppBar: React.FC = () => {
     <div
       className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black px-14"
       style={{backgroundColor: '#facc15'}}>
-      <div>
+      <span>
         <Link href="/">
-        <Home size={24} />
+          <Home size={24} />
         </Link>
-      </div>
-      <div>
+      </span>
+      <span>
         <Link href={!user ? '/user' : '/user/profile'}>
           <LogIn size={24} />
         </Link>
-      </div>
-      <div>
+      </span>
+      <span>
         <Settings size={24} />
-      </div>
-      <div>
+      </span>
+      <span>
         <ListTodo size={24} />
-      </div>
+      </span>
     </div>
   );
 };
