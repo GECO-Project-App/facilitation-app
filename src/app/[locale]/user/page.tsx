@@ -1,12 +1,20 @@
+'use client';
 import SignUp from './SignUp';
 import LogIn from './LogIn';
 import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs/tabs';
 import {useTranslations} from 'next-intl';
+import {motion, AnimatePresence} from 'framer-motion';
 
 const AuthPage = () => {
   const t = useTranslations('authenticate');
 
- return (
+  const tabVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+    exit: { y: -20, opacity: 0 }
+  };
+
+  return (
     <Tabs defaultValue="login" className="mx-auto h-full max-w-[600px] overflow-hidden p-4">
       <TabsList className="m-auto mt-10 grid h-12 w-80 grid-cols-2 rounded-full bg-lightBlue">
         <TabsTrigger
@@ -20,12 +28,28 @@ const AuthPage = () => {
           {t('signUp')}
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="login" className="mt-10 h-full">
-        <LogIn />
-      </TabsContent>
-      <TabsContent value="signup" className="mt-10 h-full">
-        <SignUp />
-      </TabsContent>
+      <AnimatePresence mode="wait">
+        <TabsContent value="login" key="login" className="mt-10 h-full">
+          <motion.div
+            variants={tabVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{type: "spring", stiffness: 100, damping: 15}}>
+            <LogIn />
+          </motion.div>
+        </TabsContent>
+        <TabsContent value="signup" key="signup" className="mt-10 h-full">
+          <motion.div
+            variants={tabVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{type: "spring", stiffness: 100, damping: 15}}>
+            <SignUp />
+          </motion.div>
+        </TabsContent>
+      </AnimatePresence>
     </Tabs>
   );
 };

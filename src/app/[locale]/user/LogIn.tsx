@@ -78,7 +78,7 @@ const LogIn = () => {
               />
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center space-x-4 text-sm text-green">
                 {t('forgotPassword')}
               </div>
             </div>
