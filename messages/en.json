@@ -226,6 +226,8 @@
     ]
   },
   "authenticate": {
+    "reset": "Reset",
+    "resetPassword": "Reset Password",
     "logIn": "Log In",
     "logOut": "Log Out",
     "signIn": "Sign In",

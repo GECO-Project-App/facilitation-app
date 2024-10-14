@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 import DialogView from '@/components/modal/DialogView';
 import {useTranslations} from 'next-intl';
-
+import Link from 'next/link';
 const LogIn = () => {
   const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
@@ -78,8 +78,10 @@ const LogIn = () => {
               />
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-center space-x-4 text-sm text-green">
+              <div className="flex items-center justify-center space-x-4 text-sm text-green cursor-pointer hover:text-green/80">
+              <Link href="./user/reset-password">
                 {t('forgotPassword')}
+              </Link>
               </div>
             </div>
           </div>

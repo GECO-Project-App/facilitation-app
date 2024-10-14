@@ -227,6 +227,8 @@
     ]
   },
   "authenticate": {
+    "reset": "Återställ",
+    "resetPassword": "Återställ lösenord",
     "logIn": "Logga in",
     "logOut": "Logga ut",
     "signIn": "Logga in",
