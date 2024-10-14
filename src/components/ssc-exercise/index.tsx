@@ -7,7 +7,7 @@ import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components
 import {paginationColors} from '@/lib/constants';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
-import {Link, useRouter} from '@/navigation';
+import {useRouter} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -69,12 +69,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   }
 
   const handleComplete = () => {
-    console.log('complete');
     const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
     if (!completedChapters.includes(chapter)) {
       completedChapters.push(chapter);
       localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
     }
+    router.push(`/exercises/ssc/accomplishment`);
   };
 
   const nextStep = () => {
@@ -99,10 +99,8 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
       }
       footer={
         currentStep === steps.length - 1 ? (
-          <Button variant="blue" className="mx-auto" asChild onClick={handleComplete}>
-            <Link href={`/ssc/accomplishment`}>
-              {t('completeButton')} <Complete stroke="white" />
-            </Link>
+          <Button variant="blue" className="mx-auto" onClick={handleComplete}>
+            {t('completeButton')} <Complete />
           </Button>
         ) : (
           <Button variant={getButtonVariant} onClick={nextStep}>
