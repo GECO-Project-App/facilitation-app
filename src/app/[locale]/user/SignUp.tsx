@@ -5,8 +5,10 @@ import {Input} from '@/components/ui/input';
 import {supabase} from '@/lib/supabase/supabaseClient';
 import DialogView from '@/components/modal/DialogView';
 import {useTranslations} from 'next-intl';
+import { useToast } from "@/hooks/useToast"
 
 const SignUp = () => {
+  const { toast } = useToast();
   const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({
@@ -38,9 +40,12 @@ const SignUp = () => {
       if (error) throw error;
       setShowDialog(true);
       setFormData({email: '', password: '', confirmPassword: '', firstName: '', lastName: ''});
-      console.log('DATA: ', data);
     } catch (error) {
-      alert('Error signing up: ' + error);
+      toast({
+        title: t('error'),
+        description: t('errorDescription'),
+        variant: 'destructive',
+      });
     }
   };
 

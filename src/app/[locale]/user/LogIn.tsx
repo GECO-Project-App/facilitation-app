@@ -6,7 +6,11 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 import DialogView from '@/components/modal/DialogView';
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
-const LogIn = () => {
+import { useToast } from "@/hooks/useToast"
+
+
+const LogIn = () => { 
+  const { toast } = useToast();
   const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,18 +23,19 @@ const LogIn = () => {
     e.preventDefault();
     setLoading(true);
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
         })
         if (error) throw error;
         setShowDialog(true);
-        // setUser(data.user);
-        console.log("Logged in successfully!");
-        console.log('User: ',data);
         setFormData({ email: "", password: "" });
       } catch (error) {
-        alert("Error signing up: " + error);
+        toast({
+          title: t('error'),
+          description: t('errorDescription'),
+          variant: 'destructive',
+        });
       }
       setLoading(false);
   };
