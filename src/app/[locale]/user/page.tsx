@@ -9,8 +9,11 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import {useTranslations} from 'next-intl';
 
 const AuthPage = () => {
+  const t = useTranslations('authenticate');
+
   const [api, setApi] = useState<CarouselApi>();
 
   const loginTab = () => {
@@ -28,13 +31,13 @@ const AuthPage = () => {
           value="login"
           className="text-green-100 h-10 rounded-full border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black"
           onClick={loginTab}>
-          Login
+          {t('logIn')}
         </TabsTrigger>
         <TabsTrigger
           value="signup"
           className="text-green-100 h-10 rounded-full border-black data-[state=active]:border-2 data-[state=active]:bg-green data-[state=active]:text-black"
           onClick={signupTab}>
-          Signup
+          {t('signUp')}
         </TabsTrigger>
       </TabsList>
       <Carousel setApi={setApi} className="mt-10 h-full">

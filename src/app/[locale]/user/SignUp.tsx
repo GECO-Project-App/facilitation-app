@@ -4,8 +4,10 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {supabase} from '@/lib/supabase/supabaseClient';
 import DialogView from '@/components/modal/DialogView';
+import {useTranslations} from 'next-intl';
 
 const SignUp = () => {
+  const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -66,7 +68,7 @@ const SignUp = () => {
                 id="signup-email"
                 name="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t('enterEmail')}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -78,7 +80,7 @@ const SignUp = () => {
                 id="signup-password"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={t('enterPassword')}
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -90,7 +92,7 @@ const SignUp = () => {
                 id="signup-confirm-password"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm your password"
+                placeholder={t('confirmPassword')}
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
@@ -102,7 +104,7 @@ const SignUp = () => {
                 id="first-name"
                 name="firstName"
                 type="text"
-                placeholder="First Name"
+                placeholder={t('firstName')}
                 value={formData.firstName}
                 onChange={handleChange}
                 className="h-12 rounded-full"
@@ -113,7 +115,7 @@ const SignUp = () => {
                 id="last-name"
                 name="lastName"
                 type="text"
-                placeholder="Last Name"
+                placeholder={t('lastName')}
                 value={formData.lastName}
                 onChange={handleChange}
                 className="h-12 rounded-full"
@@ -121,7 +123,7 @@ const SignUp = () => {
             </div>
           </div>
           <div className="mt-14 flex justify-center pb-6">
-            <Button type="submit">Sign Up</Button>
+            <Button type="submit">{t('signUp')}</Button>
           </div>
         </form>
       )}

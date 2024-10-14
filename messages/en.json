@@ -224,5 +224,21 @@
         "locale": "sv"
       }
     ]
+  },
+  "authenticate": {
+    "logIn": "Log In",
+    "logOut": "Log Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "loading": "Loading...",
+    "button": "Submit",
+    "loggedIn": "You're logged in!",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter the password",
+    "confirmPassword": "Confirm the password",
+    "forgotPassword": "Forgot your password?",
+    "firstName": "First Name",
+    "lastName": "Last Name"
   }
 }

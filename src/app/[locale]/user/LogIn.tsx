@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from "@/lib/supabase/supabaseClient";
 import DialogView from '@/components/modal/DialogView';
+import {useTranslations} from 'next-intl';
 
 const LogIn = () => {
+  const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,7 +47,7 @@ const LogIn = () => {
   return (
     <>
     {showDialog ? (
-      <DialogView destinationRoute="/" message="You're logged in!" icon="login" />
+      <DialogView destinationRoute="/" message={t('loggedIn')} icon="login" />
     ) : (
         <form onSubmit={handleSubmit} className="h-fit min-h-[448px] flex flex-col justify-between">
           <div className="space-y-6 px-4">
@@ -54,7 +56,7 @@ const LogIn = () => {
                 id="login-email"
                 name="email"
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t('enterEmail')}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -67,7 +69,7 @@ const LogIn = () => {
                 id="login-password"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder={t('enterPassword')}
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -77,13 +79,13 @@ const LogIn = () => {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-center space-x-4">
-                Forgot your password?
+                {t('forgotPassword')}
               </div>
             </div>
           </div>
           <div className="mt-14 flex justify-center pb-6">
           <Button type="submit" disabled={loading}>
-              {loading ? 'Loading...' : 'Log In'}
+              {loading ? t('loading') : t('logIn')}
             </Button>
           </div>
         </form>
