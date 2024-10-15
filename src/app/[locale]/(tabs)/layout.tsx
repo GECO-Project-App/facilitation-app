@@ -1,4 +1,4 @@
-import {AppBar} from '@/components/AppBar';
+import {TabBar} from '@/components';
 
 export default async function TabsLayout({
   children,
@@ -8,7 +8,7 @@ export default async function TabsLayout({
   return (
     <main>
       {children}
-      <AppBar />
+      <TabBar />
     </main>
   );
 }

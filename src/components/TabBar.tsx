@@ -4,7 +4,7 @@ import {useUserStore} from '@/store/userStore';
 import {Home, ListTodo, LogIn, Settings} from 'lucide-react';
 import {FC} from 'react';
 
-export const AppBar: FC = () => {
+export const TabBar: FC = () => {
   const {user} = useUserStore();
 
   return (
