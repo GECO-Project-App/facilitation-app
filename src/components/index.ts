@@ -1,5 +1,4 @@
 export * from './About';
-export * from './AppBar';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './Header';
@@ -9,5 +8,6 @@ export * from './PageLayout';
 export * from './PassItOn';
 export * from './RandomQuestion';
 export * from './RiveAnimation';
+export * from './TabBar';
 export * from './Timer';
 export * from './ui';
