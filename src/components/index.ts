@@ -1,4 +1,5 @@
 export * from './About';
+export * from './BaseballCard';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './Header';

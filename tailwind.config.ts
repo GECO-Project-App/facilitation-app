@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 import tailwindAnimate from 'tailwindcss-animate';
 
 const config: Config = {
@@ -22,6 +22,7 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        "4xl": '1.6rem',
       },
       colors: {
         darkBorder: '#000',
@@ -79,7 +80,7 @@ const config: Config = {
       },
       boxShadow: {
         dark: '0px 6px 0px 0px #000',
-        small: '0px 2.5px 0px 0px #000',
+        small: '0px 3px 0px 0px #000',
       },
       translate: {
         boxShadowX: '0px',
