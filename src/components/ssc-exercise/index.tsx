@@ -56,6 +56,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     () => ({
       start: sscMock.start.steps,
       stop: sscMock.stop.steps,
+      continue: sscMock.continue.steps,
     }),
     [],
   );

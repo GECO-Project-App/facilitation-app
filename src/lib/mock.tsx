@@ -98,13 +98,13 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker: 'ssc_prioritize.riv',
+        sticker: 'ssc_continue.riv',
       },
       {
-        sticker: 'ssc_prioritize.riv',
+        timer: 180,
       },
       {
-        sticker: 'ssc_prioritize.riv',
+        sticker: 'discussion.riv',
       },
       {
         sticker: 'ssc_prioritize.riv',
