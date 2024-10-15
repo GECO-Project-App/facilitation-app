@@ -48,19 +48,16 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker: 'topic.riv',
-      },
-      {
         sticker: 'ssc_start.riv',
       },
       {
         timer: 180,
       },
       {
-        sticker: 'discuss.riv',
+        sticker: 'discussion.riv',
       },
       {
-        sticker: 'priority.riv',
+        sticker: 'ssc_prioritize.riv',
       },
     ] as StepContent[],
   },
@@ -76,18 +73,16 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker: 'ssc_stop.riv',
+        sticker:'ssc_stop.riv',
       },
-
       {
         timer: 180,
       },
-
       {
-        sticker: 'discuss.riv',
+        sticker: 'discussion.riv',
       },
       {
-        sticker: 'priority.riv',
+        sticker: 'ssc_prioritize.riv',
       },
     ] as StepContent[],
   },
@@ -103,17 +98,16 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker: 'ssc_continue.riv',
-      },
-
-      {
-        timer: 180,
+        sticker: 'ssc_prioritize.riv',
       },
       {
-        sticker: 'discuss.riv',
+        sticker: 'ssc_prioritize.riv',
       },
       {
-        sticker: 'priority.riv',
+        sticker: 'ssc_prioritize.riv',
+      },
+      {
+        sticker: 'ssc_prioritize.riv',
       },
     ] as StepContent[],
   },
