@@ -1,3 +1,4 @@
+import {Toaster} from '@/components/ui/toast/toaster';
 import {PHProvider} from '@/lib/providers/PHProvider';
 import {cn} from '@/lib/utils';
 import type {Metadata} from 'next';
@@ -32,6 +33,7 @@ export default async function RootLayout({
           <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
             <PostHogPageView />
             {children}
+            <Toaster />
           </body>
         </PHProvider>
       </html>

@@ -1,4 +1,5 @@
 export * from './About';
+export * from './AppBar';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './Header';
