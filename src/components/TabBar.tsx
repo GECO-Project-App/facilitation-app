@@ -9,7 +9,7 @@ export const TabBar: FC = () => {
   const {user} = useUserStore();
 
   return (
-    <nav className="fixed bottom-0 flex h-[40px] w-full border-t-2 border-black bg-yellow px-4">
+    <nav className="fixed bottom-0 flex  w-full border-t-2 border-black bg-yellow px-4 pb-8 pt-4">
       <ul className="flex items-center justify-between w-full bw-full gap-4">
         <li>
           <Link href="/">

@@ -31,7 +31,7 @@ export const BaseballCard: FC<BaseballCardProps> = ({
         <p>{role.join('/')}</p>
       </div>
       <Button size="small" variant="white" className="w-full">
-        Invite
+        Remove
       </Button>
     </div>
   );

@@ -5,7 +5,7 @@ export default function TeamPage() {
     <PageLayout>
       <section className="space-y-4">
         <h3 className="font-bold text-xl">Team</h3>
-        <div className="grid gap-4 grid-cols-2">
+        <div className="grid gap-2 lg:gap-4 grid-cols-2">
           {Array.from({length: 5}).map((_, index) => (
             <BaseballCard
               key={index}
