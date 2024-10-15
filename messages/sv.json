@@ -97,22 +97,22 @@
         "steps": [
           {
             "title": "Starta",
-            "description": "Vad är det vi inte gör som vi kanske borde börja göra som grupp?",
+            "description": "Vad borde vi börja göra för att arbeta bättre tillsammans?",
             "button": "Nästa steg"
           },
           {
             "title": "Tyst Brainstorm",
-            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja börja göra. De har tre minuter att brainstorma tyst.",
+            "description": "Alla skriver ner en sak som teamet borde börja göra. Ni har tre minuter på er att brainstorma tyst",
             "button": "Nästa steg"
           },
           {
             "title": "Sammanfatta",
-            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "description": "Gå runt i rummet och presentera det en sak som alla skrev ner.",
             "button": "Nästa steg"
           },
           {
             "title": "Prioritera",
-            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "description": "Gruppera liknande förslag. Låt medlemmarna placera en 'dot' på det förslag som de håller mest.",
             "button": "Nästa steg"
           }
         ]
@@ -125,22 +125,22 @@
         "steps": [
           {
             "title": "Stopp",
-            "description": "Vad har vi varit inne på som vi kanske borde sluta göra som grupp?",
+            "description": "Vad borde vi sluta göra för att arbeta bättre tillsammans?",
             "button": "Nästa steg"
           },
           {
             "title": "Tyst Brainstorm",
-            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja sluta göra. De har tre minuter att brainstorma tyst.",
+            "description": "Alla skriver ner en sak som teamet borde sluta göra. Ni har tre minuter på er att brainstorma tyst",
             "button": "Nästa steg"
           },
           {
             "title": "Sammanfatta",
-            "description": "Sammanfatta vilka punkter som är viktiga att fokusera på.",
+            "description": "Gå runt i rummet och presentera det en sak som alla skrev ner.",
             "button": "Nästa steg"
           },
           {
             "title": "Prioritera",
-            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "description": "Gruppera liknande förslag. Låt medlemmarna placera en 'dot' på det förslag som de håller mest.",
             "button": "Nästa steg"
           }
         ]
@@ -158,17 +158,17 @@
           },
           {
             "title": "Tyst Brainstorm",
-            "description": "Använd detta steg för att tänka på en sak som varje enskild person skulle vilja fortsätta göra. De har tre minuter att brainstorma tyst.",
+            "description": "Alla skriver ner en sak som teamet borde fortsätta göra. Ni har tre minuter på er att brainstorma tyst",
             "button": "Nästa steg"
           },
           {
             "title": "Sammanfatta",
-            "description": "Sammanfatta vilka punkter som är viktiga att fokusera på.",
+            "description": "Gå runt i rummet och presentera det en sak som alla skrev ner.",
             "button": "Nästa steg"
           },
           {
             "title": "Prioritera",
-            "description": "Prioritera vilka punkter som är viktiga att fokusera på.",
+            "description": "Gruppera liknande förslag. Låt medlemmarna placera en 'dot' på det förslag som de håller mest.",
             "button": "Nästa steg"
           }
         ]

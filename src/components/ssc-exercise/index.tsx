@@ -56,6 +56,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     () => ({
       start: sscMock.start.steps,
       stop: sscMock.stop.steps,
+      continue: sscMock.continue.steps,
     }),
     [],
   );
@@ -113,7 +114,8 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
           <CarouselContent>
             {steps.map((_, index) => (
               <CarouselItem key={index} className="space-y-6">
-                <p className="text-2xl">{steps[index].description}</p>
+                <h1 className="text-2xl font-bold">{steps[index].title}</h1>
+                <p className="text-xl">{steps[index].description}</p>
                 <div className="relative aspect-video">
                   {chapterSteps[index].sticker && (
                     <RiveAnimation src={chapterSteps[index].sticker} width="100%" height="100%" />

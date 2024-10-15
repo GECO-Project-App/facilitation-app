@@ -96,23 +96,23 @@
         "steps": [
           {
             "title": "Start",
-            "description": "Pick a main topic on what you wanna discuss today with the community.",
+            "description": "What should we start doing to work better together?",
             "button": "Next step"
           },
 
           {
             "title": "Silent Brainstorm",
-            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "description": "Everyone writes down one thing the team should start doing. You have three minutes to brainstorm silently",
             "button": "Next step"
           },
           {
             "title": "Review & Discussion",
-            "description": "Prioritize which issues, and what can we propose.",
+            "description": "Go around the room and present the one thing everyone wrote down.",
             "button": "Next step"
           },
           {
             "title": "Proritize",
-            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "description": "Group similar suggestions Let members place one “dot” on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]
@@ -125,22 +125,22 @@
         "steps": [
           {
             "title": "Stop",
-            "description": "What have we been doing that we might/should stop doing as a community",
+            "description": "What should we stop doing to work better together?",
             "button": "Next step"
           },
           {
             "title": "Silent Brainstorm",
-            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "description": "Everyone writes down one thing the team should stop doing. You have three minutes to brainstorm silently.",
             "button": "Next step"
           },
           {
             "title": "Review & Discussion",
-            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "description": "Go around the room and present the one thing everyone wrote down.",
             "button": "Next step"
           },
           {
             "title": "Proritize",
-            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "description": "Group similar suggestions Let members place one “dot” on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]
@@ -158,17 +158,17 @@
           },
           {
             "title": "Silent Brainstorm",
-            "description": "Use this step to think of one thing that each one would like to start doing. They have three minutes to brainstorm silently.",
+            "description": "Everyone writes down one thing the team should continue doing. You have three minutes to brainstorm silently.",
             "button": "Next step"
           },
           {
             "title": "Review & Discussion",
-            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "description": "Go around the room and present the one thing everyone wrote down.",
             "button": "Next step"
           },
           {
             "title": "Proritize",
-            "description": "Review and discuss that one thing, let everyone shares their point.",
+            "description": "Group similar suggestions Let members place one “dot” on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]
