@@ -5,6 +5,7 @@ import {getTranslations} from 'next-intl/server';
 
 export async function generateMetadata() {
   const t = await getTranslations('home');
+
   return {
     title: t('title'),
     description: t('desc'),

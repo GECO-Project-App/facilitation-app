@@ -6,6 +6,8 @@ import {PHProvider} from '@/lib/providers/PHProvider';
 import dynamic from 'next/dynamic';
 import {jetbrains_mono, roboto} from './fonts';
 import {getMessages} from 'next-intl/server';
+import { Toaster } from "@/components/ui/toast/toaster"
+
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -32,6 +34,7 @@ export default async function RootLayout({
           <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
             <PostHogPageView />
             {children}
+            <Toaster />
           </body>
         </PHProvider>
       </html>

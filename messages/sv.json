@@ -207,7 +207,8 @@
     "title": "Vad fungerade bra under övningen?",
     "subtitle": "Vad fungerade inte?",
     "placeholder": "Skriv din feedback här...",
-    "button": "Skicka"
+    "button": "Skicka",
+    "thankYouText": "Tack för din feedback!"
   },
   "common": {
     "nextStep": "Nästa steg",
@@ -224,5 +225,27 @@
         "locale": "sv"
       }
     ]
+  },
+  "authenticate": {
+    "reset": "Återställ",
+    "resetPassword": "Återställ lösenord",
+    "logIn": "Logga in",
+    "logOut": "Logga ut",
+    "signIn": "Logga in",
+    "signUp": "Skapa konto",
+    "signOut": "Logga ut",
+    "loading": "Laddar...",
+    "button": "Skicka",
+    "loggedIn": "Du är inloggad!",
+    "enterEmail": "Ange e-postadress",
+    "enterPassword": "Ange lösenord",
+    "confirmPassword": "Bekräfta lösenord",
+    "forgotPassword": "Glömt ditt lösenord?",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "emailSent": "Email skickat",
+    "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
+    "error": "Fel",
+    "errorDescription": "Ett fel uppstod när lösenordet återställdes. Försök igen."
   }
 }

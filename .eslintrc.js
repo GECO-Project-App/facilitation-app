@@ -14,6 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    // Add your custom ESLint rules here
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
   },
 };
