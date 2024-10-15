@@ -1,16 +1,14 @@
 'use client';
-import React from 'react';
 import {Link} from '@/navigation';
 import {useUserStore} from '@/store/userStore';
-import {Home, Settings, LogIn, ListTodo} from 'lucide-react';
+import {Home, ListTodo, LogIn, Settings} from 'lucide-react';
+import {FC} from 'react';
 
-const AppBar: React.FC = () => {
+export const AppBar: FC = () => {
   const {user} = useUserStore();
 
   return (
-    <div
-      className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black px-14"
-      style={{backgroundColor: '#facc15'}}>
+    <div className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black bg-yellow px-14">
       <span>
         <Link href="/">
           <Home size={24} />
@@ -30,5 +28,3 @@ const AppBar: React.FC = () => {
     </div>
   );
 };
-
-export default AppBar;

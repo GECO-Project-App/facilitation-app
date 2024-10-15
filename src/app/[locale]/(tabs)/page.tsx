@@ -2,10 +2,10 @@ import {ExerciseCard, LanguageSelector, PageLayout, RiveAnimation} from '@/compo
 import {ExerciseCardType} from '@/lib/types';
 
 import {getTranslations} from 'next-intl/server';
-import AppBar from '@/components/Appbar';
 
 export async function generateMetadata() {
   const t = await getTranslations('home');
+
   return {
     title: t('title'),
     description: t('desc'),
@@ -17,7 +17,6 @@ export default async function Home() {
   const catalogue: ExerciseCardType[] = t.raw('catalogue');
 
   return (
-    <>
     <PageLayout backgroundColor="bg-yellow" hasPadding={false} contentColor="bg-yellow">
       <section className="flex flex-col items-center justify-between">
         <div className="space-y-6 p-6">
@@ -36,7 +35,5 @@ export default async function Home() {
         </div>
       </section>
     </PageLayout>
-    <AppBar />
-    </>
   );
 }
