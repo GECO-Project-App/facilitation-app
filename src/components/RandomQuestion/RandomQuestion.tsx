@@ -19,7 +19,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   const shuffleShape = useCallback(() => {
     setCurrentShapeIndex((prevIndex) => (prevIndex + 1) % shapes.length);
     setDisplayedQuestion(() => questions[Math.floor(Math.random() * questions.length)]);
-  }, []);
+  }, [questions]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -31,11 +31,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
     };
   }, [isSpinning, shuffleShape]);
 
-  useEffect(() => {
-    spinWheel();
-  }, []);
-
-  const spinWheel = () => {
+  const spinWheel = useCallback(() => {
     setIsSpinning(true);
     setDisplayedQuestion(null);
     const newRotation = rotation + 720 + 360;
@@ -43,8 +39,8 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
 
     setTimeout(() => {
       setIsSpinning(false);
-    }, 2000); // Changge spin duration here
-  };
+    }, 2000);
+  }, [rotation, setIsSpinning, setRotation]);
 
   const CurrentShape = shapes[currentShapeIndex];
 

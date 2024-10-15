@@ -1,10 +1,9 @@
 'use client';
+import {RiveAnimation} from '@/components/';
+import {Pause, Restart, Start} from '@/components/icons/timer';
+import {cn} from '@/lib/utils';
 import {FC, useCallback, useEffect, useState} from 'react';
 import {StylizedContainer} from '../StylizedContainer';
-import {AnimatedEyes} from '../AnimatedEyes/AnimatedEyes';
-import {cn} from '@/lib/utils';
-import {Restart, Start, Pause} from '@/components/icons/timer';
-import {RiveAnimation} from '@/components/';
 
 type TimerProps = {
   seconds?: number;

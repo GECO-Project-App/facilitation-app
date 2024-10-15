@@ -23,12 +23,6 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const t = useTranslations('exercises.ssc');
   const [api, setApi] = useState<CarouselApi>();
 
-  const chapterMap = {
-    start: sscMock.start.steps,
-    stop: sscMock.stop.steps,
-    continue: sscMock.continue.steps,
-  };
-
   const getButtonVariant = useMemo(() => {
     switch (paginationColors[currentStep + 1]) {
       case 'bg-blue':
@@ -46,14 +40,6 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     }
   }, [currentStep]);
 
-  const chapterSteps = useMemo(() => {
-    return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
-  }, [chapter]);
-
-  if (!steps) {
-    return <div>Loading...</div>;
-  }
-
   useEffect(() => {
     if (!api) {
       return;
@@ -64,7 +50,23 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     api.on('select', () => {
       setCurrentStep(api.selectedScrollSnap());
     });
-  }, [api]);
+  }, [api, setCurrentStep]);
+
+  const chapterMap = useMemo(
+    () => ({
+      start: sscMock.start.steps,
+      stop: sscMock.stop.steps,
+    }),
+    [],
+  );
+
+  const chapterSteps = useMemo(() => {
+    return chapterMap[chapter as keyof typeof chapterMap] || sscMock.start.steps;
+  }, [chapter, chapterMap]);
+
+  if (!steps) {
+    return <div>Loading...</div>;
+  }
 
   const handleComplete = () => {
     const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');

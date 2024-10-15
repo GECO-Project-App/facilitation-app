@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { devtools } from "zustand/middleware";
-import { User } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase/supabaseClient";
+import {supabase} from '@/lib/supabase/supabaseClient';
+import {User} from '@supabase/supabase-js';
+import {create} from 'zustand';
+import {devtools} from 'zustand/middleware';
 
 interface UserState {
   user: User | null;
@@ -14,15 +14,15 @@ export const useUserStore = create<UserState>()(
     (set) => ({
       user: null,
 
-      setUser: (user) => set({ user }),
+      setUser: (user) => set({user}),
 
       signOut: async () => {
         await supabase.auth.signOut();
-        set({ user: null });
+        set({user: null});
       },
     }),
-    { name: "UserStore" }
-  )
+    {name: 'UserStore'},
+  ),
 );
 
 supabase.auth.onAuthStateChange((_event, session) => {

@@ -1,13 +1,12 @@
-import {NextIntlClientProvider} from 'next-intl';
-import '../globals.css';
-import type {Metadata} from 'next';
-import {cn} from '@/lib/utils';
+import {Toaster} from '@/components/ui/toast/toaster';
 import {PHProvider} from '@/lib/providers/PHProvider';
-import dynamic from 'next/dynamic';
-import {jetbrains_mono, roboto} from './fonts';
+import {cn} from '@/lib/utils';
+import type {Metadata} from 'next';
+import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
-import { Toaster } from "@/components/ui/toast/toaster"
-
+import dynamic from 'next/dynamic';
+import '../globals.css';
+import {jetbrains_mono, roboto} from './fonts';
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',

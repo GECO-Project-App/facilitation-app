@@ -28,11 +28,11 @@ export default async function SSCPage() {
           }
         />
       }>
-      <section className="mx-auto flex flex-1 flex-col items-center justify-center space-y-10">
+      <section className="mx-auto flex max-w-xs flex-1 flex-col items-center justify-center space-y-10">
         {buttons.map((button, i) => (
           <Button
             variant={button.variant}
-            className="w-fit justify-between"
+            className="w-full justify-between"
             asChild
             key={button.title}>
             <Link href={button.href}>

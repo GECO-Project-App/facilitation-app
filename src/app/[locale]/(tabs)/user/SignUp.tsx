@@ -1,14 +1,14 @@
 'use client';
-import {useState} from 'react';
+import DialogView from '@/components/modal/DialogView';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
+import {useToast} from '@/hooks/useToast';
 import {supabase} from '@/lib/supabase/supabaseClient';
-import DialogView from '@/components/modal/DialogView';
 import {useTranslations} from 'next-intl';
-import { useToast } from "@/hooks/useToast"
+import {useState} from 'react';
 
 const SignUp = () => {
-  const { toast } = useToast();
+  const {toast} = useToast();
   const t = useTranslations('authenticate');
   const [showDialog, setShowDialog] = useState(false);
   const [formData, setFormData] = useState({

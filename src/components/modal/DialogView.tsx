@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {Confetti} from '@/components/icons/confetti';
 import {
   Dialog,
   DialogContent,
@@ -7,8 +7,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
- import {Confetti} from '@/components/icons/confetti';
-import {AstroGeco, AstroGecoWithStar} from '@/components/icons/astro-geco';
+import {useCallback} from 'react';
+import {AstroGeco, AstroGecoWithStar} from '../icons';
 
 interface DialogViewProps {
   destinationRoute?: string;
@@ -18,9 +18,9 @@ interface DialogViewProps {
 
 export default function DialogView({destinationRoute, message, icon}: DialogViewProps) {
   const router = useRouter();
-  const handleDialogClose = () => {
+  const handleDialogClose = useCallback(() => {
     router.push(destinationRoute || '/');
-  };
+  }, [router, destinationRoute]);
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {

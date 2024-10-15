@@ -26,7 +26,7 @@ export default function ExerciseAccomplishment({params}: {params: {slug: string}
         slug === 'ssc' ? (
           isSSCCompleted ? (
             <Button variant="pink" className="mx-auto" asChild>
-              <Link href={`/exercises/${slug}/feedback`}>
+              <Link href={`/exercises/ssc/${slug}/feedback`}>
                 {t('feedbackButton')}
                 <ArrowRight size={28} />
               </Link>

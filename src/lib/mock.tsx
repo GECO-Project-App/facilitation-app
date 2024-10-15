@@ -1,5 +1,5 @@
-import type { ButtonProps } from '@/components';
-import { AboutProps, StepContent } from './types';
+import type {ButtonProps} from '@/components';
+import {AboutProps, StepContent} from './types';
 
 export const ccMock = {
   about: {
@@ -133,4 +133,3 @@ export const mockPassItOn: PassItOnItem[] = [
     rive: 'passiton3.riv',
   },
 ];
-

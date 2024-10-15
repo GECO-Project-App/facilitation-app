@@ -1,4 +1,8 @@
+export * from './arrow';
+export * from './astro-geco';
 export * from './circle';
+export * from './complete';
+export * from './enflag';
 export * from './eyes';
 export * from './figure';
 export * from './figureWithFingers';
@@ -7,6 +11,3 @@ export * from './home';
 export * from './people';
 export * from './shapes';
 export * from './svflag';
-export * from './enflag';
-export * from './complete';
-export * from './arrow';

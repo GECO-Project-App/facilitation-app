@@ -20,9 +20,7 @@ const withPWA = withPWAInit({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+
 };
 
 export default withNextIntl(withPWA(nextConfig));
