@@ -55,7 +55,11 @@ export const About: FC<{
         </Button>
       }>
       <div className="space-y-6">
-        {mock?.rive && <RiveAnimation src={mock.rive} width={220} height={220} />}
+        {mock?.rive && (
+          <div className="relative aspect-video w-2/3 mx-auto">
+            <RiveAnimation src={mock.rive} width={220} height={220} />
+          </div>
+        )}
         {mock?.illustration && (
           <div className="relative mx-auto aspect-video w-2/3">
             <Image src={mock.illustration} alt={title} fill />
