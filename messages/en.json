@@ -213,6 +213,7 @@
     "letsStart": "Let's Start",
     "goToHome": "Go to home",
     "pressToGetNewQuestion": "Press to get a new question!",
+    "thankYouText": "Thank you for your feedback!",
     "languages": [
       {
         "label": "English",
@@ -223,5 +224,27 @@
         "locale": "sv"
       }
     ]
+  },
+  "authenticate": {
+    "reset": "Reset",
+    "resetPassword": "Reset Password",
+    "logIn": "Log In",
+    "logOut": "Log Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "loading": "Loading...",
+    "button": "Submit",
+    "loggedIn": "You're logged in!",
+    "enterEmail": "Enter your email",
+    "enterPassword": "Enter the password",
+    "confirmPassword": "Confirm the password",
+    "forgotPassword": "Forgot your password?",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "emailSent": "Email sent",
+    "emailSentDescription": "Check your email for a link to reset your password",
+    "error": "Error",
+    "errorDescription": "An error occurred while resetting password. Please try again."
   }
 }
