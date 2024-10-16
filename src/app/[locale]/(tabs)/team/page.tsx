@@ -1,8 +1,19 @@
-import {BaseballCard, PageLayout} from '@/components';
+import {BaseballCard, Button, Header, PageLayout} from '@/components';
+import {Link} from '@/navigation';
 
 export default function TeamPage() {
   return (
-    <PageLayout>
+    <PageLayout
+      header={
+        <Header
+          rightContent={
+            <Button variant="outline" size="icon" asChild>
+              <Link href="/team/manage">Add</Link>
+            </Button>
+          }
+          showBackButton={false}
+        />
+      }>
       <section className="space-y-4">
         <h3 className="font-bold text-xl">Team</h3>
         <div className="grid gap-2 lg:gap-4 grid-cols-2">

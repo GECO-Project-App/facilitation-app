@@ -81,6 +81,7 @@ const config: Config = {
       boxShadow: {
         dark: '0px 6px 0px 0px #000',
         small: '0px 3px 0px 0px #000',
+        xs: '0px 2px 0px 0px #000',
       },
       translate: {
         boxShadowX: '0px',
@@ -88,8 +89,18 @@ const config: Config = {
       },
       animation: {
         shake: 'shake 0.5s infinite',
+        'collapsible-down': 'collapsible-down 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        'collapsible-up': 'collapsible-up 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
       },
       keyframes: {
+        'collapsible-down': {
+          '0%': { height: '0', opacity: '0', transform: 'translateY(-8px)' },
+          '100%': { height: 'var(--radix-collapsible-content-height)', opacity: '1', transform: 'translateY(0)' },
+        },
+        'collapsible-up': {
+          '0%': { height: 'var(--radix-collapsible-content-height)', opacity: '1', transform: 'translateY(0)' },
+          '100%': { height: '0', opacity: '0', transform: 'translateY(-4px)' },
+        },
         shake: {
           '0%': {transform: 'translate(1px, 1px) rotate(0deg)'},
           '10%': {transform: 'translate(-1px, -2px) rotate(-1deg)'},

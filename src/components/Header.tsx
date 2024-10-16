@@ -7,10 +7,17 @@ type HeaderProps = {
   rightContent?: React.ReactNode;
   leftContent?: React.ReactNode;
   onBackButton?: () => void;
+  showBackButton?: boolean;
   children?: React.ReactNode;
 };
 
-export const Header: FC<HeaderProps> = ({rightContent, onBackButton, children, leftContent}) => {
+export const Header: FC<HeaderProps> = ({
+  rightContent,
+  onBackButton,
+  children,
+  leftContent,
+  showBackButton = true,
+}) => {
   const router = useRouter();
 
   return (
@@ -19,9 +26,13 @@ export const Header: FC<HeaderProps> = ({rightContent, onBackButton, children, l
         {leftContent ? (
           leftContent
         ) : (
-          <button onClick={() => (onBackButton ? onBackButton() : router.back())}>
-            <ArrowLeft size={42} />
-          </button>
+          <>
+            {showBackButton && (
+              <button onClick={() => (onBackButton ? onBackButton() : router.back())}>
+                <ArrowLeft size={42} />
+              </button>
+            )}
+          </>
         )}
       </div>
       <nav className="mx-auto flex grow flex-row items-center justify-center">{children}</nav>
