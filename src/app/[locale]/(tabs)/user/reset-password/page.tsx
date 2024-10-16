@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
 import {supabase} from '@/lib/supabase/supabaseClient';
+import { RefreshCcw } from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
 
@@ -65,7 +66,7 @@ const ResetPassword = () => {
         </div>
         <div className="mt-14 flex justify-center pb-6">
           <Button type="submit" disabled={loading} variant="pink">
-            {loading ? t('loading') : t('reset')}
+            {loading ? t('loading') : t('reset')} <RefreshCcw />
           </Button>
         </div>
       </form>

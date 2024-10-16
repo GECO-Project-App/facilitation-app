@@ -20,10 +20,29 @@ const UpdatePassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.newPassword !== formData.confirmNewPassword) {
-      alert('Passwords do not match');
+      toast({
+        title: t('error'),
+        description: t('passwordsDoNotMatch'),
+        variant: 'destructive',
+      });
       return;
     }
-   console.log(formData);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        email: formData.email,
+        password: formData.newPassword,
+      });
+      if (error) throw error;
+      setShowDialog(true);
+      setFormData({ email: '', newPassword: '', confirmNewPassword: '' });
+    } catch (error) {
+      console.error('Error updating password:', error);
+      toast({
+        title: t('error'),
+        description: t('errorDescription'),
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
