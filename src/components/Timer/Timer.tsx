@@ -7,9 +7,10 @@ import {StylizedContainer} from '../StylizedContainer';
 
 type TimerProps = {
   seconds?: number;
+  className?: string;
 };
 
-export const Timer: FC<TimerProps> = ({seconds = 60}) => {
+export const Timer: FC<TimerProps> = ({seconds = 60, className}) => {
   const [countdown, setCountdown] = useState(seconds);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -46,7 +47,7 @@ export const Timer: FC<TimerProps> = ({seconds = 60}) => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <StylizedContainer className="bg-white">
+      <StylizedContainer className={cn('bg-white', className)}>
         <section>
           <p
             className={cn(
