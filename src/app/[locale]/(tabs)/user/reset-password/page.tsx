@@ -4,11 +4,13 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
 import {supabase} from '@/lib/supabase/supabaseClient';
-import { RefreshCcw } from 'lucide-react';
+import {RefreshCcw} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {usePathname} from 'next/navigation';
 import {useState} from 'react';
 
 const ResetPassword = () => {
+  const currentPath = usePathname();
   const {toast} = useToast();
   const t = useTranslations('authenticate');
   const [loading, setLoading] = useState(false);
@@ -16,9 +18,11 @@ const ResetPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    const locale = currentPath.split('/')[1]; // Extract locale from the current path
+    const redirectToPage = `${window.location.origin}/${locale}/user/update-password`;
     try {
       const {error} = await supabase.auth.resetPasswordForEmail(userEmail, {
-        redirectTo: `${window.location.origin}/user/update-password`,
+        redirectTo: redirectToPage,
       });
       if (error) throw error;
       toast({
