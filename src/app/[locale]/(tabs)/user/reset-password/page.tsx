@@ -16,7 +16,9 @@ const ResetPassword = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const {error} = await supabase.auth.resetPasswordForEmail(userEmail);
+      const {error} = await supabase.auth.resetPasswordForEmail(userEmail, {
+        redirectTo: `${window.location.origin}/user/update-password`,
+      });
       if (error) throw error;
       toast({
         title: t('emailSent'),
