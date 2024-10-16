@@ -56,22 +56,10 @@ const UpdatePassword = () => {
   return (
         <form onSubmit={handleSubmit} className="flex min-h-[448px] h-fit flex-col justify-between">
             <div className="flex flex-col gap-4 items-center py-10">
-                <h1 className="text-2xl font-bold">Update Password</h1>
-                <p className="text-sm text-gray-500">Please enter your new password below.</p>
+                <h1 className="text-2xl font-bold">{t('updatePassword')}</h1>
+                <p className="text-sm text-gray-500">{t('updatePasswordDescription')}</p>
             </div>
           <div className="space-y-4 px-4">
-            <div className="space-y-2">
-              <Input
-                id="signup-email"
-                name="email"
-                type="email"
-                placeholder={t('enterEmail')}
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="h-12 rounded-full"
-              />
-            </div>
             <div className="space-y-2">
               <Input
                 id="signup-password"
@@ -79,6 +67,18 @@ const UpdatePassword = () => {
                 type="password"
                 placeholder={t('enterPassword')}
                 value={formData.newPassword}
+                onChange={handleChange}
+                required
+                className="h-12 rounded-full"
+              />
+            </div>
+            <div className="space-y-2">
+              <Input
+                id="signup-confirm-password"
+                name="confirmPassword"
+                type="password"
+                placeholder={t('confirmPassword')}
+                value={formData.confirmNewPassword}
                 onChange={handleChange}
                 required
                 className="h-12 rounded-full"
