@@ -131,7 +131,7 @@ const splitTextIntoParagraphs = (text: string): string[] => {
                   )}
                   {chapterSteps[index].timer && (
                     <div className="pt-10">
-                      <Timer seconds={chapterSteps[index].timer} />
+                      <Timer seconds={chapterSteps[index].timer} className="max-w-64 w-[60vw]" />
                     </div>
                   )}
                 </div>
