@@ -122,9 +122,9 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
                 {splitTextIntoParagraphs(steps[index].description).map((paragraph, index) => (
                   <div key={index} className="flex items-center">
                     <div>
-                    <div className="bg-black w-2 h-2 rounded-full mx-2"></div>
+                      <div className="bg-black w-2 h-2 rounded-full mx-2"></div>
                     </div>
-                    <li className="text-2xl list-none">{paragraph}</li>
+                    <li className="text-2xl list-none pl-1">{paragraph}</li>
                   </div>
                 ))}
                 <div className="relative aspect-video">
