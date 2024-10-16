@@ -90,6 +90,10 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     }
   };
 
+const splitTextIntoParagraphs = (text: string): string[] => {
+  return text.split(/(?:\.\s+|\n+)/).filter((paragraph) => paragraph.trim() !== '');
+};
+
   return (
     <PageLayout
       backgroundColor={sscMock[chapter as Exclude<keyof typeof sscMock, 'about'>].backgroundColor}
@@ -115,7 +119,12 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
             {steps.map((_, index) => (
               <CarouselItem key={index} className="space-y-6">
                 <h1 className="text-2xl font-bold">{steps[index].title}</h1>
-                <p className="text-xl">{steps[index].description}</p>
+                {splitTextIntoParagraphs(steps[index].description).map((paragraph, index) => (
+                  <li key={index} className="text-xl">
+                    {paragraph}
+                  </li>
+                ))}
+                {/* <p className="text-xl">{steps[index].description}</p> */}
                 <div className="relative aspect-video">
                   {chapterSteps[index].sticker && (
                     <RiveAnimation src={chapterSteps[index].sticker} width="100%" height="100%" />
