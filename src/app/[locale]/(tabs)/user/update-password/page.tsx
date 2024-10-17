@@ -10,15 +10,13 @@ import {useState} from 'react';
 const UpdatePassword = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const [formData, setFormData] = useState({
-    email: '',
-    newPassword: '',
-    confirmNewPassword: '',
-  });
+  const [email, setEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.newPassword !== formData.confirmNewPassword) {
+    if (newPassword !== confirmNewPassword) {
       toast({
         title: t('error'),
         description: t('passwordsDoNotMatch'),
@@ -28,11 +26,13 @@ const UpdatePassword = () => {
     }
     try {
       const {error} = await supabase.auth.updateUser({
-        email: formData.email,
-        password: formData.newPassword,
+        email: email,
+        password: newPassword,
       });
       if (error) throw error;
-      setFormData({email: '', newPassword: '', confirmNewPassword: ''});
+      setEmail('');
+      setNewPassword('');
+      setConfirmNewPassword('');
     } catch (error) {
       console.error('Error updating password:', error);
       toast({
@@ -45,10 +45,17 @@ const UpdatePassword = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    switch (name) {
+      case 'email':
+        setEmail(value);
+        break;
+      case 'newPassword':
+        setNewPassword(value);
+        break;
+      case 'confirmNewPassword':
+        setConfirmNewPassword(value);
+        break;
+    }
   };
 
   return (
@@ -62,10 +69,10 @@ const UpdatePassword = () => {
           <div className="space-y-2">
             <Input
               id="signup-password"
-              name="password"
+              name="newPassword"
               type="password"
               placeholder={t('enterPassword')}
-              value={formData.newPassword}
+              value={newPassword}
               onChange={handleChange}
               required
               className="h-12 rounded-full"
@@ -74,10 +81,10 @@ const UpdatePassword = () => {
           <div className="space-y-2">
             <Input
               id="signup-confirm-password"
-              name="confirmPassword"
+              name="confirmNewPassword"
               type="password"
               placeholder={t('confirmPassword')}
-              value={formData.confirmNewPassword}
+              value={confirmNewPassword}
               onChange={handleChange}
               required
               className="h-12 rounded-full"
@@ -85,11 +92,11 @@ const UpdatePassword = () => {
           </div>
           <div className="space-y-2">
             <Input
-              id="signup-confirm-password"
-              name="confirmPassword"
-              type="password"
-              placeholder={t('confirmPassword')}
-              value={formData.confirmNewPassword}
+              id="signup-email"
+              name="email"
+              type="email"
+              placeholder={t('enterEmail')}
+              value={email}
               onChange={handleChange}
               required
               className="h-12 rounded-full"
