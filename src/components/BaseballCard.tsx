@@ -1,28 +1,23 @@
 'use client';
+import {BaseballCardType} from '@/lib/types';
 import {cn} from '@/lib/utils';
 import {FC} from 'react';
 import {AvatarCharacter} from './icons/avatar-character';
 import {Avatar, AvatarFallback} from './ui/avatar';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from './ui/collapsible';
 
-type BaseballCardProps = {
-  bgColor?: string;
-  name: string;
-  role: string[];
-  avatar: string;
-};
-
-export const BaseballCard: FC<BaseballCardProps> = ({
+export const BaseballCard: FC<BaseballCardType> = ({
   name,
-  bgColor = 'bg-yellow',
+  bgColor = 'bg-pink',
   role = [],
   avatar,
+  children,
 }) => {
   return (
     <Collapsible
       className={cn(
         bgColor,
-        ' py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 w-full px-4 h-fit',
+        ' py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
       )}>
       <CollapsibleTrigger className="w-full">
         <div className="items-center w-full flex flex-col gap-4">
@@ -39,15 +34,7 @@ export const BaseballCard: FC<BaseballCardProps> = ({
       </CollapsibleTrigger>
 
       <CollapsibleContent>
-        <div>
-          {['Strength', 'Weakness', 'Communication Style', 'Skills Assessment'].map(
-            (item, index) => (
-              <p key={index}>
-                <span className="font-light">{item}:</span>
-              </p>
-            ),
-          )}
-        </div>
+        <div className=" gap-2 flex flex-col pb-2">{children}</div>
       </CollapsibleContent>
     </Collapsible>
   );

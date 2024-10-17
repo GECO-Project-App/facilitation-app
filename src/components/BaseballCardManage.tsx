@@ -1,19 +1,17 @@
 'use client';
+import {BaseballCardType} from '@/lib/types';
 import {cn} from '@/lib/utils';
 import {FC} from 'react';
 import {AvatarCharacter} from './icons/avatar-character';
 import {Avatar, AvatarFallback} from './ui/avatar';
 
-type BaseballCardProps = {
-  bgColor?: string;
-  name: string;
-  role: string[];
+type BaseballCardManageProps = BaseballCardType & {
   children: React.ReactNode;
 };
 
-export const BaseballCardManage: FC<BaseballCardProps> = ({
+export const BaseballCardManage: FC<BaseballCardManageProps> = ({
   name,
-  bgColor = 'bg-yellow',
+  bgColor = 'bg-pink',
   role = [],
   children,
 }) => {

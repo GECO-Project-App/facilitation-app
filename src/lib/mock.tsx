@@ -73,7 +73,7 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker:'ssc_stop.riv',
+        sticker: 'ssc_stop.riv',
       },
       {
         timer: 180,
@@ -125,5 +125,44 @@ export const mockPassItOn: PassItOnItem[] = [
   },
   {
     rive: 'passiton3.riv',
+  },
+];
+
+export type TeamMember = {
+  name: string;
+  role: string[];
+  avatar?: string;
+};
+
+export const mockTeamMembers: TeamMember[] = [
+  {
+    name: 'Anna Andersson',
+    role: ['Facilitator', 'Member'],
+    avatar: 'https://placehold.co/100x100',
+  },
+  {
+    name: 'Erik Eriksson',
+    role: ['Member'],
+    avatar: 'https://placehold.co/100x100',
+  },
+  {
+    name: 'Maria Nilsson',
+    role: ['Member'],
+    avatar: 'https://placehold.co/100x100',
+  },
+  {
+    name: 'Johan Johansson',
+    role: ['Member'],
+    avatar: 'https://placehold.co/100x100',
+  },
+  {
+    name: 'Lena Lindberg',
+    role: ['Member'],
+    avatar: 'https://placehold.co/100x100',
+  },
+  {
+    name: 'Elias Berg',
+    role: ['Member'],
+    avatar: 'https://placehold.co/100x100',
   },
 ];

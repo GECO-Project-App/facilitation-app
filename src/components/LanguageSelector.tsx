@@ -81,10 +81,7 @@ export const LanguageSelector: FC = () => {
           <SelectItem
             value={lang.value}
             key={lang.value}
-            className={cn(
-              index < countries.length - 1 && 'border-b-2 border-black',
-              'data-[state=checked]:bg-pink',
-            )}>
+            className={cn(index < countries.length - 1 && 'border-b-2 border-black')}>
             <span className="flex items-center gap-2 font-semibold">
               {lang.lgFlag} {lang.label}
             </span>

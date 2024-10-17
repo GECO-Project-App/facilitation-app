@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from '@/components';
 import {BaseballCardManage} from '@/components/BaseballCardManage';
+import {mockTeamMembers} from '@/lib/mock';
 import {Trash} from 'lucide-react';
 
 const teams = [
@@ -27,7 +28,7 @@ export default function TeamPage() {
     <PageLayout header={<Header />}>
       <section className="space-y-6 text-center flex flex-col items-center justify-center">
         <Select defaultValue={teams[0].name}>
-          <SelectTrigger>
+          <SelectTrigger className="w-[120px]">
             <SelectValue placeholder="Select a team" />
           </SelectTrigger>
           <SelectContent>
@@ -50,20 +51,18 @@ export default function TeamPage() {
         <section className="space-y-4">
           <h3 className="font-bold text-xl">Manage your team</h3>
           <div className="grid gap-2 lg:gap-4 grid-cols-2 ">
-            {Array.from({length: 5}).map((_, index) => (
-              <BaseballCardManage
-                key={index}
-                name="John Doe"
-                role={['Facilitator', 'Member']}
-                bgColor="bg-pink">
-                <Button variant="white" size="xs" className="w-full justify-between ">
-                  Remove <Trash className="w-4 h-4" />
-                </Button>
-                <Button variant="white" size="xs" className="w-full justify-between">
-                  Change role <Trash className="w-4 h-4" />
-                </Button>
-              </BaseballCardManage>
-            ))}
+            {mockTeamMembers
+              .filter((member) => !member.role.includes('Facilitator'))
+              .map((member, index) => (
+                <BaseballCardManage key={index} {...member} bgColor="bg-pink">
+                  <Button variant="white" size="xs" className="w-full justify-between ">
+                    Remove <Trash className="w-4 h-4" />
+                  </Button>
+                  <Button variant="white" size="xs" className="w-full justify-between">
+                    Change role <Trash className="w-4 h-4" />
+                  </Button>
+                </BaseballCardManage>
+              ))}
           </div>
         </section>
       </section>
