@@ -22,7 +22,7 @@ export const Header: FC<HeaderProps> = ({
 
   return (
     <header className="page-constraints flex w-full flex-row items-center justify-between gap-2 px-4 pb-4 lg:gap-4">
-      <div className="flex-none">
+      <div className="flex-none aspect-square h-11">
         {leftContent ? (
           leftContent
         ) : (
