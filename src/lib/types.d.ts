@@ -43,3 +43,11 @@ export type AboutProps = {
     text: string;
   };
 };
+
+export type BaseballCardType = {
+  bgColor?: string;
+  name: string;
+  role: string[];
+  avatar?: string;
+  children?: React.ReactNode;
+};
