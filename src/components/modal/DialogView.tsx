@@ -1,3 +1,6 @@
+'use client';
+
+import {useEffect} from 'react';
 import {Confetti} from '@/components/icons/confetti';
 import {
   Dialog,
@@ -9,6 +12,7 @@ import {
 import {useRouter} from '@/navigation';
 import {useCallback} from 'react';
 import {AstroGeco, AstroGecoWithStar} from '../icons';
+import {useDialog} from '@/store/useDialog';
 
 interface DialogViewProps {
   destinationRoute?: string;
@@ -18,17 +22,19 @@ interface DialogViewProps {
 
 export default function DialogView({destinationRoute, message, icon}: DialogViewProps) {
   const router = useRouter();
+  const {setIsDialogOpen} = useDialog();
   const handleDialogClose = useCallback(() => {
     router.push(destinationRoute || '/');
-  }, [router, destinationRoute]);
+    setIsDialogOpen(false);
+  }, [router, destinationRoute, setIsDialogOpen]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     handleDialogClose();
-  //   }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleDialogClose();
+    }, 2000);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
