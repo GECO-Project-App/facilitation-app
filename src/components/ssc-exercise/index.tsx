@@ -13,8 +13,7 @@ import {useDialog} from '@/store/useDialog';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import React, {useEffect, useMemo, useState} from 'react';
-import {Confetti} from '@/components/icons/confetti';
-
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 export type SSCExerciseProps = {
   chapter: string;
   steps: Step[];
@@ -22,6 +21,7 @@ export type SSCExerciseProps = {
 
 const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
   const {isDialogOpen, setIsDialogOpen} = useDialog();
+  const {setChapterDone, isSSCCompleted} = useSSCChaptersHandler();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.ssc');
@@ -73,28 +73,8 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
     return <div>Loading...</div>;
   }
 
-  // const handleComplete = () => {
-  //   const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
-  //   if (!completedChapters.includes(chapter)) {
-  //     completedChapters.push(chapter);
-  //     localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
-  //   }
-  //   router.push(`/exercises/ssc/accomplishment`);
-  // };
-
-  const isSSCCompleted = () => {
-    const storedValue = localStorage.getItem('chapterDone') || '[]';
-    const chaptersDone: string[] = JSON.parse(storedValue);
-    return chaptersDone.length === 3;
-  };
-
   const handleComplete = () => {
-    console.log('handleComplete => ', isSSCCompleted());
-    const completedChapters = JSON.parse(localStorage.getItem('chapterDone') || '[]');
-    if (!completedChapters.includes(chapter)) {
-      completedChapters.push(chapter);
-      localStorage.setItem('chapterDone', JSON.stringify(completedChapters));
-    }
+    setChapterDone(chapter);
     if (isSSCCompleted()) {
       router.push('/exercises/ssc/feedback');
     } else {
