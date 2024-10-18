@@ -53,7 +53,7 @@ const LogIn = () => {
   return (
     <>
       {isDialogOpen ? (
-        <DialogView destinationRoute="/" message={t('loggedIn')} icon="login" className="bg-pink" sticker={<AstroGeco />} />
+        <DialogView destinationRoute="/" message={t('loggedIn')} className="bg-pink" sticker={<AstroGeco />} />
       ) : (
         <form onSubmit={handleSubmit} className="h-fit min-h-[448px] flex flex-col justify-between">
           <div className="space-y-6 px-4">

@@ -207,7 +207,8 @@
     "title": " What worked well during this exercise?",
     "subtitle": "What didn't?",
     "placeholder": "Write your feedback here...",
-    "button": "Send"
+    "button": "Send",
+    "thankYouText": "Thank you for your feedback!"
   },
   "common": {
     "nextStep": "Next Step",

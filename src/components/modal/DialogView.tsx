@@ -1,6 +1,5 @@
 'use client';
 
-import {Confetti} from '@/components/icons/confetti';
 import {
   Dialog,
   DialogContent,
@@ -15,7 +14,6 @@ import {useCallback, useEffect} from 'react';
 interface DialogViewProps {
   destinationRoute?: string;
   message?: string;
-  icon?: string;
   description?: string;
   sticker?: React.ReactNode;
   className?: string;
@@ -24,7 +22,6 @@ interface DialogViewProps {
 export default function DialogView({
   destinationRoute,
   message,
-  icon,
   description,
   sticker,
   className,
