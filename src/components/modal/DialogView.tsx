@@ -11,7 +11,6 @@ import {
 import {useRouter} from '@/navigation';
 import {useDialog} from '@/store/useDialog';
 import {useCallback, useEffect} from 'react';
-import {AstroGeco, AstroGecoWithStar} from '../icons';
 
 interface DialogViewProps {
   destinationRoute?: string;
@@ -37,13 +36,13 @@ export default function DialogView({
     setIsDialogOpen(false);
   }, [router, destinationRoute, setIsDialogOpen]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     handleDialogClose();
-  //   }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleDialogClose();
+    }, 2000);
 
-  //   return () => clearTimeout(timer);
-  // }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
@@ -51,11 +50,6 @@ export default function DialogView({
         className={`${className?.includes('bg-') ? className : `bg-blue ${className}`}`}>
         <DialogHeader className="flex h-full flex-col items-center justify-center">
           <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">
-            {/* <>
-              {icon === 'feedback' && <Confetti />}
-              {icon === 'signup' && <AstroGeco />}
-              {icon === 'login' && <AstroGecoWithStar />}
-              </> */}
             {message ? message : 'Thank you...!'}
             {sticker && sticker}
           </DialogTitle>
