@@ -18,6 +18,7 @@ interface DialogViewProps {
   message?: string;
   icon?: string;
   description?: string;
+  sticker?: React.ReactNode;
 }
 
 export default function DialogView({
@@ -25,6 +26,7 @@ export default function DialogView({
   message,
   icon,
   description,
+  sticker
 }: DialogViewProps) {
   const router = useRouter();
   const {setIsDialogOpen} = useDialog();
@@ -33,25 +35,26 @@ export default function DialogView({
     setIsDialogOpen(false);
   }, [router, destinationRoute, setIsDialogOpen]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      handleDialogClose();
-    }, 2000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     handleDialogClose();
+  //   }, 2000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
-      <DialogContent className="bg-pink">
+      <DialogContent className="bg-blue">
         <DialogHeader className="flex h-full flex-col items-center justify-center">
           <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">
-            <>
+            {/* <>
               {icon === 'feedback' && <Confetti />}
               {icon === 'signup' && <AstroGeco />}
               {icon === 'login' && <AstroGecoWithStar />}
-              {message ? message : 'Thank you...!'}
-            </>
+              </> */}
+            {message ? message : 'Thank you...!'}
+            {sticker && sticker}
           </DialogTitle>
           {description && (
             <DialogDescription className="font-family-j">{description}</DialogDescription>

@@ -13,6 +13,8 @@ import {useDialog} from '@/store/useDialog';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import React, {useEffect, useMemo, useState} from 'react';
+import {Confetti} from '@/components/icons/confetti';
+
 export type SSCExerciseProps = {
   chapter: string;
   steps: Step[];
@@ -122,7 +124,7 @@ const SSCExercise: React.FC<SSCExerciseProps> = ({chapter, steps}) => {
         <DialogView
           destinationRoute="/exercises/ssc"
           message={t('greatJob')}
-          icon="feedback"
+          sticker={<RiveAnimation src="geckograttis.riv" width={300} height={300} />}
         />
       ) : (
         <PageLayout
