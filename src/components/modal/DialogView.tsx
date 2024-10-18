@@ -19,6 +19,7 @@ interface DialogViewProps {
   icon?: string;
   description?: string;
   sticker?: React.ReactNode;
+  className?: string;
 }
 
 export default function DialogView({
@@ -26,7 +27,8 @@ export default function DialogView({
   message,
   icon,
   description,
-  sticker
+  sticker,
+  className,
 }: DialogViewProps) {
   const router = useRouter();
   const {setIsDialogOpen} = useDialog();
@@ -45,7 +47,8 @@ export default function DialogView({
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
-      <DialogContent className="bg-blue">
+      <DialogContent
+        className={`${className?.includes('bg-') ? className : `bg-blue ${className}`}`}>
         <DialogHeader className="flex h-full flex-col items-center justify-center">
           <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">
             {/* <>
