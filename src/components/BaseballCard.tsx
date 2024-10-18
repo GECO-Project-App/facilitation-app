@@ -39,7 +39,7 @@ export const BaseballCard: FC<BaseballCardType> = ({
 
       {children && (
         <CollapsibleContent>
-          <div className=" gap-2 flex flex-col pb-2">{children}</div>
+          <div className=" gap-2 flex flex-col ">{children}</div>
         </CollapsibleContent>
       )}
     </Collapsible>
