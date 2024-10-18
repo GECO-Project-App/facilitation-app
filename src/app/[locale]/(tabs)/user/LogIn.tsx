@@ -8,6 +8,7 @@ import {useTranslations} from 'next-intl';
 import Link from 'next/link';
 import {useState} from 'react';
 import {useDialog} from '@/store/useDialog';
+import {AstroGecoWithStar} from '@/components/icons';
 
 const LogIn = () => {
   const {isDialogOpen, setIsDialogOpen} = useDialog();
@@ -52,7 +53,7 @@ const LogIn = () => {
   return (
     <>
       {isDialogOpen ? (
-        <DialogView destinationRoute="/" message={t('loggedIn')} icon="login" />
+        <DialogView destinationRoute="/" message={t('loggedIn')} icon="login" className="bg-pink" sticker={<AstroGecoWithStar />} />
       ) : (
         <form onSubmit={handleSubmit} className="h-fit min-h-[448px] flex flex-col justify-between">
           <div className="space-y-6 px-4">
