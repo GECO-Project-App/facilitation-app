@@ -1,6 +1,5 @@
 'use client';
 
-import {useEffect} from 'react';
 import {Confetti} from '@/components/icons/confetti';
 import {
   Dialog,
@@ -10,17 +9,23 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {useRouter} from '@/navigation';
-import {useCallback} from 'react';
-import {AstroGeco, AstroGecoWithStar} from '../icons';
 import {useDialog} from '@/store/useDialog';
+import {useCallback, useEffect} from 'react';
+import {AstroGeco, AstroGecoWithStar} from '../icons';
 
 interface DialogViewProps {
   destinationRoute?: string;
   message?: string;
   icon?: string;
+  description?: string;
 }
 
-export default function DialogView({destinationRoute, message, icon}: DialogViewProps) {
+export default function DialogView({
+  destinationRoute,
+  message,
+  icon,
+  description,
+}: DialogViewProps) {
   const router = useRouter();
   const {setIsDialogOpen} = useDialog();
   const handleDialogClose = useCallback(() => {
@@ -48,7 +53,9 @@ export default function DialogView({destinationRoute, message, icon}: DialogView
               {message ? message : 'Thank you...!'}
             </>
           </DialogTitle>
-          <DialogDescription className="font-family-j"></DialogDescription>
+          {description && (
+            <DialogDescription className="font-family-j">{description}</DialogDescription>
+          )}
         </DialogHeader>
       </DialogContent>
     </Dialog>

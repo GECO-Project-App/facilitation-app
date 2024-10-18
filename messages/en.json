@@ -199,7 +199,9 @@
       },
       "completeButton": "Complete",
       "exerciseButton": "Go to exercise",
-      "nextStep": "Next step"
+      "nextStep": "Next step",
+      "greatJob": "GREAT JOB! YOU DID IT!"
+
     }
   },
   "feedback": {
