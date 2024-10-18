@@ -10,15 +10,19 @@ export const BaseballCard: FC<BaseballCardType> = ({
   name,
   bgColor = 'bg-pink',
   role = [],
-  avatar,
+
+  onOpenChange,
   children,
+  open,
 }) => {
   return (
     <Collapsible
       className={cn(
         bgColor,
         ' py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
-      )}>
+      )}
+      open={open}
+      onOpenChange={onOpenChange}>
       <CollapsibleTrigger className="w-full">
         <div className="items-center w-full flex flex-col gap-4">
           <Avatar className="w-16 h-16 relative bg-white">
@@ -33,9 +37,11 @@ export const BaseballCard: FC<BaseballCardType> = ({
         </div>
       </CollapsibleTrigger>
 
-      <CollapsibleContent>
-        <div className=" gap-2 flex flex-col pb-2">{children}</div>
-      </CollapsibleContent>
+      {children && (
+        <CollapsibleContent>
+          <div className=" gap-2 flex flex-col pb-2">{children}</div>
+        </CollapsibleContent>
+      )}
     </Collapsible>
   );
 };

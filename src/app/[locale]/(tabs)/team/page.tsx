@@ -9,6 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  TeamGrid,
 } from '@/components';
 import {EditTeam} from '@/components/icons';
 import {mockTeamMembers} from '@/lib/mock';
@@ -43,34 +44,22 @@ export default function TeamPage() {
               </SelectContent>
             </Select>
             <Button variant="outline" size="icon" asChild className="aspect-square">
-              <Link href="/team/manage">
+              <Link href="/team/">
                 <EditTeam />
               </Link>
             </Button>
           </div>
         </Header>
       }>
-      <InviteCodeCard />
-      <section className="space-y-4">
-        <h3 className="font-bold text-xl">Team</h3>
-        <div className="grid gap-2 lg:gap-4 grid-cols-2">
-          {mockTeamMembers.map((member, index) => (
-            <BaseballCard key={index} {...member}>
-              <Button variant="white" size="xs" className=" justify-between w-full ">
-                Remove
-              </Button>
-              <Button variant="white" size="xs" className=" justify-between w-full">
-                Change role
-              </Button>
-              <Button variant="white" size="xs" className=" justify-between w-full ">
-                Edit profile
-              </Button>
-              <Button variant="yellow" size="xs" className=" justify-between w-full" asChild>
-                <Link href={`/team/member/1`}>See profile</Link>
-              </Button>
-            </BaseballCard>
-          ))}
+      <section className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 max-w-sm mx-auto w-full">
+          <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" />
+          <InviteCodeCard />
         </div>
+        <section className="space-y-4 ">
+          <h3 className="font-bold text-xl">Team</h3>
+          <TeamGrid members={mockTeamMembers} />
+        </section>
       </section>
     </PageLayout>
   );

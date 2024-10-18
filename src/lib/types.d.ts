@@ -45,9 +45,10 @@ export type AboutProps = {
 };
 
 export type BaseballCardType = {
+  index: number;
   bgColor?: string;
   name: string;
   role: string[];
   avatar?: string;
   children?: React.ReactNode;
-};
+} & React.ComponentPropsWithoutRef<typeof Collapsible>;
