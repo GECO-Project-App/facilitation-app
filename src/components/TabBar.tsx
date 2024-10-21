@@ -8,7 +8,7 @@ export const TabBar: FC = () => {
   const {user} = useUserStore();
 
   return (
-    <div className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black bg-yellow px-14">
+    <nav className="fixed bottom-0 flex h-[40px] w-full items-center justify-between border-t-2 border-black bg-yellow px-14">
       <span>
         <Link href="/">
           <Home size={24} />
@@ -25,6 +25,6 @@ export const TabBar: FC = () => {
       <span>
         <ListTodo size={24} />
       </span>
-    </div>
+    </nav>
   );
 };
