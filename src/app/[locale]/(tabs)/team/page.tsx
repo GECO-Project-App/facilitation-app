@@ -52,7 +52,7 @@ export default function TeamPage() {
         </Header>
       }>
       <section className="flex flex-col gap-6">
-        <div className="flex flex-col gap-4 max-w-sm mx-auto w-full">
+        <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
           <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" />
           <InviteCodeCard />
         </div>
