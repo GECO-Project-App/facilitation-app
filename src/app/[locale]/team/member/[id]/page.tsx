@@ -1,13 +1,19 @@
-import {AvatarBuilder, PageLayout} from '@/components';
+import {AvatarBuilder, Button, Header, PageLayout} from '@/components';
+import {Save} from '@/components/icons';
+import {getTranslations} from 'next-intl/server';
 
-export default function TeamMemberPage() {
+export default async function TeamMemberPage() {
+  const t = await getTranslations('team.edit.avatar');
+
   return (
-    <PageLayout>
-      <section>
-        <div className="flex flex-col gap-4">
-          <AvatarBuilder />
-        </div>
-      </section>
+    <PageLayout
+      header={<Header />}
+      footer={
+        <Button variant="green">
+          {t('button')} <Save />
+        </Button>
+      }>
+      <AvatarBuilder />
     </PageLayout>
   );
 }

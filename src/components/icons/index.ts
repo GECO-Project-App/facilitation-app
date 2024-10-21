@@ -10,5 +10,6 @@ export * from './figureWithFingers';
 export * from './fingers';
 export * from './home';
 export * from './people';
+export * from './save';
 export * from './shapes';
 export * from './svflag';
