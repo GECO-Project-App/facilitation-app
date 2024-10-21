@@ -1,5 +1,6 @@
 export * from './arrow';
 export * from './astro-geco';
+export * from './avatar';
 export * from './circle';
 export * from './complete';
 export * from './enflag';
