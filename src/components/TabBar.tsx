@@ -1,10 +1,10 @@
 'use client';
 import {Link} from '@/navigation';
 import {useUserStore} from '@/store/userStore';
+import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import {FC} from 'react';
-
-import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
+import {locales} from '../../i18n';
 
 export const TabBar: FC = () => {
   const pathname = usePathname();
@@ -41,9 +41,7 @@ export const TabBar: FC = () => {
             <Home
               size={24}
               className={
-                pathname.split('/').pop() === 'en' || pathname.split('/').pop() === 'sv'
-                  ? 'text-green'
-                  : 'text-black'
+                locales.includes(pathname.split('/').pop() || '') ? 'text-green' : 'text-black'
               }
             />
           </Link>
