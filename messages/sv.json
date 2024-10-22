@@ -30,6 +30,14 @@
         "button": "Starta",
         "link": "/exercises/check-out/introduction",
         "type": "check-out"
+      },
+      {
+        "title": "Handledning till mig",
+        "subtitle": "5-15 minuter | 2-20 deltagare",
+        "description": "Avsluta era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
+        "button": "Starta",
+        "link": "/exercises/tutorial-to-me/introduction",
+        "type": "tutorial-to-me"
       }
     ]
   },
@@ -201,6 +209,12 @@
       "completeButton": "Slutför",
       "exerciseButton": "Go till övningen",
       "nextStep": "Nästa steg"
+    },
+    "tutorialToMe": {
+      "title": "Handledning till mig",
+      "subtitle": "30 minuter | 2-15 personer | Multiplayer, Asynkron",
+      "description": "Övningen 'Handledning till mig' hjälper ditt team att dela sina styrkor, svagheter och föredragna sätt att kommunicera när ni börjar arbeta tillsammans. Detta säkerställer att alla är överens om hur de gillar att arbeta och hur man bäst samarbetar. Teammedlemmar kan hänvisa till resultaten av denna övning i fliken 'Team' i GECO-appen under hela projektet.",
+      "button": "Starta"
     }
   },
   "feedback": {

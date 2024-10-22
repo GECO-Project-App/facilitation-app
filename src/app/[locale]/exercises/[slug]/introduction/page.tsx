@@ -20,8 +20,10 @@ export default function IntroductionPage({params}: {params: {slug: string}}) {
         return 'exercises.ssc.stop';
       case 'continue':
         return 'exercises.ssc.continue';
+      case 'tutorial-to-me':
+        return 'exercises.tutorialToMe';
       default:
-        return 'exercises.checkIn';
+        return slug;
     }
   }, [slug]);
 

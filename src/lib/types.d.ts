@@ -20,7 +20,7 @@ export type ExerciseCardType = {
   description: string;
   button: string;
   link: string;
-  type: 'check-in' | 'check-out' | 'ssc';
+  type: 'check-in' | 'check-out' | 'ssc' | 'tutorial-to-me';
 };
 
 export type Step = {

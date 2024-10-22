@@ -25,6 +25,15 @@ export const ccMock = {
       },
     } as AboutProps,
   },
+  tutorialToMe: {
+    about: {
+      button: {
+        variant: 'yellow' as ButtonProps['variant'],
+        link: '/exercises/tutorial-to-me',
+        text: "Let's Start",
+      },
+    } as AboutProps,
+  },
 };
 
 export const sscMock = {
@@ -73,7 +82,7 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker:'ssc_stop.riv',
+        sticker: 'ssc_stop.riv',
       },
       {
         timer: 180,

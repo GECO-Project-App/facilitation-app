@@ -30,6 +30,14 @@
         "button": "Start",
         "link": "/exercises/check-out/introduction",
         "type": "check-out"
+      },
+      {
+        "title": "Tutorial to me",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "End your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/tutorial-to-me/introduction",
+        "type": "tutorial-to-me"
       }
     ]
   },
@@ -200,6 +208,12 @@
       "completeButton": "Complete",
       "exerciseButton": "Go to exercise",
       "nextStep": "Next step"
+    },
+    "tutorialToMe": {
+      "title": "Tutorial to me",
+      "subtitle": "30 minutes | 2-15 people | Multiplayer, Asynchronous",
+      "description": "The 'Tutorial to me' exercise helps your team share their strengths, weaknesses, and preferred ways of communicating when starting to work together. This ensures everyone is aligned on how they like working and how to best collaborate. Team members can refer to the results of this exercise in the 'Team' tab of the GECO app throughout the project.",
+      "button": "Let's Start"
     }
   },
   "feedback": {

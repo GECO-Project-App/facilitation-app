@@ -39,6 +39,8 @@ export const About: FC<{
         return sscMock.continue.about;
       case 'ssc':
         return sscMock.about;
+      case 'tutorial-to-me':
+        return ccMock.tutorialToMe.about;
       default:
         return ccMock.checkOut.about;
     }
