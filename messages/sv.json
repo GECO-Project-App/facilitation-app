@@ -246,7 +246,7 @@
     "emailSent": "Email skickat",
     "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
     "error": "Fel",
-    "errorDescription": "Ett fel uppstod när lösenordet återställdes. Försök igen.",
+    "errorDescription": "Ett fel uppstod. Försök igen.",
     "updatePassword": "Uppdatera lösenord",
     "updatePasswordDescription": "Ange ditt nya lösenord nedan.",
     "passwordsDoNotMatch": "Lösenorden matchar inte",

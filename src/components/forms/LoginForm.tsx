@@ -1,49 +1,80 @@
 'use client';
-import {Link} from '@/i18n/routing';
+import {useToast} from '@/hooks/useToast';
+import {Link, useRouter} from '@/i18n/routing';
 import {login} from '@/lib/actions';
+import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
-import {useFormStatus} from 'react-dom';
-import {Button, Input} from '../ui';
+import {useForm} from 'react-hook-form';
+import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
 export const LoginForm = () => {
+  const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const {pending} = useFormStatus();
+  const router = useRouter();
 
-  console.log(pending);
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data: LoginSchema) => {
+    const result = await login(data);
+
+    if (result?.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: result.error,
+      });
+    } else {
+      router.replace('/user/profile');
+    }
+  };
+
   return (
-    <form className="h-fit min-h-[448px] flex flex-col justify-between">
-      <div className="space-y-6 px-4">
-        <div className="space-y-2">
-          <Input
-            id="login-email"
-            name="email"
-            type="email"
-            placeholder={t('enterEmail')}
-            required
-            className="rounded-full h-12"
-          />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 min-h-[448px]">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({field}) => (
+            <FormItem>
+              <FormControl>
+                <Input type="email" {...field} placeholder={t('enterEmail')} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({field}) => (
+            <FormItem>
+              <FormControl>
+                <Input type="password" {...field} placeholder={t('enterPassword')} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Link
+          href="/user/reset-password"
+          className="text-green hover:underline text-sm text-center">
+          {t('forgotPassword')}
+        </Link>
+        <div className="mt-14 flex justify-center pb-6">
+          <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
+            {form.formState.isSubmitting ? t('loading') : t('logIn')}
+          </Button>
         </div>
-        <div className="space-y-2">
-          <Input
-            id="login-password"
-            name="password"
-            type="password"
-            placeholder={t('enterPassword')}
-            required
-            className="rounded-full h-12"
-          />
-        </div>
-        <div className="space-y-2">
-          <div className="flex items-center justify-center space-x-4 text-sm text-green cursor-pointer hover:text-green/80">
-            <Link href="./user/reset-password">{t('forgotPassword')}</Link>
-          </div>
-        </div>
-      </div>
-      <div className="mt-14 flex justify-center pb-6">
-        <Button type="submit" disabled={pending} formAction={login}>
-          {pending ? t('loading') : t('logIn')}
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };
