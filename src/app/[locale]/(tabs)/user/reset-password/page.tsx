@@ -4,7 +4,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
 import {usePathname} from '@/i18n/routing';
-import {supabase} from '@/lib/supabase/supabaseClient';
+import {createClient} from '@/lib/supabase/client';
 import {RefreshCcw} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
@@ -21,6 +21,7 @@ const ResetPassword = () => {
     const locale = currentPath.split('/')[1]; // Extract locale from the current path
     const redirectToPage = `${window.location.origin}/${locale}/user/update-password`;
     try {
+      const supabase = createClient();
       const {error} = await supabase.auth.resetPasswordForEmail(userEmail, {
         redirectTo: redirectToPage,
       });

@@ -3,7 +3,7 @@ import {PageLayout} from '@/components';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
-import {supabase} from '@/lib/supabase/supabaseClient';
+import {supabase} from '@/lib/supabase/client';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
 

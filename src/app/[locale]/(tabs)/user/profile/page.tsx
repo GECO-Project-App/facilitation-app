@@ -1,17 +1,14 @@
-'use client';
 import {DefaultProfileImage} from '@/components/icons/astro-geco';
 import {Button} from '@/components/ui/button';
-import {useRouter} from '@/i18n/routing';
-import {useUserStore} from '@/store/userStore';
+import {logOut} from '@/lib/actions';
+import {createClient} from '@/lib/supabase/server';
+export default async function ProfilePage() {
+  const supabase = createClient();
 
-const ProfilePage = () => {
-  const {user, signOut} = useUserStore();
-  const router = useRouter();
-  const logOut = () => {
-    signOut();
-    router.push('/');
-  };
-
+  const {
+    data: {user},
+    error,
+  } = await supabase.auth.getUser();
   return (
     <div className="overflow-hidden bg-sky-300">
       {user ? (
@@ -27,17 +24,15 @@ const ProfilePage = () => {
             <p className="text-xl">Last Name: {user.user_metadata.lastName}</p>
             <p className="text-xl">Email: {user.email}</p>
           </section>
-          <section>
-            <Button onClick={logOut} className="mt-4">
+          <form>
+            <Button formAction={logOut} className="mt-4">
               Log out
             </Button>
-          </section>
+          </form>
         </div>
       ) : (
         <h1 className="text-xl font-bold">Please log in to view your profile</h1>
       )}
     </div>
   );
-};
-
-export default ProfilePage;
+}

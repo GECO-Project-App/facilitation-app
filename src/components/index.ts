@@ -1,6 +1,7 @@
 export * from './About';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
+export * from './forms';
 export * from './Header';
 export * from './HomeButton';
 export * from './LanguageSelector';
