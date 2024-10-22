@@ -3,6 +3,7 @@ import {z} from 'zod';
 export type UpdatePasswordSchema = z.infer<typeof updatePasswordSchema>;
 export type LoginSchema = z.infer<typeof loginSchema>;
 export type SignupSchema = z.infer<typeof signupSchema>;
+export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -36,4 +37,8 @@ export const signupSchema = z.object({
   confirmPassword: z.string(),
   firstName: z.string(),
   lastName: z.string(),
+});
+
+export const resetPasswordSchema = z.object({
+  email: z.string().email(),
 });

@@ -1,32 +1,61 @@
 'use client';
+import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
+import {resetPassword} from '@/lib/actions';
+import {resetPasswordSchema, ResetPasswordSchema} from '@/lib/zodSchemas';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {RefreshCcw} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useFormStatus} from 'react-dom';
-import {Button, Input} from '../ui';
+import {useForm} from 'react-hook-form';
+import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
 export const ResetPasswordForm = () => {
-  const {pending} = useFormStatus();
+  const {toast} = useToast();
   const t = useTranslations('authenticate');
+  const router = useRouter();
+
+  const form = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
+  });
+
+  const onSubmit = async (data: ResetPasswordSchema) => {
+    const result = await resetPassword(data);
+
+    if (result?.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: result.error,
+      });
+    } else {
+      router.replace('/user/profile');
+    }
+  };
+
   return (
-    <form className="mx-auto mt-10 flex h-fit min-h-[448px] max-w-[600px] flex-col justify-between">
-      <div className="space-y-6 px-4">
-        <h2 className="text-center text-2xl font-bold">{t('resetPassword')}</h2>
-        <div className="space-y-2">
-          <Input
-            id="login-email"
-            name="email"
-            type="email"
-            placeholder={t('enterEmail')}
-            required
-            className="h-12 rounded-full"
-          />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 min-h-[448px]">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({field}) => (
+            <FormItem>
+              <FormControl>
+                <Input type="email" {...field} placeholder={t('enterEmail')} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="mt-14 flex justify-center pb-6">
+          <Button type="submit" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? t('loading') : t('reset')} <RefreshCcw />
+          </Button>
         </div>
-      </div>
-      <div className="mt-14 flex justify-center pb-6">
-        <Button type="submit" disabled={pending} variant="pink">
-          {pending ? t('loading') : t('reset')} <RefreshCcw />
-        </Button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 };

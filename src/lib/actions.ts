@@ -8,6 +8,9 @@ import {z} from 'zod';
 import {
   loginSchema,
   LoginSchema,
+  resetPasswordSchema,
+  ResetPasswordSchema,
+  signupSchema,
   SignupSchema,
   updatePasswordSchema,
   UpdatePasswordSchema,
@@ -45,7 +48,7 @@ export async function signup(data: SignupSchema) {
   const t = await getTranslations('authenticate');
 
   try {
-    const validatedFields = loginSchema.parse(data);
+    const validatedFields = signupSchema.parse(data);
 
     const {
       error,
@@ -67,12 +70,28 @@ export async function signup(data: SignupSchema) {
   }
 }
 
-export async function resetPassword(formData: FormData) {
+export async function resetPassword(data: ResetPasswordSchema) {
   const supabase = createClient();
-  const email = formData.get('email') as string;
-  const {error} = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_URL}/user/update-password`,
-  });
+  const t = await getTranslations('authenticate');
+  try {
+    const validatedFields = resetPasswordSchema.parse(data);
+    // TODO: Fix redirectTo
+    const {error} = await supabase.auth.resetPasswordForEmail(validatedFields.email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_URL}/user/update-password`,
+    });
+
+    if (error) {
+      return {error: error.message};
+    }
+
+    revalidatePath('/');
+    return {success: true};
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {error: error.errors[0].message};
+    }
+    return {error: t('errorDescription')};
+  }
 }
 
 export async function logOut() {
