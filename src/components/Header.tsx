@@ -1,5 +1,5 @@
 'use client';
-import {useRouter} from '@/navigation';
+import {useRouter} from '@/i18n/routing';
 import {ArrowLeft} from 'lucide-react';
 import React, {FC} from 'react';
 

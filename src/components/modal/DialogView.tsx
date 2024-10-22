@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {useRouter} from '@/navigation';
+import {useRouter} from '@/i18n/routing';
 import {useCallback} from 'react';
 import {AstroGeco, AstroGecoWithStar} from '../icons';
 

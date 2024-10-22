@@ -1,5 +1,5 @@
 'use client';
-import {Link} from '@/navigation';
+import {Link} from '@/i18n/routing';
 import {useUserStore} from '@/store/userStore';
 import {Home, ListTodo, LogIn, Settings} from 'lucide-react';
 import {FC} from 'react';

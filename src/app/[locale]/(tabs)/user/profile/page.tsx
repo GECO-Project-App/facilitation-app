@@ -1,8 +1,8 @@
 'use client';
 import {DefaultProfileImage} from '@/components/icons/astro-geco';
 import {Button} from '@/components/ui/button';
+import {useRouter} from '@/i18n/routing';
 import {useUserStore} from '@/store/userStore';
-import {useRouter} from 'next/navigation';
 
 const ProfilePage = () => {
   const {user, signOut} = useUserStore();

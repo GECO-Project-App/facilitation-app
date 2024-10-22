@@ -3,10 +3,10 @@ import {PageLayout} from '@/components';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
+import {usePathname} from '@/i18n/routing';
 import {supabase} from '@/lib/supabase/supabaseClient';
 import {RefreshCcw} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {usePathname} from 'next/navigation';
 import {useState} from 'react';
 
 const ResetPassword = () => {

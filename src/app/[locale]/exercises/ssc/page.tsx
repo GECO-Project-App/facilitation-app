@@ -1,8 +1,8 @@
 import {Button, Header, PageLayout} from '@/components';
 import {Lamp} from '@/components/icons/lamp';
 import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
+import {Link} from '@/i18n/routing';
 import {buttons} from '@/lib/ssc-mock-data';
-import {Link} from '@/navigation';
 import {ArrowLeft} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 
