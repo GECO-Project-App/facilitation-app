@@ -18,7 +18,7 @@ import {
 
 export async function login(data: LoginSchema) {
   const supabase = createClient();
-  const t = await getTranslations(['authenticate', 'error']);
+  const t = await getTranslations(['error']);
 
   try {
     const validatedFields = loginSchema.parse(data);
@@ -39,13 +39,13 @@ export async function login(data: LoginSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('error.errorOccurred')};
+    return {error: t('errorOccurred')};
   }
 }
 
 export async function signup(data: SignupSchema) {
   const supabase = createClient();
-  const t = await getTranslations('authenticate');
+  const t = await getTranslations('error');
 
   try {
     const validatedFields = signupSchema.parse(data);
@@ -81,7 +81,7 @@ export async function signup(data: SignupSchema) {
 
 export async function resetPassword(data: ResetPasswordSchema) {
   const supabase = createClient();
-  const t = await getTranslations('authenticate');
+  const t = await getTranslations('error');
   try {
     const validatedFields = resetPasswordSchema.parse(data);
     // TODO: Fix redirectTo
@@ -99,7 +99,7 @@ export async function resetPassword(data: ResetPasswordSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('error.errorOccurred')};
+    return {error: t('errorOccurred')};
   }
 }
 
@@ -111,7 +111,7 @@ export async function logOut() {
 
 export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
   const supabase = createClient();
-  const t = await getTranslations('authenticate');
+  const t = await getTranslations('error');
   try {
     const validatedFields = updatePasswordSchema.parse(data);
 
@@ -121,7 +121,7 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
     } = await supabase.auth.getUser();
 
     if (AuthError || !user) {
-      return {error: t('error.userNotFound')};
+      return {error: t('userNotFound')};
     }
 
     const {error} = await supabase.auth.updateUser({
@@ -138,6 +138,6 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('error.errorOccurred')};
+    return {error: t('errorOccurred')};
   }
 }
