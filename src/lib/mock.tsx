@@ -25,15 +25,6 @@ export const ccMock = {
       },
     } as AboutProps,
   },
-  tutorialToMe: {
-    about: {
-      button: {
-        variant: 'yellow' as ButtonProps['variant'],
-        link: '/exercises/tutorial-to-me',
-        text: "Let's Start",
-      },
-    } as AboutProps,
-  },
 };
 
 export const sscMock = {
@@ -120,6 +111,16 @@ export const sscMock = {
       },
     ] as StepContent[],
   },
+};
+
+export const tutorialMock = {
+  about: {
+    button: {
+      variant: 'yellow' as ButtonProps['variant'],
+      link: '/exercises/tutorial-to-me',
+      text: "Let's Start",
+    },
+  } as AboutProps,
 };
 
 export type PassItOnItem = {

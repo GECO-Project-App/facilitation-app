@@ -214,7 +214,15 @@
       "title": "Handledning till mig",
       "subtitle": "30 minuter | 2-15 personer | Multiplayer, Asynkron",
       "description": "Övningen 'Handledning till mig' hjälper ditt team att dela sina styrkor, svagheter och föredragna sätt att kommunicera när ni börjar arbeta tillsammans. Detta säkerställer att alla är överens om hur de gillar att arbeta och hur man bäst samarbetar. Teammedlemmar kan hänvisa till resultaten av denna övning i fliken 'Team' i GECO-appen under hela projektet.",
-      "button": "Starta"
+      "button": "Starta",
+      "nextStep": "Nästa steg",
+      "defineTimeline": {
+        "title": "Definiera tid",
+        "description": "Låt oss sätta deadline för övningen.",
+        "writingPhase": "Skrivningsfas",
+        "reviewingPhase": "Granskning",
+        "pickADateAndTime": "Välj en datum och tid"
+      }
     }
   },
   "feedback": {

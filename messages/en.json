@@ -213,7 +213,15 @@
       "title": "Tutorial to me",
       "subtitle": "30 minutes | 2-15 people | Multiplayer, Asynchronous",
       "description": "The 'Tutorial to me' exercise helps your team share their strengths, weaknesses, and preferred ways of communicating when starting to work together. This ensures everyone is aligned on how they like working and how to best collaborate. Team members can refer to the results of this exercise in the 'Team' tab of the GECO app throughout the project.",
-      "button": "Let's Start"
+      "button": "Let's Start",
+      "nextStep": "Next step",
+      "defineTimeline": {
+        "title": "Define Timeline",
+        "description": "Let's set the deadline for the exercise.",
+        "writingPhase": "Writing Phase",
+        "reviewingPhase": "Reviewing Phase",
+        "pickADateAndTime": "Pick a date and time"
+      }
     }
   },
   "feedback": {
