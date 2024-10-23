@@ -9,7 +9,7 @@ import {CalendarClock} from 'lucide-react';
 import * as React from 'react';
 import {TimePicker} from './TimePicker';
 
-export function DateAndTimePicker() {
+export function DateAndTimePicker({btnText}: {btnText: string}) {
   const [date, setDate] = React.useState<Date>();
   const [hours, setHours] = React.useState<string>('');
   const [minutes, setMinutes] = React.useState<string>('');
@@ -20,15 +20,17 @@ export function DateAndTimePicker() {
         <Button
           variant="purple"
           className={cn(
-            'w-full justify-start text-left font-normal text-lg',
+            'w-full justify-start text-left font-normal text-md',
             !date && 'text-muted-foreground',
           )}>
           <CalendarClock size={24} className="text-black" />
-          {date ? format(date, 'PPP') : <span className="text-black">Pick a date and time</span>}
-          {hours && minutes && (
-            <span>
-              , {hours}:{minutes}
-            </span>
+          {date ? (
+            <>
+              {format(date, 'PPP')}
+              {hours && minutes && ` ${hours}:${minutes}`}
+            </>
+          ) : (
+            <span className="text-black">{btnText}</span>
           )}
         </Button>
       </PopoverTrigger>
