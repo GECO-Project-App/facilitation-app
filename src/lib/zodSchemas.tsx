@@ -7,8 +7,8 @@ export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 
 export const updatePasswordSchema = z
   .object({
-    password: z.string().transform((val) => val.trim()),
-    confirmPassword: z.string().transform((val) => val.trim()),
+    password: z.string(),
+    confirmPassword: z.string(),
   })
   .refine(
     (data: {password: string; confirmPassword: string}) => data.password === data.confirmPassword,
@@ -19,11 +19,8 @@ export const updatePasswordSchema = z
   );
 
 export const loginSchema = z.object({
-  email: z
-    .string()
-    .email()
-    .transform((val) => val.trim()),
-  password: z.string().transform((val) => val.trim()),
+  email: z.string().email(),
+  password: z.string(),
   // TODO: Add more advanced password validation
   // .min(8, 'Password must be at least 8 characters')
   // .max(50, 'Password must not exceed 50 characters')
@@ -35,14 +32,11 @@ export const loginSchema = z.object({
 
 export const signupSchema = z
   .object({
-    email: z
-      .string()
-      .email()
-      .transform((val) => val.trim()),
-    password: z.string().transform((val) => val.trim()),
-    confirmPassword: z.string().transform((val) => val.trim()),
-    firstName: z.string().transform((val) => val.trim()),
-    lastName: z.string().transform((val) => val.trim()),
+    email: z.string().email(),
+    password: z.string(),
+    confirmPassword: z.string(),
+    first_name: z.string(),
+    last_name: z.string(),
   })
   .refine(
     (data: {password: string; confirmPassword: string}) => data.password === data.confirmPassword,
@@ -53,8 +47,5 @@ export const signupSchema = z
   );
 
 export const resetPasswordSchema = z.object({
-  email: z
-    .string()
-    .email()
-    .transform((val) => val.trim()),
+  email: z.string().email(),
 });

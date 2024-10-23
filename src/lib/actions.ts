@@ -53,10 +53,18 @@ export async function signup(data: SignupSchema) {
     const {
       error,
       data: {user},
-    } = await supabase.auth.signUp(validatedFields);
+    } = await supabase.auth.signUp({
+      email: validatedFields.email,
+      password: validatedFields.password,
+      options: {
+        data: {
+          first_name: validatedFields.first_name,
+          last_name: validatedFields.last_name,
+        },
+      },
+    });
 
     if (error) {
-      console.log(error);
       return {error: error.message};
     }
 

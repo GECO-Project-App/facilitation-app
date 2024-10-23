@@ -3,6 +3,15 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
+  "profile": {
+    "title": "Profile",
+    "welcome": "Welcome, {name}!",
+    "metadata": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email"
+    }
+  },
   "home": {
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
@@ -214,6 +223,7 @@
     "goToHome": "Go to home",
     "pressToGetNewQuestion": "Press to get a new question!",
     "thankYouText": "Thank you for your feedback!",
+    "logOut": "Log Out",
     "languages": [
       {
         "label": "English",
