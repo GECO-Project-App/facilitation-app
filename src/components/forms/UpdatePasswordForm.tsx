@@ -48,7 +48,12 @@ export const UpdatePasswordForm = () => {
             <FormItem>
               <FormLabel>New Password</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input
+                  type="password"
+                  {...field}
+                  autoComplete="new-password"
+                  placeholder={t('enterPassword')}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -62,7 +67,12 @@ export const UpdatePasswordForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input type="password" {...field} />
+                <Input
+                  type="password"
+                  {...field}
+                  autoComplete="new-password"
+                  placeholder={t('confirmPassword')}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

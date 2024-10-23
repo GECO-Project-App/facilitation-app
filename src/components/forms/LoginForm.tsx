@@ -37,14 +37,16 @@ export const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 min-h-[448px]">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 h-full md:min-h-[400px]">
         <FormField
           control={form.control}
           name="email"
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input type="email" {...field} placeholder={t('enterEmail')} />
+                <Input type="email" {...field} placeholder={t('enterEmail')} autoComplete="email" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -57,7 +59,12 @@ export const LoginForm = () => {
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input type="password" {...field} placeholder={t('enterPassword')} />
+                <Input
+                  type="password"
+                  {...field}
+                  placeholder={t('enterPassword')}
+                  autoComplete="current-password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,7 +76,7 @@ export const LoginForm = () => {
           className="text-green hover:underline text-sm text-center">
           {t('forgotPassword')}
         </Link>
-        <div className="mt-14 flex justify-center pb-6">
+        <div className="mt-10 flex justify-center pb-6">
           <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
             {form.formState.isSubmitting ? t('loading') : t('logIn')}
           </Button>

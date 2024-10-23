@@ -226,6 +226,26 @@
       }
     ]
   },
+
+  "errors": {
+      "error": "Något gick fel",
+    "userNotFound": "Användaren hittades inte",
+    "userNotLoggedIn": "Logga in för att se din profil",
+    "errorOccurred": "Ett fel uppstod. Försök igen.",
+    "invalidCredentials": "Ogiltig e-postadress eller lösenord",
+    "password": {
+      "doNotMatch": "Lösenorden matchar inte",
+      "maxCharacters": "Lösenordet kan inte vara längre än 50 tecken",
+      "minCharacters": "Lösenordet måste vara minst 8 tecken",
+      "uppercaseLetter": "Lösenordet måste innehålla minst en stor bokstav",
+      "lowercaseLetter": "Lösenordet måste innehålla minst en liten bokstav",
+      "number": "Lösenordet måste innehålla minst en siffra",
+      "specialCharacter": "Lösenordet måste innehålla minst ett specialtecken",
+      "mustBeString": "Lösenordet måste vara en sträng",
+      "invalidEmail": "Ogiltig e-postadress"
+    }
+  },
+  
   "authenticate": {
     "reset": "Återställ",
     "resetPassword": "Återställ lösenord",

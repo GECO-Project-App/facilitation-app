@@ -4,7 +4,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs/tab
 import {AnimatePresence, motion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 
-const AuthPage = () => {
+export default function AuthPage() {
   const t = useTranslations('authenticate');
 
   const tabVariants = {
@@ -46,6 +46,4 @@ const AuthPage = () => {
       </Tabs>
     </PageLayout>
   );
-};
-
-export default AuthPage;
+}

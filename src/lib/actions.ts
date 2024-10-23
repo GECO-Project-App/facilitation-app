@@ -18,7 +18,7 @@ import {
 
 export async function login(data: LoginSchema) {
   const supabase = createClient();
-  const t = await getTranslations('authenticate');
+  const t = await getTranslations(['authenticate', 'error']);
 
   try {
     const validatedFields = loginSchema.parse(data);
@@ -39,7 +39,7 @@ export async function login(data: LoginSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('errorDescription')};
+    return {error: t('error.errorOccurred')};
   }
 }
 
@@ -56,6 +56,7 @@ export async function signup(data: SignupSchema) {
     } = await supabase.auth.signUp(validatedFields);
 
     if (error) {
+      console.log(error);
       return {error: error.message};
     }
 
@@ -66,7 +67,7 @@ export async function signup(data: SignupSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('errorDescription')};
+    return {error: t('errorOccurred')};
   }
 }
 
@@ -90,7 +91,7 @@ export async function resetPassword(data: ResetPasswordSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('errorDescription')};
+    return {error: t('error.errorOccurred')};
   }
 }
 
@@ -112,7 +113,7 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
     } = await supabase.auth.getUser();
 
     if (AuthError || !user) {
-      return {error: 'No user found'};
+      return {error: t('error.userNotFound')};
     }
 
     const {error} = await supabase.auth.updateUser({
@@ -129,6 +130,6 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
-    return {error: t('errorDescription')};
+    return {error: t('error.errorOccurred')};
   }
 }

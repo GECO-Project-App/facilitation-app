@@ -7,16 +7,23 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import {useRouter} from '@/i18n/routing';
+import {DialogProps} from '@radix-ui/react-dialog';
 import {useCallback} from 'react';
 import {AstroGeco, AstroGecoWithStar} from '../icons';
 
-interface DialogViewProps {
+interface DialogViewProps extends DialogProps {
   destinationRoute?: string;
   message?: string;
   icon?: string;
 }
 
-export default function DialogView({destinationRoute, message, icon}: DialogViewProps) {
+export default function DialogView({
+  destinationRoute,
+  message,
+  icon,
+  open,
+  onOpenChange,
+}: DialogViewProps) {
   const router = useRouter();
   const handleDialogClose = useCallback(() => {
     router.push(destinationRoute || '/');
@@ -31,7 +38,7 @@ export default function DialogView({destinationRoute, message, icon}: DialogView
   // }, []);
 
   return (
-    <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
+    <Dialog defaultOpen={open} onOpenChange={(open) => !open && handleDialogClose()}>
       <DialogContent className="bg-pink">
         <DialogHeader className="flex h-full flex-col items-center justify-center">
           <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">

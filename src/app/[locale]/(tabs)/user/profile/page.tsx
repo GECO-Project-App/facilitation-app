@@ -2,9 +2,9 @@ import {DefaultProfileImage} from '@/components/icons/astro-geco';
 import {Button} from '@/components/ui/button';
 import {logOut} from '@/lib/actions';
 import {createClient} from '@/lib/supabase/server';
+
 export default async function ProfilePage() {
   const supabase = createClient();
-
   const {
     data: {user},
     error,
