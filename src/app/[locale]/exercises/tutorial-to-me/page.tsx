@@ -1,9 +1,9 @@
 import {Header, PageLayout} from '@/components';
-import {Button} from '@/components/ui/button';
+import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
+import {Button} from '@/components/ui/button/button';
 import {Link} from '@/navigation';
 import {ArrowRight, CalendarClock} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
-
 export default async function TutorialToMePage() {
   const t = await getTranslations('exercises.tutorialToMe');
   return (
@@ -34,6 +34,7 @@ export default async function TutorialToMePage() {
             {t('defineTimeline.pickADateAndTime')}
           </Button>
         </article>
+        <DateAndTimePicker />
       </section>
     </PageLayout>
   );
