@@ -22,10 +22,7 @@ export default async function TutorialToMePage() {
         <p className="mt-4 text-lg">{t('defineTimeline.description')}</p>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.writingPhase')}</p>
-          <Button variant="purple" className="text-lg">
-            <CalendarClock size={24} />
-            {t('defineTimeline.pickADateAndTime')}
-          </Button>
+          <DateAndTimePicker />
         </article>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.reviewingPhase')}</p>
@@ -34,7 +31,6 @@ export default async function TutorialToMePage() {
             {t('defineTimeline.pickADateAndTime')}
           </Button>
         </article>
-        <DateAndTimePicker />
       </section>
     </PageLayout>
   );
