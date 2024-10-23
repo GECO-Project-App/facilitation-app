@@ -1,10 +1,10 @@
 'use client';
+import {locales} from '@/i18n/config';
 import {Link} from '@/i18n/routing';
 import {useUserStore} from '@/store/userStore';
 import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import {FC} from 'react';
-import {locales} from '../../i18n';
 
 export const TabBar: FC = () => {
   const pathname = usePathname();
