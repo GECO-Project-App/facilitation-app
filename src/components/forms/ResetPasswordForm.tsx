@@ -11,7 +11,7 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 
 export const ResetPasswordForm = () => {
   const {toast} = useToast();
-  const t = useTranslations('authenticate');
+  const t = useTranslations();
   const router = useRouter();
 
   const form = useForm<ResetPasswordSchema>({
@@ -27,7 +27,7 @@ export const ResetPasswordForm = () => {
     if (result?.error) {
       toast({
         variant: 'destructive',
-        title: 'Error',
+        title: t('errors.error'),
         description: result.error,
       });
     } else {
@@ -44,7 +44,7 @@ export const ResetPasswordForm = () => {
           render={({field}) => (
             <FormItem>
               <FormControl>
-                <Input type="email" {...field} placeholder={t('enterEmail')} />
+                <Input type="email" {...field} placeholder={t('authenticate.enterEmail')} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,7 +52,8 @@ export const ResetPasswordForm = () => {
         />
         <div className="mt-14 flex justify-center pb-6">
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? t('loading') : t('reset')} <RefreshCcw />
+            {form.formState.isSubmitting ? t('authenticate.loading') : t('authenticate.reset')}{' '}
+            <RefreshCcw />
           </Button>
         </div>
       </form>
