@@ -3,6 +3,17 @@
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer"
   },
+    "team": {
+    "tabs": {
+      "create": "Skapa Team",
+      "join": "Gå med i Team",
+      "name": "Teamnamn",
+      "invite": "Bjud in medlemmar",
+      "button": "Gå vidare",
+      "code": "Teamkod"
+    }
+  },
+
   "profile": {
     "title": "Profil",
     "welcome": "Välkommen, {name}!",

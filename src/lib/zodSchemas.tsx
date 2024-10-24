@@ -5,6 +5,8 @@ export type LoginSchema = z.infer<typeof loginSchema>;
 export type SignupSchema = z.infer<typeof signupSchema>;
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 export type ProfileSchema = z.infer<typeof profileSchema>;
+export type CreateTeamSchema = z.infer<typeof createTeamSchema>;
+export type JoinTeamSchema = z.infer<typeof joinTeamSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -57,4 +59,14 @@ export const profileSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   username: z.string(),
+});
+
+export const createTeamSchema = z.object({
+  name: z.string(),
+});
+
+export const joinTeamSchema = z.object({
+  code: z.string().regex(/^geco-[a-zA-Z0-9]{5}$/, {
+    message: 'Code must start with "geco-" followed by 8 alphanumeric characters',
+  }),
 });

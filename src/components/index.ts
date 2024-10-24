@@ -11,5 +11,6 @@ export * from './PassItOn';
 export * from './RandomQuestion';
 export * from './RiveAnimation';
 export * from './TabBar';
+export * from './TeamTabs';
 export * from './Timer';
 export * from './ui';

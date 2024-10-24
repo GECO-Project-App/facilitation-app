@@ -43,10 +43,12 @@ export const TabBar: FC = () => {
           </Link>
         </li>
         <li>
-          <Users
-            size={24}
-            className={pathname.split('/').pop() === 'team' ? 'text-green' : 'text-black'}
-          />
+          <Link href="/team">
+            <Users
+              size={24}
+              className={pathname.split('/').pop() === 'team' ? 'text-green' : 'text-black'}
+            />
+          </Link>
         </li>
         <li>
           <Settings
