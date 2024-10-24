@@ -7,11 +7,14 @@ import {supabase} from '@/lib/supabase/supabaseClient';
 import {useTranslations} from 'next-intl';
 import Link from 'next/link';
 import {useState} from 'react';
+import {useDialog} from '@/store/useDialog';
+import {AstroGeco} from '@/components/icons';
 
 const LogIn = () => {
+  const {isDialogOpen, setIsDialogOpen} = useDialog();
   const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const [showDialog, setShowDialog] = useState(false);
+  // const [showDialog, setShowDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -27,7 +30,7 @@ const LogIn = () => {
         password: formData.password,
       });
       if (error) throw error;
-      setShowDialog(true);
+      setIsDialogOpen(true);
       setFormData({email: '', password: ''});
     } catch (error) {
       toast({
@@ -49,8 +52,8 @@ const LogIn = () => {
 
   return (
     <>
-      {showDialog ? (
-        <DialogView destinationRoute="/" message={t('loggedIn')} icon="login" />
+      {isDialogOpen ? (
+        <DialogView destinationRoute="/" message={t('loggedIn')} className="bg-pink" sticker={<AstroGeco />} />
       ) : (
         <form onSubmit={handleSubmit} className="h-fit min-h-[448px] flex flex-col justify-between">
           <div className="space-y-6 px-4">

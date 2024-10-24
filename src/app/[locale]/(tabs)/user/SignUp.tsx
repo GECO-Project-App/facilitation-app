@@ -4,13 +4,15 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useToast} from '@/hooks/useToast';
 import {supabase} from '@/lib/supabase/supabaseClient';
+import {useDialog} from '@/store/useDialog';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
+import {AstroGecoWithStar} from '@/components/icons';
 
 const SignUp = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const [showDialog, setShowDialog] = useState(false);
+  const {isDialogOpen, setIsDialogOpen} = useDialog();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -38,7 +40,7 @@ const SignUp = () => {
         },
       });
       if (error) throw error;
-      setShowDialog(true);
+      setIsDialogOpen(true);
       setFormData({email: '', password: '', confirmPassword: '', firstName: '', lastName: ''});
     } catch (error) {
       toast({
@@ -59,11 +61,12 @@ const SignUp = () => {
 
   return (
     <>
-      {showDialog ? (
+      {isDialogOpen ? (
         <DialogView
           destinationRoute="/"
           message="Thank you for signing up, Your account is ready!"
-          icon="signup"
+          className="bg-lightBlue"
+          sticker={<AstroGecoWithStar />}
         />
       ) : (
         <form onSubmit={handleSubmit} className="flex min-h-[448px] h-fit flex-col justify-between">

@@ -6,6 +6,7 @@ import {useTranslations} from 'next-intl';
 import {usePostHog} from 'posthog-js/react';
 import {useEffect, useState} from 'react';
 import Survey from './Survey';
+import {Confetti} from '@/components/icons/confetti';
 
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
@@ -69,7 +70,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
           onSubmit={handleSubmit}
         />
       ) : (
-        <DialogView destinationRoute="/" message={t('thankYouText')} icon="feedback" />
+        <DialogView destinationRoute="/" message={t('thankYouText')} sticker={<Confetti />} className="bg-pink" />
       )}
     </PageLayout>
   );
