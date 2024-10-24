@@ -9,16 +9,21 @@ import {CalendarClock} from 'lucide-react';
 import * as React from 'react';
 import {TimePicker} from './TimePicker';
 
-export function DateAndTimePicker({btnText}: {btnText: string}) {
+export function DateAndTimePicker({
+  btnText,
+  variant,
+}: {
+  btnText: string;
+  variant: 'purple' | 'blue';
+}) {
   const [date, setDate] = React.useState<Date>();
-  const [hours, setHours] = React.useState<string>('');
-  const [minutes, setMinutes] = React.useState<string>('');
+  const [time, setTime] = React.useState<string>();
 
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="purple"
+          variant={variant}
           className={cn(
             'w-full justify-start text-left font-normal text-md',
             !date && 'text-muted-foreground',
@@ -27,7 +32,7 @@ export function DateAndTimePicker({btnText}: {btnText: string}) {
           {date ? (
             <>
               {format(date, 'PPP')}
-              {hours && minutes && ` ${hours}:${minutes}`}
+              {time && ` ${time}`}
             </>
           ) : (
             <span className="text-black">{btnText}</span>
@@ -36,7 +41,7 @@ export function DateAndTimePicker({btnText}: {btnText: string}) {
       </PopoverTrigger>
       <PopoverContent>
         <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-        <TimePicker hours={hours} setHours={setHours} minutes={minutes} setMinutes={setMinutes} />
+        <TimePicker time={time} setTime={setTime} />
       </PopoverContent>
     </Popover>
   );
