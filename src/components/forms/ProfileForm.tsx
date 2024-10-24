@@ -1,5 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {logOut} from '@/lib/actions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {User} from '@supabase/supabase-js';
@@ -24,92 +25,93 @@ export const ProfileForm = ({user}: {user: User}) => {
   //TODO: Set up updateProfile actions
 
   return (
-    <Form {...form}>
-      <form
-        // onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 h-full justify-center">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>{t('profile.metadata.username')}</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  {...field}
-                  placeholder={t('profile.metadata.enterUsername')}
-                  autoComplete="username"
-                  disabled
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="first_name"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>{t('profile.metadata.firstName')}</FormLabel>
+    <>
+      <Form {...form}>
+        <form
+          // onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 h-full justify-center">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>{t('profile.metadata.username')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    {...field}
+                    placeholder={t('profile.metadata.enterUsername')}
+                    autoComplete="username"
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="first_name"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>{t('profile.metadata.firstName')}</FormLabel>
 
-              <FormControl>
-                <Input
-                  type="text"
-                  {...field}
-                  placeholder={t('profile.metadata.firstName')}
-                  autoComplete="given-name"
-                  disabled
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormControl>
+                  <Input
+                    type="text"
+                    {...field}
+                    placeholder={t('profile.metadata.firstName')}
+                    autoComplete="given-name"
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="last_name"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>{t('profile.metadata.lastName')}</FormLabel>
+          <FormField
+            control={form.control}
+            name="last_name"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>{t('profile.metadata.lastName')}</FormLabel>
 
-              <FormControl>
-                <Input
-                  type="text"
-                  {...field}
-                  placeholder={t('profile.metadata.lastName')}
-                  autoComplete="family-name"
-                  disabled
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>{t('profile.metadata.email')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    {...field}
+                    placeholder={t('profile.metadata.lastName')}
+                    autoComplete="family-name"
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>{t('profile.metadata.email')}</FormLabel>
 
-              <FormControl>
-                <Input
-                  type="email"
-                  {...field}
-                  placeholder={t('profile.metadata.email')}
-                  autoComplete="email"
-                  readOnly
-                  disabled
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* 
+                <FormControl>
+                  <Input
+                    type="email"
+                    {...field}
+                    placeholder={t('profile.metadata.email')}
+                    autoComplete="email"
+                    readOnly
+                    disabled
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* 
         <FormField
           control={form.control}
           name="password"
@@ -128,16 +130,22 @@ export const ProfileForm = ({user}: {user: User}) => {
             </FormItem>
           )}
         /> */}
-        <div className="mt-8 flex justify-center pb-6">
-          <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
-            {form.formState.isSubmitting ? (
-              <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin"></div>
-            ) : (
-              t('profile.save')
-            )}
+          {/* <div className="mt-8 flex justify-center pb-6">
+            <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
+              {form.formState.isSubmitting ? (
+                <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin"></div>
+              ) : (
+                t('profile.save')
+              )}
+            </Button>
+          </div>
+        
+          */}
+          <Button variant="red" formAction={logOut}>
+            {t('profile.logout')}
           </Button>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </>
   );
 };
