@@ -223,7 +223,29 @@
         "pickADateAndTime": "Pick a date and time"
       },
       "inviteTeamMember": "Invite team member",
-      "removeTeamMember": "Remove team member"
+      "removeTeamMember": "Remove team member",
+      "steps": [
+        {
+          "title": "Strength",
+          "description": "What three strengths do you bring to a team when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Weakness",
+          "description": "What three weaknesses do you have when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Communication",
+          "description": "What three communication practices do you value when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Finish",
+          "description": "You're done! You can now see the results of the exercise in the 'Team' tab in the GECO app.",
+          "button": "Finish"
+        }
+      ]
     }
   },
   "feedback": {

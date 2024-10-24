@@ -3,36 +3,17 @@ import {Header, PageLayout} from '@/components';
 import {CarouselPagination} from '@/components/CarouselPagination';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {Step} from '@/lib/types';
 import {ArrowRight} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 import {useEffect, useState} from 'react';
 
 const TutorialToMePage = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
+  const t = useTranslations('exercises.tutorialToMe');
 
-  const steps = [
-    {
-      title: 'Strength',
-      description: 'What three strengths do you bring to a team when working on a project?',
-      button: 'Submit',
-    },
-    {
-      title: 'Weakness',
-      description: 'What three weaknesses do you have when working on a project?',
-      button: 'Submit',
-    },
-    {
-      title: 'Communication',
-      description: 'What three communication practices do you value when working on a project?',
-      button: 'Submit',
-    },
-    {
-      title: 'Finish',
-      description: 'Congratulations! You have completed the tutorial to me exercise.',
-      button: 'Back to main',
-    },
-  ];
-
+  const steps: Step[] = t.raw('steps').map((step: Step) => step);
   useEffect(() => {
     if (!api) {
       return;
@@ -83,10 +64,24 @@ const TutorialToMePage = () => {
       <section className="flex h-full w-full flex-1 items-center justify-center">
         <Carousel className="h-full w-full flex-1" setApi={setApi}>
           <CarouselContent>
-            {steps.map((_, index) => (
+            {steps.map((step, index) => (
               <CarouselItem key={index} className="space-y-6">
-                <h1 className="text-2xl font-bold">{steps[index].title}</h1>
-                <p className="text-lg">{steps[index].description}</p>
+                <h1 className="text-2xl font-bold">{step.title}</h1>
+                <p className="text-lg">Type your {step.title}</p>
+                <textarea
+                  rows={10}
+                  className="h-full w-full rounded-3xl border-2 border-black px-4 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                />
+                <p className="text-lg">Type your {step.title}</p>
+                <textarea
+                  rows={10}
+                  className="h-full w-full rounded-3xl border-2 border-black px-4 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                />
+                <p className="text-lg">Type your {step.title}</p>
+                <textarea
+                  rows={10}
+                  className="h-full w-full rounded-3xl border-2 border-black px-4 shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
