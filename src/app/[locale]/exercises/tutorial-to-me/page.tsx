@@ -65,7 +65,7 @@ const TutorialToMePage = () => {
         <Carousel className="h-full w-full flex-1" setApi={setApi}>
           <CarouselContent>
             {steps.map((step, index) => (
-              <CarouselItem key={index} className="space-y-6">
+              <CarouselItem key={index} className="space-y-6 h-full">
                 <h1 className="text-2xl font-bold">{step.title}</h1>
                 <p className="text-lg">Type your {step.title}</p>
                 <textarea
