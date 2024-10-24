@@ -3,6 +3,20 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
+  "profile": {
+    "title": "Profile",
+    "welcome": "Welcome, {name}!",
+    "save": "Save Changes",
+    "logout": "Log Out",
+    "metadata": {
+      "username": "Profile Name",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "enterUsername": "Select profile name",
+      "password": "Password"
+    }
+  },
   "home": {
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
@@ -199,14 +213,16 @@
       },
       "completeButton": "Complete",
       "exerciseButton": "Go to exercise",
-      "nextStep": "Next step"
+      "nextStep": "Next step",
+      "greatJob": "GREAT JOB! YOU DID IT!"
     }
   },
   "feedback": {
     "title": " What worked well during this exercise?",
     "subtitle": "What didn't?",
     "placeholder": "Write your feedback here...",
-    "button": "Send"
+    "button": "Send",
+    "thankYouText": "Thank you for your feedback!"
   },
   "common": {
     "nextStep": "Next Step",
@@ -214,6 +230,7 @@
     "goToHome": "Go to home",
     "pressToGetNewQuestion": "Press to get a new question!",
     "thankYouText": "Thank you for your feedback!",
+    "logOut": "Log Out",
     "languages": [
       {
         "label": "English",
@@ -225,6 +242,26 @@
       }
     ]
   },
+
+  "errors": {
+    "error": "Error",
+    "userNotFound": "User not found",
+    "userNotLoggedIn": "Please log in to view your profile",
+    "errorOccurred": "An error occurred. Please try again.",
+    "invalidCredentials": "Invalid email or password",
+    "password": {
+      "doNotMatch": "Passwords do not match",
+      "maxCharacters": "Password must not exceed 50 characters",
+      "minCharacters": "Password must be at least 8 characters",
+      "uppercaseLetter": "Password must contain at least one uppercase letter",
+      "lowercaseLetter": "Password must contain at least one lowercase letter",
+      "number": "Password must contain at least one number",
+      "specialCharacter": "Password must contain at least one special character",
+      "mustBeString": "Password must be a string",
+      "invalidEmail": "Invalid email"
+    }
+  },
+
   "authenticate": {
     "reset": "Reset",
     "resetPassword": "Reset Password",
@@ -236,6 +273,7 @@
     "loading": "Loading...",
     "button": "Submit",
     "loggedIn": "You're logged in!",
+
     "enterEmail": "Enter your email",
     "enterPassword": "Enter the password",
     "confirmPassword": "Confirm the password",
@@ -245,7 +283,7 @@
     "emailSent": "Email sent",
     "emailSentDescription": "Check your email for a link to reset your password",
     "error": "Error",
-    "errorDescription": "An error occurred while resetting password. Please try again.",
+    "errorDescription": "An error occurred. Please try again.",
     "updatePassword": "Update Password",
     "updatePasswordDescription": "Please enter your new password below.",
     "passwordsDoNotMatch": "Passwords do not match",

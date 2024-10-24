@@ -1,14 +1,14 @@
 'use client';
 
-import useRemoveLocalStorageItem from '@/hooks/useRemoveLocalStorageItem'; // Adjust path as needed
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useEffect} from 'react';
 
 const ClearLocalStorage = () => {
-  const removeItem = useRemoveLocalStorageItem('chapterDone');
+  const {removeLocalStorageItem} = useSSCChaptersHandler();
 
   useEffect(() => {
-    removeItem();
-  }, [removeItem]);
+    removeLocalStorageItem();
+  }, []);
 
   return null;
 };

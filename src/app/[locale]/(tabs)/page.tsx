@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <PageLayout backgroundColor="bg-yellow" hasPadding={false} contentColor="bg-yellow">
-      <section className="flex flex-col items-center justify-between">
+      <section className="flex flex-col items-center justify-between h-fit mb-[-42px]">
         <div className="space-y-6 p-6">
           <header className="flex w-full flex-row items-center justify-center">
             <LanguageSelector />

@@ -1,6 +1,6 @@
 'use client';
+import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
-import {useRouter} from '@/navigation';
 import {ChevronDownIcon, ChevronUpIcon} from 'lucide-react';
 import {useLocale, useTranslations} from 'next-intl';
 import {useParams} from 'next/navigation';

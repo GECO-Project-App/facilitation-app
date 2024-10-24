@@ -8,7 +8,7 @@ Welcome to the GECO Project's Facilitation app! This open-source project helps t
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Tech Stack](#tech-stack)
-- [Internationalization (i18n)](#internationalization-i18n)
+- [next-intl (i18n)](#next-intl)
 - [Storybook](#storybook)
 - [Testing](#testing)
 - [License](#license)

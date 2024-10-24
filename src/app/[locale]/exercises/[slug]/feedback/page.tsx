@@ -1,5 +1,6 @@
 'use client';
 import {PageLayout} from '@/components';
+import {Confetti} from '@/components/icons/confetti';
 import DialogView from '@/components/modal/DialogView';
 import {CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, SSC_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
 import {useTranslations} from 'next-intl';
@@ -69,7 +70,12 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
           onSubmit={handleSubmit}
         />
       ) : (
-        <DialogView destinationRoute="/" message={t('thankYouText')} icon="feedback" />
+        <DialogView
+          destinationRoute="/"
+          message={t('thankYouText')}
+          sticker={<Confetti />}
+          className="bg-pink"
+        />
       )}
     </PageLayout>
   );

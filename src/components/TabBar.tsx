@@ -1,30 +1,58 @@
 'use client';
-import {Link} from '@/navigation';
+import {locales} from '@/i18n/config';
+import {Link} from '@/i18n/routing';
 import {useUserStore} from '@/store/userStore';
-import {Home, LogIn} from 'lucide-react';
+import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
+import {usePathname} from 'next/navigation';
 import {FC} from 'react';
-import {Team} from './icons';
 
 export const TabBar: FC = () => {
+  const pathname = usePathname();
   const {user} = useUserStore();
 
+  const colorText = (path: string) => {
+    if (pathname.includes(path)) {
+      return 'text-green';
+    } else {
+      return 'text-black';
+    }
+  };
+
   return (
-    <nav className="fixed bottom-0 flex  w-full border-t-2 border-black bg-yellow px-4 pb-8 pt-4">
-      <ul className="flex items-center justify-between w-full bw-full gap-4">
+    <nav className="fixed bottom-0 h-[40px] border-t-2 border-black bg-yellow w-full">
+      <ul className="flex flex-row items-center justify-between max-w-md mx-auto h-full px-4 sm:px-0">
+        <li>
+          <Link href="/user">
+            <ListTodo
+              size={24}
+              className={pathname.split('/').pop() === 'user' ? 'text-green' : 'text-black'}
+            />
+          </Link>
+        </li>
+        <li>
+          <Library size={24} className={colorText('library')} />
+        </li>
         <li>
           <Link href="/">
-            <Home size={24} />
+            <Home
+              size={24}
+              className={
+                locales.includes(pathname.split('/').pop() || '') ? 'text-green' : 'text-black'
+              }
+            />
           </Link>
         </li>
         <li>
-          <Link href={!user ? '/user' : '/user/profile'}>
-            <LogIn size={24} />
-          </Link>
+          <Users
+            size={24}
+            className={pathname.split('/').pop() === 'team' ? 'text-green' : 'text-black'}
+          />
         </li>
         <li>
-          <Link href="/team">
-            <Team />
-          </Link>
+          <Settings
+            size={24}
+            className={pathname.split('/').pop() === 'settings' ? 'text-green' : 'text-black'}
+          />
         </li>
       </ul>
     </nav>

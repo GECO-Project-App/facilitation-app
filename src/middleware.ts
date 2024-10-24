@@ -1,17 +1,17 @@
+import {routing} from '@/i18n/routing';
+import {updateSession} from '@/lib/supabase/middleware';
 import createMiddleware from 'next-intl/middleware';
-import {defaultLocale, locales} from '../i18n';
+import {type NextRequest} from 'next/server';
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: locales,
+const handleI18nRouting = createMiddleware(routing);
 
-  // Used when no locale matches
-  defaultLocale: defaultLocale,
-  localePrefix: 'always',
-  localeDetection: true,
-});
+export async function middleware(request: NextRequest) {
+  const response = handleI18nRouting(request);
+
+  // A `response` can now be passed here
+  return await updateSession(request, response);
+}
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(sv|en)/:path*'],
+  matcher: ['/', '/(sv|en)/:path*', '/((?!api|_next|_vercel|.*\\..*).*)'],
 };

@@ -60,6 +60,7 @@ To set up the development environment, follow these steps:
 - Add new translations in the respective language file: /messages/[lang].json
 - Use the `useTranslations` hook or the `<Trans>` component for translations in your React components
 - See https://next-intl-docs.vercel.app/ for more information on how to use next-intl
+- Setup according to next.js app router docs https://next-intl-docs.vercel.app/docs/getting-started/app-router/with-i18n-routing
 
 ## Storybook
 
