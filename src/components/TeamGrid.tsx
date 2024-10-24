@@ -1,6 +1,6 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {TeamMember} from '@/lib/mock';
-import {Link} from '@/navigation';
 import {FC, useCallback, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
 import {Button} from './ui/button';

@@ -12,8 +12,8 @@ import {
   TeamGrid,
 } from '@/components';
 import {EditTeam} from '@/components/icons';
+import {Link} from '@/i18n/routing';
 import {mockTeamMembers} from '@/lib/mock';
-import {Link} from '@/navigation';
 
 const teams = [
   {
