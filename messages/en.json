@@ -199,14 +199,16 @@
       },
       "completeButton": "Complete",
       "exerciseButton": "Go to exercise",
-      "nextStep": "Next step"
+      "nextStep": "Next step",
+      "greatJob": "GREAT JOB! YOU DID IT!"
     }
   },
   "feedback": {
     "title": " What worked well during this exercise?",
     "subtitle": "What didn't?",
     "placeholder": "Write your feedback here...",
-    "button": "Send"
+    "button": "Send",
+    "thankYouText": "Thank you for your feedback!"
   },
   "common": {
     "nextStep": "Next Step",

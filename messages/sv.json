@@ -200,7 +200,8 @@
       },
       "completeButton": "Slutför",
       "exerciseButton": "Go till övningen",
-      "nextStep": "Nästa steg"
+      "nextStep": "Nästa steg",
+      "greatJob": "BRA JOBBAT! DU KLARADE DET!"
     }
   },
   "feedback": {
