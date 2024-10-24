@@ -1,5 +1,4 @@
 import {Header, PageLayout} from '@/components';
-import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
 import {Button} from '@/components/ui/button/button';
 import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
@@ -17,18 +16,7 @@ export default async function TutorialToMePage() {
           </Link>
         </Button>
       }>
-      <section className="p-6 space-y-8 flex flex-col justify-evenly items-left h-full">
-        <h1 className="text-3xl font-bold">{t('defineTimeline.title')}</h1>
-        <p className="mt-4 text-lg">{t('defineTimeline.description')}</p>
-        <article className="flex flex-col gap-6">
-          <p className="text-2xl font-bold">{t('defineTimeline.writingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="purple" />
-        </article>
-        <article className="flex flex-col gap-6">
-          <p className="text-2xl font-bold">{t('defineTimeline.reviewingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="blue" />
-        </article>
-      </section>
+      Start
     </PageLayout>
   );
 }

@@ -221,7 +221,9 @@
         "writingPhase": "Writing Phase",
         "reviewingPhase": "Reviewing Phase",
         "pickADateAndTime": "Pick a date and time"
-      }
+      },
+      "inviteTeamMember": "Invite team member",
+      "removeTeamMember": "Remove team member"
     }
   },
   "feedback": {

@@ -222,7 +222,9 @@
         "writingPhase": "Skrivningsfas",
         "reviewingPhase": "Granskning",
         "pickADateAndTime": "Välj en datum och tid"
-      }
+      },
+      "inviteTeamMember": "Bjud in teammedlem",
+      "removeTeamMember": "Ta bort teammedlem"
     }
   },
   "feedback": {
