@@ -1,9 +1,9 @@
 'use client';
 import {Button} from '@/components/ui/button';
 import {useKeyboardStatus} from '@/hooks/useKeyboardStatus';
+import {useRouter} from '@/i18n/routing';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import TextArea from './views/TextArea';
 

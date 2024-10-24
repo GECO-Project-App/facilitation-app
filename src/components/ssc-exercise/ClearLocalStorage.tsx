@@ -1,7 +1,7 @@
 'use client';
 
-import {useEffect} from 'react';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
+import {useEffect} from 'react';
 
 const ClearLocalStorage = () => {
   const {removeLocalStorageItem} = useSSCChaptersHandler();

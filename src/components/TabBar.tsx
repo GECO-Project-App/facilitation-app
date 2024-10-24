@@ -1,10 +1,10 @@
 'use client';
-import {Link} from '@/navigation';
+import {locales} from '@/i18n/config';
+import {Link} from '@/i18n/routing';
 import {useUserStore} from '@/store/userStore';
 import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import {FC} from 'react';
-import {locales} from '../../i18n';
 
 export const TabBar: FC = () => {
   const pathname = usePathname();
@@ -22,14 +22,10 @@ export const TabBar: FC = () => {
     <nav className="fixed bottom-0 h-[40px] border-t-2 border-black bg-yellow w-full">
       <ul className="flex flex-row items-center justify-between max-w-md mx-auto h-full px-4 sm:px-0">
         <li>
-          <Link href={!user ? '/user' : '/user/profile'}>
+          <Link href="/user">
             <ListTodo
               size={24}
-              className={
-                pathname.split('/').pop() === 'user' || pathname.split('/').pop() === 'profile'
-                  ? 'text-green'
-                  : 'text-black'
-              }
+              className={pathname.split('/').pop() === 'user' ? 'text-green' : 'text-black'}
             />
           </Link>
         </li>

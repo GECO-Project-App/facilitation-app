@@ -5,15 +5,15 @@ import {Complete} from '@/components/icons';
 import DialogView from '@/components/modal/DialogView';
 import {Button} from '@/components/ui/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
+import {useRouter} from '@/i18n/routing';
 import {paginationColors} from '@/lib/constants';
 import {sscMock} from '@/lib/mock';
 import {Step} from '@/lib/types';
-import {useRouter} from '@/navigation';
 import {useDialog} from '@/store/useDialog';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import React, {useEffect, useMemo, useState} from 'react';
-import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 export type SSCExerciseProps = {
   chapter: string;
   steps: Step[];

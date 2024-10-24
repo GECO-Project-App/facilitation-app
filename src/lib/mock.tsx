@@ -73,7 +73,7 @@ export const sscMock = {
     } as AboutProps,
     steps: [
       {
-        sticker:'ssc_stop.riv',
+        sticker: 'ssc_stop.riv',
       },
       {
         timer: 180,

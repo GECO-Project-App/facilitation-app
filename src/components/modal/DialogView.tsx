@@ -7,11 +7,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {useRouter} from '@/navigation';
+import {useRouter} from '@/i18n/routing';
 import {useDialog} from '@/store/useDialog';
+import {DialogProps} from '@radix-ui/react-dialog';
 import {useCallback, useEffect} from 'react';
 
-interface DialogViewProps {
+interface DialogViewProps extends DialogProps {
   destinationRoute?: string;
   message?: string;
   description?: string;

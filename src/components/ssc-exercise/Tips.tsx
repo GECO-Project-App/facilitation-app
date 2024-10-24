@@ -1,5 +1,5 @@
 import {Lamp} from '@/components/icons/lamp';
-import {Link} from '@/navigation';
+import {Link} from '@/i18n/routing';
 import {ArrowLeft} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 import {FC} from 'react';

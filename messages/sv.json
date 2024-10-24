@@ -3,6 +3,20 @@
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer"
   },
+  "profile": {
+    "title": "Profil",
+    "welcome": "Välkommen, {name}!",
+    "save": "Spara ändringar",
+    "logout": "Logga ut",
+    "metadata": {
+      "firstName": "Förnamn",
+      "lastName": "Efternamn",
+      "email": "E-post",
+      "username": "Användarnamn",
+      "enterUsername": "Ange användarnamn",
+      "password": "Lösenord"
+    }
+  },
   "home": {
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer",
@@ -215,6 +229,7 @@
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
     "goToHome": "Gå till hem",
+    "logOut": "Logga ut",
     "pressToGetNewQuestion": "Tryck för att få en ny fråga!",
     "languages": [
       {
@@ -227,6 +242,27 @@
       }
     ]
   },
+
+  "errors": {
+    "error": "Något gick fel",
+    "userNotFound": "Användaren hittades inte",
+    "userNotLoggedIn": "Logga in för att se din profil",
+    "errorOccurred": "Ett fel uppstod. Försök igen.",
+    "invalidCredentials": "Ogiltig e-postadress eller lösenord",
+
+    "password": {
+      "doNotMatch": "Lösenorden matchar inte",
+      "maxCharacters": "Lösenordet kan inte vara längre än 50 tecken",
+      "minCharacters": "Lösenordet måste vara minst 8 tecken",
+      "uppercaseLetter": "Lösenordet måste innehålla minst en stor bokstav",
+      "lowercaseLetter": "Lösenordet måste innehålla minst en liten bokstav",
+      "number": "Lösenordet måste innehålla minst en siffra",
+      "specialCharacter": "Lösenordet måste innehålla minst ett specialtecken",
+      "mustBeString": "Lösenordet måste vara en sträng",
+      "invalidEmail": "Ogiltig e-postadress"
+    }
+  },
+  
   "authenticate": {
     "reset": "Återställ",
     "resetPassword": "Återställ lösenord",
@@ -247,7 +283,7 @@
     "emailSent": "Email skickat",
     "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
     "error": "Fel",
-    "errorDescription": "Ett fel uppstod när lösenordet återställdes. Försök igen.",
+    "errorDescription": "Ett fel uppstod. Försök igen.",
     "updatePassword": "Uppdatera lösenord",
     "updatePasswordDescription": "Ange ditt nya lösenord nedan.",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
