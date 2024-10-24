@@ -18,7 +18,8 @@ const buttonVariants = cva(
         orange: 'bg-orange',
         purple: 'bg-purple',
         white: 'bg-white',
-        outline: 'bg-transparent border-2 border-black shadow-none',
+        noShadow: 'bg-transparent border-2 border-black !shadow-none',
+        outline: 'bg-transparent border-2 border-black ',
         carousel:
           'bg-transparent border-none shadow-none active:translate-x-0 active:translate-y-0',
       },

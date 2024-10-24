@@ -81,7 +81,7 @@ const config: Config = {
       boxShadow: {
         dark: '0px 6px 0px 0px #000',
         small: '0px 3px 0px 0px #000',
-        xs: '0px 2px 0px 0px #000',
+        xs: '0px 2.5px 0px 0px #000',
       },
       translate: {
         boxShadowX: '0px',

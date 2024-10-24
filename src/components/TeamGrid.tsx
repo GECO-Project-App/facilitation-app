@@ -1,8 +1,8 @@
 'use client';
-import {Link} from '@/i18n/routing';
 import {TeamMember} from '@/lib/mock';
 import {FC, useCallback, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
+import {ChangeRole, RemoveMember} from './icons';
 import {Button} from './ui/button';
 
 export const TeamGrid: FC<{members: TeamMember[]}> = ({members}) => {
@@ -25,15 +25,13 @@ export const TeamGrid: FC<{members: TeamMember[]}> = ({members}) => {
           onClick={() => toggleCard(index)}>
           <Button variant="white" size="xs" className=" justify-between w-full ">
             Remove
+            <RemoveMember />
           </Button>
           <Button variant="white" size="xs" className=" justify-between w-full">
-            Change role
+            Change role <ChangeRole />
           </Button>
-          <Button variant="white" size="xs" className=" justify-between w-full ">
-            Edit profile
-          </Button>
-          <Button variant="yellow" size="xs" className=" justify-between w-full" asChild>
-            <Link href={`/team/member/1`}>See profile</Link>
+          <Button variant="white" size="xs" className=" justify-between w-full">
+            See profile <ChangeRole />
           </Button>
         </BaseballCard>
       ))}

@@ -5,7 +5,6 @@ export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './forms';
 export * from './Header';
-export * from './HomeButton';
 export * from './InviteCodeCard';
 export * from './LanguageSelector';
 export * from './PageLayout';

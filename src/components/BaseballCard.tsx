@@ -10,7 +10,6 @@ export const BaseballCard: FC<BaseballCardType> = ({
   name,
   bgColor = 'bg-pink',
   role = [],
-
   onOpenChange,
   children,
   open,

@@ -53,8 +53,8 @@ export default function TeamPage() {
       }>
       <section className="flex flex-col gap-6">
         <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
-          <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" />
           <InviteCodeCard />
+          <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" />
         </div>
         <section className="space-y-4 ">
           <h3 className="font-bold text-xl">Team</h3>

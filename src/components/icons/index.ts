@@ -1,9 +1,7 @@
 export * from './arrow';
 export * from './astro-geco';
-
 export * from './circle';
 export * from './complete';
-export * from './edit-team';
 export * from './enflag';
 export * from './eyes';
 export * from './fingers';

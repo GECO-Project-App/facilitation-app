@@ -225,6 +225,12 @@
     "button": "Skicka",
     "thankYouText": "Tack för din feedback!"
   },
+  "team": {
+    "inviteCode": "Inbjudningskod",
+    "inviteTeam": "Inbjud in medlemmar",
+    "copied": "Kopierat",
+    "copiedDescription": "Inbjudningskod kopierad till urklipp"
+  },
   "common": {
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
