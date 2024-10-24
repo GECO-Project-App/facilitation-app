@@ -31,7 +31,7 @@ export const ResetPasswordForm = () => {
         description: result.error,
       });
     } else {
-      router.replace('/user/profile');
+      router.replace('/user');
     }
   };
 
