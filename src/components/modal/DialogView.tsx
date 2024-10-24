@@ -6,39 +6,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {useRouter} from '@/i18n/routing';
-import {DialogProps} from '@radix-ui/react-dialog';
-import {useCallback} from 'react';
+import {useDialog} from '@/store/dialogStore';
 import {AstroGeco, AstroGecoWithStar} from '../icons';
 
-interface DialogViewProps extends DialogProps {
+interface DialogViewProps {
   destinationRoute?: string;
   message?: string;
   icon?: string;
 }
 
-export default function DialogView({
-  destinationRoute,
-  message,
-  icon,
-  open,
-  onOpenChange,
-}: DialogViewProps) {
-  const router = useRouter();
-  const handleDialogClose = useCallback(() => {
-    router.push(destinationRoute || '/');
-  }, [router, destinationRoute]);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     handleDialogClose();
-  //   }, 2000);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
+export default function DialogView({destinationRoute, message, icon}: DialogViewProps) {
+  const {isOpen, onClose} = useDialog();
 
   return (
-    <Dialog defaultOpen={open} onOpenChange={(open) => !open && handleDialogClose()}>
+    <Dialog defaultOpen={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-pink">
         <DialogHeader className="flex h-full flex-col items-center justify-center">
           <DialogTitle className="flex flex-col items-center gap-2 text-2xl font-bold text-black">

@@ -4,6 +4,7 @@ export type UpdatePasswordSchema = z.infer<typeof updatePasswordSchema>;
 export type LoginSchema = z.infer<typeof loginSchema>;
 export type SignupSchema = z.infer<typeof signupSchema>;
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
+export type ProfileSchema = z.infer<typeof profileSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -48,4 +49,12 @@ export const signupSchema = z
 
 export const resetPasswordSchema = z.object({
   email: z.string().email(),
+});
+
+export const profileSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  username: z.string(),
 });

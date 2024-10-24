@@ -28,11 +28,14 @@ export const SignUpForm = () => {
     if (result?.error) {
       toast({
         variant: 'destructive',
-        title: 'Error',
+        title: t('error'),
         description: result.error,
       });
     } else {
-      router.replace('/user/profile');
+      toast({
+        variant: 'default',
+        title: t('loggedIn'),
+      });
     }
   };
 

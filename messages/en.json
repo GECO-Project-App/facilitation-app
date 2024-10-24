@@ -6,10 +6,14 @@
   "profile": {
     "title": "Profile",
     "welcome": "Welcome, {name}!",
+    "save": "Save Changes",
     "metadata": {
+      "username": "Profile Name",
       "firstName": "First Name",
       "lastName": "Last Name",
-      "email": "Email"
+      "email": "Email",
+      "enterUsername": "Select profile name",
+      "password": "Password"
     }
   },
   "home": {
@@ -237,7 +241,7 @@
   },
 
   "errors": {
-        "error": "Error",
+    "error": "Error",
     "userNotFound": "User not found",
     "userNotLoggedIn": "Please log in to view your profile",
     "errorOccurred": "An error occurred. Please try again.",
@@ -266,6 +270,7 @@
     "loading": "Loading...",
     "button": "Submit",
     "loggedIn": "You're logged in!",
+
     "enterEmail": "Enter your email",
     "enterPassword": "Enter the password",
     "confirmPassword": "Confirm the password",

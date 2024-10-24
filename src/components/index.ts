@@ -1,4 +1,5 @@
 export * from './About';
+export * from './AuthTabs';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './forms';

@@ -6,10 +6,14 @@
   "profile": {
     "title": "Profil",
     "welcome": "Välkommen, {name}!",
+    "save": "Spara ändringar",
     "metadata": {
       "firstName": "Förnamn",
       "lastName": "Efternamn",
-      "email": "E-post"
+      "email": "E-post",
+      "username": "Användarnamn",
+      "enterUsername": "Ange användarnamn",
+      "password": "Lösenord"
     }
   },
   "home": {
@@ -243,6 +247,7 @@
     "userNotLoggedIn": "Logga in för att se din profil",
     "errorOccurred": "Ett fel uppstod. Försök igen.",
     "invalidCredentials": "Ogiltig e-postadress eller lösenord",
+
     "password": {
       "doNotMatch": "Lösenorden matchar inte",
       "maxCharacters": "Lösenordet kan inte vara längre än 50 tecken",

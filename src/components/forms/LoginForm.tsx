@@ -31,7 +31,10 @@ export const LoginForm = () => {
         description: result.error,
       });
     } else {
-      router.replace('/user/profile');
+      toast({
+        variant: 'default',
+        title: t('loggedIn'),
+      });
     }
   };
 

@@ -32,7 +32,7 @@ export async function login(data: LoginSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/user/profile ', 'page');
+    revalidatePath('/user ', 'page');
 
     return {success: true};
   } catch (error) {
@@ -68,7 +68,7 @@ export async function signup(data: SignupSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/user/profile', 'page');
+    revalidatePath('/user', 'page');
 
     return {success: true};
   } catch (error) {
@@ -112,6 +112,7 @@ export async function logOut() {
 export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
   const supabase = createClient();
   const t = await getTranslations('error');
+
   try {
     const validatedFields = updatePasswordSchema.parse(data);
 
@@ -132,7 +133,7 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/');
+    revalidatePath('/user', 'page');
     return {success: true};
   } catch (error) {
     if (error instanceof z.ZodError) {
