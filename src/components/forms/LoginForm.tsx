@@ -32,7 +32,7 @@ export const LoginForm = () => {
       });
     } else {
       toast({
-        variant: 'default',
+        variant: 'success',
         title: t('loggedIn'),
       });
     }
@@ -75,7 +75,7 @@ export const LoginForm = () => {
         />
 
         <Link
-          href="/user/reset-password"
+          href="/settings/reset-password"
           className="text-green hover:underline text-sm text-center">
           {t('forgotPassword')}
         </Link>

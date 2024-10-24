@@ -32,7 +32,7 @@ export async function login(data: LoginSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/user ', 'page');
+    revalidatePath('/settings ', 'page');
 
     return {success: true};
   } catch (error) {
@@ -68,7 +68,7 @@ export async function signup(data: SignupSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/user', 'page');
+    revalidatePath('/settings', 'page');
 
     return {success: true};
   } catch (error) {
@@ -86,7 +86,7 @@ export async function resetPassword(data: ResetPasswordSchema) {
     const validatedFields = resetPasswordSchema.parse(data);
     // TODO: Fix redirectTo
     const {error} = await supabase.auth.resetPasswordForEmail(validatedFields.email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_URL}/user/update-password`,
+      redirectTo: `${process.env.NEXT_PUBLIC_URL}/settings/update-password`,
     });
 
     if (error) {
@@ -133,7 +133,7 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/user', 'page');
+    revalidatePath('/settings', 'page');
     return {success: true};
   } catch (error) {
     if (error instanceof z.ZodError) {

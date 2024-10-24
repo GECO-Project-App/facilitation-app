@@ -18,12 +18,16 @@ const buttonVariants = cva(
         orange: 'bg-orange',
         purple: 'bg-purple',
         white: 'bg-white',
+        noShadow: 'bg-transparent border-2 border-black !shadow-none',
+        outline: 'bg-transparent border-2 border-black ',
         carousel:
           'bg-transparent border-none shadow-none active:translate-x-0 active:translate-y-0',
       },
       size: {
         default: 'px-6 py-4',
-        icon: '',
+        icon: 'h-10 w-10',
+        small: 'px-4 py-2 text-sm font-normal shadow-small',
+        xs: 'px-3 py-1 text-sm font-normal shadow-xs',
       },
     },
     defaultVariants: {

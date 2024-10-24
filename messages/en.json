@@ -224,6 +224,13 @@
     "button": "Send",
     "thankYouText": "Thank you for your feedback!"
   },
+  "team": {
+    "inviteCode": "Invite Code",
+    "inviteTeam": "Invite team members",
+    "copied": "Copied",
+    "copiedDescription": "Invite code copied to clipboard"
+  },
+
   "common": {
     "nextStep": "Next Step",
     "letsStart": "Let's Start",

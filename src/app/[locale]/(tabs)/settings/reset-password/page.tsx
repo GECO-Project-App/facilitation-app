@@ -7,7 +7,7 @@ export default async function ResetPasswordPage() {
   //   e.preventDefault();
   //   setLoading(true);
   //   const locale = currentPath.split('/')[1]; // Extract locale from the current path
-  //   const redirectToPage = `${window.location.origin}/${locale}/user/update-password`;
+  //   const redirectToPage = `${window.location.origin}/${locale}/settings/update-password`;
   //   try {
   //     const supabase = createClient();
   //     const {error} = await supabase.auth.resetPasswordForEmail(userEmail, {
