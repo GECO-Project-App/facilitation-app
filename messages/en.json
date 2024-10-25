@@ -224,6 +224,7 @@
       },
       "inviteTeamMember": "Invite team member",
       "removeTeamMember": "Remove team member",
+      "submit": "Submit",
       "steps": [
         {
           "title": "Strength",

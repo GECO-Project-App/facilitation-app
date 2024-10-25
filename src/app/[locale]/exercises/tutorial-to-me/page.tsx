@@ -1,9 +1,10 @@
 'use client';
 import {Header, PageLayout} from '@/components';
 import {CarouselPagination} from '@/components/CarouselPagination';
+import Review from '@/components/tutorial-to-me/review/Review';
+import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
-import {Textarea} from '@/components/ui/textarea/textarea';
 import {Step} from '@/lib/types';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
@@ -72,11 +73,11 @@ const TutorialToMePage = () => {
       footer={
         currentStep === steps.length - 1 ? (
           <Button variant="blue" className="mx-auto" onClick={handleComplete}>
-            Complete
+            {t('submit')}
           </Button>
         ) : (
           <Button variant="blue" onClick={nextStep}>
-            Next <ArrowRight />
+            {t('submit')} <ArrowRight />
           </Button>
         )
       }>
@@ -85,38 +86,17 @@ const TutorialToMePage = () => {
           {steps.map((step, index) => (
             <CarouselItem
               key={index}
-              className="space-y-6 h-[68vh] overflow-y-auto overflow-x-hidden">
-              <h1 className="text-xl font-bold">{step.description}</h1>
-              <div className="grid w-full gap-1 text-center justify-center">
-                <label htmlFor={`${step.title} 1`} className="font-bold">
-                  {step.title} 1
-                </label>
-                <Textarea
-                  id={`${step.title} 1`}
-                  rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
-                />
-              </div>
-              <div className="grid w-full gap-1 text-center justify-center">
-                <label htmlFor={`${step.title} 2`} className="font-bold">
-                  {step.title} 2
-                </label>
-                <Textarea
-                  id={`${step.title} 2`}
-                  rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
-                />
-              </div>
-              <div className="grid w-full gap-1 pb-10  text-center justify-center">
-                <label htmlFor={`${step.title} 3`} className="font-bold">
-                  {step.title} 3
-                </label>
-                <Textarea
-                  id={`${step.title} 3`}
-                  rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
-                />
-              </div>
+              className="space-y-6 h-[70vh] overflow-y-auto overflow-x-hidden">
+              {currentStep <= 2 ? (
+                <>
+                  <h1 className="text-xl font-bold">{step.description}</h1>
+                  <TextAreaForTutorial title={`${step.title} 1`} borderColor={colorClass} />
+                  <TextAreaForTutorial title={`${step.title} 2`} borderColor={colorClass} />
+                  <TextAreaForTutorial title={`${step.title} 3`} borderColor={colorClass} />
+                </>
+              ) : (
+                <Review message={step.description} />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
