@@ -45,7 +45,17 @@ const TutorialToMePage = () => {
 
   return (
     <PageLayout
-      backgroundColor="bg-red"
+      backgroundColor={
+        currentStep === 0
+          ? 'bg-yellow'
+          : currentStep === 1
+            ? 'bg-pink'
+            : currentStep === 2
+              ? 'bg-orange'
+              : currentStep === 3
+                ? 'bg-purple'
+                : undefined
+      }
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
@@ -69,28 +79,64 @@ const TutorialToMePage = () => {
               key={index}
               className="space-y-6 h-[68vh] overflow-y-auto overflow-x-hidden">
               <h1 className="text-xl font-bold">{step.description}</h1>
-              <div className="grid w-full gap-1.5 text-center justify-center">
-                <label htmlFor={`${step.title} 1`}>Your {step.title} 1</label>
+              <div className="grid w-full gap-1 text-center justify-center">
+                <label htmlFor={`${step.title} 1`} className="font-bold">
+                  {step.title} 1
+                </label>
                 <Textarea
                   id={`${step.title} 1`}
                   rows={7}
-                  className="w-[88vw] rounded-xl border-2 border-black shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none ${
+                    currentStep === 0
+                      ? 'border-yellow'
+                      : currentStep === 1
+                        ? 'border-pink'
+                        : currentStep === 2
+                          ? 'border-orange'
+                          : currentStep === 3
+                            ? 'border-purple'
+                            : ''
+                  }`}
                 />
               </div>
-              <div className="grid w-full gap-1.5 text-center justify-center">
-                <label htmlFor={`${step.title} 2`}>Your {step.title} 2</label>
+              <div className="grid w-full gap-1 text-center justify-center">
+                <label htmlFor={`${step.title} 2`} className="font-bold">
+                  {step.title} 2
+                </label>
                 <Textarea
                   id={`${step.title} 2`}
                   rows={7}
-                  className="w-[88vw] rounded-xl border-2 border-black shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none ${
+                    currentStep === 0
+                      ? 'border-yellow'
+                      : currentStep === 1
+                        ? 'border-pink'
+                        : currentStep === 2
+                          ? 'border-orange'
+                          : currentStep === 3
+                            ? 'border-purple'
+                            : ''
+                  }`}
                 />
               </div>
-              <div className="grid w-full gap-1.5 pb-10  text-center justify-center">
-                <label htmlFor={`${step.title} 3`}>Your {step.title} 3</label>
+              <div className="grid w-full gap-1 pb-10  text-center justify-center">
+                <label htmlFor={`${step.title} 3`} className="font-bold">
+                  {step.title} 3
+                </label>
                 <Textarea
                   id={`${step.title} 3`}
                   rows={7}
-                  className="w-[88vw] rounded-xl border-2 border-black shadow-[0px_6px_0px_rgb(0,0,0)] focus:outline-none"
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none  ${
+                    currentStep === 0
+                      ? 'border-yellow'
+                      : currentStep === 1
+                        ? 'border-pink'
+                        : currentStep === 2
+                          ? 'border-orange'
+                          : currentStep === 3
+                            ? 'border-purple'
+                            : ''
+                  }`}
                 />
               </div>
             </CarouselItem>
