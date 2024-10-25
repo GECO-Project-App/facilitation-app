@@ -8,7 +8,7 @@ import {FC, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
-import InvOrDelMember from './tutorial-to-me/InvOrDelMember';
+import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
 import {Button} from './ui';
 export const About: FC<{
   slug: string;
@@ -73,7 +73,7 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && <InvOrDelMember />}
+          {slug === 'tutorial-to-me' && <InvOrDelMembers />}
         </div>
       </div>
     </PageLayout>

@@ -1,3 +1,4 @@
+'use client';
 import {Button} from '@/components/ui/button/button';
 import {UserRoundMinus, UserRoundPlus} from 'lucide-react';
 import {useTranslations} from 'next-intl';
