@@ -8,7 +8,7 @@ const UninviteMembers: FC = () => {
       <img src="/assets/svg/invite_member.svg" alt="Invite Member" />
       <Button variant="white" className="w-full h-12">
         <div className="flex items-center justify-center text-md">
-          Uninvite Members
+          Remove Members
           <UserRoundPlus size={24} className="ml-2" />
         </div>
       </Button>
