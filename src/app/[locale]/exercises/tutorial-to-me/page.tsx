@@ -15,6 +15,22 @@ const TutorialToMePage = () => {
   const t = useTranslations('exercises.tutorialToMe');
 
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
+
+  const getColorClass = (step: number) => {
+    switch (step) {
+      case 0:
+        return 'yellow';
+      case 1:
+        return 'pink';
+      case 2:
+        return 'orange';
+      case 3:
+        return 'purple';
+      default:
+        return '';
+    }
+  };
+
   useEffect(() => {
     if (!api) {
       return;
@@ -43,19 +59,11 @@ const TutorialToMePage = () => {
     console.log('complete');
   };
 
+  const colorClass = getColorClass(currentStep);
+
   return (
     <PageLayout
-      backgroundColor={
-        currentStep === 0
-          ? 'bg-yellow'
-          : currentStep === 1
-            ? 'bg-pink'
-            : currentStep === 2
-              ? 'bg-orange'
-              : currentStep === 3
-                ? 'bg-purple'
-                : undefined
-      }
+      backgroundColor={`bg-${colorClass}`}
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
@@ -86,17 +94,7 @@ const TutorialToMePage = () => {
                 <Textarea
                   id={`${step.title} 1`}
                   rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none ${
-                    currentStep === 0
-                      ? 'border-yellow'
-                      : currentStep === 1
-                        ? 'border-pink'
-                        : currentStep === 2
-                          ? 'border-orange'
-                          : currentStep === 3
-                            ? 'border-purple'
-                            : ''
-                  }`}
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
                 />
               </div>
               <div className="grid w-full gap-1 text-center justify-center">
@@ -106,17 +104,7 @@ const TutorialToMePage = () => {
                 <Textarea
                   id={`${step.title} 2`}
                   rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none ${
-                    currentStep === 0
-                      ? 'border-yellow'
-                      : currentStep === 1
-                        ? 'border-pink'
-                        : currentStep === 2
-                          ? 'border-orange'
-                          : currentStep === 3
-                            ? 'border-purple'
-                            : ''
-                  }`}
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
                 />
               </div>
               <div className="grid w-full gap-1 pb-10  text-center justify-center">
@@ -126,17 +114,7 @@ const TutorialToMePage = () => {
                 <Textarea
                   id={`${step.title} 3`}
                   rows={7}
-                  className={`w-[82vw] rounded-xl border-2 focus:outline-none  ${
-                    currentStep === 0
-                      ? 'border-yellow'
-                      : currentStep === 1
-                        ? 'border-pink'
-                        : currentStep === 2
-                          ? 'border-orange'
-                          : currentStep === 3
-                            ? 'border-purple'
-                            : ''
-                  }`}
+                  className={`w-[82vw] rounded-xl border-2 focus:outline-none border-${colorClass}`}
                 />
               </div>
             </CarouselItem>
