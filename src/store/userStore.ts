@@ -1,5 +1,5 @@
 import {ShapeColors} from '@/lib/constants';
-import {supabase} from '@/lib/supabase/supabaseClient';
+import {createClient} from '@/lib/supabase/client';
 import {User} from '@supabase/supabase-js';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
@@ -24,9 +24,14 @@ export const useUserStore = create<UserState>()(
         shape: 0,
       },
       setAvatar: (avatar) => set({avatar}),
-      setUser: (user) => set({user}),
+      setUser: () =>
+        createClient().auth.onAuthStateChange((_event, session) => {
+          console.log('session', session);
+          set({user: session?.user ?? null});
+        }),
 
       signOut: async () => {
+        const supabase = createClient();
         await supabase.auth.signOut();
         set({user: null});
       },
@@ -34,7 +39,3 @@ export const useUserStore = create<UserState>()(
     {name: 'UserStore'},
   ),
 );
-
-supabase.auth.onAuthStateChange((_event, session) => {
-  useUserStore.getState().setUser(session?.user ?? null);
-});
