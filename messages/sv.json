@@ -11,6 +11,11 @@
       "invite": "Bjud in medlemmar",
       "button": "Gå vidare",
       "code": "Teamkod"
+    },
+    "toast": {
+      "created": "Du har skapat ett team!",
+      "joined": "Du har gått med i ett team!",
+      "inviteSent": "Du har skickat en ibjudan till ett teammedlem!"
     }
   },
 

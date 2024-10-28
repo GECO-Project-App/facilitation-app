@@ -1,5 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {createTeam} from '@/lib/actions/teamActions';
 import {createTeamSchema, CreateTeamSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
@@ -18,7 +19,20 @@ export const CreateTeamForm = () => {
   });
 
   const onSubmit = async (data: CreateTeamSchema) => {
-    console.log(data);
+    const result = await createTeam(data);
+
+    if (result?.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: result.error,
+      });
+    } else {
+      toast({
+        variant: 'default',
+        title: t('toast.created'),
+      });
+    }
   };
 
   return (

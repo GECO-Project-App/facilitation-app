@@ -66,7 +66,7 @@ export const createTeamSchema = z.object({
 });
 
 export const joinTeamSchema = z.object({
-  code: z.string().regex(/^geco-[a-zA-Z0-9]{5}$/, {
-    message: 'Code must start with "geco-" followed by 8 alphanumeric characters',
+  code: z.string().regex(/^[0-9A-F]{6}$/, {
+    message: 'Code must be 6 alphanumeric characters',
   }),
 });

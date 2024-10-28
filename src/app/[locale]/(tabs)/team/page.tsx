@@ -1,9 +1,22 @@
 import {PageLayout, TeamTabs} from '@/components';
+import {getUserTeams} from '@/lib/actions/teamActions';
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const {teams} = await getUserTeams();
+
   return (
     <PageLayout>
-      <TeamTabs />
+      {teams && teams.length > 0 ? (
+        <>
+          <ul>
+            {teams.map((team) => (
+              <li key={team.id}>{team.name}</li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <TeamTabs />
+      )}
     </PageLayout>
   );
 }

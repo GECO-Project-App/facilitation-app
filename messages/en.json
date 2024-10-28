@@ -12,7 +12,13 @@
       "invite": "Invite Members",
       "button": "Let's Go!",
       "code": "Team Code"
+    },
+    "toast": {
+      "created": "You have created a team!",
+      "joined": "You have joined a team!",
+      "inviteSent": "You have sent an invite to a team member!"
     }
+
   },
 
   "profile": {

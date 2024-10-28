@@ -1,5 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {joinTeamByCode} from '@/lib/actions/teamActions';
 import {joinTeamSchema, JoinTeamSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
@@ -18,7 +19,20 @@ export const JoinTeamForm = () => {
   });
 
   const onSubmit = async (data: JoinTeamSchema) => {
-    console.log(data);
+    const result = await joinTeamByCode(data.code);
+
+    if (result?.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: result.error,
+      });
+    } else {
+      toast({
+        variant: 'default',
+        title: t('toast.joined'),
+      });
+    }
   };
 
   return (
