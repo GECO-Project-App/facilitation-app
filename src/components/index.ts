@@ -1,5 +1,6 @@
 export * from './About';
 export * from './AuthTabs';
+export * from './AvatarBuilder';
 export * from './BaseballCard';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
@@ -13,5 +14,6 @@ export * from './RandomQuestion';
 export * from './RiveAnimation';
 export * from './TabBar';
 export * from './TeamGrid';
+export * from './TeamTabs';
 export * from './Timer';
 export * from './ui';

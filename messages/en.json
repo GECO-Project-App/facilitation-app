@@ -3,6 +3,24 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
+
+  "team": {
+    "tabs": {
+      "create": "Create Team",
+      "join": "Join Team",
+      "name": "Team Name",
+      "invite": "Invite Members",
+      "button": "Let's Go!",
+      "code": "Team Code"
+    },
+    "toast": {
+      "created": "You have created a team!",
+      "joined": "You have joined a team!",
+      "inviteSent": "You have sent an invite to a team member!"
+    }
+
+  },
+
   "profile": {
     "title": "Profile",
     "welcome": "Welcome, {name}!",
@@ -295,5 +313,14 @@
     "updatePasswordDescription": "Please enter your new password below.",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordUpdated": "Password updated"
+  },
+  "team": {
+    "edit": {
+      "avatar": {
+        "title": "Choose your avatar",
+        "subtitle": "Skin Tone",
+        "button": "Save Changes"
+      }
+    }
   }
 }

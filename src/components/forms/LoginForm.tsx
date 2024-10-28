@@ -1,7 +1,7 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {Link, useRouter} from '@/i18n/routing';
-import {login} from '@/lib/actions';
+import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';

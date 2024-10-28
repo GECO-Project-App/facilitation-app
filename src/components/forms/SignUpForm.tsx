@@ -2,7 +2,7 @@
 
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
-import {signup} from '@/lib/actions';
+import {signup} from '@/lib/actions/authActions';
 import {SignupSchema, signupSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
