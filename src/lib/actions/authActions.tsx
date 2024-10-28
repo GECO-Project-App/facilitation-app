@@ -14,7 +14,7 @@ import {
   SignupSchema,
   updatePasswordSchema,
   UpdatePasswordSchema,
-} from './zodSchemas';
+} from '../zodSchemas';
 
 export async function login(data: LoginSchema) {
   const supabase = createClient();

@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {logOut} from '@/lib/actions';
+import {logOut} from '@/lib/actions/authActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {User} from '@supabase/supabase-js';

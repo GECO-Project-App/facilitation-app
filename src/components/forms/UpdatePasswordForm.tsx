@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {resetPasswordForEmail} from '@/lib/actions';
+import {resetPasswordForEmail} from '@/lib/actions/authActions';
 import {updatePasswordSchema, UpdatePasswordSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
