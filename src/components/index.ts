@@ -1,5 +1,6 @@
 export * from './About';
 export * from './AuthTabs';
+export * from './AvatarBuilder';
 export * from './CarouselPagination';
 export * from './ExerciseCard';
 export * from './forms';

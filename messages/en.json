@@ -288,5 +288,14 @@
     "updatePasswordDescription": "Please enter your new password below.",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordUpdated": "Password updated"
+  },
+  "team": {
+    "edit": {
+      "avatar": {
+        "title": "Choose your avatar",
+        "subtitle": "Skin Tone",
+        "button": "Save Changes"
+      }
+    }
   }
 }

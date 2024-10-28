@@ -288,5 +288,14 @@
     "updatePasswordDescription": "Ange ditt nya lösenord nedan.",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
     "passwordUpdated": "Lösenord uppdaterat"
+  },
+    "team": {
+    "edit": {
+      "avatar": {
+        "title": "Välj din avatar",
+        "subtitle": "Hudton",
+        "button": "Spara ändringar"
+      }
+    }
   }
 }
