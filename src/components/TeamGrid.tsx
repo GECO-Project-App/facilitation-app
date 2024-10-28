@@ -1,4 +1,6 @@
 'use client';
+import {useToast} from '@/hooks/useToast';
+import {removeTeamMember} from '@/lib/actions/teamActions';
 import {useTeamStore} from '@/store/teamStore';
 import {FC, useCallback, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
@@ -7,7 +9,8 @@ import {Button} from './ui';
 
 export const TeamGrid: FC = () => {
   const [openCards, setOpenCards] = useState([0]);
-  const {currentTeam} = useTeamStore();
+  const {currentTeam, isFacilitator} = useTeamStore();
+  const {toast} = useToast();
 
   const toggleCard = useCallback((index: number) => {
     setOpenCards((prev) =>
@@ -15,7 +18,22 @@ export const TeamGrid: FC = () => {
     );
   }, []);
 
-  console.log(currentTeam);
+  const handleRemoveMember = async (userId: string) => {
+    if (!currentTeam) return;
+    const result = await removeTeamMember(currentTeam.id, userId);
+
+    if (result?.error) {
+      toast({
+        title: 'Error',
+        description: result.error,
+      });
+    } else {
+      toast({
+        title: 'Success',
+        description: 'Team member removed successfully',
+      });
+    }
+  };
 
   return (
     <section className="space-y-4 ">
@@ -29,13 +47,22 @@ export const TeamGrid: FC = () => {
             onOpenChange={() => toggleCard(index)}
             open={openCards.includes(index)}
             onClick={() => toggleCard(index)}>
-            <Button variant="white" size="xs" className=" justify-between w-full ">
-              Remove
-              <RemoveMember />
-            </Button>
-            <Button variant="white" size="xs" className=" justify-between w-full">
-              Change role <ChangeRole />
-            </Button>
+            {isFacilitator && (
+              <>
+                <Button
+                  variant="white"
+                  size="xs"
+                  className=" justify-between w-full "
+                  onClick={() => handleRemoveMember(member.user_id)}>
+                  Remove
+                  <RemoveMember />
+                </Button>
+                <Button variant="white" size="xs" className=" justify-between w-full">
+                  Change role <ChangeRole />
+                </Button>
+              </>
+            )}
+
             <Button variant="white" size="xs" className=" justify-between w-full">
               See profile <ChangeRole />
             </Button>
