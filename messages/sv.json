@@ -3,19 +3,32 @@
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer"
   },
-    "team": {
+  "team": {
     "tabs": {
-      "create": "Skapa Team",
+      "create": "Skapa Team", 
       "join": "Gå med i Team",
       "name": "Teamnamn",
       "invite": "Bjud in medlemmar",
       "button": "Gå vidare",
       "code": "Teamkod"
     },
+    "page": {
+       "inviteCode": "Inbjudningskod",
+    "inviteTeam": "Bjud in teammedlemmar",
+    "copied": "Kopierat",
+    "copiedDescription": "Inbjudningskoden har kopierats"
+    },
     "toast": {
       "created": "Du har skapat ett team!",
       "joined": "Du har gått med i ett team!",
-      "inviteSent": "Du har skickat en ibjudan till ett teammedlem!"
+      "inviteSent": "Du har skickat en inbjudan till ett teammedlem!"
+    },
+      "edit": {
+      "avatar": {
+        "title": "Välj din avatar",
+        "subtitle": "Hudton",
+        "button": "Spara ändringar"
+      }
     }
   },
 
@@ -241,12 +254,7 @@
     "button": "Skicka",
     "thankYouText": "Tack för din feedback!"
   },
-  "team": {
-    "inviteCode": "Inbjudningskod",
-    "inviteTeam": "Inbjud in medlemmar",
-    "copied": "Kopierat",
-    "copiedDescription": "Inbjudningskod kopierad till urklipp"
-  },
+
   "common": {
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
@@ -310,14 +318,5 @@
     "updatePasswordDescription": "Ange ditt nya lösenord nedan.",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
     "passwordUpdated": "Lösenord uppdaterat"
-  },
-    "team": {
-    "edit": {
-      "avatar": {
-        "title": "Välj din avatar",
-        "subtitle": "Hudton",
-        "button": "Spara ändringar"
-      }
-    }
   }
 }

@@ -14,6 +14,7 @@ export * from './RandomQuestion';
 export * from './RiveAnimation';
 export * from './TabBar';
 export * from './TeamGrid';
+export * from './TeamSelect';
 export * from './TeamTabs';
 export * from './Timer';
 export * from './ui';

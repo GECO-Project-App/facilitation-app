@@ -1,14 +1,16 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {useRef} from 'react';
 import {InviteTeam} from './icons';
 import {Button} from './ui/button';
 
 export const InviteCodeCard = () => {
-  const t = useTranslations('team');
+  const t = useTranslations('team.page');
   const btnRef = useRef<HTMLButtonElement>(null);
   const {toast} = useToast();
+  const {currentTeam} = useTeamStore();
 
   const copyCode = () => {
     navigator.clipboard
@@ -34,7 +36,7 @@ export const InviteCodeCard = () => {
         className=" text-center w-full bg-white"
         ref={btnRef}
         onClick={copyCode}>
-        ABC123*
+        {currentTeam?.team_code}
       </Button>
 
       <Button variant="white" size="xs" className=" justify-between w-full ">

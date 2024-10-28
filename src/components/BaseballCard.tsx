@@ -6,18 +6,11 @@ import {AvatarCharacter} from './icons/avatar-character';
 import {Avatar, AvatarFallback} from './ui/avatar';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from './ui/collapsible';
 
-export const BaseballCard: FC<BaseballCardType> = ({
-  name,
-  bgColor = 'bg-pink',
-  role = [],
-  onOpenChange,
-  children,
-  open,
-}) => {
+export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, children, open}) => {
   return (
     <Collapsible
       className={cn(
-        bgColor,
+        member.role.includes('facilitator') ? 'bg-pink' : 'bg-yellow',
         ' py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
       )}
       open={open}
@@ -30,8 +23,8 @@ export const BaseballCard: FC<BaseballCardType> = ({
             </AvatarFallback>
           </Avatar>
           <div className="text-center">
-            <p className="font-bold">{name}</p>
-            <p>{role.join('/')}</p>
+            <p className="font-bold">{`${member.first_name} ${member.last_name}`}</p>
+            <p>{member.role}</p>
           </div>
         </div>
       </CollapsibleTrigger>

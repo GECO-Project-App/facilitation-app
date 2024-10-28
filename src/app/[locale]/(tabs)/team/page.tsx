@@ -1,11 +1,10 @@
 import {
   AuthTabs,
+  Header,
+  InviteCodeCard,
   PageLayout,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  TeamGrid,
+  TeamSelect,
   TeamTabs,
 } from '@/components';
 import {getUserTeams} from '@/lib/actions/teamActions';
@@ -20,20 +19,23 @@ export default async function TeamPage() {
   } = await supabase.auth.getUser();
 
   return (
-    <PageLayout>
+    <PageLayout
+      header={
+        teams &&
+        teams.length > 0 && (
+          <Header showBackButton={false}>
+            <TeamSelect teams={teams} />
+          </Header>
+        )
+      }>
       {teams && teams.length > 0 ? (
-        <Select defaultValue={teams[0].name}>
-          <SelectTrigger className="">
-            <SelectValue placeholder="Select a team" />
-          </SelectTrigger>
-          <SelectContent>
-            {teams.map((team) => (
-              <SelectItem key={team.id} value={team.name}>
-                {team.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
+            <InviteCodeCard />
+            {/* <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" /> */}
+          </div>
+          <TeamGrid />
+        </section>
       ) : (
         <>{user ? <TeamTabs /> : <AuthTabs />}</>
       )}

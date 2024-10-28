@@ -119,6 +119,16 @@ export async function getUserTeams() {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
+    // First get the user's team IDs
+    const {data: userTeams, error: userTeamsError} = await supabase
+      .from('team_members')
+      .select('team_id')
+      .eq('user_id', user.user.id);
+
+    if (userTeamsError) throw userTeamsError;
+
+    // Then get the full team details
+    const teamIds = userTeams.map((t) => t.team_id);
     const {data: teams, error: teamsError} = await supabase
       .from('teams')
       .select(
@@ -128,13 +138,16 @@ export async function getUserTeams() {
         team_code,
         created_at,
         created_by,
-        team_members!inner (
+        team_members (
           role,
-          user_id
+          user_id,
+          avatar_url,
+          first_name,
+          last_name
         )
       `,
       )
-      .eq('team_members.user_id', user.user.id);
+      .in('id', teamIds);
 
     if (teamsError) {
       console.log('Error fetching teams:', teamsError);
