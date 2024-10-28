@@ -1,21 +1,41 @@
-import {PageLayout, TeamTabs} from '@/components';
+import {
+  AuthTabs,
+  PageLayout,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  TeamTabs,
+} from '@/components';
 import {getUserTeams} from '@/lib/actions/teamActions';
+import {createClient} from '@/lib/supabase/server';
 
 export default async function TeamPage() {
+  const supabase = createClient();
   const {teams} = await getUserTeams();
+  const {
+    data: {user},
+    error: AuthError,
+  } = await supabase.auth.getUser();
 
   return (
     <PageLayout>
       {teams && teams.length > 0 ? (
-        <>
-          <ul>
+        <Select defaultValue={teams[0].name}>
+          <SelectTrigger className="">
+            <SelectValue placeholder="Select a team" />
+          </SelectTrigger>
+          <SelectContent>
             {teams.map((team) => (
-              <li key={team.id}>{team.name}</li>
+              <SelectItem key={team.id} value={team.name}>
+                {team.name}
+              </SelectItem>
             ))}
-          </ul>
-        </>
+          </SelectContent>
+        </Select>
       ) : (
-        <TeamTabs />
+        <>{user ? <TeamTabs /> : <AuthTabs />}</>
       )}
     </PageLayout>
   );
