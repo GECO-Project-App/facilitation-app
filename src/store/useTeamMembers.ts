@@ -10,6 +10,7 @@ interface MemberType {
 interface TeamMembersstate {
   members: MemberType[];
   addMember: (member: MemberType) => void;
+  removeMember: (id: string) => void;
 }
 
 export const useTeamMembers = create<TeamMembersstate>()(
@@ -17,6 +18,8 @@ export const useTeamMembers = create<TeamMembersstate>()(
     (set) => ({
       members: [],
       addMember: (member) => set((state) => ({members: [...state.members, member]})),
+      removeMember: (id) =>
+        set((state) => ({members: state.members.filter((member) => member.id !== id)})),
     }),
     {name: 'TeamMembersStore'},
   ),
