@@ -9,7 +9,7 @@ import {Button} from './ui';
 
 export const TeamGrid: FC = () => {
   const [openCards, setOpenCards] = useState([0]);
-  const {currentTeam, isFacilitator} = useTeamStore();
+  const {currentTeam, isFacilitator, userProfile} = useTeamStore();
   const {toast} = useToast();
 
   const toggleCard = useCallback((index: number) => {
@@ -37,6 +37,14 @@ export const TeamGrid: FC = () => {
 
   return (
     <section className="space-y-4 ">
+      <div className=" max-w-xs mx-auto">
+        <BaseballCard member={userProfile} open>
+          <Button variant="white" size="xs" className=" justify-between w-full">
+            Edit Your Profile <ChangeRole />
+          </Button>
+        </BaseballCard>
+      </div>
+
       <h3 className="font-bold text-xl text-center">{currentTeam?.name}</h3>
 
       <div className="grid gap-2 lg:gap-4 grid-cols-2">

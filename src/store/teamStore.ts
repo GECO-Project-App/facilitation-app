@@ -1,6 +1,6 @@
 import {getUserTeams} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/client';
-import {Team} from '@/lib/types';
+import {Team, TeamMember} from '@/lib/types';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 
@@ -11,6 +11,7 @@ interface TeamState {
   init: () => Promise<void>;
   setCurrentTeamId: (teamId: string | null) => Promise<void>;
   isFacilitator: boolean;
+  userProfile: TeamMember | null;
 }
 
 export const useTeamStore = create<TeamState>()(
@@ -20,6 +21,7 @@ export const useTeamStore = create<TeamState>()(
       currentTeamId: null,
       currentTeam: null, // Initialize as null
       isLoading: true, // Start with loading true
+      userProfile: null,
       init: async () => {
         try {
           const supabase = createClient();
@@ -30,6 +32,20 @@ export const useTeamStore = create<TeamState>()(
           const {
             data: {user},
           } = await supabase.auth.getUser();
+
+          if (user && teams?.[0]) {
+            const userProfile = teams[0].team_members?.find((member) => member.user_id === user.id);
+            const filteredTeamMembers = teams[0].team_members?.filter(
+              (member) => member.user_id !== user.id,
+            );
+            set({
+              userProfile,
+              currentTeam: {
+                ...teams[0],
+                team_members: filteredTeamMembers,
+              },
+            });
+          }
 
           set({isFacilitator: teams?.[0]?.created_by === user?.id});
         } catch (error) {
@@ -69,12 +85,24 @@ export const useTeamStore = create<TeamState>()(
             )
             .eq('id', teamId)
             .single();
+
           if (error) throw error;
           const {
             data: {user},
           } = await supabase.auth.getUser();
-
-          set({currentTeam: team, isLoading: false});
+          if (user && team) {
+            const userProfile = team.team_members?.find((member) => member.user_id === user.id);
+            const filteredTeamMembers = team.team_members?.filter(
+              (member) => member.user_id !== user.id,
+            );
+            set({
+              userProfile,
+              currentTeam: {
+                ...team,
+                team_members: filteredTeamMembers,
+              },
+            });
+          }
 
           set({isFacilitator: team?.created_by === user?.id});
         } catch (error) {

@@ -20,6 +20,7 @@ export const TeamSelect = ({
   return (
     <Select
       defaultValue={currentTeam?.name ?? teams[0].name}
+      value={currentTeam?.id}
       onValueChange={(value) => setCurrentTeamId(value)}>
       <SelectTrigger className="">
         <SelectValue placeholder={currentTeam?.name ?? teams[0].name ?? 'Select a team'} />
