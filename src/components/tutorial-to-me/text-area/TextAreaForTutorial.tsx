@@ -2,7 +2,6 @@
 import {Textarea} from '@/components/ui/textarea/textarea';
 
 const TextAreaForTutorial = ({title, borderColor}: {title: string; borderColor: string}) => {
-  console.log(borderColor);
   return (
     <aside>
       <div className="grid w-full gap-1 text-center justify-center">

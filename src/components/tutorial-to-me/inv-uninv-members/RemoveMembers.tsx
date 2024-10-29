@@ -1,17 +1,19 @@
-import {Button} from '@/components/ui/button/button';
-import {UserRoundPlus} from 'lucide-react';
+'use client';
+import {useTeamMembers} from '@/store/useTeamMembers';
 import {FC} from 'react';
 
 const UninviteMembers: FC = () => {
+  const {members} = useTeamMembers();
+  console.log(members);
   return (
-    <div className="bg-green w-[80%] h-24 rounded-3xl border-2 border-black p-4 mx-auto flex flex-col gap-4 h-full">
-      <img src="/assets/svg/invite_member.svg" alt="Invite Member" />
-      <Button variant="white" className="w-full h-12">
-        <div className="flex items-center justify-center text-md">
-          Remove Members
-          <UserRoundPlus size={24} className="ml-2" />
+    <div className="flex flex-col gap-4 p-4">
+      {members.map((member) => (
+        <div
+          key={member.id}
+          className="bg-green w-[80%] h-24 rounded-3xl border-2 border-black p-4 mx-auto flex flex-col gap-4 h-full text-white">
+          {member.nickname}
         </div>
-      </Button>
+      ))}
     </div>
   );
 };
