@@ -1,6 +1,6 @@
+import {Link} from '@/i18n/routing';
 import {ExerciseCardType} from '@/lib/types';
 import {cn} from '@/lib/utils';
-import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import {FC, useMemo} from 'react';
 import {Button} from './ui';

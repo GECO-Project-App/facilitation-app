@@ -1,7 +1,9 @@
 // app/PostHogPageView.tsx
 'use client';
 
-import {usePathname, useSearchParams} from 'next/navigation';
+import {usePathname} from '@/i18n/routing';
+import {useSearchParams} from 'next/navigation';
+
 import {usePostHog} from 'posthog-js/react';
 import {useEffect} from 'react';
 

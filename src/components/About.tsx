@@ -1,6 +1,6 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
-import {Link} from '@/navigation';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';

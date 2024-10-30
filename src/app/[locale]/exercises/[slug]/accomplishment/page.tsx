@@ -1,6 +1,6 @@
 'use client';
 import {Button, PageLayout, RiveAnimation} from '@/components';
-import {Link} from '@/navigation';
+import {Link} from '@/i18n/routing';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';

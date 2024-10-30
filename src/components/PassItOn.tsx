@@ -1,6 +1,6 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {mockPassItOn} from '@/lib/mock';
-import {Link} from '@/navigation';
 import {useTranslations} from 'next-intl';
 import {FC, useEffect, useState} from 'react';
 import {CarouselPagination} from './CarouselPagination';
