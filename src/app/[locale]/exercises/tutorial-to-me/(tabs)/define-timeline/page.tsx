@@ -1,7 +1,7 @@
 import {Header, PageLayout} from '@/components';
 import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
 import {Button} from '@/components/ui/button/button';
-import {Link} from '@/navigation';
+import {Link} from '@/i18n/routing';
 import {ArrowRight} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 export default async function TutorialToMePage() {
