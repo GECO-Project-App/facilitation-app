@@ -148,19 +148,19 @@ export async function getUserTeams() {
       .from('teams')
       .select(
         `
-        id,
-        name,
-        team_code,
-        created_at,
-        created_by,
-        team_members (
-          role,
-          user_id,
-          avatar_url,
-          first_name,
-          last_name
-        )
-      `,
+    id,
+    name,
+    team_code,
+    created_at,
+    created_by,
+    team_members!inner(
+      role,
+      user_id,
+      avatar_url,
+      first_name,
+      last_name
+    )
+  `,
       )
       .in('id', teamIds);
 

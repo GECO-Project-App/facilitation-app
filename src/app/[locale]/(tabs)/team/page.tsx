@@ -32,7 +32,6 @@ export default async function TeamPage() {
         <section className="flex flex-col gap-6">
           <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
             <InviteCodeCard />
-            {/* <BaseballCard {...mockTeamMembers[0]} bgColor="bg-yellow" /> */}
           </div>
           <TeamGrid />
         </section>
