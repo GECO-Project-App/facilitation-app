@@ -11,7 +11,10 @@ const TextAreaForTutorial = ({title, borderColor}: {title: string; borderColor: 
         <Textarea
           id={title}
           rows={7}
-          className={`w-[80vw] rounded-2xl border-2 focus:outline-none border-${borderColor}`}
+          className={`w-[80vw] rounded-2xl border-2 focus:outline-none max-w-md`}
+          style={{
+            borderColor: borderColor,
+          }}
         />
       </div>
     </aside>
