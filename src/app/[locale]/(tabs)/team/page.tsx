@@ -1,5 +1,6 @@
 import {
   AuthTabs,
+  Button,
   Header,
   InviteCodeCard,
   PageLayout,
@@ -7,6 +8,7 @@ import {
   TeamSelect,
   TeamTabs,
 } from '@/components';
+import {EditTeam} from '@/components/icons';
 import {getUserTeams} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/server';
 
@@ -23,7 +25,13 @@ export default async function TeamPage() {
       header={
         teams &&
         teams.length > 0 && (
-          <Header showBackButton={false}>
+          <Header
+            showBackButton={false}
+            rightContent={
+              <Button variant="noShadow" size="xs" className="aspect-square">
+                <EditTeam />
+              </Button>
+            }>
             <TeamSelect teams={teams} />
           </Header>
         )

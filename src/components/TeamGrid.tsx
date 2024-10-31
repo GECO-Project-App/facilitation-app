@@ -41,7 +41,8 @@ export const TeamGrid: FC = () => {
         <div className=" max-w-xs mx-auto">
           <BaseballCard member={facilitator} open>
             <Button variant="white" size="xs" className=" justify-between w-full">
-              Edit Your Profile <ChangeRole />
+              {facilitator.user_id !== userProfile?.user_id ? <>Edit your</> : <>Show</>} profile{' '}
+              <ChangeRole />
             </Button>
           </BaseballCard>
         </div>
@@ -77,7 +78,8 @@ export const TeamGrid: FC = () => {
               )}
 
               <Button variant="white" size="xs" className=" justify-between w-full">
-                See profile <ChangeRole />
+                {member.user_id !== userProfile?.user_id ? <>Edit your</> : <>Show</>} profile{' '}
+                <ChangeRole />
               </Button>
             </BaseballCard>
           ))}

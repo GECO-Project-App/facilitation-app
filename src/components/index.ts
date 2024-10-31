@@ -3,6 +3,7 @@ export * from './AuthTabs';
 export * from './AvatarBuilder';
 export * from './BaseballCard';
 export * from './CarouselPagination';
+export * from './EditTeamDialog';
 export * from './ExerciseCard';
 export * from './forms';
 export * from './Header';
