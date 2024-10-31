@@ -2,6 +2,7 @@
 import {useToast} from '@/hooks/useToast';
 import {removeTeamMember} from '@/lib/actions/teamActions';
 import {useTeamStore} from '@/store/teamStore';
+import {useTranslations} from 'next-intl';
 import {FC, useCallback, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
 import {ChangeRole, RemoveMember} from './icons';
@@ -11,6 +12,7 @@ export const TeamGrid: FC = () => {
   const [openCards, setOpenCards] = useState([0]);
   const {currentTeam, facilitator, isFacilitator, userProfile} = useTeamStore();
   const {toast} = useToast();
+  const t = useTranslations('team.page');
 
   const toggleCard = useCallback((index: number) => {
     setOpenCards((prev) =>
@@ -41,8 +43,13 @@ export const TeamGrid: FC = () => {
         <div className=" max-w-xs mx-auto">
           <BaseballCard member={facilitator} open>
             <Button variant="white" size="xs" className=" justify-between w-full">
-              {facilitator.user_id !== userProfile?.user_id ? <>Edit your</> : <>Show</>} profile{' '}
-              <ChangeRole />
+              {facilitator.user_id === userProfile?.user_id ? (
+                <>
+                  {t('buttons.editProfile')} <ChangeRole />
+                </>
+              ) : (
+                <>{t('buttons.showProfile')}</>
+              )}
             </Button>
           </BaseballCard>
         </div>
@@ -68,18 +75,23 @@ export const TeamGrid: FC = () => {
                     size="xs"
                     className=" justify-between w-full "
                     onClick={() => handleRemoveMember(member.user_id)}>
-                    Remove
+                    {t('buttons.remove')}
                     <RemoveMember />
                   </Button>
                   <Button variant="white" size="xs" className=" justify-between w-full">
-                    Change role <ChangeRole />
+                    {t('buttons.changeRole')} <ChangeRole />
                   </Button>
                 </>
               )}
 
               <Button variant="white" size="xs" className=" justify-between w-full">
-                {member.user_id !== userProfile?.user_id ? <>Edit your</> : <>Show</>} profile{' '}
-                <ChangeRole />
+                {member.user_id === userProfile?.user_id ? (
+                  <>
+                    {t('buttons.editProfile')} <ChangeRole />
+                  </>
+                ) : (
+                  <>{t('buttons.showProfile')}</>
+                )}
               </Button>
             </BaseballCard>
           ))}

@@ -59,6 +59,7 @@ export const useTeamStore = create<TeamState>()(
               facilitator: teams[0].team_members.find(
                 (member) => member.user_id === teams[0].created_by,
               ),
+              userProfile: sortedMembers.find((member) => member.user_id === user.id),
               isFacilitator: teams[0].created_by === user.id,
               isLoading: false,
             });
@@ -125,6 +126,8 @@ export const useTeamStore = create<TeamState>()(
             set({
               currentTeam: {...team, team_members: sortedMembers},
               facilitator: sortedMembers.find((member) => member.user_id === team.created_by),
+              userProfile: sortedMembers.find((member) => member.user_id === user.id),
+
               isFacilitator: team.created_by === user.id,
             });
           }

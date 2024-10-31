@@ -13,11 +13,18 @@
       "button": "Let's Go!",
       "code": "Team Code"
     },
+
     "page": {
-      "inviteCode": "Invite Code",
+    "inviteCode": "Invite Code",
     "inviteTeam": "Invite team members",
     "copied": "Copied",
-    "copiedDescription": "Invite code copied to clipboard"
+      "copiedDescription": "Invite code copied to clipboard",
+      "buttons": {
+        "remove": "Remove",
+        "changeRole": "Change role",
+        "showProfile": "Show profile",
+        "editProfile": "Edit profile"
+      }
     },
     "toast": {
       "created": "You have created a team!",
