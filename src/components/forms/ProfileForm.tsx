@@ -141,7 +141,7 @@ export const ProfileForm = ({user}: {user: User}) => {
           </div>
         
           */}
-          <Button variant="red" formAction={logOut}>
+          <Button variant="red" formAction={logOut} className="mx-auto">
             {t('profile.logout')}
           </Button>
         </form>

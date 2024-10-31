@@ -13,12 +13,31 @@
       "button": "Let's Go!",
       "code": "Team Code"
     },
+
+    "page": {
+    "inviteCode": "Invite Code",
+    "inviteTeam": "Invite team members",
+    "copied": "Copied",
+      "copiedDescription": "Invite code copied to clipboard",
+      "buttons": {
+        "remove": "Remove",
+        "changeRole": "Change role",
+        "showProfile": "Show profile",
+        "editProfile": "Edit profile"
+      }
+    },
     "toast": {
       "created": "You have created a team!",
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
+    },
+      "edit": {
+      "avatar": {
+        "title": "Choose your avatar",
+        "subtitle": "Skin Tone",
+        "button": "Save Changes"
+      }
     }
-
   },
 
   "profile": {
@@ -289,6 +308,8 @@
     "button": "Send",
     "thankYouText": "Thank you for your feedback!"
   },
+
+
   "common": {
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
@@ -353,14 +374,6 @@
     "updatePasswordDescription": "Please enter your new password below.",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordUpdated": "Password updated"
-  },
-  "team": {
-    "edit": {
-      "avatar": {
-        "title": "Choose your avatar",
-        "subtitle": "Skin Tone",
-        "button": "Save Changes"
-      }
-    }
   }
+
 }
