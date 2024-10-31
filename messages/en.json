@@ -19,6 +19,7 @@
     "inviteTeam": "Invite team members",
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
+      "createOrJoin": "Create or Join a team",
       "buttons": {
         "remove": "Remove",
         "changeRole": "Change role",

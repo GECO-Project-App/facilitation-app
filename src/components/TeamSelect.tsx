@@ -1,5 +1,6 @@
 'use client';
 import {useTeamStore} from '@/store/teamStore';
+import {useTranslations} from 'next-intl';
 import {useEffect} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
@@ -12,7 +13,7 @@ export const TeamSelect = ({
   }[];
 }) => {
   const {setCurrentTeamId, currentTeam} = useTeamStore();
-
+  const t = useTranslations('team.page');
   useEffect(() => {
     useTeamStore.getState().init();
   }, []);
@@ -31,6 +32,7 @@ export const TeamSelect = ({
             {team.name}
           </SelectItem>
         ))}
+        <SelectItem value="new">{t('createOrJoin')}</SelectItem>
       </SelectContent>
     </Select>
   );

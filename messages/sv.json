@@ -16,9 +16,10 @@
        "inviteCode": "Inbjudningskod",
     "inviteTeam": "Bjud in teammedlemmar",
     "copied": "Kopierat",
-    "copiedDescription": "Inbjudningskoden har kopierats",
-    "buttons": {  
-      "remove": "Ta bort",
+      "copiedDescription": "Inbjudningskoden har kopierats",
+      "createOrJoin": "Skapa eller gå med i ett team",
+      "buttons": {
+        "remove": "Ta bort",
       "changeRole": "Ändra roll",
       "showProfile": "Visa profil",
       "editProfile": "Redigera profil"
