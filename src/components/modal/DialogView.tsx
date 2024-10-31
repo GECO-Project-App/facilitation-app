@@ -40,7 +40,7 @@ export default function DialogView({
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [handleDialogClose]);
 
   return (
     <Dialog defaultOpen={true} onOpenChange={(open) => !open && handleDialogClose()}>
