@@ -1,9 +1,9 @@
 'use client';
-import {useTeamMembers} from '@/store/useTeamMembers';
+import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {FC} from 'react';
 
 const UninviteMembers: FC = () => {
-  const {members, removeMember} = useTeamMembers();
+  const {members, removeMember} = useTutorialToMe();
   return (
     <div className="flex flex-col gap-4 p-4">
       {members.map((member) => (

@@ -13,7 +13,7 @@ interface TeamMembersstate {
   removeMember: (id: string) => void;
 }
 
-export const useTeamMembers = create<TeamMembersstate>()(
+export const useTutorialToMe = create<TeamMembersstate>()(
   devtools(
     (set) => ({
       members: [],
@@ -21,6 +21,6 @@ export const useTeamMembers = create<TeamMembersstate>()(
       removeMember: (id) =>
         set((state) => ({members: state.members.filter((member) => member.id !== id)})),
     }),
-    {name: 'TeamMembersStore'},
+    {name: 'TutorialToMeStore'},
   ),
 );

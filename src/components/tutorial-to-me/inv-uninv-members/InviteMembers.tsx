@@ -1,12 +1,12 @@
 'use client';
 import {Button} from '@/components/ui/button/button';
 import {Input} from '@/components/ui/input/input';
-import {useTeamMembers} from '@/store/useTeamMembers';
+import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {UserRoundPlus} from 'lucide-react';
 import {FC, useState} from 'react';
 const InviteMembers: FC = () => {
   const [inviteMember, setInviteMember] = useState('');
-  const {addMember} = useTeamMembers();
+  const {addMember} = useTutorialToMe();
   const handleInviteMemberChange = () => {
     console.log(inviteMember);
     if (inviteMember.trim() !== '') {
