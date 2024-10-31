@@ -1,6 +1,6 @@
 'use client';
 import {Link} from '@/i18n/routing';
-import {ccMock, sscMock} from '@/lib/mock';
+import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -8,8 +8,8 @@ import {FC, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
+import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
 import {Button} from './ui';
-
 export const About: FC<{
   slug: string;
   title: string;
@@ -39,6 +39,8 @@ export const About: FC<{
         return sscMock.continue.about;
       case 'ssc':
         return sscMock.about;
+      case 'tutorial-to-me':
+        return tutorialMock.about;
       default:
         return ccMock.checkOut.about;
     }
@@ -71,6 +73,7 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
+          {slug === 'tutorial-to-me' && <InvOrDelMembers />}
         </div>
       </div>
     </PageLayout>

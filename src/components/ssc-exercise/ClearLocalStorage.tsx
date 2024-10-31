@@ -8,7 +8,7 @@ const ClearLocalStorage = () => {
 
   useEffect(() => {
     removeLocalStorageItem();
-  }, []);
+  }, [removeLocalStorageItem]);
 
   return null;
 };

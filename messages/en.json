@@ -62,6 +62,14 @@
         "button": "Start",
         "link": "/exercises/check-out/introduction",
         "type": "check-out"
+      },
+      {
+        "title": "Tutorial to me",
+        "subtitle": "5-15 minutes | 2-20 members",
+        "description": "End your meetings right by giving each team member the space to share something with the team.",
+        "button": "Start",
+        "link": "/exercises/tutorial-to-me/introduction",
+        "type": "tutorial-to-me"
       }
     ]
   },
@@ -233,6 +241,45 @@
       "exerciseButton": "Go to exercise",
       "nextStep": "Next step",
       "greatJob": "GREAT JOB! YOU DID IT!"
+    },
+    "tutorialToMe": {
+      "title": "Tutorial to me",
+      "subtitle": "30 minutes | 2-15 people | Multiplayer, Asynchronous",
+      "description": "The 'Tutorial to me' exercise helps your team share their strengths, weaknesses, and preferred ways of communicating when starting to work together. This ensures everyone is aligned on how they like working and how to best collaborate. Team members can refer to the results of this exercise in the 'Team' tab of the GECO app throughout the project.",
+      "button": "Let's Start",
+      "nextStep": "Next step",
+      "defineTimeline": {
+        "title": "Define Timeline",
+        "description": "Let's set the deadline for the exercise.",
+        "writingPhase": "Writing Phase",
+        "reviewingPhase": "Reviewing Phase",
+        "pickADateAndTime": "Pick a date and time"
+      },
+      "inviteTeamMember": "Invite team member",
+      "removeTeamMember": "Remove team member",
+      "submit": "Submit",
+      "steps": [
+        {
+          "title": "Strength",
+          "description": "What three strengths do you bring to a team when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Weakness",
+          "description": "What three weaknesses do you have when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Communication",
+          "description": "What three communication practices do you value when working on a project?",
+          "button": "Submit"
+        },
+        {
+          "title": "Finish",
+          "description": "You're done! You can now see the results of the exercise in the 'Team' tab in the GECO app.",
+          "button": "Finish"
+        }
+      ]
     }
   },
   "feedback": {
