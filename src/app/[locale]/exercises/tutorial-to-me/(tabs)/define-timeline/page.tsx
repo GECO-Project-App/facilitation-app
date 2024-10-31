@@ -22,11 +22,19 @@ export default async function TutorialToMePage() {
         <p className="mt-4 text-lg">{t('defineTimeline.description')}</p>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.writingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="purple" />
+          <DateAndTimePicker
+            btnText={t('defineTimeline.pickADateAndTime')}
+            variant="purple"
+            mode="writing"
+          />
         </article>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.reviewingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="blue" />
+          <DateAndTimePicker
+            btnText={t('defineTimeline.pickADateAndTime')}
+            variant="blue"
+            mode="reviewing"
+          />
         </article>
       </section>
     </PageLayout>
