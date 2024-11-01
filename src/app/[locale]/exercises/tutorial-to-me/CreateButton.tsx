@@ -27,7 +27,7 @@ const CreateButton = ({title}: {title: string}) => {
     };
     createTutorialToMe(tutorialData).then((res) => {
       console.log('res', res);
-      router.push('/exercises/tutorial-to-me');
+      router.push(`/exercises/tutorial-to-me/${res?.[0].tutorial_id}`);
     });
   };
 

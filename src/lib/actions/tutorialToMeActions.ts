@@ -7,11 +7,10 @@ type TutorialToMeType = {
   reviewing_date: string;
   members: string;
 };
-
 export async function createTutorialToMe(tutorialData: TutorialToMeType) {
   const supabase = createClient();
   try {
-    const {data, error} = await supabase.from('tutorial_to_me').insert([tutorialData]);
+    const {data, error} = await supabase.from('tutorial_to_me').insert([tutorialData]).select();
 
     if (error) {
       console.error('Error inserting data:', error);
