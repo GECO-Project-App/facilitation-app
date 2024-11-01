@@ -8,15 +8,17 @@ type TutorialToMeType = {
   members: string;
 };
 
-export async function createTutorialToMe(data: TutorialToMeType) {
+export async function createTutorialToMe(tutorialData: TutorialToMeType) {
   const supabase = createClient();
   try {
-    const {data: supabaseData, error} = await supabase.from('tutorial_to_me').insert([data]);
+    const {data, error} = await supabase.from('tutorial_to_me').insert([tutorialData]);
 
     if (error) {
       console.error('Error inserting data:', error);
     } else {
-      console.log('Data inserted successfully:', supabaseData);
+      console.log('Data inserted successfully:', data);
+      console.log('supabaseData:', data);
+      return data;
     }
   } catch (error) {
     console.error('Unexpected error:', error);
