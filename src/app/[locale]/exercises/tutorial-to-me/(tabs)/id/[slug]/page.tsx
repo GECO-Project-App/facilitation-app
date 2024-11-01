@@ -8,13 +8,13 @@ import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components
 import {Step} from '@/lib/types';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-
 const TutorialToMePage = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.tutorialToMe');
-
+  const router = useRouter();
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
 
   const getColorClass = (step: number) => {
@@ -52,7 +52,7 @@ const TutorialToMePage = () => {
     if (currentStep >= 1) {
       api?.scrollPrev();
     } else {
-      console.log('previous step');
+      router.push(`/`);
     }
   };
 
