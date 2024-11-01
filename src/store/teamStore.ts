@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import {getUserTeams} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/client';
-import {Profile, Team, TeamMember} from '@/lib/types';
+import {Team, TeamMember} from '@/lib/types';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 
@@ -13,7 +13,7 @@ interface TeamState {
   setCurrentTeamId: (teamId: string | null) => Promise<void>; // Change selected team
   facilitator: TeamMember | null; // Team facilitator/leader
   isFacilitator: boolean; // Whether current user is facilitator
-  userProfile: TeamMember | Profile | null; // Current user's profile
+  userProfile: TeamMember | null; // Current user's profile
 }
 
 // Create the team store using Zustand
