@@ -220,3 +220,26 @@ export async function removeTeamMember(teamId: string, userId: string) {
     return {error: 'Failed to remove team member'};
   }
 }
+
+export const updateTeamMemberAvatar = async (svgString: string) => {
+  const supabase = createClient();
+  const {data: user, error: userError} = await supabase.auth.getUser();
+
+  if (userError) throw userError;
+
+  const blob = new Blob([svgString], {type: 'image/svg+xml'});
+  const file = new File([blob], 'avatar.svg', {type: 'image/svg+xml'});
+
+  const {data, error: uploadError} = await supabase.storage
+    .from('avatars')
+    .upload(`avatar-${user.user.id}.svg`, file, {
+      cacheControl: '3600',
+      upsert: true, // TODO: this causes  message: 'new row violates row-level security policy'
+    });
+
+  if (uploadError) {
+    console.error('Error uploading avatar:', uploadError);
+    return null;
+  }
+  return data.path;
+};

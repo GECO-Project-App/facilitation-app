@@ -11,6 +11,7 @@ export * from './InviteCodeCard';
 export * from './LanguageSelector';
 export * from './PageLayout';
 export * from './PassItOn';
+export * from './ProfileAvatar';
 export * from './RandomQuestion';
 export * from './RiveAnimation';
 export * from './TabBar';

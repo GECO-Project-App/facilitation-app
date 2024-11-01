@@ -2,8 +2,7 @@
 import {BaseballCardType} from '@/lib/types';
 import {cn} from '@/lib/utils';
 import {FC} from 'react';
-import {AvatarCharacter} from './icons/avatar-character';
-import {Avatar, AvatarFallback} from './ui/avatar';
+import {ProfileAvatar} from './ProfileAvatar';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from './ui/collapsible';
 
 export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, children, open}) => {
@@ -11,17 +10,13 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
     <Collapsible
       className={cn(
         member.role.includes('facilitator') ? 'bg-pink' : 'bg-yellow',
-        ' py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
+        'py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
       )}
       open={open}
       onOpenChange={onOpenChange}>
       <CollapsibleTrigger className="w-full">
         <div className="items-center w-full flex flex-col gap-4">
-          <Avatar className="w-16 h-16 relative bg-white">
-            <AvatarFallback>
-              <AvatarCharacter />
-            </AvatarFallback>
-          </Avatar>
+          <ProfileAvatar />
           <div className="text-center">
             <p className="font-bold">{`${member.first_name} ${member.last_name}`}</p>
             <p>{member.role}</p>
