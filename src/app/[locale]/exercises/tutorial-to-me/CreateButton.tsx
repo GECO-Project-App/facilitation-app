@@ -1,6 +1,7 @@
 'use client';
 import {Button} from '@/components/ui/button/button';
 import {createTutorialToMe} from '@/lib/actions/tutorialToMeActions';
+import {useTeamStore} from '@/store/teamStore';
 import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {ArrowRight} from 'lucide-react';
 import {useRouter} from 'next/navigation';
@@ -13,22 +14,25 @@ const CreateButton = ({title}: {title: string}) => {
     const t = time;
     return `${d} ${t}`;
   };
-
+  const {currentTeam} = useTeamStore();
+  const {userProfile} = useTeamStore();
+  console.log('writingDate', writingDate);
   const handleClick = async () => {
     const writingTimestamp = getTimestamp(writingDate, writingTime);
     const reviewingTimestamp = getTimestamp(reviewingDate, reviewingTime);
-    console.log('clicked', writingTimestamp, reviewingTimestamp);
-    const array = members.map((member) => member.id);
     const tutorialData = {
-      created_by: 'Cristian',
-      members: array.join(','),
+      created_by: userProfile?.user_id || '',
+      team_id: currentTeam?.id || '',
       writing_date: writingTimestamp,
       reviewing_date: reviewingTimestamp,
     };
-    createTutorialToMe(tutorialData).then((res) => {
-      console.log('res', res);
-      router.push(`/exercises/tutorial-to-me/id/${res?.[0].tutorial_id}`);
-    });
+    console.log('tutorialData', tutorialData);
+    if (tutorialData.created_by && tutorialData.team_id) {
+      createTutorialToMe(tutorialData).then((res) => {
+        console.log('res', res);
+        router.push(`/exercises/tutorial-to-me/id/${res?.[0].tutorial_id}`);
+      });
+    }
   };
 
   return (

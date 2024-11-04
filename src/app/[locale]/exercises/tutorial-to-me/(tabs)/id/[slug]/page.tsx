@@ -6,11 +6,15 @@ import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaF
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
 import {Step} from '@/lib/types';
+import {useTutorialToMeAnswer} from '@/store/useTutorialToMeAnswer';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
-const TutorialToMePage = () => {
+
+const TutorialToMePage = ({params}: {params: {slug: string}}) => {
+  const {setTutorialToMeId} = useTutorialToMeAnswer();
+  const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations('exercises.tutorialToMe');
@@ -31,6 +35,10 @@ const TutorialToMePage = () => {
         return '';
     }
   };
+
+  useEffect(() => {
+    setTutorialToMeId(slug);
+  }, [slug]);
 
   useEffect(() => {
     if (!api) {

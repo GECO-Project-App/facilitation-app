@@ -1,10 +1,10 @@
 'use client';
 
 import {Button, Header, PageLayout} from '@/components';
+import {TeamGrid} from '@/components/TeamGrid';
 import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {Save} from 'lucide-react';
 import {FC} from 'react';
-
 const UninviteMembers: FC = () => {
   const {members, removeMember} = useTutorialToMe();
 
@@ -35,6 +35,7 @@ const UninviteMembers: FC = () => {
           </div>
         ))}
       </div>
+      <TeamGrid />
     </PageLayout>
   );
 };
