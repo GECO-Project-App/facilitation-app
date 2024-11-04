@@ -1,5 +1,5 @@
-import {AvatarBuilder} from '@/components';
+import {ProfileStats} from '@/components';
 
 export default async function TeamMemberPage() {
-  return <AvatarBuilder />;
+  return <ProfileStats />;
 }

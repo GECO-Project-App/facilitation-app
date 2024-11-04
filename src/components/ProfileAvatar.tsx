@@ -7,8 +7,6 @@ export const ProfileAvatar = () => {
 
   if (!userProfile) return null;
 
-  console.log(userProfile);
-
   return (
     <Avatar className="w-16 h-16 relative bg-white">
       <AvatarImage
