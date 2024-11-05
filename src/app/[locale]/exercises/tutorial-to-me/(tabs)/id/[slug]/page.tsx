@@ -5,6 +5,7 @@ import Review from '@/components/tutorial-to-me/review/Review';
 import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
 import {useTutorialToMeAnswer} from '@/store/useTutorialToMeAnswer';
 import {ArrowRight} from 'lucide-react';
@@ -14,6 +15,10 @@ import {useEffect, useState} from 'react';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const {setTutorialToMeId} = useTutorialToMeAnswer();
+  const {strength_1, strength_2, strength_3} = useTutorialToMeAnswer();
+  const {weakness_1, weakness_2, weakness_3} = useTutorialToMeAnswer();
+  const {communication_1, communication_2, communication_3} = useTutorialToMeAnswer();
+
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
@@ -53,7 +58,25 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   }, [api, setCurrentStep]);
 
   const nextStep = () => {
-    api?.scrollNext();
+    if (currentStep + 1 >= steps.length - 1) {
+      console.log('Complete');
+      saveTutorialToMeAnswer({
+        exercise_id: slug,
+        replied_id: '',
+        s1: strength_1 ?? '',
+        s2: strength_2 ?? '',
+        s3: strength_3 ?? '',
+        w1: weakness_1 ?? '',
+        w2: weakness_2 ?? '',
+        w3: weakness_3 ?? '',
+        c1: communication_1 ?? '',
+        c2: communication_2 ?? '',
+        c3: communication_3 ?? '',
+      });
+      api?.scrollNext();
+    } else {
+      api?.scrollNext();
+    }
   };
 
   const previousStep = () => {
