@@ -2,9 +2,11 @@
 import {useToast} from '@/hooks/useToast';
 import {logOut} from '@/lib/actions/authActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
+import {useTeamStore} from '@/store/teamStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {User} from '@supabase/supabase-js';
 import {useTranslations} from 'next-intl';
+import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
@@ -23,6 +25,9 @@ export const ProfileForm = ({user}: {user: User}) => {
     },
   });
   //TODO: Set up updateProfile actions
+  useEffect(() => {
+    useTeamStore.getState().init();
+  }, []);
 
   return (
     <>
