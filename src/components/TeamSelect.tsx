@@ -1,8 +1,8 @@
 'use client';
 import {useTeamStore} from '@/store/teamStore';
+import {useExercisesStore} from '@/store/useExercises';
 import {useEffect} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
-
 export const TeamSelect = ({
   teams,
 }: {
@@ -16,6 +16,10 @@ export const TeamSelect = ({
   useEffect(() => {
     useTeamStore.getState().init();
   }, []);
+
+  useEffect(() => {
+    useExercisesStore.getState().init(currentTeam?.id || '');
+  }, [currentTeam?.id]);
 
   return (
     <Select
