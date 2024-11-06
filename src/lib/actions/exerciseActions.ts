@@ -13,7 +13,7 @@ export async function getExercisesData(teamId: string) {
     if (exercisesError) throw exercisesError;
 
     const exercisesData = exercises.map((e) => ({
-      exerciseId: e.tutorial_id,
+      exerciseId: e.exercise_id,
       createdBy: e.created_by,
       teamId: e.team_id,
       writingDate: e.writing_date ? e.writing_date : undefined,
