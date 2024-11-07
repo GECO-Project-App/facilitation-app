@@ -51,7 +51,10 @@
       "username": "Användarnamn",
       "enterUsername": "Ange användarnamn",
       "password": "Lösenord"
-    }
+    },
+    "success": "Profil uppdaterad",
+    "error": "Ett fel uppstod",
+    "updateSuccess": "Profil uppdaterad"
   },
   "home": {
     "title": "Projekt GECO",

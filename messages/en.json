@@ -53,7 +53,10 @@
       "email": "Email",
       "enterUsername": "Select profile name",
       "password": "Password"
-    }
+    },
+    "success": "Success",
+    "error": "Error",
+    "updateSuccess": "Profile updated successfully"
   },
   "home": {
     "title": "Project GECO",

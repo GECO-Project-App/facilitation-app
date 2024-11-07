@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 const PostHogPageView = dynamic(() => import('@/components/PostHogPageView'), {
   ssr: false,
 });
-
 export default async function RootLayout({
   children,
   params: {locale},

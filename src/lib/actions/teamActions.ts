@@ -38,28 +38,20 @@ export async function createTeam(data: CreateTeamSchema) {
   }
 }
 
-export async function inviteTeamMember(teamId: string, email: string) {
-  const supabase = createClient();
-  const {data, error} = await supabase
-    .from('team_invitations')
-    .insert({team_id: teamId, email})
-    .select();
-  return {data, error};
-}
-
-export async function acceptInvitation(invitationId: string) {
-  const supabase = createClient();
-
-  const {data, error} = await supabase.rpc('handle_invitation_acceptance', {
-    invitation_id: invitationId,
-  });
-  return {data, error};
-}
-
 export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
 
   try {
+    // Get team ID using the secure function
+    const {data: teamData, error: teamError} = await supabase
+      .rpc('get_team_by_code', {code: teamCode})
+      .single();
+
+    if (teamError || !teamData) {
+      console.log('Team lookup error:', teamError);
+      return {error: 'Invalid team code'};
+    }
+
     // Get the current user
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
@@ -76,29 +68,18 @@ export async function joinTeamByCode(teamCode: string) {
       return {error: 'Failed to get profile data'};
     }
 
-    // Find the team with the given code
-    const {data: teamData, error: teamError} = await supabase
-      .from('teams')
-      .select('id')
-      .eq('team_code', teamCode)
-      .single();
-
-    if (teamError) {
-      console.log('Team lookup error:', teamError);
-      return {error: 'Invalid team code'};
-    }
-
-    if (!teamData) {
-      return {error: 'Team not found'};
-    }
-
     // Check if user is already a member
     const {data: existingMember, error: memberCheckError} = await supabase
       .from('team_members')
       .select()
       .eq('team_id', teamData.id)
       .eq('user_id', user.user.id)
-      .single();
+      .maybeSingle();
+
+    if (memberCheckError) {
+      console.log('Member check error:', memberCheckError);
+      return {error: 'Failed to check membership'};
+    }
 
     if (existingMember) {
       return {error: 'You are already a member of this team'};
@@ -134,35 +115,26 @@ export async function getUserTeams() {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    // First get the user's team IDs
-    const {data: userTeams, error: userTeamsError} = await supabase
-      .from('team_members')
-      .select('team_id')
-      .eq('user_id', user.user.id);
-
-    if (userTeamsError) throw userTeamsError;
-
-    // Then get the full team details
-    const teamIds = userTeams.map((t) => t.team_id);
+    // Get all teams in a single query
     const {data: teams, error: teamsError} = await supabase
       .from('teams')
       .select(
         `
-    id,
-    name,
-    team_code,
-    created_at,
-    created_by,
-    team_members!inner(
-      role,
-      user_id,
-      avatar_url,
-      first_name,
-      last_name
-    )
-  `,
+        id,
+        name,
+        team_code,
+        created_at,
+        created_by,
+        team_members!team_id (
+          role,
+          user_id,
+          avatar_url,
+          first_name,
+          last_name
+        )
+      `,
       )
-      .in('id', teamIds);
+      .or(`created_by.eq.${user.user.id},team_members.user_id.eq.${user.user.id}`);
 
     if (teamsError) {
       console.log('Error fetching teams:', teamsError);
@@ -190,11 +162,15 @@ export async function removeTeamMember(teamId: string, userId: string) {
       .select('role')
       .eq('team_id', teamId)
       .eq('user_id', currentUser.user.id)
-      .single();
+      .maybeSingle();
 
     if (facilitatorError) {
       console.log('Facilitator check error:', facilitatorError);
       return {error: 'Failed to verify permissions'};
+    }
+
+    if (!facilitator) {
+      return {error: 'Not a team member'};
     }
 
     // Only allow facilitators to remove members (or users removing themselves)
@@ -215,6 +191,7 @@ export async function removeTeamMember(teamId: string, userId: string) {
     }
 
     revalidatePath('/team', 'page');
+    return {success: true};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to remove team member'};
@@ -243,3 +220,82 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
   }
   return data.path;
 };
+
+export async function updateTeamMemberRole(
+  teamId: string,
+  userId: string,
+  newRole: 'facilitator' | 'member',
+) {
+  const supabase = createClient();
+
+  try {
+    // Get the current user (the one performing the role change)
+    const {data: currentUser, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    // Check if the current user is a facilitator of the team
+    const {data: facilitator, error: facilitatorError} = await supabase
+      .from('team_members')
+      .select('role')
+      .eq('team_id', teamId)
+      .eq('user_id', currentUser.user.id)
+      .single();
+
+    if (facilitatorError || facilitator?.role !== 'facilitator') {
+      return {error: 'Not authorized to change member roles'};
+    }
+
+    // Update the member's role
+    const {error: updateError} = await supabase
+      .from('team_members')
+      .update({role: newRole})
+      .eq('team_id', teamId)
+      .eq('user_id', userId);
+
+    if (updateError) {
+      console.log('Role update error:', updateError);
+      return {error: 'Failed to update member role'};
+    }
+
+    revalidatePath('/team', 'page');
+    return {success: true};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to update member role'};
+  }
+}
+
+export async function deleteTeam(teamId: string) {
+  const supabase = createClient();
+
+  try {
+    // Check if user is a facilitator
+    const {data: currentUser, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    const {data: facilitator, error: facilitatorError} = await supabase
+      .from('team_members')
+      .select('role')
+      .eq('team_id', teamId)
+      .eq('user_id', currentUser.user.id)
+      .single();
+
+    if (facilitatorError || facilitator?.role !== 'facilitator') {
+      return {error: 'Not authorized to delete team'};
+    }
+
+    // Delete the team (cascade will handle team_members)
+    const {error: deleteError} = await supabase.from('teams').delete().eq('id', teamId);
+
+    if (deleteError) {
+      console.log('Team deletion error:', deleteError);
+      return {error: 'Failed to delete team'};
+    }
+
+    revalidatePath('/team', 'page');
+    return {success: true};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to delete team'};
+  }
+}

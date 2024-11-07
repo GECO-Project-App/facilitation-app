@@ -17,6 +17,7 @@ export const TeamGrid: FC = () => {
   const {toast} = useToast();
   const t = useTranslations('team.page');
 
+  console.log(currentTeam);
   const toggleCard = useCallback((index: number) => {
     setOpenCards((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],

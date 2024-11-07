@@ -11,5 +11,18 @@ export default async function AuthPage() {
 
   const t = await getTranslations(['authenticate']);
 
-  return <PageLayout>{user ? <ProfileForm user={user} /> : <AuthTabs />}</PageLayout>;
+  return (
+    <PageLayout>
+      {user ? (
+        <section className="flex flex-col gap-4">
+          <h1 className="text-2xl font-bold">
+            {t('profile.welcome', {name: user.user_metadata.first_name})}
+          </h1>
+          <ProfileForm user={user} />
+        </section>
+      ) : (
+        <AuthTabs />
+      )}
+    </PageLayout>
+  );
 }

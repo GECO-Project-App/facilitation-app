@@ -1,3 +1,4 @@
+'use client';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 
@@ -8,7 +9,7 @@ export const ProfileStats = () => {
         <h3 className=" text-xl font-bold">Name</h3>
         <p>role</p>
       </div>
-      <section className="bg-white w-fit rounded-full mx-auto h-32 w-32"> hej</section>
+      <section className="bg-white  rounded-full mx-auto h-32 w-32"> hej</section>
       <section className="grid grid-cols-1 gap-4">
         {
           /* stats */

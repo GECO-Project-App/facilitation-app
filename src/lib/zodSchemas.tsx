@@ -55,7 +55,6 @@ export const resetPasswordSchema = z.object({
 
 export const profileSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
   username: z.string(),
