@@ -18,6 +18,7 @@ export async function getExercisesData(teamId: string) {
       teamId: e.team_id,
       writingDate: e.writing_date ? e.writing_date : undefined,
       reviewingDate: e.reviewing_date ? e.reviewing_date : undefined,
+      isActive: e.is_active,
       type: 'tutorial_to_me',
     }));
     return {exercises: exercisesData};

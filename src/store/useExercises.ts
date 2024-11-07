@@ -5,6 +5,7 @@ interface ExerciseType {
   exerciseId: string;
   createdBy: string;
   teamId: string;
+  isActive?: boolean;
   writingDate?: string;
   reviewingDate?: string;
   type?: string;

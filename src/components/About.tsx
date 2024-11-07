@@ -1,6 +1,7 @@
 'use client';
 import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {useExercisesStore} from '@/store/useExercises';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -10,6 +11,7 @@ import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
 import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
 import {Button} from './ui';
+
 export const About: FC<{
   slug: string;
   title: string;
@@ -18,6 +20,7 @@ export const About: FC<{
   buttonText: string;
 }> = ({slug, title, subtitle, description, buttonText}) => {
   const posthog = usePostHog();
+  const {exercises} = useExercisesStore();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
@@ -46,12 +49,21 @@ export const About: FC<{
     }
   }, [slug]);
 
+  const toturianExerciseId = exercises.find(
+    (e) => e.type === 'tutorial_to_me' && e.isActive,
+  )?.exerciseId;
+
   return (
     <PageLayout
       header={<Header />}
       footer={
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link href={mock.button.link}>
+          <Link
+            href={
+              toturianExerciseId && slug === 'tutorial-to-me'
+                ? `/exercises/tutorial-to-me/id/${toturianExerciseId}`
+                : mock.button.link
+            }>
             {buttonText} <ArrowRight size={28} />
           </Link>
         </Button>
@@ -73,7 +85,7 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && <InvOrDelMembers />}
+          {slug === 'tutorial-to-me' && <InvOrDelMembers toturianExerciseId={toturianExerciseId} />}
         </div>
       </div>
     </PageLayout>
