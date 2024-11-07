@@ -14,6 +14,7 @@ export const TeamSelect = ({
   const {setCurrentTeamId, currentTeam} = useTeamStore();
 
   useEffect(() => {
+    if (currentTeam) return;
     useTeamStore.getState().init();
   }, []);
 
