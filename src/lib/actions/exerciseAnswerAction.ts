@@ -1,17 +1,10 @@
 'use server';
 
 type ExerciseAnswerType = {
+  strengths: string[];
+  weaknesses: string[];
+  communications: string[];
   exercise_id: string;
-  replied_id: string;
-  s1: string;
-  s2: string;
-  s3: string;
-  w1: string;
-  w2: string;
-  w3: string;
-  c1: string;
-  c2: string;
-  c3: string;
 };
 
 function arrayToString(arr: string[]): string {
@@ -19,17 +12,12 @@ function arrayToString(arr: string[]): string {
 }
 
 export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerType) {
-  const strengths = [answerExerciseData.s1, answerExerciseData.s2, answerExerciseData.s3];
-  const weaknesses = [answerExerciseData.w1, answerExerciseData.w2, answerExerciseData.w3];
-  const challenges = [answerExerciseData.c1, answerExerciseData.c2, answerExerciseData.c3];
   const saveData = {
+    strengths: arrayToString(answerExerciseData.strengths),
+    weaknesses: arrayToString(answerExerciseData.weaknesses),
+    challenges: arrayToString(answerExerciseData.communications),
     exercise_id: answerExerciseData.exercise_id,
-    replied_id: answerExerciseData.replied_id,
-    strengths: arrayToString(strengths),
-    weaknesses: arrayToString(weaknesses),
-    challenges: arrayToString(challenges),
   };
-  console.log('-----saveData--------->', saveData);
   //   const supabase = createClient();
   //   try {
   //     const {data, error} = await supabase.from('tutorial_to_me').insert([answerExerciseData]).select();

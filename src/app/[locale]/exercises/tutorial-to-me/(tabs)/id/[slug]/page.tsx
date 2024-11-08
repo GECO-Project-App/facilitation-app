@@ -7,18 +7,12 @@ import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
-import {useTutorialToMeAnswer} from '@/store/useTutorialToMeAnswer';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
-  const {setTutorialToMeId} = useTutorialToMeAnswer();
-  const {strength_1, strength_2, strength_3} = useTutorialToMeAnswer();
-  const {weakness_1, weakness_2, weakness_3} = useTutorialToMeAnswer();
-  const {communication_1, communication_2, communication_3} = useTutorialToMeAnswer();
-
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
@@ -42,10 +36,6 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   useEffect(() => {
-    setTutorialToMeId(slug);
-  }, [slug]);
-
-  useEffect(() => {
     if (!api) {
       return;
     }
@@ -57,22 +47,38 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     });
   }, [api, setCurrentStep]);
 
+  const [one, setOne] = useState(JSON.parse(localStorage.getItem('strengths') ?? '[]')[0] ?? '');
+  const [two, setTwo] = useState(JSON.parse(localStorage.getItem('strengths') ?? '[]')[1] ?? '');
+  const [three, setThree] = useState(
+    JSON.parse(localStorage.getItem('strengths') ?? '[]')[2] ?? '',
+  );
+
   const nextStep = () => {
+    if (currentStep === 0) {
+      const strengths = [one, two, three];
+      localStorage.setItem('strengths', JSON.stringify(strengths));
+    }
+    if (currentStep === 1) {
+      const weaknesses = [one, two, three];
+      localStorage.setItem('weaknesses', JSON.stringify(weaknesses));
+    }
+    if (currentStep === 2) {
+      const communications = [one, two, three];
+      localStorage.setItem('communications', JSON.stringify(communications));
+    }
+
     if (currentStep + 1 >= steps.length - 1) {
       console.log('Complete');
-      saveTutorialToMeAnswer({
+      const strengths = JSON.parse(localStorage.getItem('strengths') ?? '[]') as string[];
+      const weaknesses = JSON.parse(localStorage.getItem('weaknesses') ?? '[]') as string[];
+      const communications = JSON.parse(localStorage.getItem('communications') ?? '[]') as string[];
+      const saveAnswerDat = {
+        strengths,
+        weaknesses,
+        communications,
         exercise_id: slug,
-        replied_id: '',
-        s1: strength_1 ?? '',
-        s2: strength_2 ?? '',
-        s3: strength_3 ?? '',
-        w1: weakness_1 ?? '',
-        w2: weakness_2 ?? '',
-        w3: weakness_3 ?? '',
-        c1: communication_1 ?? '',
-        c2: communication_2 ?? '',
-        c3: communication_3 ?? '',
-      });
+      };
+      saveTutorialToMeAnswer(saveAnswerDat);
       api?.scrollNext();
     } else {
       api?.scrollNext();
@@ -80,6 +86,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const previousStep = () => {
+    console.log('currentStep', currentStep);
     if (currentStep >= 1) {
       api?.scrollPrev();
     } else {
@@ -92,6 +99,24 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const colorClass = getColorClass(currentStep);
+
+  useEffect(() => {
+    if (currentStep === 0) {
+      setOne(JSON.parse(localStorage.getItem('strengths') ?? '[]')[0] ?? '');
+      setTwo(JSON.parse(localStorage.getItem('strengths') ?? '[]')[1] ?? '');
+      setThree(JSON.parse(localStorage.getItem('strengths') ?? '[]')[2] ?? '');
+    }
+    if (currentStep === 1) {
+      setOne(JSON.parse(localStorage.getItem('weaknesses') ?? '[]')[0] ?? '');
+      setTwo(JSON.parse(localStorage.getItem('weaknesses') ?? '[]')[1] ?? '');
+      setThree(JSON.parse(localStorage.getItem('weaknesses') ?? '[]')[2] ?? '');
+    }
+    if (currentStep === 2) {
+      setOne(JSON.parse(localStorage.getItem('communications') ?? '[]')[0] ?? '');
+      setTwo(JSON.parse(localStorage.getItem('communications') ?? '[]')[1] ?? '');
+      setThree(JSON.parse(localStorage.getItem('communications') ?? '[]')[2] ?? '');
+    }
+  }, [currentStep]);
 
   return (
     <PageLayout
@@ -121,9 +146,24 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               {currentStep <= 2 ? (
                 <>
                   <h1 className="text-xl font-bold">{step.description}</h1>
-                  <TextAreaForTutorial title={`${step.title} 1`} borderColor={colorClass} />
-                  <TextAreaForTutorial title={`${step.title} 2`} borderColor={colorClass} />
-                  <TextAreaForTutorial title={`${step.title} 3`} borderColor={colorClass} />
+                  <TextAreaForTutorial
+                    title={`${step.title} 1`}
+                    borderColor={colorClass}
+                    setValue={setOne}
+                    value={one}
+                  />
+                  <TextAreaForTutorial
+                    title={`${step.title} 2`}
+                    borderColor={colorClass}
+                    setValue={setTwo}
+                    value={two}
+                  />
+                  <TextAreaForTutorial
+                    title={`${step.title} 3`}
+                    borderColor={colorClass}
+                    setValue={setThree}
+                    value={three}
+                  />
                 </>
               ) : (
                 <Review message={step.description} />
