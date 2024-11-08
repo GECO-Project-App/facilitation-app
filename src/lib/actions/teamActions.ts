@@ -42,16 +42,6 @@ export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
 
   try {
-    // Get team ID using the secure function
-    const {data: teamData, error: teamError} = await supabase
-      .rpc('get_team_by_code', {code: teamCode})
-      .single();
-
-    if (teamError || !teamData) {
-      console.log('Team lookup error:', teamError);
-      return {error: 'Invalid team code'};
-    }
-
     // Get the current user
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
@@ -68,18 +58,29 @@ export async function joinTeamByCode(teamCode: string) {
       return {error: 'Failed to get profile data'};
     }
 
+    // Find the team with the given code
+    const {data: teamData, error: teamError} = await supabase
+      .from('teams')
+      .select('id')
+      .eq('team_code', teamCode)
+      .single();
+
+    if (teamError) {
+      console.log('Team lookup error:', teamError);
+      return {error: 'Invalid team code'};
+    }
+
+    if (!teamData) {
+      return {error: 'Team not found'};
+    }
+
     // Check if user is already a member
     const {data: existingMember, error: memberCheckError} = await supabase
       .from('team_members')
       .select()
       .eq('team_id', teamData.id)
       .eq('user_id', user.user.id)
-      .maybeSingle();
-
-    if (memberCheckError) {
-      console.log('Member check error:', memberCheckError);
-      return {error: 'Failed to check membership'};
-    }
+      .single();
 
     if (existingMember) {
       return {error: 'You are already a member of this team'};
@@ -115,26 +116,35 @@ export async function getUserTeams() {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    // Get all teams in a single query
+    // First get the user's team IDs
+    const {data: userTeams, error: userTeamsError} = await supabase
+      .from('team_members')
+      .select('team_id')
+      .eq('user_id', user.user.id);
+
+    if (userTeamsError) throw userTeamsError;
+
+    // Then get the full team details
+    const teamIds = userTeams.map((t) => t.team_id);
     const {data: teams, error: teamsError} = await supabase
       .from('teams')
       .select(
         `
-        id,
-        name,
-        team_code,
-        created_at,
-        created_by,
-        team_members!team_id (
-          role,
-          user_id,
-          avatar_url,
-          first_name,
-          last_name
-        )
-      `,
+    id,
+    name,
+    team_code,
+    created_at,
+    created_by,
+    team_members!inner(
+      role,
+      user_id,
+      avatar_url,
+      first_name,
+      last_name
+    )
+  `,
       )
-      .or(`created_by.eq.${user.user.id},team_members.user_id.eq.${user.user.id}`);
+      .in('id', teamIds);
 
     if (teamsError) {
       console.log('Error fetching teams:', teamsError);
