@@ -7,6 +7,7 @@ import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
+import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
@@ -19,6 +20,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const t = useTranslations('exercises.tutorialToMe');
   const router = useRouter();
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
+  const {currentTeam} = useTeamStore();
 
   const getColorClass = (step: number) => {
     switch (step) {
@@ -77,6 +79,8 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
         weaknesses,
         communications,
         exercise_id: slug,
+        team_id: currentTeam?.id ?? '',
+        created_by: currentTeam?.created_by ?? '',
       };
       saveTutorialToMeAnswer(saveAnswerDat);
       api?.scrollNext();
