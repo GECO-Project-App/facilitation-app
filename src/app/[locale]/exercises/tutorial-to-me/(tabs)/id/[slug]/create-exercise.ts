@@ -11,7 +11,7 @@ function getTime(date: Date, time: string) {
   return `${date.toISOString().split('T')[0]} ${time}`;
 }
 
-export function createExercise(data: CreateExerciseProps) {
+export async function createExercise(data: CreateExerciseProps) {
   const {writingDate, writingTime, reviewingDate, reviewingTime} = useTutorialToMe.getState();
   const writingDateAndTime = writingDate && writingTime ? getTime(writingDate, writingTime) : '';
   const reviewingDateAndTime =
@@ -25,5 +25,5 @@ export function createExercise(data: CreateExerciseProps) {
     weaknesses: data.weaknesses.join(','),
     communications: data.communications.join(','),
   };
-  createTutorialToMe(saveData);
+  await createTutorialToMe(saveData);
 }
