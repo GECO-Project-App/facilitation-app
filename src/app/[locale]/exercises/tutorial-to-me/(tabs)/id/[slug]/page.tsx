@@ -12,6 +12,7 @@ import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
+import {createExercise} from './create-exercise';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const {slug} = params;
@@ -82,7 +83,11 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
         team_id: currentTeam?.id ?? '',
         created_by: currentTeam?.created_by ?? '',
       };
-      saveTutorialToMeAnswer(saveAnswerDat);
+      if (slug === 'create') {
+        createExercise(saveAnswerDat);
+      } else {
+        saveTutorialToMeAnswer(saveAnswerDat);
+      }
       api?.scrollNext();
     } else {
       api?.scrollNext();

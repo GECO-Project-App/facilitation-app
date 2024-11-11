@@ -2,7 +2,6 @@
 import {createClient} from '../supabase/server';
 
 type TutorialToMeType = {
-  created_by: string;
   team_id: string;
   writing_date: string;
   reviewing_date: string;
@@ -10,7 +9,16 @@ type TutorialToMeType = {
 export async function createTutorialToMe(tutorialData: TutorialToMeType) {
   const supabase = createClient();
   try {
-    const {data, error} = await supabase.from('tutorial_to_me').insert([tutorialData]).select();
+    const {data: user, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    const saveData = {
+      ...tutorialData,
+      replied_id: user.user.id,
+      created_by: user.user.id,
+    };
+
+    const {data, error} = await supabase.from('tutorial_to_me').insert([saveData]).select();
 
     if (error) {
       console.error('Error inserting data:', error);
