@@ -72,13 +72,12 @@ export const useTeamStore = create<TeamState>()(
 
       // Change the currently selected team
       setCurrentTeamId: async (teamId) => {
-        set({currentTeamId: teamId, isLoading: true});
-
         // Clear team data if no teamId provided
-        if (!teamId) {
+        if (!teamId || teamId === 'new') {
           set({currentTeam: null, isLoading: false});
           return;
         }
+        set({currentTeamId: teamId, isLoading: true});
 
         try {
           const supabase = createClient();

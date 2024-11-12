@@ -20,11 +20,11 @@ export default async function TeamPage() {
     error: AuthError,
   } = await supabase.auth.getUser();
 
+  console.log(teams);
   return (
     <PageLayout
       header={
-        teams &&
-        teams.length > 0 && (
+        teams && (
           <Header
             showBackButton={false}
             rightContent={
@@ -36,7 +36,7 @@ export default async function TeamPage() {
           </Header>
         )
       }>
-      {teams && teams.length > 0 ? (
+      {teams ? (
         <section className="flex flex-col gap-6">
           <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
             <InviteCodeCard />
