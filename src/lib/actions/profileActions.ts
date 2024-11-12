@@ -37,7 +37,7 @@ export async function updateProfile(data: ProfileSchema) {
     if (updateProfileError) throw updateProfileError;
 
     revalidatePath('/settings', 'page');
-    return {success: true};
+    return {success: true, user: user.user};
   } catch (error) {
     console.error('Profile update error:', error);
     return {error: 'Failed to update profile'};

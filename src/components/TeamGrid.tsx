@@ -17,7 +17,6 @@ export const TeamGrid: FC = () => {
   const {toast} = useToast();
   const t = useTranslations('team.page');
 
-  console.log(currentTeam);
   const toggleCard = useCallback((index: number) => {
     setOpenCards((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
@@ -50,7 +49,7 @@ export const TeamGrid: FC = () => {
           {facilitator && (
             <div className=" max-w-xs mx-auto">
               <BaseballCard member={facilitator} open>
-                <Button variant="white" size="xs" className=" justify-between w-full">
+                <Button variant="white" size="xs" className=" justify-between w-full" asChild>
                   {facilitator.user_id === userProfile?.user_id ? (
                     <Link
                       href={`/team/member/${userProfile.user_id}`}

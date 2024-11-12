@@ -27,9 +27,11 @@ export default async function RootLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <html lang={locale}>
+      <html lang={locale} suppressHydrationWarning>
         <PHProvider>
-          <body className={cn(jetbrains_mono.variable, roboto.variable, '')}>
+          <body
+            className={cn(jetbrains_mono.variable, roboto.variable, '')}
+            suppressHydrationWarning>
             <PostHogPageView />
             {children}
             <Toaster />

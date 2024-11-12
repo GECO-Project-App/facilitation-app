@@ -2,7 +2,7 @@ create type "public"."team_role" as enum ('member', 'facilitator');
 
 create table "public"."profiles" (
     "id" uuid not null,
-    "updated_at" timestamp with time zone,
+    "updated_at" timestamp with time zone default now(),
     "username" text,
     "first_name" text,
     "last_name" text,
@@ -17,9 +17,9 @@ create table "public"."team_members" (
     "user_id" uuid not null,
     "role" team_role default 'member'::team_role,
     "joined_at" timestamp with time zone default now(),
-    "avatar_url" text,
     "first_name" text,
-    "last_name" text
+    "last_name" text,
+    "avatar_url" text
 );
 
 
@@ -37,6 +37,8 @@ create table "public"."teams" (
 alter table "public"."teams" enable row level security;
 
 CREATE INDEX idx_team_members_user_team ON public.team_members USING btree (user_id, team_id);
+
+CREATE INDEX idx_teams_created_by ON public.teams USING btree (created_by);
 
 CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id);
 
@@ -86,13 +88,12 @@ CREATE OR REPLACE FUNCTION public.check_team_management_permission(team_id uuid,
  SECURITY DEFINER
 AS $function$
 BEGIN
-  RETURN EXISTS (
-    SELECT 1 FROM teams
-    WHERE id = team_id AND created_by = user_id
-  ) OR EXISTS (
-    SELECT 1 FROM team_members
-    WHERE team_id = team_id AND user_id = user_id AND role = 'facilitator'
-  );
+    RETURN EXISTS (
+        SELECT 1 FROM team_members
+        WHERE team_members.team_id = $1
+        AND team_members.user_id = $2
+        AND team_members.role = 'facilitator'
+    );
 END;
 $function$
 ;
@@ -102,8 +103,8 @@ CREATE OR REPLACE FUNCTION public.generate_team_code()
  LANGUAGE plpgsql
 AS $function$
 DECLARE
-    code text;
-    code_exists boolean;
+    code TEXT;
+    code_exists BOOLEAN;
 BEGIN
     LOOP
         -- Generate a random 6-character alphanumeric code
@@ -114,7 +115,6 @@ BEGIN
             SELECT 1 FROM teams WHERE team_code = code
         ) INTO code_exists;
         
-        -- Exit loop if code is unique
         EXIT WHEN NOT code_exists;
     END LOOP;
     
@@ -122,8 +122,9 @@ BEGIN
 END;
 $function$
 ;
-
 create type "public"."profile_response" as ("id" uuid, "username" text, "first_name" text, "last_name" text, "avatar_url" text, "updated_at" timestamp with time zone);
+
+
 
 CREATE OR REPLACE FUNCTION public.get_my_profile()
  RETURNS profile_response
@@ -159,38 +160,13 @@ CREATE OR REPLACE FUNCTION public.handle_new_team()
  SECURITY DEFINER
 AS $function$
 BEGIN
-    -- Set team_code if not provided
-    IF NEW.team_code IS NULL THEN
-        UPDATE teams 
-        SET team_code = upper(substring(md5(random()::text) from 1 for 6))
-        WHERE id = NEW.id;
-    END IF;
-
-    -- Insert the creator as a facilitator with their profile info
-    BEGIN  -- Add exception handling
-        INSERT INTO team_members (
-            team_id, 
-            user_id, 
-            role,
-            first_name,
-            last_name,
-            avatar_url
-        )
-        SELECT 
-            NEW.id,
-            NEW.created_by,
-            'facilitator',
-            profiles.first_name,
-            profiles.last_name,
-            profiles.avatar_url
-        FROM profiles
-        WHERE profiles.id = NEW.created_by;
-    EXCEPTION 
-        WHEN unique_violation THEN 
-            -- Do nothing if entry already exists
-            NULL;
-    END;
-
+    -- Generate team code
+    NEW.team_code := generate_team_code();
+    
+    -- Insert the creator as a facilitator
+    INSERT INTO team_members (team_id, user_id, role)
+    VALUES (NEW.id, NEW.created_by, 'facilitator');
+    
     RETURN NEW;
 END;
 $function$
@@ -200,27 +176,26 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
  RETURNS trigger
  LANGUAGE plpgsql
  SECURITY DEFINER
- SET search_path TO ''
+ SET search_path TO 'public'
 AS $function$
 begin
-  insert into public.profiles (id, first_name, last_name, avatar_url)
-  values (new.id, new.raw_user_meta_data->>'first_name', new.raw_user_meta_data->>'last_name', new.raw_user_meta_data->>'avatar_url');
+  insert into public.profiles (
+    id,
+    first_name,
+    last_name,
+    avatar_url,
+    username,
+    updated_at
+  ) values (
+    new.id,
+    new.raw_user_meta_data->>'first_name',
+    new.raw_user_meta_data->>'last_name',
+    new.raw_user_meta_data->>'avatar_url',
+    new.raw_user_meta_data->>'username',
+    now()
+  );
   return new;
 end;
-$function$
-;
-
-CREATE OR REPLACE FUNCTION public.handle_team_member()
- RETURNS trigger
- LANGUAGE plpgsql
- SECURITY DEFINER
-AS $function$
-BEGIN
-    -- Insert the creator as a facilitator
-    INSERT INTO team_members (team_id, user_id, role)
-    VALUES (NEW.id, NEW.created_by, 'facilitator');
-    RETURN NEW;
-END;
 $function$
 ;
 
@@ -279,6 +254,18 @@ END;
 $function$
 ;
 
+
+CREATE OR REPLACE FUNCTION public.refresh_team_permissions()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    REFRESH MATERIALIZED VIEW CONCURRENTLY team_permissions;
+    RETURN NULL;
+END;
+$function$
+;
+
 CREATE OR REPLACE FUNCTION public.sync_team_member_avatar()
  RETURNS trigger
  LANGUAGE plpgsql
@@ -294,23 +281,14 @@ END;
 $function$
 ;
 
-CREATE OR REPLACE FUNCTION public.sync_team_member_profile()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
-BEGIN
-    -- Update all profile fields in team_members when a profile is updated
-    UPDATE team_members
-    SET 
-        first_name = NEW.first_name,
-        last_name = NEW.last_name,
-        avatar_url = NEW.avatar_url
-    WHERE user_id = NEW.id;
-    
-    RETURN NEW;
-END;
-$function$
-;
+create materialized view "public"."team_permissions" as  SELECT tm.team_id,
+    tm.user_id,
+    tm.role,
+    t.created_by
+   FROM (team_members tm
+     JOIN teams t ON ((t.id = tm.team_id)));
+
+
 
 CREATE OR REPLACE FUNCTION public.update_profile(p_username text DEFAULT NULL::text, p_first_name text DEFAULT NULL::text, p_last_name text DEFAULT NULL::text, p_avatar_url text DEFAULT NULL::text)
  RETURNS profile_response
@@ -369,6 +347,8 @@ end;
 $function$
 ;
 
+CREATE INDEX idx_team_permissions ON public.team_permissions USING btree (team_id, user_id, role);
+
 grant delete on table "public"."profiles" to "anon";
 
 grant insert on table "public"."profiles" to "anon";
@@ -396,20 +376,6 @@ grant trigger on table "public"."profiles" to "authenticated";
 grant truncate on table "public"."profiles" to "authenticated";
 
 grant update on table "public"."profiles" to "authenticated";
-
-grant delete on table "public"."profiles" to "postgres";
-
-grant insert on table "public"."profiles" to "postgres";
-
-grant references on table "public"."profiles" to "postgres";
-
-grant select on table "public"."profiles" to "postgres";
-
-grant trigger on table "public"."profiles" to "postgres";
-
-grant truncate on table "public"."profiles" to "postgres";
-
-grant update on table "public"."profiles" to "postgres";
 
 grant delete on table "public"."profiles" to "service_role";
 
@@ -453,20 +419,6 @@ grant truncate on table "public"."team_members" to "authenticated";
 
 grant update on table "public"."team_members" to "authenticated";
 
-grant delete on table "public"."team_members" to "postgres";
-
-grant insert on table "public"."team_members" to "postgres";
-
-grant references on table "public"."team_members" to "postgres";
-
-grant select on table "public"."team_members" to "postgres";
-
-grant trigger on table "public"."team_members" to "postgres";
-
-grant truncate on table "public"."team_members" to "postgres";
-
-grant update on table "public"."team_members" to "postgres";
-
 grant delete on table "public"."team_members" to "service_role";
 
 grant insert on table "public"."team_members" to "service_role";
@@ -509,20 +461,6 @@ grant truncate on table "public"."teams" to "authenticated";
 
 grant update on table "public"."teams" to "authenticated";
 
-grant delete on table "public"."teams" to "postgres";
-
-grant insert on table "public"."teams" to "postgres";
-
-grant references on table "public"."teams" to "postgres";
-
-grant select on table "public"."teams" to "postgres";
-
-grant trigger on table "public"."teams" to "postgres";
-
-grant truncate on table "public"."teams" to "postgres";
-
-grant update on table "public"."teams" to "postgres";
-
 grant delete on table "public"."teams" to "service_role";
 
 grant insert on table "public"."teams" to "service_role";
@@ -550,87 +488,50 @@ on "public"."profiles"
 as permissive
 for insert
 to public
-with check ((( SELECT auth.uid() AS uid) = id));
+with check ((auth.uid() = id));
 
 
-create policy "Users can update own profile."
+create policy "Users can update their own profile."
 on "public"."profiles"
 as permissive
 for update
 to public
-using ((( SELECT auth.uid() AS uid) = id));
+using ((auth.uid() = id))
+with check ((auth.uid() = id));
 
 
-create policy "Insert team members through trigger"
+create policy "Enable insert for authenticated users"
 on "public"."team_members"
 as permissive
 for insert
-to public
+to authenticated
 with check (true);
 
 
-create policy "Only facilitators can update roles"
+create policy "team_members_access_policy"
 on "public"."team_members"
 as permissive
-for update
-to public
-using (((user_id = auth.uid()) AND (role = 'facilitator'::team_role)));
+for all
+to authenticated
+using (((user_id = auth.uid()) OR (EXISTS ( SELECT 1
+   FROM team_permissions tp
+  WHERE ((tp.team_id = team_members.team_id) AND (tp.user_id = auth.uid()) AND (tp.role = 'facilitator'::team_role))))));
 
 
-create policy "team_members_delete_policy"
-on "public"."team_members"
-as permissive
-for delete
-to public
-using (((EXISTS ( SELECT 1
-   FROM team_members tm
-  WHERE ((tm.team_id = team_members.team_id) AND (tm.user_id = auth.uid()) AND (tm.role = 'facilitator'::team_role)))) OR (user_id = auth.uid())));
-
-
-create policy "team_members_insert_policy"
-on "public"."team_members"
-as permissive
-for insert
-to public
-with check ((auth.uid() IS NOT NULL));
-
-
-create policy "team_members_select_policy"
-on "public"."team_members"
-as permissive
-for select
-to public
-using ((auth.uid() IS NOT NULL));
-
-
-create policy "teams_delete_policy"
+create policy "teams_access_policy"
 on "public"."teams"
 as permissive
-for delete
-to public
-using ((created_by = auth.uid()));
+for all
+to authenticated
+using (((created_by = auth.uid()) OR (EXISTS ( SELECT 1
+   FROM team_permissions tp
+  WHERE ((tp.team_id = teams.id) AND (tp.user_id = auth.uid()))))));
 
 
-create policy "teams_insert_policy"
-on "public"."teams"
-as permissive
-for insert
-to public
-with check ((auth.uid() IS NOT NULL));
+CREATE TRIGGER refresh_team_permissions_on_member_change AFTER INSERT OR DELETE OR UPDATE ON public.team_members FOR EACH STATEMENT EXECUTE FUNCTION refresh_team_permissions();
 
+CREATE TRIGGER on_team_created BEFORE INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
 
-create policy "teams_select_policy"
-on "public"."teams"
-as permissive
-for select
-to public
-using ((auth.uid() IS NOT NULL));
-
-
-CREATE TRIGGER on_profile_update AFTER UPDATE OF first_name, last_name, avatar_url ON public.profiles FOR EACH ROW EXECUTE FUNCTION sync_team_member_profile();
-
-CREATE TRIGGER on_team_created AFTER INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
-
-CREATE TRIGGER on_team_member_created AFTER INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_team_member();
+CREATE TRIGGER refresh_team_permissions_on_team_change AFTER INSERT OR DELETE OR UPDATE ON public.teams FOR EACH STATEMENT EXECUTE FUNCTION refresh_team_permissions();
 
 

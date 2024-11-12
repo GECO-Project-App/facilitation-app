@@ -94,7 +94,7 @@ npx supabase init
 Check out the [docs](https://supabase.com/docs/reference/cli) for more useful CLI commands.
 
 
-1. Start the local Supabase db. 
+1. Start the local Supabase db. (Make sure docker is running before starting the db)
 ```bash
 npx supabase start
 ```
@@ -124,7 +124,7 @@ npx  supabase db pull
 A self-hosted supabase db can pull changes from a remote db by using the --db-url flag and the database url:
 
 ```bash
-npx supabase db diff -f initial_structure --db-url postgresql://postgres:QB5T26qrxlYwLyD6an01ww0g45nQVVY4@130.238.147.129:6666/postgres 
+npx supabase db diff -f initial_structure --db-url postgresql://your-db-url 
 ```
 
 2. Apply migrations to your local db:

@@ -1,6 +1,5 @@
 'use server';
 import {revalidatePath} from 'next/cache';
-import {z} from 'zod';
 import {createClient} from '../supabase/server';
 import {CreateTeamSchema, createTeamSchema} from '../zodSchemas';
 
@@ -9,30 +8,52 @@ export async function createTeam(data: CreateTeamSchema) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
+    // Get or create user profile
+    let {data: profile} = await supabase
+      .from('profiles')
+      .select('first_name, last_name, avatar_url')
+      .eq('id', user.user.id)
+      .maybeSingle();
+
+    if (!profile) {
+      // Create profile if it doesn't exist
+      const {data: newProfile, error: createError} = await supabase
+        .from('profiles')
+        .insert({
+          id: user.user.id,
+          first_name: user.user.user_metadata?.first_name || '',
+          last_name: user.user.user_metadata?.last_name || '',
+          avatar_url: user.user.user_metadata?.avatar_url || '',
+        })
+        .select()
+        .single();
+
+      if (createError) throw createError;
+      profile = newProfile;
+    }
+
+    // Create team
     const {data: teamData, error: teamError} = await supabase
       .from('teams')
       .insert({
         name: validatedFields.name,
         created_by: user.user.id,
       })
-      .select()
-      .single();
+      .select('*')
+      .maybeSingle();
 
-    if (teamError) {
+    if (teamError || !teamData) {
       console.log(teamError);
-      return {error: teamError.message};
+      return {error: teamError?.message || 'Failed to create team'};
     }
 
     revalidatePath('/team', 'page');
+
     return {success: true, teamId: teamData.id};
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return {error: error.errors[0].message};
-    }
     console.log('Unexpected error:', error);
     return {error: 'Failed to create team'};
   }
@@ -62,16 +83,16 @@ export async function joinTeamByCode(teamCode: string) {
     const {data: teamData, error: teamError} = await supabase
       .from('teams')
       .select('id')
-      .eq('team_code', teamCode)
-      .single();
+      .eq('team_code', teamCode.toUpperCase())
+      .maybeSingle();
 
     if (teamError) {
       console.log('Team lookup error:', teamError);
-      return {error: 'Invalid team code'};
+      return {error: 'Failed to lookup team'};
     }
 
     if (!teamData) {
-      return {error: 'Team not found'};
+      return {error: 'Invalid team code'};
     }
 
     // Check if user is already a member
@@ -80,7 +101,7 @@ export async function joinTeamByCode(teamCode: string) {
       .select()
       .eq('team_id', teamData.id)
       .eq('user_id', user.user.id)
-      .single();
+      .maybeSingle();
 
     if (existingMember) {
       return {error: 'You are already a member of this team'};
@@ -116,42 +137,47 @@ export async function getUserTeams() {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    // First get the user's team IDs
-    const {data: userTeams, error: userTeamsError} = await supabase
+    // First get the teams the user is a member of
+    const {data: memberTeams, error: memberError} = await supabase
       .from('team_members')
       .select('team_id')
       .eq('user_id', user.user.id);
 
-    if (userTeamsError) throw userTeamsError;
+    if (memberError) {
+      console.log('Error fetching member teams:', memberError);
+      return {error: 'Failed to fetch teams'};
+    }
 
-    // Then get the full team details
-    const teamIds = userTeams.map((t) => t.team_id);
+    const teamIds = memberTeams?.map((t) => t.team_id) || [];
+
+    // Then get the full team data including members
     const {data: teams, error: teamsError} = await supabase
       .from('teams')
       .select(
         `
-    id,
-    name,
-    team_code,
-    created_at,
-    created_by,
-    team_members!inner(
-      role,
-      user_id,
-      avatar_url,
-      first_name,
-      last_name
-    )
-  `,
+        id,
+        name,
+        team_code,
+        created_at,
+        created_by,
+        team_members (
+          role,
+          user_id,
+          avatar_url,
+          first_name,
+          last_name
+        )
+      `,
       )
-      .in('id', teamIds);
+      .in('id', teamIds)
+      .order('name', {ascending: true});
 
     if (teamsError) {
       console.log('Error fetching teams:', teamsError);
       return {error: 'Failed to fetch teams'};
     }
 
-    return {teams};
+    return {teams: teams || []};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to fetch teams'};
