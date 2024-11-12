@@ -1,8 +1,7 @@
-'use client';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 
-export const ProfileStats = () => {
+export const ProfileStats = ({member}: {member: unknown}) => {
   return (
     <PageLayout header={<Header />} backgroundColor="bg-pink" contentColor="bg-pink">
       <div className="text-center space-y-1">

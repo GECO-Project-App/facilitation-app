@@ -3,7 +3,7 @@ import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useCallback, useEffect} from 'react';
+import {useCallback} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
 export const TeamSelect = ({
@@ -28,12 +28,6 @@ export const TeamSelect = ({
     },
     [searchParams],
   );
-
-  useEffect(() => {
-    if (currentTeam) {
-      router.push(`/team?${createQueryString('id', currentTeam.id)}`);
-    }
-  }, [createQueryString, router, currentTeam]);
 
   return (
     <Select

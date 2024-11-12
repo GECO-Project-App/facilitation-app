@@ -124,8 +124,6 @@ $function$
 ;
 create type "public"."profile_response" as ("id" uuid, "username" text, "first_name" text, "last_name" text, "avatar_url" text, "updated_at" timestamp with time zone);
 
-
-
 CREATE OR REPLACE FUNCTION public.get_my_profile()
  RETURNS profile_response
  LANGUAGE plpgsql
@@ -157,16 +155,57 @@ $function$
 CREATE OR REPLACE FUNCTION public.handle_new_team()
  RETURNS trigger
  LANGUAGE plpgsql
- SECURITY DEFINER
 AS $function$
+DECLARE
+    new_team_code TEXT;
+    user_profile RECORD;
+    code_exists BOOLEAN;
 BEGIN
-    -- Generate team code
-    NEW.team_code := generate_team_code();
+    -- Generate unique team code loop
+    LOOP
+        -- Generate 6-character uppercase hex code
+        new_team_code := upper(substring(encode(gen_random_bytes(3), 'hex') from 1 for 6));
+        
+        -- Check if code already exists
+        SELECT EXISTS (
+            SELECT 1 FROM teams WHERE team_code = new_team_code
+        ) INTO code_exists;
+        
+        -- Exit loop if unique code found
+        EXIT WHEN NOT code_exists;
+    END LOOP;
     
-    -- Insert the creator as a facilitator
-    INSERT INTO team_members (team_id, user_id, role)
-    VALUES (NEW.id, NEW.created_by, 'facilitator');
-    
+    -- Update the team with the generated code
+    UPDATE teams 
+    SET team_code = new_team_code 
+    WHERE id = NEW.id;
+
+    -- Get user profile data
+    SELECT first_name, last_name, avatar_url 
+    INTO user_profile 
+    FROM profiles 
+    WHERE id = NEW.created_by;
+
+    -- Create team member record for the creator as facilitator
+    INSERT INTO team_members (
+        team_id,
+        user_id,
+        role,
+        first_name,
+        last_name,
+        avatar_url
+    ) VALUES (
+        NEW.id,
+        NEW.created_by,
+        'facilitator',
+        user_profile.first_name,
+        user_profile.last_name,
+        user_profile.avatar_url
+    );
+
+    RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Error in handle_new_team: %', SQLERRM;
     RETURN NEW;
 END;
 $function$
@@ -258,9 +297,13 @@ $function$
 CREATE OR REPLACE FUNCTION public.refresh_team_permissions()
  RETURNS trigger
  LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
 AS $function$
 BEGIN
     REFRESH MATERIALIZED VIEW CONCURRENTLY team_permissions;
+    RETURN NULL;
+EXCEPTION WHEN OTHERS THEN
     RETURN NULL;
 END;
 $function$
@@ -281,13 +324,9 @@ END;
 $function$
 ;
 
-create materialized view "public"."team_permissions" as  SELECT tm.team_id,
-    tm.user_id,
-    tm.role,
-    t.created_by
-   FROM (team_members tm
-     JOIN teams t ON ((t.id = tm.team_id)));
-
+create materialized view "public"."team_permissions" as  SELECT DISTINCT tm.team_id,
+    tm.user_id
+   FROM team_members tm;
 
 
 CREATE OR REPLACE FUNCTION public.update_profile(p_username text DEFAULT NULL::text, p_first_name text DEFAULT NULL::text, p_last_name text DEFAULT NULL::text, p_avatar_url text DEFAULT NULL::text)
@@ -347,7 +386,7 @@ end;
 $function$
 ;
 
-CREATE INDEX idx_team_permissions ON public.team_permissions USING btree (team_id, user_id, role);
+CREATE UNIQUE INDEX team_permissions_idx ON public.team_permissions USING btree (team_id, user_id);
 
 grant delete on table "public"."profiles" to "anon";
 
@@ -515,7 +554,7 @@ for all
 to authenticated
 using (((user_id = auth.uid()) OR (EXISTS ( SELECT 1
    FROM team_permissions tp
-  WHERE ((tp.team_id = team_members.team_id) AND (tp.user_id = auth.uid()) AND (tp.role = 'facilitator'::team_role))))));
+  WHERE ((tp.team_id = team_members.team_id) AND (tp.user_id = auth.uid()))))));
 
 
 create policy "teams_access_policy"
@@ -525,13 +564,11 @@ for all
 to authenticated
 using (((created_by = auth.uid()) OR (EXISTS ( SELECT 1
    FROM team_permissions tp
-  WHERE ((tp.team_id = teams.id) AND (tp.user_id = auth.uid()))))));
+  WHERE ((tp.team_id = teams.id) AND (tp.user_id = auth.uid())))) OR (team_code IS NOT NULL)));
 
 
 CREATE TRIGGER refresh_team_permissions_on_member_change AFTER INSERT OR DELETE OR UPDATE ON public.team_members FOR EACH STATEMENT EXECUTE FUNCTION refresh_team_permissions();
 
-CREATE TRIGGER on_team_created BEFORE INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
-
-CREATE TRIGGER refresh_team_permissions_on_team_change AFTER INSERT OR DELETE OR UPDATE ON public.teams FOR EACH STATEMENT EXECUTE FUNCTION refresh_team_permissions();
+CREATE TRIGGER on_team_created AFTER INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
 
 

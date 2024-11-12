@@ -335,3 +335,39 @@ export async function deleteTeam(teamId: string) {
     return {error: 'Failed to delete team'};
   }
 }
+
+export async function getTeamMember(teamId: string, userId: string) {
+  const supabase = createClient();
+
+  try {
+    const {data: member, error} = await supabase
+      .from('team_members')
+      .select(
+        `
+        *,
+        profiles (
+          first_name,
+          last_name,
+          avatar_url
+        )
+      `,
+      )
+      .eq('team_id', teamId)
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.log('Team member lookup error:', error);
+      return {error: 'Failed to get team member'};
+    }
+
+    if (!member) {
+      return {error: 'Team member not found'};
+    }
+    console.log('member', member);
+    return {success: true, member};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to get team member'};
+  }
+}
