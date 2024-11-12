@@ -5,6 +5,7 @@ import Review from '@/components/tutorial-to-me/review/Review';
 import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useTutorialLocalStorage} from '@/hooks/useTutorialLocalStorage';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
@@ -16,6 +17,8 @@ import {useEffect, useState} from 'react';
 import {createExercise} from './create-exercise';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
+  const {done} = useDoneTutorialExercise();
+
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
@@ -45,13 +48,16 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     if (!api) {
       return;
     }
-
-    setCurrentStep(api.selectedScrollSnap());
-
-    api.on('select', () => {
+    if (done) {
+      setCurrentStep(steps.length - 1);
+    } else {
       setCurrentStep(api.selectedScrollSnap());
-    });
-  }, [api, setCurrentStep]);
+
+      api.on('select', () => {
+        setCurrentStep(api.selectedScrollSnap());
+      });
+    }
+  }, [api, setCurrentStep, done, steps.length]);
 
   const nextStep = () => {
     if (currentStep === 0) {
@@ -104,7 +110,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const handleComplete = () => {
-    console.log('complete');
+    router.push(`/`);
   };
 
   const colorClass = getColorClass(currentStep);
@@ -120,7 +126,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       footer={
         currentStep === steps.length - 1 ? (
           <Button variant="blue" className="mx-auto" onClick={handleComplete}>
-            {t('submit')}
+            {t('backToHome')}
           </Button>
         ) : (
           <Button variant="blue" onClick={nextStep}>
@@ -157,7 +163,8 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
                   />
                 </>
               ) : (
-                <Review message={step.description} />
+                // <Review message={step.description} />
+                <Review />
               )}
             </CarouselItem>
           ))}

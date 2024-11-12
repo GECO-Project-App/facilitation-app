@@ -266,6 +266,7 @@
       "description": "Övningen 'Handledning till mig' hjälper ditt team att dela sina styrkor, svagheter och föredragna sätt att kommunicera när ni börjar arbeta tillsammans. Detta säkerställer att alla är överens om hur de gillar att arbeta och hur man bäst samarbetar. Teammedlemmar kan hänvisa till resultaten av denna övning i fliken 'Team' i GECO-appen under hela projektet.",
       "button": "Starta",
       "nextStep": "Nästa steg",
+      "backToHome": "Tillbaka till hem",
       "defineTimeline": {
         "title": "Definiera tid",
         "description": "Låt oss sätta deadline för övningen.",

@@ -267,6 +267,7 @@
       "description": "The 'Tutorial to me' exercise helps your team share their strengths, weaknesses, and preferred ways of communicating when starting to work together. This ensures everyone is aligned on how they like working and how to best collaborate. Team members can refer to the results of this exercise in the 'Team' tab of the GECO app throughout the project.",
       "button": "Let's Start",
       "nextStep": "Next step",
+      "backToHome": "Back to Home",
       "defineTimeline": {
         "title": "Define Timeline",
         "description": "Let's set the deadline for the exercise.",

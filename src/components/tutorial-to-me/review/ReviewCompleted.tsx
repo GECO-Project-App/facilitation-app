@@ -1,10 +1,10 @@
 import {FC} from 'react';
 
-const ReviewCompleted: FC<{message: string}> = ({message}) => {
+const ReviewCompleted: FC = () => {
   return (
     <div className="simple-text">
       <h2>Review Completed</h2>
-      <p>{message}</p>
+      {/* <p>{message}</p> */}
     </div>
   );
 };

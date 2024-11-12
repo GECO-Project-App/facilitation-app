@@ -3,8 +3,10 @@ import {useExercisesStore} from '@/store/useExercises';
 
 export const useDoneTutorialExercise = () => {
   let done = false;
+  let isAllDone = false;
   const {userProfile} = useTeamStore();
   const {exercises} = useExercisesStore();
+  const {currentTeam} = useTeamStore();
   const currentTutorialExerciseId = exercises.find(
     (e) => e.type === 'tutorial_to_me' && e.isActive,
   )?.exerciseId;
@@ -16,5 +18,9 @@ export const useDoneTutorialExercise = () => {
   if (didIt) {
     done = true;
   }
-  return {done};
+  const allMembersTeamIds = currentTeam?.team_members.map((m) => m.user_id);
+  if (allMembersTeamIds?.length === currentExercise.length) {
+    isAllDone = true;
+  }
+  return {done, isAllDone};
 };
