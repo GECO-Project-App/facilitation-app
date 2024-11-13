@@ -3,7 +3,7 @@ import {avatars} from '@/components/icons/avatar';
 import {cn} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {AvatarColorPicker} from './AvatarColorPicker';
 import {Header} from './Header';
@@ -13,6 +13,7 @@ import {Button} from './ui/button';
 
 export const AvatarBuilder: FC = () => {
   const {avatar, setAvatar, updateAvatar} = useUserStore();
+  const [idx, setIdx] = useState<number | null>(null);
   const t = useTranslations('team.edit.avatar');
   return (
     <PageLayout
@@ -21,7 +22,7 @@ export const AvatarBuilder: FC = () => {
         <Button
           variant="green"
           onClick={() => {
-            const AvatarComponent = avatars[avatar.shape];
+            const AvatarComponent = avatars[idx ?? 0];
 
             const svgString = ReactDOMServer.renderToString(
               <AvatarComponent
@@ -46,11 +47,11 @@ export const AvatarBuilder: FC = () => {
               <button
                 key={index}
                 className={cn(
-                  avatar.shape === index ? 'bg-slate-100 border-black' : 'border-white',
+                  idx === index ? 'bg-slate-100 border-black' : 'border-white',
                   'flex justify-center items-center aspect-square  animation-transition rounded-full p-4 overflow-hidden border',
                 )}
                 onClick={() => {
-                  setAvatar({color: avatar.color, shape: index});
+                  setIdx(index);
                 }}>
                 <AvatarItem
                   fill={avatar.color}

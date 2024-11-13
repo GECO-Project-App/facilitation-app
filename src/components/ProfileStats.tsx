@@ -1,3 +1,4 @@
+import {Link} from '@/i18n/routing';
 import {Tables} from '../../database.types';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
@@ -10,8 +11,9 @@ export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
         <h3 className=" text-xl font-bold">{`${member.first_name} ${member.last_name}`}</h3>
         <p>{member.role}</p>
       </div>
-
-      <ProfileAvatar memberProfile={member} />
+      <Link href={`${member.user_id}/edit`}>
+        <ProfileAvatar memberProfile={member} size="lg" />
+      </Link>
       <section className="grid grid-cols-1 gap-4">
         {
           /* stats */

@@ -16,7 +16,7 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
       onOpenChange={onOpenChange}>
       <CollapsibleTrigger className="w-full">
         <div className="items-center w-full flex flex-col gap-4">
-          <ProfileAvatar />
+          <ProfileAvatar memberProfile={member} />
           <div className="text-center">
             <p className="font-bold">{`${member.first_name} ${member.last_name}`}</p>
             <p>{member.role}</p>

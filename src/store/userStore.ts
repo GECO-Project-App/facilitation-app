@@ -16,6 +16,7 @@ interface UserState {
   avatarUrl: string | null;
   signOut: () => Promise<void>;
   updateAvatar: (svgString: string) => Promise<void>;
+  downloadImage: (path: string) => Promise<string | undefined>;
 }
 
 export const useUserStore = create<UserState>()(
@@ -50,25 +51,33 @@ export const useUserStore = create<UserState>()(
 
           const url = URL.createObjectURL(data);
           set({avatarUrl: url});
+          return url;
         } catch (error) {
           console.log('Error downloading image: ', error);
+          return '';
         }
       },
       updateAvatar: async (svgString: string) => {
         const supabase = createClient();
         const {data: user, error: userError} = await supabase.auth.getUser();
         if (userError) throw userError;
+
         const avatarUrl = await updateTeamMemberAvatar(svgString);
         if (avatarUrl) {
-          const {data: profileData, error: profileError} = await supabase
+          const {error: profileError} = await supabase
             .from('profiles')
             .update({avatar_url: avatarUrl})
-            .eq('id', user.user.id)
-            .select();
+            .eq('id', user.user.id);
 
           if (profileError) throw profileError;
 
-          console.log('profileData', profileData);
+          await supabase.auth.updateUser({
+            data: {
+              avatar_url: avatarUrl,
+            },
+          });
+
+          set({avatarUrl});
         }
       },
     }),
