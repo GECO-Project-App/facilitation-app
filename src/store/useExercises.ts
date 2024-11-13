@@ -27,7 +27,7 @@ interface ExerciseType {
 
 interface ExercisesState {
   exercises: ExerciseType[];
-  currentTutorialExerciseId: string | null;
+  currentTutorialExerciseId: string | undefined;
   isLoading: boolean;
   init: (teamId: string) => Promise<void>;
 }
@@ -36,7 +36,7 @@ export const useExercisesStore = create<ExercisesState>()(
   devtools(
     (set) => ({
       exercises: [],
-      currentTutorialExerciseId: null,
+      currentTutorialExerciseId: undefined,
       isLoading: true,
       init: async (teamId: string) => {
         const {exercises} = await getExercisesData(teamId);

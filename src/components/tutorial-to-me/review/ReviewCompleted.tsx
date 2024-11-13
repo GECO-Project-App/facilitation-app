@@ -21,14 +21,21 @@ const ReviewCompleted: FC = () => {
       {steps.slice(0, -1).map((step, index) => (
         <div key={step.title} className={`${background(index)} h-64`}>
           <div className="space-y-1">
-            <h4 className="text-2xl font-bold">{step.title}</h4>
+            <h4 className="text-2xl font-bold p-4">{step.title}</h4>
           </div>
-          <Button variant="white" asChild className="mx-auto">
-            <Link href="#">
-              Let’s Get Started
-              <ArrowRight size={32} />
-            </Link>
-          </Button>
+          <p className="p-4">
+            {t('takeALookAtYourTeammates')}
+            <span className="font-bold">&nbsp;{step.title}&nbsp;</span>
+            {t('preferences')}
+          </p>
+          <div className="flex justify-center pt-2">
+            <Button variant="white" asChild>
+              <Link href={`../preferences/${step.title.toLowerCase()}`}>
+                {t('letsGetStarted')}
+                <ArrowRight size={32} />
+              </Link>
+            </Button>
+          </div>
         </div>
       ))}
     </div>

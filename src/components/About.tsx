@@ -20,7 +20,7 @@ export const About: FC<{
   buttonText: string;
 }> = ({slug, title, subtitle, description, buttonText}) => {
   const posthog = usePostHog();
-  const {exercises} = useExercisesStore();
+  const {currentTutorialExerciseId} = useExercisesStore();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
@@ -49,10 +49,6 @@ export const About: FC<{
     }
   }, [slug]);
 
-  const toturianExerciseId = exercises.find(
-    (e) => e.type === 'tutorial_to_me' && e.isActive,
-  )?.exerciseId;
-
   return (
     <PageLayout
       header={<Header />}
@@ -60,8 +56,8 @@ export const About: FC<{
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
           <Link
             href={
-              toturianExerciseId && slug === 'tutorial-to-me'
-                ? `/exercises/tutorial-to-me/id/${toturianExerciseId}`
+              currentTutorialExerciseId && slug === 'tutorial-to-me'
+                ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
                 : mock.button.link
             }>
             {buttonText} <ArrowRight size={28} />
@@ -85,7 +81,9 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && <InvOrDelMembers toturianExerciseId={toturianExerciseId} />}
+          {slug === 'tutorial-to-me' && (
+            <InvOrDelMembers toturianExerciseId={currentTutorialExerciseId} />
+          )}
         </div>
       </div>
     </PageLayout>
