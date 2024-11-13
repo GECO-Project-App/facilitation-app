@@ -113,6 +113,16 @@ export const sscMock = {
   },
 };
 
+export const tutorialMock = {
+  about: {
+    button: {
+      variant: 'yellow' as ButtonProps['variant'],
+      link: '/exercises/tutorial-to-me/define-timeline',
+      text: "Let's Start",
+    },
+  } as AboutProps,
+};
+
 export type PassItOnItem = {
   rive: string;
 };

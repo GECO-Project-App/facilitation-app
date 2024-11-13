@@ -20,7 +20,7 @@ export type ExerciseCardType = {
   description: string;
   button: string;
   link: string;
-  type: 'check-in' | 'check-out' | 'ssc';
+  type: 'check-in' | 'check-out' | 'ssc' | 'tutorial-to-me';
 };
 
 export type Step = {
@@ -42,4 +42,26 @@ export type AboutProps = {
     link: string | URL;
     text: string;
   };
+};
+
+export type BaseballCardType = {
+  member: TeamMember;
+  children?: React.ReactNode;
+} & React.ComponentPropsWithoutRef<typeof Collapsible>;
+
+export type TeamMember = {
+  user_id: string;
+  role: string[];
+  avatar_url?: string;
+  first_name?: string;
+  last_name?: string;
+};
+
+export type Team = {
+  id: string;
+  name: string;
+  team_code: string;
+  created_at: string;
+  created_by: string;
+  team_members: TeamMember[];
 };

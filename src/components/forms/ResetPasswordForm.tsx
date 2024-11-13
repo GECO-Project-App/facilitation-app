@@ -1,7 +1,7 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
-import {resetPassword} from '@/lib/actions';
+import {resetPassword} from '@/lib/actions/authActions';
 import {resetPasswordSchema, ResetPasswordSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RefreshCcw} from 'lucide-react';
@@ -31,7 +31,7 @@ export const ResetPasswordForm = () => {
         description: result.error,
       });
     } else {
-      router.replace('/user');
+      router.replace('/settings');
     }
   };
 
