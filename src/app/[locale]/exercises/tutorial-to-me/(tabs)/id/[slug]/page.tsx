@@ -118,6 +118,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   return (
     <PageLayout
       backgroundColor={`bg-${colorClass}`}
+      hasPadding={false}
       header={
         <Header onBackButton={previousStep}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
