@@ -1,6 +1,5 @@
 import {ProfileStats} from '@/components';
 import {getTeamMember} from '@/lib/actions/teamActions';
-import {notFound} from 'next/navigation';
 
 export default async function TeamMemberPage({
   params: {teamId, id},
@@ -9,9 +8,7 @@ export default async function TeamMemberPage({
 }) {
   const {member, error} = await getTeamMember(teamId, id);
 
-  if (error) {
-    notFound();
-  }
+  if (!member) return <div>Member not found</div>;
 
   return <ProfileStats member={member} />;
 }

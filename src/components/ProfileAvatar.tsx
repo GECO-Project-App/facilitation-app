@@ -1,20 +1,16 @@
-import {useTeamStore} from '@/store/teamStore';
+import {Tables} from '../../database.types';
 import {DefaultProfileImage} from './icons';
 import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar';
 
-export const ProfileAvatar = () => {
-  const {userProfile} = useTeamStore();
-
-  if (!userProfile) return null;
-
+export const ProfileAvatar = ({memberProfile}: {memberProfile: Tables<'team_members'>}) => {
   return (
-    <Avatar className="w-16 h-16 relative bg-white">
+    <Avatar className="w-32 h-32 relative bg-white aspect-square mx-auto">
       <AvatarImage
-        src={userProfile.avatar_url}
-        alt={`${userProfile.first_name} ${userProfile.last_name}`}
+        src={memberProfile?.avatar_url ?? ''}
+        alt={`${memberProfile.first_name} ${memberProfile.last_name}`}
       />
-      {userProfile?.first_name?.[0] && userProfile?.last_name?.[0] ? (
-        <AvatarFallback>{`${userProfile.first_name[0]}${userProfile.last_name[0]}`}</AvatarFallback>
+      {memberProfile?.first_name?.[0] && memberProfile?.last_name?.[0] ? (
+        <AvatarFallback>{`${memberProfile.first_name[0]}${memberProfile.last_name[0]}`}</AvatarFallback>
       ) : (
         <AvatarFallback>
           <DefaultProfileImage />

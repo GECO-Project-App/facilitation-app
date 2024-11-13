@@ -364,7 +364,7 @@ export async function getTeamMember(teamId: string, userId: string) {
     if (!member) {
       return {error: 'Team member not found'};
     }
-    console.log('member', member);
+
     return {success: true, member};
   } catch (error) {
     console.log('Unexpected error:', error);

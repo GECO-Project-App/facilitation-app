@@ -2,7 +2,6 @@
 import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
 import {removeTeamMember} from '@/lib/actions/teamActions';
-import {generateUserSlug} from '@/lib/utils';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {FC, useCallback, useState} from 'react';
@@ -53,15 +52,12 @@ export const TeamGrid: FC = () => {
               <BaseballCard member={facilitator} open>
                 <Button variant="white" size="xs" className=" justify-between w-full" asChild>
                   {facilitator.user_id === userProfile?.user_id ? (
-                    <Link
-                      href={`/team/${currentTeamId}/member/${userProfile.user_id}`}
-                      as={`/team/${generateUserSlug(currentTeam.name)}/member/${generateUserSlug(userProfile?.first_name, userProfile?.last_name)}`}>
+                    <Link href={`/team/${currentTeamId}/member/${userProfile.user_id}`}>
                       {t('buttons.editProfile')} <ChangeRole />
                     </Link>
                   ) : (
-                    <Link
-                      href={`/team/${currentTeamId}/member/${facilitator.user_id}`}
-                      as={`/team/${generateUserSlug(currentTeam.name)}/member/${generateUserSlug(facilitator?.first_name, facilitator?.last_name)}`}>
+                    <Link href={`/team/${currentTeamId}/member/${facilitator.user_id}`}>
+                      {' '}
                       {t('buttons.showProfile')}
                     </Link>
                   )}
@@ -101,15 +97,11 @@ export const TeamGrid: FC = () => {
 
                   <Button variant="white" size="xs" className=" justify-between w-full" asChild>
                     {member.user_id === userProfile?.user_id ? (
-                      <Link
-                        href={`/team/${currentTeamId}/member/${userProfile.user_id}`}
-                        as={`/team/${generateUserSlug(currentTeam.name)}/member/${generateUserSlug(userProfile?.first_name, userProfile?.last_name)}`}>
+                      <Link href={`/team/${currentTeamId}/member/${userProfile.user_id}`}>
                         {t('buttons.editProfile')} <ChangeRole />
                       </Link>
                     ) : (
-                      <Link
-                        href={`/team/${currentTeamId}/member/${member.user_id}`}
-                        as={`/team/${generateUserSlug(currentTeam.name)}/member/${generateUserSlug(member?.first_name, member?.last_name)}`}>
+                      <Link href={`/team/${currentTeamId}/member/${member.user_id}`}>
                         {t('buttons.showProfile')}
                       </Link>
                     )}

@@ -1,7 +1,6 @@
 'use client';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
-import {useCallback} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
 export const TeamSelect = ({
@@ -14,15 +13,6 @@ export const TeamSelect = ({
 }) => {
   const {setCurrentTeamId, currentTeam} = useTeamStore();
   const t = useTranslations('team.page');
-
-  useCallback(() => {
-    console.log('effect');
-
-    const init = async () => {
-      await useTeamStore.getState().init();
-    };
-    init();
-  }, []);
 
   return (
     <Select
