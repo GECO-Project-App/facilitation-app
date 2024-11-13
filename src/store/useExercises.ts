@@ -27,6 +27,7 @@ interface ExerciseType {
 
 interface ExercisesState {
   exercises: ExerciseType[];
+  currentTutorialExerciseId: string | null;
   isLoading: boolean;
   init: (teamId: string) => Promise<void>;
 }
@@ -35,10 +36,16 @@ export const useExercisesStore = create<ExercisesState>()(
   devtools(
     (set) => ({
       exercises: [],
+      currentTutorialExerciseId: null,
       isLoading: true,
       init: async (teamId: string) => {
         const {exercises} = await getExercisesData(teamId);
         set({exercises: exercises as ExerciseType[]});
+        set({
+          currentTutorialExerciseId: exercises?.find(
+            (e) => e.isActive && e.type === 'tutorial_to_me',
+          )?.exerciseId,
+        });
       },
     }),
     {name: 'ExercisesStore'},

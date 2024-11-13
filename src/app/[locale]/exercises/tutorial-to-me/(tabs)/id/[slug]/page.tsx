@@ -13,7 +13,7 @@ import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {createExercise} from './create-exercise';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
@@ -114,33 +114,53 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const colorClass = getColorClass(currentStep);
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const divFooterRef = useRef<HTMLDivElement | null>(null);
+  const [divHeaderHeight, setDivHeaderHeight] = useState<number>(0);
+  const [divFooterHeight, setDivFooterHeight] = useState<number>(0);
+
+  useEffect(() => {
+    if (divRef.current) {
+      setDivHeaderHeight(divRef.current.clientHeight);
+    }
+  }, [divRef]);
+  useEffect(() => {
+    if (divFooterRef.current) {
+      setDivFooterHeight(divFooterRef.current.clientHeight);
+    }
+  }, [divFooterRef]);
 
   return (
     <PageLayout
       backgroundColor={`bg-${colorClass}`}
       hasPadding={false}
       header={
-        <Header onBackButton={previousStep}>
-          <CarouselPagination steps={steps} currentStep={currentStep} />
-        </Header>
+        <div ref={divRef}>
+          <Header onBackButton={previousStep}>
+            <CarouselPagination steps={steps} currentStep={currentStep} />
+          </Header>
+        </div>
       }
       footer={
-        currentStep === steps.length - 1 ? (
-          <Button variant="blue" className="mx-auto" onClick={handleComplete}>
-            {t('backToHome')}
-          </Button>
-        ) : (
-          <Button variant="blue" onClick={nextStep}>
-            {t('submit')} <ArrowRight />
-          </Button>
-        )
+        <div ref={divFooterRef}>
+          {currentStep === steps.length - 1 ? (
+            <Button variant="blue" className="mx-auto" onClick={handleComplete}>
+              {t('backToHome')}
+            </Button>
+          ) : (
+            <Button variant="blue" onClick={nextStep}>
+              {t('submit')} <ArrowRight />
+            </Button>
+          )}
+        </div>
       }>
       <Carousel className="h-full w-full flex-1" setApi={setApi}>
         <CarouselContent>
           {steps.map((step, index) => (
             <CarouselItem
               key={index}
-              className="space-y-6 h-[70vh] overflow-y-auto overflow-x-hidden">
+              className={`space-y-6 overflow-y-auto overflow-x-hidden`}
+              style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
               {currentStep <= 2 ? (
                 <>
                   <h1 className="text-xl font-bold">{step.description}</h1>
