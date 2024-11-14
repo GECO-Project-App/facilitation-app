@@ -247,14 +247,16 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
     .from('avatars')
     .upload(`avatar-${user.user.id}.svg`, file, {
       cacheControl: '3600',
-      upsert: true, // TODO: this causes  message: 'new row violates row-level security policy'
+      upsert: true,
     });
 
   if (uploadError) {
     console.error('Error uploading avatar:', uploadError);
-    return null;
+    return {success: false, error: uploadError.message};
   }
-  return data.path;
+  revalidatePath('/team', 'page');
+
+  return {success: true, url: data.path};
 };
 
 export async function updateTeamMemberRole(

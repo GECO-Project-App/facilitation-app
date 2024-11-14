@@ -41,6 +41,7 @@ export const TeamGrid: FC = () => {
 
   if (!currentTeam) return null;
 
+  console.log(currentTeamId);
   return (
     <>
       {currentTeamId === 'new' ? (

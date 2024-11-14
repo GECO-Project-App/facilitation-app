@@ -1,4 +1,3 @@
-// Import necessary dependencies
 import {getUserTeams} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/client';
 import {create} from 'zustand';
@@ -77,7 +76,11 @@ export const useTeamStore = create<TeamState>()(
       // Change the currently selected team
       setCurrentTeamId: async (teamId) => {
         // Clear team data if no teamId provided
-        if (!teamId || teamId === 'new') {
+        if (teamId === 'new') {
+          set({currentTeamId: teamId, isLoading: false});
+          return;
+        }
+        if (!teamId) {
           set({currentTeam: null, isLoading: false});
           return;
         }

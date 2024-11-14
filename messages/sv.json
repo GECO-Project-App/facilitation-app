@@ -34,7 +34,10 @@
       "avatar": {
         "title": "Välj din avatar",
         "subtitle": "Hudton",
-        "button": "Spara ändringar"
+        "button": "Spara ändringar",
+        "updateSuccess": "Avatar uppdaterad",
+        "chooseAvatar": "Välj avatar",
+        "skinTone": "Hudton"
       }
     }
   },

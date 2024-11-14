@@ -1,5 +1,7 @@
 'use client';
 import {avatars} from '@/components/icons/avatar';
+import {toast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
@@ -15,13 +17,14 @@ export const AvatarBuilder: FC = () => {
   const {avatar, setAvatar, updateAvatar} = useUserStore();
   const [idx, setIdx] = useState<number | null>(null);
   const t = useTranslations('team.edit.avatar');
+  const router = useRouter();
   return (
     <PageLayout
       header={<Header />}
       footer={
         <Button
           variant="green"
-          onClick={() => {
+          onClick={async () => {
             const AvatarComponent = avatars[idx ?? 0];
 
             const svgString = ReactDOMServer.renderToString(
@@ -33,14 +36,27 @@ export const AvatarBuilder: FC = () => {
               />,
             );
 
-            updateAvatar(svgString);
+            const result = await updateAvatar(svgString);
+            if (result?.error) {
+              toast({
+                variant: 'destructive',
+                title: result.error,
+              });
+            } else {
+              toast({
+                variant: 'success',
+                title: t('updateSuccess'),
+              });
+
+              router.back();
+            }
           }}>
           {t('button')} <Save />
         </Button>
       }>
       <section className="flex flex-col gap-6">
         <section className="flex flex-col gap-4">
-          <p className="text-xl font-semibold text-center">Choose Your Avatar</p>
+          <p className="text-xl font-semibold text-center">{t('chooseAvatar')}</p>
 
           <div className="grid grid-cols-3 lg:grid-cols-4 gap-0 ">
             {avatars.map((AvatarItem, index) => (
@@ -64,7 +80,7 @@ export const AvatarBuilder: FC = () => {
           </div>
         </section>
         <section className="flex flex-col gap-4">
-          <p className="text-xl font-semibold">Skin Tone</p>
+          <p className="text-xl font-semibold">{t('skinTone')}</p>
           <AvatarColorPicker onColorSelect={(color) => setAvatar({color, shape: avatar.shape})} />
         </section>
       </section>

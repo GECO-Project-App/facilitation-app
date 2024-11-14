@@ -9,12 +9,12 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
   return (
     <Collapsible
       className={cn(
-        member.role.includes('facilitator') ? 'bg-pink' : 'bg-yellow',
+        member.role.includes('facilitator') ? 'bg-yellow' : 'bg-pink',
         'py-6 rounded-4xl border-2 border-black flex flex-col items-center space-y-4 h-fit',
       )}
       open={open}
       onOpenChange={onOpenChange}>
-      <CollapsibleTrigger className="w-full">
+      <CollapsibleTrigger className={cn('w-full')}>
         <div className="items-center w-full flex flex-col gap-4">
           <ProfileAvatar memberProfile={member} />
           <div className="text-center">
@@ -26,7 +26,7 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
 
       {children && (
         <CollapsibleContent>
-          <div className=" gap-2 flex flex-col ">{children}</div>
+          <div className="gap-2 flex flex-col">{children}</div>
         </CollapsibleContent>
       )}
     </Collapsible>

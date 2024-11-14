@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {Link, useRouter} from '@/i18n/routing';
+import {Link} from '@/i18n/routing';
 import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -11,7 +11,6 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 export const LoginForm = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const router = useRouter();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),

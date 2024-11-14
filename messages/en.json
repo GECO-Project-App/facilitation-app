@@ -36,7 +36,10 @@
       "avatar": {
         "title": "Choose your avatar",
         "subtitle": "Skin Tone",
-        "button": "Save Changes"
+        "button": "Save Changes",
+        "updateSuccess": "Avatar updated successfully",
+        "chooseAvatar": "Choose your avatar",
+        "skinTone": "Skin Tone"
       }
     }
   },

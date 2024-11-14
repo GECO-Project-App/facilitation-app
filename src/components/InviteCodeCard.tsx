@@ -11,7 +11,7 @@ export const InviteCodeCard = () => {
   const t = useTranslations('team.page');
   const btnRef = useRef<HTMLButtonElement>(null);
   const {toast} = useToast();
-  const {currentTeam} = useTeamStore();
+  const {currentTeam, currentTeamId} = useTeamStore();
 
   const copyCode = () => {
     navigator.clipboard
@@ -30,7 +30,7 @@ export const InviteCodeCard = () => {
 
   return (
     <>
-      {currentTeam && (
+      {currentTeam && currentTeamId !== 'new' && (
         <div className=" py-6 px-4 rounded-4xl border-2 border-black flex flex-col items-center h-fit bg-green gap-4">
           <p className="font-bold">{t('inviteCode')}:</p>
           <Button
