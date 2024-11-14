@@ -1,4 +1,5 @@
 'use client';
+import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExercisesStore} from '@/store/useExercises';
@@ -21,6 +22,7 @@ export const About: FC<{
 }> = ({slug, title, subtitle, description, buttonText}) => {
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
+  const {done} = useDoneTutorialExercise();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
@@ -57,7 +59,9 @@ export const About: FC<{
           <Link
             href={
               currentTutorialExerciseId && slug === 'tutorial-to-me'
-                ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
+                ? done
+                  ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}/review`
+                  : `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
                 : mock.button.link
             }>
             {buttonText} <ArrowRight size={28} />

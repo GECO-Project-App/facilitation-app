@@ -17,20 +17,20 @@ const ReviewCompleted: FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-min-full">
-      {steps.slice(0, -1).map((step, index) => (
-        <div key={step.title} className={`${background(index)} h-64`}>
-          <div className="space-y-1">
-            <h4 className="text-2xl font-bold p-4">{step.title}</h4>
-          </div>
+    <section className="flex flex-col h-min-full">
+      {steps.map((step, index) => (
+        <div
+          key={step.title}
+          className={`${background(index)} border-t-2 border-black ${index === steps.length - 1 ? 'border-b-2' : ''}`}>
+          <h4 className="text-2xl font-bold p-4">{step.title}</h4>
           <p className="p-4">
             {t('takeALookAtYourTeammates')}
             <span className="font-bold">&nbsp;{step.title}&nbsp;</span>
             {t('preferences')}
           </p>
-          <div className="flex justify-center pt-2">
-            <Button variant="white" asChild>
-              <Link href={`../preferences/${step.title.toLowerCase()}`}>
+          <div className="flex justify-center pb-8">
+            <Button variant="white" asChild className="h-12">
+              <Link href={`./${step.title.toLowerCase()}`}>
                 {t('letsGetStarted')}
                 <ArrowRight size={32} />
               </Link>
@@ -38,7 +38,7 @@ const ReviewCompleted: FC = () => {
           </div>
         </div>
       ))}
-    </div>
+    </section>
   );
 };
 
