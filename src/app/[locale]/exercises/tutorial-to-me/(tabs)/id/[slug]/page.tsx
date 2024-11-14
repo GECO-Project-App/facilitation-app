@@ -1,11 +1,9 @@
 'use client';
 import {Header, PageLayout} from '@/components';
 import {CarouselPagination} from '@/components/CarouselPagination';
-import Review from '@/components/tutorial-to-me/review/Review';
 import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
-import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useTutorialLocalStorage} from '@/hooks/useTutorialLocalStorage';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
@@ -17,8 +15,6 @@ import {useEffect, useRef, useState} from 'react';
 import {createExercise} from './create-exercise';
 
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
-  const {done} = useDoneTutorialExercise();
-
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
@@ -48,16 +44,11 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     if (!api) {
       return;
     }
-    if (done) {
-      setCurrentStep(steps.length - 1);
-    } else {
+    setCurrentStep(api.selectedScrollSnap());
+    api.on('select', () => {
       setCurrentStep(api.selectedScrollSnap());
-
-      api.on('select', () => {
-        setCurrentStep(api.selectedScrollSnap());
-      });
-    }
-  }, [api, setCurrentStep, done, steps.length]);
+    });
+  }, [api, setCurrentStep, steps.length]);
 
   const nextStep = () => {
     if (currentStep === 0) {
@@ -72,36 +63,10 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       const communications = [one, two, three];
       localStorage.setItem('communications', JSON.stringify(communications));
     }
-
-    if (currentStep + 1 >= steps.length - 1) {
-      const strengths = JSON.parse(localStorage.getItem('strengths') ?? '[]') as string[];
-      const weaknesses = JSON.parse(localStorage.getItem('weaknesses') ?? '[]') as string[];
-      const communications = JSON.parse(localStorage.getItem('communications') ?? '[]') as string[];
-      const saveAnswerDat = {
-        strengths,
-        weaknesses,
-        communications,
-        exercise_id: slug,
-        team_id: currentTeam?.id ?? '',
-        created_by: currentTeam?.created_by ?? '',
-      };
-      if (slug === 'create') {
-        createExercise(saveAnswerDat).then(() => {
-          clearTutorialLocalStorage();
-        });
-      } else {
-        saveTutorialToMeAnswer(saveAnswerDat).then(() => {
-          clearTutorialLocalStorage();
-        });
-      }
-      api?.scrollNext();
-    } else {
-      api?.scrollNext();
-    }
+    api?.scrollNext();
   };
 
   const previousStep = () => {
-    console.log('currentStep', currentStep);
     if (currentStep >= 1) {
       api?.scrollPrev();
     } else {
@@ -110,7 +75,30 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const handleComplete = () => {
-    router.push(`/`);
+    const communicationsData = [one, two, three];
+    localStorage.setItem('communications', JSON.stringify(communicationsData));
+    const strengths = JSON.parse(localStorage.getItem('strengths') ?? '[]') as string[];
+    const weaknesses = JSON.parse(localStorage.getItem('weaknesses') ?? '[]') as string[];
+    const communications = JSON.parse(localStorage.getItem('communications') ?? '[]') as string[];
+    const saveAnswerDat = {
+      strengths,
+      weaknesses,
+      communications,
+      exercise_id: slug,
+      team_id: currentTeam?.id ?? '',
+      created_by: currentTeam?.created_by ?? '',
+    };
+    if (slug === 'create') {
+      createExercise(saveAnswerDat).then(() => {
+        clearTutorialLocalStorage();
+      });
+    } else {
+      saveTutorialToMeAnswer(saveAnswerDat).then(() => {
+        clearTutorialLocalStorage();
+      });
+    }
+
+    router.push(`./${slug}/review`);
   };
 
   const colorClass = getColorClass(currentStep);
@@ -145,7 +133,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
         <div ref={divFooterRef}>
           {currentStep === steps.length - 1 ? (
             <Button variant="blue" className="mx-auto" onClick={handleComplete}>
-              {t('backToHome')}
+              {t('submit')}
             </Button>
           ) : (
             <Button variant="blue" onClick={nextStep}>
@@ -161,32 +149,27 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               key={index}
               className={`space-y-6 overflow-y-auto overflow-x-hidden`}
               style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
-              {currentStep <= 2 ? (
-                <>
-                  <h1 className="text-xl font-bold">{step.description}</h1>
-                  <TextAreaForTutorial
-                    title={`${step.title} 1`}
-                    borderColor={colorClass}
-                    setValue={setOne}
-                    value={one}
-                  />
-                  <TextAreaForTutorial
-                    title={`${step.title} 2`}
-                    borderColor={colorClass}
-                    setValue={setTwo}
-                    value={two}
-                  />
-                  <TextAreaForTutorial
-                    title={`${step.title} 3`}
-                    borderColor={colorClass}
-                    setValue={setThree}
-                    value={three}
-                  />
-                </>
-              ) : (
-                // <Review message={step.description} />
-                <Review />
-              )}
+              <>
+                <h1 className="text-xl font-bold">{step.description}</h1>
+                <TextAreaForTutorial
+                  title={`${step.title} 1`}
+                  borderColor={colorClass}
+                  setValue={setOne}
+                  value={one}
+                />
+                <TextAreaForTutorial
+                  title={`${step.title} 2`}
+                  borderColor={colorClass}
+                  setValue={setTwo}
+                  value={two}
+                />
+                <TextAreaForTutorial
+                  title={`${step.title} 3`}
+                  borderColor={colorClass}
+                  setValue={setThree}
+                  value={three}
+                />
+              </>
             </CarouselItem>
           ))}
         </CarouselContent>

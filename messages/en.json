@@ -296,11 +296,6 @@
           "title": "Communication",
           "description": "What three communication practices do you value when working on a project?",
           "button": "Submit"
-        },
-        {
-          "title": "Finish",
-          "description": "You're done! You can now see the results of the exercise in the 'Team' tab in the GECO app.",
-          "button": "Finish"
         }
       ]
     }

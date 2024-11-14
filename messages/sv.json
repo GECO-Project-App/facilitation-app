@@ -296,11 +296,6 @@
           "title": "Kommunikation",
           "description": "Vad tre kommunikationsmetoder du värderar när du arbetar i ett team?",
           "button": "Skicka"
-        },
-        {
-          "title": "Slutför",
-          "description": "Du är klar! Du kan nu se resultatet av övningen i 'Team' fliken i GECO-appen.",
-          "button": "Slutför"
         }
       ]
     }
