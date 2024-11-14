@@ -65,7 +65,7 @@ export const memberSchema = z.object({
 });
 
 export const createTeamSchema = z.object({
-  name: z.string(),
+  name: z.string().min(4),
 });
 
 export const joinTeamSchema = z.object({
