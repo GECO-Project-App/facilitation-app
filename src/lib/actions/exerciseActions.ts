@@ -18,7 +18,9 @@ export async function getExercisesData(teamId: string) {
       replied_id: e.replied_id,
       teamId: e.team_id,
       writingDate: e.writing_date ? e.writing_date : '',
+      writingTime: e.writing_time ? e.writing_time : '',
       reviewingDate: e.reviewing_date ? e.reviewing_date : '',
+      reviewingTime: e.reviewing_time ? e.reviewing_time : '',
       isActive: e.is_active,
       type: 'tutorial_to_me',
       answers: {

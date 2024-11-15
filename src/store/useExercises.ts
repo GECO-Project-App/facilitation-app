@@ -14,7 +14,9 @@ interface ExerciseType {
   createdBy: string;
   teamId: string;
   writingDate: string;
+  writingTime: string;
   reviewingDate: string;
+  reviewingTime: string;
   isActive: boolean;
   type: 'tutorial_to_me';
   replied_id: string;
