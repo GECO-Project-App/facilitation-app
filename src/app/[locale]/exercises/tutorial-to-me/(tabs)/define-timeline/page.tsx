@@ -8,13 +8,15 @@ import Link from 'next/link';
 
 export default function DefineTimeForTutorialToMePage() {
   const t = useTranslations('exercises.tutorialToMe');
-  const {writingDate, reviewingDate} = useTutorialToMe();
+  const {writingDate, reviewingDate, writingTime, reviewingTime} = useTutorialToMe();
   return (
     <PageLayout
       backgroundColor="bg-red"
       header={<Header />}
       footer={
-        <Button variant="white" disabled={!writingDate || !reviewingDate}>
+        <Button
+          variant="white"
+          disabled={!writingDate || !reviewingDate || !writingTime || !reviewingTime}>
           <Link href={`/exercises/tutorial-to-me/id/create`}>
             <span className="flex items-center gap-2">
               {t('nextStep')}
