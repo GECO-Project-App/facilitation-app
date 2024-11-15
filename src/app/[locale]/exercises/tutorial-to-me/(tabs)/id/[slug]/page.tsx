@@ -1,6 +1,7 @@
 'use client';
 import {Header, PageLayout} from '@/components';
 import {CarouselPagination} from '@/components/CarouselPagination';
+import ReviewTimeAtHeader from '@/components/tutorial-to-me/ReviewTimeAtHeader';
 import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
@@ -13,7 +14,6 @@ import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useEffect, useRef, useState} from 'react';
 import {createExercise} from './create-exercise';
-
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
@@ -125,7 +125,11 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       header={
         <div ref={divRef}>
           <Header onBackButton={previousStep}>
-            <CarouselPagination steps={steps} currentStep={currentStep} />
+            <div className="flex justify-between items-center w-full">
+              <div></div>
+              <CarouselPagination steps={steps} currentStep={currentStep} />
+              <ReviewTimeAtHeader />
+            </div>
           </Header>
         </div>
       }
