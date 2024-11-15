@@ -136,11 +136,15 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       footer={
         <div ref={divFooterRef}>
           {currentStep === steps.length - 1 ? (
-            <Button variant="blue" className="mx-auto" onClick={handleComplete}>
+            <Button
+              variant="blue"
+              className="mx-auto"
+              onClick={handleComplete}
+              disabled={!one || !two || !three}>
               {t('submit')}
             </Button>
           ) : (
-            <Button variant="blue" onClick={nextStep}>
+            <Button variant="blue" onClick={nextStep} disabled={!one || !two || !three}>
               {t('submit')} <ArrowRight />
             </Button>
           )}
