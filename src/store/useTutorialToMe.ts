@@ -10,6 +10,7 @@ interface TutorialToMeType {
   setWritingTime: (time: string) => void;
   setReviewingDate: (date: Date) => void;
   setReviewingTime: (time: string) => void;
+  clearTutorialToMeTimesAndDates: () => void;
 }
 
 export const useTutorialToMe = create<TutorialToMeType>()(
@@ -23,6 +24,13 @@ export const useTutorialToMe = create<TutorialToMeType>()(
       setWritingTime: (time) => set(() => ({writingTime: time})),
       setReviewingDate: (date) => set(() => ({reviewingDate: date})),
       setReviewingTime: (time) => set(() => ({reviewingTime: time})),
+      clearTutorialToMeTimesAndDates: () =>
+        set(() => ({
+          writingDate: undefined,
+          writingTime: undefined,
+          reviewingDate: undefined,
+          reviewingTime: undefined,
+        })),
     }),
 
     {name: 'TutorialToMeStore'},

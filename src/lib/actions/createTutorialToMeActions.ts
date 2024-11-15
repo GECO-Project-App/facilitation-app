@@ -4,7 +4,9 @@ import {createClient} from '../supabase/server';
 type TutorialToMeType = {
   team_id: string;
   writing_date: string;
+  writing_time: string;
   reviewing_date: string;
+  reviewing_time: string;
 };
 export async function createTutorialToMe(tutorialData: TutorialToMeType) {
   const supabase = createClient();

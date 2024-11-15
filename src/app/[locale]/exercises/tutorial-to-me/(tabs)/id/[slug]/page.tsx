@@ -9,6 +9,7 @@ import {useTutorialLocalStorage} from '@/hooks/useTutorialLocalStorage';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
 import {useTeamStore} from '@/store/teamStore';
+import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
@@ -91,6 +92,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     if (slug === 'create') {
       createExercise(saveAnswerDat).then(() => {
         clearTutorialLocalStorage();
+        useTutorialToMe.getState().clearTutorialToMeTimesAndDates();
       });
     } else {
       saveTutorialToMeAnswer(saveAnswerDat).then(() => {
