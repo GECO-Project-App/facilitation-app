@@ -571,23 +571,36 @@ CREATE TRIGGER refresh_team_permissions_on_member_change AFTER INSERT OR DELETE 
 
 CREATE TRIGGER on_team_created AFTER INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
 
--- Set up Storage!
-insert into storage.buckets (id, name)
-  values ('avatars', 'avatars');
 
--- Set up access controls for storage.
--- See https://supabase.com/docs/guides/storage#policy-examples for more details.
-create policy "Avatar images are publicly accessible." on storage.objects
-  for select using (bucket_id = 'avatars');
 
-create policy "Anyone can upload an avatar." on storage.objects
-  for insert with check (bucket_id = 'avatars');
+-- First check if bucket exists, if not create it
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM storage.buckets WHERE id = 'avatars') THEN
+        insert into storage.buckets (id, name) values ('avatars', 'avatars');
+    END IF;
+END $$;
 
- CREATE POLICY "Allow users to update their own avatar" ON storage.objects
-FOR ALL USING (
-  bucket_id = 'avatars' AND 
-  auth.uid()::text = (REGEXP_MATCH(name, '^avatar-(.*?)\.svg$'))[1]
-);
+-- Drop existing policies if they exist and recreate them
+DO $$
+BEGIN
+    DROP POLICY IF EXISTS "Avatar images are publicly accessible" ON storage.objects;
+    DROP POLICY IF EXISTS "Anyone can upload an avatar" ON storage.objects;
+    DROP POLICY IF EXISTS "Allow users to update their own avatar" ON storage.objects;
+END $$;
+
+-- Create the policies
+CREATE POLICY "Avatar images are publicly accessible" ON storage.objects
+    FOR SELECT USING (bucket_id = 'avatars');
+
+CREATE POLICY "Anyone can upload an avatar" ON storage.objects
+    FOR INSERT WITH CHECK (bucket_id = 'avatars');
+
+CREATE POLICY "Allow users to update their own avatar" ON storage.objects
+    FOR ALL USING (
+        bucket_id = 'avatars' AND 
+        auth.uid()::text = (REGEXP_MATCH(name, '^avatar-(.*?)\.svg$'))[1]
+    );
 
 -- Create trigger for new user profile creation
 CREATE TRIGGER on_auth_user_created
