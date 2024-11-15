@@ -1,19 +1,25 @@
+'use client';
 import {Button, Header, PageLayout} from '@/components';
 import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
+import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {ArrowRight} from 'lucide-react';
-import {getTranslations} from 'next-intl/server';
+import {useTranslations} from 'next-intl';
 import Link from 'next/link';
-export default async function DefineTimeForTutorialToMePage() {
-  const t = await getTranslations('exercises.tutorialToMe');
+
+export default function DefineTimeForTutorialToMePage() {
+  const t = useTranslations('exercises.tutorialToMe');
+  const {writingDate, reviewingDate} = useTutorialToMe();
   return (
     <PageLayout
       backgroundColor="bg-red"
       header={<Header />}
-      // footer={<CreateButton title={t('nextStep')} />}
       footer={
-        <Button className="h-16" variant="blue" asChild>
+        <Button variant="white" disabled={!writingDate || !reviewingDate}>
           <Link href={`/exercises/tutorial-to-me/id/create`}>
-            {t('nextStep')} <ArrowRight size={28} />
+            <span className="flex items-center gap-2">
+              {t('nextStep')}
+              <ArrowRight size={28} />
+            </span>
           </Link>
         </Button>
       }>
