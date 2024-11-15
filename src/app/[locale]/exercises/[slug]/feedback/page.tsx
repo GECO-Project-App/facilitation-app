@@ -1,7 +1,8 @@
 'use client';
 import {PageLayout} from '@/components';
 import {Confetti} from '@/components/icons/confetti';
-import DialogView from '@/components/modal/DialogView';
+import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, SSC_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
 import {useTranslations} from 'next-intl';
 import {usePostHog} from 'posthog-js/react';
@@ -11,10 +12,9 @@ import Survey from './Survey';
 export default function FeedbackFor({params}: {params: {lang: string; slug: string}}) {
   const slug = params.slug;
   const t = useTranslations('feedback');
+  const {toast} = useToast();
+  const router = useRouter();
 
-  const [showSurvey, setShowSurvey] = useState(true);
-
-  // const [surveyTitle, setSurveyTitle] = useState('');
   const [surveyID, setSurveyID] = useState('');
 
   const posthog = usePostHog();
@@ -47,36 +47,40 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
   }, [posthog, slug]);
 
   const handleSubmit = (value: string | null) => {
-    setShowSurvey(false);
     posthog.capture('survey sent', {
       $survey_id: surveyID, // required
       $survey_response: value, // required
+    });
+
+    router.push('/');
+    toast({
+      variant: 'transparent',
+      size: 'fullscreen',
+      duration: 2000,
+      className: 'text-black bg-pink',
+      children: (
+        <>
+          <Confetti />
+          <h3 className="text-2xl font-bold">{t('thankYouText')}</h3>
+        </>
+      ),
     });
   };
 
   return (
     <PageLayout backgroundColor="bg-yellow" contentColor="bg-yellow">
-      {showSurvey ? (
-        <Survey
-          title={
-            slug === 'ssc'
-              ? 'Start-Stop-Continue'
-              : slug === 'check-in'
-                ? 'Check-In'
-                : slug === 'check-out'
-                  ? 'Check-Out'
-                  : ''
-          }
-          onSubmit={handleSubmit}
-        />
-      ) : (
-        <DialogView
-          destinationRoute="/"
-          message={t('thankYouText')}
-          sticker={<Confetti />}
-          className="bg-pink"
-        />
-      )}
+      <Survey
+        title={
+          slug === 'ssc'
+            ? 'Start-Stop-Continue'
+            : slug === 'check-in'
+              ? 'Check-In'
+              : slug === 'check-out'
+                ? 'Check-Out'
+                : ''
+        }
+        onSubmit={handleSubmit}
+      />
     </PageLayout>
   );
 }
