@@ -36,6 +36,7 @@ export const ProfileForm = ({user}: {user: User}) => {
     } else {
       console.log('result', result);
       toast({
+        variant: 'success',
         title: t('profile.success'),
         description: t('profile.updateSuccess'),
       });

@@ -1,6 +1,9 @@
 'use client';
+import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
+import {useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
 export const TeamSelect = ({
@@ -13,12 +16,21 @@ export const TeamSelect = ({
 }) => {
   const {setCurrentTeamId, currentTeam} = useTeamStore();
   const t = useTranslations('team.page');
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const teamValue = useMemo(() => {
+    const teamId = searchParams.get('id');
+    setCurrentTeamId(teamId);
+
+    return searchParams.get('id') ?? '';
+  }, [setCurrentTeamId, searchParams]);
 
   return (
     <Select
       defaultValue={currentTeam?.name ?? teams[0].name}
-      value={currentTeam?.id}
-      onValueChange={(value) => setCurrentTeamId(value)}>
+      value={teamValue}
+      onValueChange={(value) => router.push(`?id=${value}`)}>
       <SelectTrigger className="">
         <SelectValue placeholder={currentTeam?.name ?? teams[0].name ?? 'Select a team'} />
       </SelectTrigger>
