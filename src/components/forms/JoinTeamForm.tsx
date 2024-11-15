@@ -5,6 +5,7 @@ import {joinTeamSchema, JoinTeamSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
+import {TeamToast} from '../icons';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
 export const JoinTeamForm = () => {
@@ -29,8 +30,15 @@ export const JoinTeamForm = () => {
       });
     } else {
       toast({
-        variant: 'default',
-        title: t('toast.joined'),
+        variant: 'transparent',
+        size: 'fullscreen',
+        className: 'text-black bg-white',
+        children: (
+          <div className="flex flex-col gap-2 w-full items-center justify-center">
+            <h3 className="text-lg font-semibold">{t('toast.joined')}</h3>
+            <TeamToast />
+          </div>
+        ),
       });
     }
   };
