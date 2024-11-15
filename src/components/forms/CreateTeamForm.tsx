@@ -1,5 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {createTeam} from '@/lib/actions/teamActions';
 import {createTeamSchema, CreateTeamSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -11,6 +12,7 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 export const CreateTeamForm = () => {
   const {toast} = useToast();
   const t = useTranslations('team');
+  const router = useRouter();
 
   const form = useForm<CreateTeamSchema>({
     resolver: zodResolver(createTeamSchema),
@@ -40,6 +42,8 @@ export const CreateTeamForm = () => {
           </div>
         ),
       });
+
+      router.push(`/team?id=${result.teamId}`);
     }
   };
 

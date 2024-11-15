@@ -19,6 +19,7 @@
     "inviteTeam": "Invite team members",
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
+      "createOrJoin": "Create or Join a team",
       "buttons": {
         "remove": "Remove",
         "changeRole": "Change role",
@@ -31,11 +32,14 @@
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },
-      "edit": {
+    "edit": {
       "avatar": {
         "title": "Choose your avatar",
         "subtitle": "Skin Tone",
-        "button": "Save Changes"
+        "button": "Save Changes",
+        "updateSuccess": "Avatar updated successfully",
+        "chooseAvatar": "Choose your avatar",
+        "skinTone": "Skin Tone"
       }
     }
   },
@@ -52,7 +56,10 @@
       "email": "Email",
       "enterUsername": "Select profile name",
       "password": "Password"
-    }
+    },
+    "success": "Success",
+    "error": "Error",
+    "updateSuccess": "Profile updated successfully"
   },
   "home": {
     "title": "Project GECO",

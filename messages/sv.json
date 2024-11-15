@@ -16,9 +16,10 @@
        "inviteCode": "Inbjudningskod",
     "inviteTeam": "Bjud in teammedlemmar",
     "copied": "Kopierat",
-    "copiedDescription": "Inbjudningskoden har kopierats",
-    "buttons": {  
-      "remove": "Ta bort",
+      "copiedDescription": "Inbjudningskoden har kopierats",
+      "createOrJoin": "Skapa eller gå med i ett team",
+      "buttons": {
+        "remove": "Ta bort",
       "changeRole": "Ändra roll",
       "showProfile": "Visa profil",
       "editProfile": "Redigera profil"
@@ -33,7 +34,10 @@
       "avatar": {
         "title": "Välj din avatar",
         "subtitle": "Hudton",
-        "button": "Spara ändringar"
+        "button": "Spara ändringar",
+        "updateSuccess": "Avatar uppdaterad",
+        "chooseAvatar": "Välj avatar",
+        "skinTone": "Hudton"
       }
     }
   },
@@ -50,7 +54,10 @@
       "username": "Användarnamn",
       "enterUsername": "Ange användarnamn",
       "password": "Lösenord"
-    }
+    },
+    "success": "Profil uppdaterad",
+    "error": "Ett fel uppstod",
+    "updateSuccess": "Profil uppdaterad"
   },
   "home": {
     "title": "Projekt GECO",

@@ -57,6 +57,16 @@ export type TeamMember = {
   last_name?: string;
 };
 
+export type Profile = {
+  id: string;
+  updated_at?: string;
+  username?: string;
+  email?: string;
+  avatar_url?: string;
+  first_name?: string;
+  last_name?: string;
+};
+
 export type Team = {
   id: string;
   name: string;

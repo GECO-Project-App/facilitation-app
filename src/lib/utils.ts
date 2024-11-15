@@ -22,3 +22,7 @@ export function getRandomUniqueItem<T>(array: T[], previousPicks: T[]): T | unde
   const randomIndex = generateRandomNumberInRange(availableItems.length);
   return availableItems[randomIndex];
 }
+
+export const generateUserSlug = (firstName?: string, lastName?: string) => {
+  return encodeURIComponent(`${firstName?.toLocaleLowerCase()}-${lastName?.toLocaleLowerCase()}`);
+};

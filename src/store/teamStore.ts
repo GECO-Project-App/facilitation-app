@@ -1,19 +1,22 @@
-// Import necessary dependencies
 import {getUserTeams} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/client';
-import {Team, TeamMember} from '@/lib/types';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
+import {Tables} from '../../database.types';
+
+type TeamWithMembers = Tables<'teams'> & {
+  team_members: Array<Omit<Tables<'team_members'>, 'joined_at' | 'team_id'>>;
+};
 
 interface TeamState {
   currentTeamId: string | null; // ID of currently selected team
-  currentTeam: Team | null; // Currently selected team data
+  currentTeam: Omit<TeamWithMembers, 'created_at'> | null; // Currently selected team data with members
   isLoading: boolean; // Loading state indicator
   init: () => Promise<void>; // Initialize the store
   setCurrentTeamId: (teamId: string | null) => Promise<void>; // Change selected team
-  facilitator: TeamMember | null; // Team facilitator/leader
+  facilitator: Omit<Tables<'team_members'>, 'joined_at' | 'team_id'> | null; // Team facilitator/leader
   isFacilitator: boolean; // Whether current user is facilitator
-  userProfile: TeamMember | null; // Current user's profile
+  userProfile: Omit<Tables<'team_members'>, 'joined_at' | 'team_id'> | null; // Current user's profile
 }
 
 // Create the team store using Zustand
@@ -47,7 +50,7 @@ export const useTeamStore = create<TeamState>()(
               if (b.user_id === user.id) return 1;
               if (a.user_id === teams[0].created_by) return -1;
               if (b.user_id === teams[0].created_by) return 1;
-              return a.first_name.localeCompare(b.first_name);
+              return a?.first_name?.localeCompare(b?.first_name ?? '') ?? 0;
             });
 
             // Update store with first team's data
@@ -72,13 +75,16 @@ export const useTeamStore = create<TeamState>()(
 
       // Change the currently selected team
       setCurrentTeamId: async (teamId) => {
-        set({currentTeamId: teamId, isLoading: true});
-
         // Clear team data if no teamId provided
+        if (teamId === 'new') {
+          set({currentTeamId: teamId, isLoading: false});
+          return;
+        }
         if (!teamId) {
           set({currentTeam: null, isLoading: false});
           return;
         }
+        set({currentTeamId: teamId, isLoading: true});
 
         try {
           const supabase = createClient();
@@ -119,7 +125,7 @@ export const useTeamStore = create<TeamState>()(
               if (b.user_id === user.id) return 1;
               if (a.user_id === team.created_by) return -1;
               if (b.user_id === team.created_by) return 1;
-              return a.first_name.localeCompare(b.first_name);
+              return a?.first_name?.localeCompare(b?.first_name ?? '') ?? 0;
             });
 
             // Update store with new team data

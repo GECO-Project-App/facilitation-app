@@ -9,7 +9,7 @@ import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
-export const ProfileForm = ({user}: {user: User}) => {
+export const MemberForm = ({user}: {user: User}) => {
   const {toast} = useToast();
   const t = useTranslations();
 
@@ -25,7 +25,6 @@ export const ProfileForm = ({user}: {user: User}) => {
 
   const onSubmit = async (data: ProfileSchema) => {
     const result = await updateProfile(data);
-    console.log('result', result);
 
     if (result.error) {
       toast({
@@ -34,9 +33,7 @@ export const ProfileForm = ({user}: {user: User}) => {
         variant: 'destructive',
       });
     } else {
-      console.log('result', result);
       toast({
-        variant: 'success',
         title: t('profile.success'),
         description: t('profile.updateSuccess'),
       });

@@ -1,6 +1,5 @@
 'use server';
 import {revalidatePath} from 'next/cache';
-import {z} from 'zod';
 import {createClient} from '../supabase/server';
 import {CreateTeamSchema, createTeamSchema} from '../zodSchemas';
 
@@ -9,51 +8,55 @@ export async function createTeam(data: CreateTeamSchema) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
+    // Get or create user profile
+    let {data: profile} = await supabase
+      .from('profiles')
+      .select('first_name, last_name, avatar_url')
+      .eq('id', user.user.id)
+      .maybeSingle();
+
+    if (!profile) {
+      // Create profile if it doesn't exist
+      const {data: newProfile, error: createError} = await supabase
+        .from('profiles')
+        .insert({
+          id: user.user.id,
+          first_name: user.user.user_metadata?.first_name || '',
+          last_name: user.user.user_metadata?.last_name || '',
+          avatar_url: user.user.user_metadata?.avatar_url || '',
+        })
+        .select()
+        .single();
+
+      if (createError) throw createError;
+      profile = newProfile;
+    }
+
+    // Create team
     const {data: teamData, error: teamError} = await supabase
       .from('teams')
       .insert({
         name: validatedFields.name,
         created_by: user.user.id,
       })
-      .select()
-      .single();
+      .select('*')
+      .maybeSingle();
 
-    if (teamError) {
+    if (teamError || !teamData) {
       console.log(teamError);
-      return {error: teamError.message};
+      return {error: teamError?.message || 'Failed to create team'};
     }
 
     revalidatePath('/team', 'page');
+
     return {success: true, teamId: teamData.id};
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return {error: error.errors[0].message};
-    }
     console.log('Unexpected error:', error);
     return {error: 'Failed to create team'};
   }
-}
-
-export async function inviteTeamMember(teamId: string, email: string) {
-  const supabase = createClient();
-  const {data, error} = await supabase
-    .from('team_invitations')
-    .insert({team_id: teamId, email})
-    .select();
-  return {data, error};
-}
-
-export async function acceptInvitation(invitationId: string) {
-  const supabase = createClient();
-
-  const {data, error} = await supabase.rpc('handle_invitation_acceptance', {
-    invitation_id: invitationId,
-  });
-  return {data, error};
 }
 
 export async function joinTeamByCode(teamCode: string) {
@@ -80,16 +83,16 @@ export async function joinTeamByCode(teamCode: string) {
     const {data: teamData, error: teamError} = await supabase
       .from('teams')
       .select('id')
-      .eq('team_code', teamCode)
-      .single();
+      .eq('team_code', teamCode.toUpperCase())
+      .maybeSingle();
 
     if (teamError) {
       console.log('Team lookup error:', teamError);
-      return {error: 'Invalid team code'};
+      return {error: 'Failed to lookup team'};
     }
 
     if (!teamData) {
-      return {error: 'Team not found'};
+      return {error: 'Invalid team code'};
     }
 
     // Check if user is already a member
@@ -98,7 +101,7 @@ export async function joinTeamByCode(teamCode: string) {
       .select()
       .eq('team_id', teamData.id)
       .eq('user_id', user.user.id)
-      .single();
+      .maybeSingle();
 
     if (existingMember) {
       return {error: 'You are already a member of this team'};
@@ -134,42 +137,47 @@ export async function getUserTeams() {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    // First get the user's team IDs
-    const {data: userTeams, error: userTeamsError} = await supabase
+    // First get the teams the user is a member of
+    const {data: memberTeams, error: memberError} = await supabase
       .from('team_members')
       .select('team_id')
       .eq('user_id', user.user.id);
 
-    if (userTeamsError) throw userTeamsError;
+    if (memberError) {
+      console.log('Error fetching member teams:', memberError);
+      return {error: 'Failed to fetch teams'};
+    }
 
-    // Then get the full team details
-    const teamIds = userTeams.map((t) => t.team_id);
+    const teamIds = memberTeams?.map((t) => t.team_id) || [];
+
+    // Then get the full team data including members
     const {data: teams, error: teamsError} = await supabase
       .from('teams')
       .select(
         `
-    id,
-    name,
-    team_code,
-    created_at,
-    created_by,
-    team_members!inner(
-      role,
-      user_id,
-      avatar_url,
-      first_name,
-      last_name
-    )
-  `,
+        id,
+        name,
+        team_code,
+        created_at,
+        created_by,
+        team_members (
+          role,
+          user_id,
+          avatar_url,
+          first_name,
+          last_name
+        )
+      `,
       )
-      .in('id', teamIds);
+      .in('id', teamIds)
+      .order('name', {ascending: true});
 
     if (teamsError) {
       console.log('Error fetching teams:', teamsError);
       return {error: 'Failed to fetch teams'};
     }
 
-    return {teams};
+    return {teams: teams || []};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to fetch teams'};
@@ -190,11 +198,15 @@ export async function removeTeamMember(teamId: string, userId: string) {
       .select('role')
       .eq('team_id', teamId)
       .eq('user_id', currentUser.user.id)
-      .single();
+      .maybeSingle();
 
     if (facilitatorError) {
       console.log('Facilitator check error:', facilitatorError);
       return {error: 'Failed to verify permissions'};
+    }
+
+    if (!facilitator) {
+      return {error: 'Not a team member'};
     }
 
     // Only allow facilitators to remove members (or users removing themselves)
@@ -215,8 +227,149 @@ export async function removeTeamMember(teamId: string, userId: string) {
     }
 
     revalidatePath('/team', 'page');
+    return {success: true};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to remove team member'};
+  }
+}
+
+export const updateTeamMemberAvatar = async (svgString: string) => {
+  const supabase = createClient();
+  const {data: user, error: userError} = await supabase.auth.getUser();
+
+  if (userError) throw userError;
+
+  const blob = new Blob([svgString], {type: 'image/svg+xml'});
+  const file = new File([blob], 'avatar.svg', {type: 'image/svg+xml'});
+
+  const {data, error: uploadError} = await supabase.storage
+    .from('avatars')
+    .upload(`avatar-${user.user.id}.svg`, file, {
+      cacheControl: '3600',
+      upsert: true,
+    });
+
+  if (uploadError) {
+    console.error('Error uploading avatar:', uploadError);
+    return {success: false, error: uploadError.message};
+  }
+  revalidatePath('/team', 'page');
+
+  return {success: true, url: data.path};
+};
+
+export async function updateTeamMemberRole(
+  teamId: string,
+  userId: string,
+  newRole: 'facilitator' | 'member',
+) {
+  const supabase = createClient();
+
+  try {
+    // Get the current user (the one performing the role change)
+    const {data: currentUser, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    // Check if the current user is a facilitator of the team
+    const {data: facilitator, error: facilitatorError} = await supabase
+      .from('team_members')
+      .select('role')
+      .eq('team_id', teamId)
+      .eq('user_id', currentUser.user.id)
+      .single();
+
+    if (facilitatorError || facilitator?.role !== 'facilitator') {
+      return {error: 'Not authorized to change member roles'};
+    }
+
+    // Update the member's role
+    const {error: updateError} = await supabase
+      .from('team_members')
+      .update({role: newRole})
+      .eq('team_id', teamId)
+      .eq('user_id', userId);
+
+    if (updateError) {
+      console.log('Role update error:', updateError);
+      return {error: 'Failed to update member role'};
+    }
+
+    revalidatePath('/team', 'page');
+    return {success: true};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to update member role'};
+  }
+}
+
+export async function deleteTeam(teamId: string) {
+  const supabase = createClient();
+
+  try {
+    // Check if user is a facilitator
+    const {data: currentUser, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    const {data: facilitator, error: facilitatorError} = await supabase
+      .from('team_members')
+      .select('role')
+      .eq('team_id', teamId)
+      .eq('user_id', currentUser.user.id)
+      .single();
+
+    if (facilitatorError || facilitator?.role !== 'facilitator') {
+      return {error: 'Not authorized to delete team'};
+    }
+
+    // Delete the team (cascade will handle team_members)
+    const {error: deleteError} = await supabase.from('teams').delete().eq('id', teamId);
+
+    if (deleteError) {
+      console.log('Team deletion error:', deleteError);
+      return {error: 'Failed to delete team'};
+    }
+
+    revalidatePath('/team', 'page');
+    return {success: true};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to delete team'};
+  }
+}
+
+export async function getTeamMember(teamId: string, userId: string) {
+  const supabase = createClient();
+
+  try {
+    const {data: member, error} = await supabase
+      .from('team_members')
+      .select(
+        `
+        *,
+        profiles (
+          first_name,
+          last_name,
+          avatar_url
+        )
+      `,
+      )
+      .eq('team_id', teamId)
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.log('Team member lookup error:', error);
+      return {error: 'Failed to get team member'};
+    }
+
+    if (!member) {
+      return {error: 'Team member not found'};
+    }
+
+    return {success: true, member};
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to get team member'};
   }
 }
