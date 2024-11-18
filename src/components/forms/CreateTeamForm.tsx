@@ -32,6 +32,7 @@ export const CreateTeamForm = () => {
       });
     } else {
       toast({
+        duration: 2000,
         variant: 'transparent',
         size: 'fullscreen',
         className: 'text-black bg-white',
