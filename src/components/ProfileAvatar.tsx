@@ -13,14 +13,14 @@ export const ProfileAvatar = ({
   memberProfile: Tables<'team_members'>;
   size?: 'sm' | 'lg';
 }) => {
-  const {downloadImage} = useUserStore();
-  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const {downloadImage, avatarUrl} = useUserStore();
+  const [url, setUrl] = useState<string>('');
 
   useEffect(() => {
     async function getImage(path: string) {
       const url = await downloadImage(path);
 
-      setAvatarUrl(url ?? '');
+      setUrl(url ?? '');
     }
 
     if (memberProfile?.avatar_url) getImage(memberProfile.avatar_url);
@@ -34,7 +34,7 @@ export const ProfileAvatar = ({
         size === 'sm' ? 'w-16 h-16 p-1' : 'w-32 h-32 p-2',
       )}>
       <AvatarImage
-        src={avatarUrl}
+        src={avatarUrl ?? url}
         alt={`${memberProfile?.first_name} ${memberProfile?.last_name}`}
         className="relative"
       />
