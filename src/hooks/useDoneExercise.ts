@@ -5,7 +5,7 @@ export const useDoneTutorialExercise = () => {
   let done = false;
   let isAllDone = false;
   const {userProfile} = useTeamStore();
-  const {exercises} = useExercisesStore();
+  const {exercises, writingDate, writingTime} = useExercisesStore();
   const {currentTeam} = useTeamStore();
   const currentTutorialExerciseId =
     exercises?.find((e) => e.type === 'tutorial_to_me' && e.isActive)?.exerciseId ?? '';
@@ -21,5 +21,29 @@ export const useDoneTutorialExercise = () => {
   if (allMembersTeamIds?.length === currentExercise?.length) {
     isAllDone = true;
   }
-  return {done, isAllDone};
+
+  const writingDateInfo = writingDate ? new Date(writingDate) : undefined;
+  const writingTimeInfo = writingTime
+    ? new Date(`1970-01-01T${writingTime}Z`).toLocaleTimeString()
+    : undefined;
+
+  const checkTimePassed = () => {
+    let theTimePassed = false;
+    if (writingDateInfo) {
+      const currentDate = new Date();
+      if (currentDate > writingDateInfo) {
+        theTimePassed = true;
+      } else if (currentDate.toDateString() === writingDateInfo.toDateString() && writingTimeInfo) {
+        const currentTime = currentDate.toLocaleTimeString();
+        if (currentTime > writingTimeInfo) {
+          theTimePassed = true;
+        }
+      }
+    }
+    return theTimePassed;
+  };
+
+  const theTimePassed = checkTimePassed();
+
+  return {done, isAllDone, theTimePassed};
 };

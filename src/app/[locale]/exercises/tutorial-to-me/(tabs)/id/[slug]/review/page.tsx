@@ -12,7 +12,7 @@ import {FC} from 'react';
 
 const Review: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
-  const {isAllDone} = useDoneTutorialExercise();
+  const {isAllDone, theTimePassed} = useDoneTutorialExercise();
   return (
     <PageLayout
       hasPadding={false}
@@ -31,7 +31,7 @@ const Review: FC = () => {
           {isAllDone ? t('reviewComplete') : t('backToHome')}
         </Button>
       }>
-      {isAllDone ? <ReviewCompleted /> : <ReviewNotCompleted />}
+      {isAllDone || theTimePassed ? <ReviewCompleted /> : <ReviewNotCompleted />}
     </PageLayout>
   );
 };

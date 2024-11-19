@@ -22,7 +22,7 @@ export const About: FC<{
 }> = ({slug, title, subtitle, description, buttonText}) => {
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
-  const {done} = useDoneTutorialExercise();
+  const {done, theTimePassed} = useDoneTutorialExercise();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
@@ -51,6 +51,8 @@ export const About: FC<{
     }
   }, [slug]);
 
+  console.log(theTimePassed);
+
   return (
     <PageLayout
       header={<Header />}
@@ -59,7 +61,7 @@ export const About: FC<{
           <Link
             href={
               currentTutorialExerciseId && slug === 'tutorial-to-me'
-                ? done
+                ? done || theTimePassed
                   ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}/review`
                   : `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
                 : mock.button.link
