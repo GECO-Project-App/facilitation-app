@@ -23,7 +23,8 @@
       "changeRole": "Ändra roll",
       "showProfile": "Visa profil",
       "editProfile": "Redigera profil"
-    }
+    },
+    "removeMemberSuccess": "Teammedlem borttagen"
     },
     "toast": {
       "created": "Du har skapat ett team!",

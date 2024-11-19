@@ -193,24 +193,15 @@ export async function removeTeamMember(teamId: string, userId: string) {
     if (userError) throw userError;
 
     // Check if the current user is a facilitator of the team
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .maybeSingle();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError) {
-      console.log('Facilitator check error:', facilitatorError);
-      return {error: 'Failed to verify permissions'};
-    }
-
-    if (!facilitator) {
-      return {error: 'Not a team member'};
-    }
-
-    // Only allow facilitators to remove members (or users removing themselves)
-    if (facilitator.role !== 'facilitator' && currentUser.user.id !== userId) {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to remove team members'};
     }
 
@@ -275,14 +266,15 @@ export async function updateTeamMemberRole(
     if (userError) throw userError;
 
     // Check if the current user is a facilitator of the team
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .single();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError || facilitator?.role !== 'facilitator') {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to change member roles'};
     }
 
@@ -314,14 +306,15 @@ export async function deleteTeam(teamId: string) {
     const {data: currentUser, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .single();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError || facilitator?.role !== 'facilitator') {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to delete team'};
     }
 

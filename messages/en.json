@@ -25,7 +25,8 @@
         "changeRole": "Change role",
         "showProfile": "Show profile",
         "editProfile": "Edit profile"
-      }
+      },
+      "removeMemberSuccess": "Team member removed successfully"
     },
     "toast": {
       "created": "You have created a team!",
