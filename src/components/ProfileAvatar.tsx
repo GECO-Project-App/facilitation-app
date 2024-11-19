@@ -17,12 +17,24 @@ export const ProfileAvatar = ({
   const [url, setUrl] = useState<string>('');
 
   useEffect(() => {
+    let isMounted = true;
+
     async function getImage(path: string) {
       const url = await downloadImage(path);
-      setUrl(url ?? '');
+      if (isMounted) {
+        setUrl(url ?? '');
+      }
     }
 
-    if (memberProfile?.avatar_url) getImage(memberProfile.avatar_url);
+    if (memberProfile?.avatar_url) {
+      getImage(memberProfile.avatar_url);
+    } else {
+      setUrl('');
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [memberProfile?.avatar_url, downloadImage]);
 
   if (!memberProfile) return null;

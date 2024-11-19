@@ -18,14 +18,14 @@ export const ProfileStats = ({
       </div>
       <div className="bg-yellow border-black border-y-2 py-4">
         <Link href={`${member.user_id}/edit`}>
-          {isCurrentUser && (
-            <div className="relative w-fit mx-auto">
-              <ProfileAvatar memberProfile={member} size="lg" />
+          <div className="relative w-fit mx-auto">
+            <ProfileAvatar memberProfile={member} size="lg" />
+            {isCurrentUser && (
               <button className="absolute bottom-0 right-0  aspect-square z-10 p-2 border-black border-2 rounded-full  transition-all  bg-white shadow-xs active:translate-x-boxShadowX active:translate-y-boxShadowY active:shadow-none">
                 <Pencil size={18} />
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </Link>
       </div>
 
