@@ -46,9 +46,16 @@ export const useUserStore = create<UserState>()(
         const supabase = createClient();
 
         try {
-          const {data, error} = await supabase.storage.from('avatars').download(path);
+          const {data, error} = await supabase.storage
+            .from('avatars')
+            .download(path + `?t=${new Date().getTime()}`);
+
           if (error) {
             throw error;
+          }
+
+          if (get().avatarUrl !== null) {
+            URL.revokeObjectURL(get().avatarUrl as string);
           }
 
           const url = URL.createObjectURL(data);

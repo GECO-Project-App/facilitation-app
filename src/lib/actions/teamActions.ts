@@ -254,7 +254,10 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
     console.error('Error uploading avatar:', uploadError);
     return {success: false, error: uploadError.message};
   }
-  revalidatePath('/team:path*', 'page');
+
+  // Revalidate all team member paths
+  revalidatePath('/team/[teamId]/member/[id]', 'page');
+  revalidatePath('/team', 'page');
 
   return {success: true, url: data.path};
 };
