@@ -1,5 +1,6 @@
 import {
   AuthTabs,
+  EditTeamDialog,
   Header,
   InviteCodeCard,
   PageLayout,
@@ -23,14 +24,7 @@ export default async function TeamPage() {
       header={
         teams &&
         teams.length > 0 && (
-          <Header
-            showBackButton={false}
-            // rightContent={
-            //   <Button variant="noShadow" size="xs" className="aspect-square">
-            //     <EditTeam />
-            //   </Button>
-            // }
-          >
+          <Header showBackButton={false} rightContent={<EditTeamDialog />}>
             <TeamSelect teams={teams} />
           </Header>
         )

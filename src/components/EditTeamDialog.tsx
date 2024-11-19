@@ -24,7 +24,7 @@ export const EditTeamDialog = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit Team</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when youre done.
           </DialogDescription>

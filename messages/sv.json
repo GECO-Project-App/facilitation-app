@@ -24,7 +24,9 @@
       "showProfile": "Visa profil",
       "editProfile": "Redigera profil"
     },
-    "removeMemberSuccess": "Teammedlem borttagen"
+    "removeMemberSuccess": "Teammedlem borttagen",
+    "removeMemberConfirmation": "Är du helt säker på att du vill ta bort denna medlem?",
+    "removeMemberDescription": "Denna handling är permanent och kommer att ta bort denna medlem från teamet."
     },
     "toast": {
       "created": "Du har skapat ett team!",

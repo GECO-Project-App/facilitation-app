@@ -7,6 +7,7 @@ import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {Tables} from '../../database.types';
 import {ChangeRole, RemoveMember} from './icons';
+import {TeamActionAlert} from './TeamActionAlert';
 import {Button} from './ui';
 
 export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at' | 'team_id'>) => {
@@ -47,14 +48,15 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
       </Button>
       {isFacilitator && userProfile?.user_id !== member.user_id && (
         <>
-          <Button
-            variant="white"
-            size="xs"
-            className=" justify-between w-full "
-            onClick={() => handleRemoveMember(member.user_id)}>
-            {t('buttons.remove')}
-            <RemoveMember />
-          </Button>
+          <TeamActionAlert
+            onAction={() => handleRemoveMember(member.user_id)}
+            title={t('removeMemberConfirmation')}
+            description={t('removeMemberDescription')}>
+            <Button variant="white" size="xs" className=" justify-between w-full">
+              {t('buttons.remove')}
+              <RemoveMember />
+            </Button>
+          </TeamActionAlert>
           <Button variant="white" size="xs" className=" justify-between w-full">
             {t('buttons.changeRole')} <ChangeRole />
           </Button>
