@@ -51,8 +51,6 @@ export const About: FC<{
     }
   }, [slug]);
 
-  console.log(theTimePassed);
-
   return (
     <PageLayout
       header={<Header />}
