@@ -15,22 +15,27 @@ import {
 } from './ui';
 
 export const EditTeamDialog = () => {
-  const {currentTeam} = useTeamStore();
+  const {currentTeam, currentTeamId} = useTeamStore();
   const t = useTranslations('team.edit');
+
+  if (!currentTeam || currentTeamId === 'new') return null;
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="noShadow" size="xs" className="aspect-square">
-          <EditTeam />
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t('title')}</DialogTitle>
-          <DialogDescription>{t('description')}</DialogDescription>
-        </DialogHeader>
-        <UpdateTeamForm currentTeam={currentTeam} />
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="white" size="xs" className=" ">
+            {t('title')} <EditTeam />
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t('title')}</DialogTitle>
+            <DialogDescription>{t('description')}</DialogDescription>
+          </DialogHeader>
+          <UpdateTeamForm currentTeam={currentTeam} />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

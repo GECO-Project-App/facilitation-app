@@ -14,6 +14,7 @@ import {createClient} from '@/lib/supabase/server';
 export default async function TeamPage() {
   const supabase = createClient();
   const {teams} = await getUserTeams();
+
   const {
     data: {user},
     error: AuthError,
@@ -24,13 +25,16 @@ export default async function TeamPage() {
       header={
         teams &&
         teams.length > 0 && (
-          <Header showBackButton={false} rightContent={<EditTeamDialog />}>
+          <Header showBackButton={false}>
             <TeamSelect teams={teams} />
           </Header>
         )
       }>
       {teams && teams.length > 0 ? (
-        <section className="flex flex-col gap-6">
+        <section className="flex flex-col gap-6 ">
+          <div className="flex justify-center">
+            <EditTeamDialog />
+          </div>
           <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
             <InviteCodeCard />
           </div>

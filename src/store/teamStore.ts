@@ -76,6 +76,7 @@ export const useTeamStore = create<TeamState>()(
       // Change the currently selected team
       setCurrentTeamId: async (teamId) => {
         // Clear team data if no teamId provided
+
         if (teamId === 'new') {
           set({currentTeamId: teamId, isLoading: false});
           return;
