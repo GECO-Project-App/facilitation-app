@@ -2,7 +2,7 @@
 import {Button} from '@/components/ui';
 import {useExercisesStore} from '@/store/useExercises';
 import {useEffect, useRef} from 'react';
-
+import ChapterAnswer from './ChapterAnswer';
 export default function ReviewAnswers({chapter}: {chapter: string}) {
   const {exercises} = useExercisesStore();
   let answersData;
@@ -84,24 +84,14 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
       <Button className="fixed bottom-0 left-0 p-2 m-4 text-sm" onClick={handleBackClick}>
         Back
       </Button>
-      <div ref={containerRef} className="h-full text-black overflow-auto">
+      <div ref={containerRef} className="h-full text-black overflow-auto w-full">
         {answersData?.map((a, index) => (
-          <div key={index} className="h-full text-black flex items-center justify-center">
+          <div key={index} className="h-full text-black w-full">
             <div className="flex flex-col">
-              {a.map((a, index) => (
-                <div key={a} className="py-4">
-                  <div className="text-gray-500 text-sm">
-                    {chapter} {index + 1}.
-                  </div>
-                  <div>{a}</div>
-                </div>
-              ))}
+              <ChapterAnswer chapter={chapter} answers={a} />
             </div>
           </div>
         ))}
-        {/* <div className="h-full text-black flex items-center justify-center">Review Answers 1</div>
-        <div className="h-full text-black flex items-center justify-center">Review Answers 2</div>
-        <div className="h-full text-black flex items-center justify-center">Review Answers 3</div> */}
       </div>
     </>
   );
