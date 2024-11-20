@@ -50,7 +50,9 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
         <>
           <TeamActionAlert
             onAction={() => handleRemoveMember(member.user_id)}
-            title={t('removeMemberConfirmation')}
+            title={t('removeMemberConfirmation', {
+              name: `${member.first_name} ${member.last_name}`,
+            })}
             description={t('removeMemberDescription')}>
             <Button variant="white" size="xs" className=" justify-between w-full">
               {t('buttons.remove')}

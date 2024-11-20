@@ -1,20 +1,22 @@
 'use client';
 
+import {useTeamStore} from '@/store/teamStore';
+import {useTranslations} from 'next-intl';
+import {UpdateTeamForm} from './forms/UpdateTeamForm';
 import {EditTeam} from './icons';
 import {
   Button,
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  Input,
-  Label,
 } from './ui';
 
 export const EditTeamDialog = () => {
+  const {currentTeam} = useTeamStore();
+  const t = useTranslations('team.edit');
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -24,28 +26,10 @@ export const EditTeamDialog = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit Team</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" defaultValue="@peduarte" className="col-span-3" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <UpdateTeamForm currentTeam={currentTeam} />
       </DialogContent>
     </Dialog>
   );

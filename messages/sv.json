@@ -10,7 +10,8 @@
       "name": "Teamnamn",
       "invite": "Bjud in medlemmar",
       "button": "Gå vidare",
-      "code": "Teamkod"
+      "code": "Teamkod",
+      "save": "Spara"
     },
     "page": {
        "inviteCode": "Inbjudningskod",
@@ -25,7 +26,7 @@
       "editProfile": "Redigera profil"
     },
     "removeMemberSuccess": "Teammedlem borttagen",
-    "removeMemberConfirmation": "Är du helt säker på att du vill ta bort denna medlem?",
+    "removeMemberConfirmation": "Är du helt säker på att du vill ta bort \"{name}\" som medlem?",
     "removeMemberDescription": "Denna handling är permanent och kommer att ta bort denna medlem från teamet."
     },
     "toast": {
@@ -41,8 +42,24 @@
         "updateSuccess": "Avatar uppdaterad",
         "chooseAvatar": "Välj avatar",
         "skinTone": "Hudton"
+      },
+      "title": "Redigera Team",
+      "description": "Uppdatera team information här. Klicka på spara när du är klar.",
+      "deletionTitle": "Jag vill ta bort detta team",
+      "deletionDescription": "Säkerställ att du vill ta bort detta team genom att kryssa i rutan.",
+      "toast": {
+        "success": "Team information uppdaterad",
+        "error": "Uppdatering misslyckades"
+      },
+      "delete": {
+        "title": "Är du säker på att du vill ta bort\"{name}\"?",
+        "description": "Denna handling är permanent och kommer att ta bort detta team permanent och alla data som är kopplade till det.",
+        "deleteError": "Team borttagning misslyckades",
+        "deletedErrorDescription": "Se till att du kryssar i rutan för att bekräfta borttagningen och försök igen.",
+        "deleteSuccess": "Team borttagningen lyckades"
       }
     }
+    
   },
 
   "profile": {

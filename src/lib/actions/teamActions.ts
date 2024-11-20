@@ -1,7 +1,7 @@
 'use server';
 import {revalidatePath} from 'next/cache';
 import {createClient} from '../supabase/server';
-import {CreateTeamSchema, createTeamSchema} from '../zodSchemas';
+import {CreateTeamSchema, createTeamSchema, UpdateTeamSchema} from '../zodSchemas';
 
 export async function createTeam(data: CreateTeamSchema) {
   const supabase = createClient();
@@ -56,6 +56,45 @@ export async function createTeam(data: CreateTeamSchema) {
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to create team'};
+  }
+}
+
+export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
+  const supabase = createClient();
+
+  try {
+    const validatedFields = createTeamSchema.parse(data);
+    const {data: user, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    // Check if user is a facilitator
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: user.user.id,
+      },
+    );
+
+    if (authError || !isAuthorized) {
+      return {error: 'Not authorized to update team'};
+    }
+
+    // Update team name
+    const {error: updateError} = await supabase
+      .from('teams')
+      .update({name: validatedFields.name})
+      .eq('id', teamId);
+
+    if (updateError) {
+      console.log('Team update error:', updateError);
+      return {error: 'Failed to update team'};
+    }
+
+    revalidatePath('/team', 'page');
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to update team'};
   }
 }
 
@@ -327,9 +366,7 @@ export async function deleteTeam(teamId: string) {
     }
 
     revalidatePath('/team', 'page');
-    return {success: true};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to delete team'};
   }
 }
