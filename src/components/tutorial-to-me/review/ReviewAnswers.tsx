@@ -1,9 +1,14 @@
 'use client';
+import {Button} from '@/components/ui/button';
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useExercisesStore} from '@/store/useExercises';
 import {ArrowDown, ArrowUp} from 'lucide-react';
+import {useRouter} from 'next/navigation';
 import {useEffect, useRef} from 'react';
 import ChapterAnswer from './ChapterAnswer';
 export default function ReviewAnswers({chapter}: {chapter: string}) {
+  const {setThisReviewDone} = useSSCChaptersHandler();
+  const router = useRouter();
   const {exercises} = useExercisesStore();
   let answersData;
   if (chapter === 'strength') {
@@ -76,6 +81,12 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
     };
   }, []);
 
+  const chapterDone = () => {
+    console.log('chapterDone :', chapter);
+    setThisReviewDone(chapter);
+    router.back();
+  };
+
   return (
     <>
       <div className="fixed top-0 right-0 m-2 text-sm" onClick={handleBackClick}>
@@ -91,8 +102,10 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
               <ChapterAnswer chapter={chapter} answers={answers} />
             </div>
             {index === answersData.length - 1 && (
-              <div className="h-full w-full bg-red-500 text-center pt-4 text-lg">
-                <button className="mx-auto">Back To home</button>
+              <div className="w-full text-center">
+                <Button variant="white" onClick={chapterDone}>
+                  Back
+                </Button>
               </div>
             )}
           </div>

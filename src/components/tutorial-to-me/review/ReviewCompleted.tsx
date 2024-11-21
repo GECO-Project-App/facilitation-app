@@ -1,11 +1,12 @@
 import {Button} from '@/components/ui';
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link} from '@/i18n/routing';
 import {Step} from '@/lib/types';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight, Check} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {FC} from 'react';
-
 const ReviewCompleted: FC = () => {
+  const {reviewDone} = useSSCChaptersHandler();
   const t = useTranslations('exercises.tutorialToMe');
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
 
@@ -32,7 +33,11 @@ const ReviewCompleted: FC = () => {
             <Button variant="white" asChild className="h-12">
               <Link href={`./${step.title.toLowerCase()}`}>
                 {t('letsGetStarted')}
-                <ArrowRight size={32} />
+                {reviewDone.includes(step.title.toLowerCase()) ? (
+                  <Check size={28} color="green" />
+                ) : (
+                  <ArrowRight size={28} />
+                )}
               </Link>
             </Button>
           </div>
