@@ -61,7 +61,9 @@
         "deletedErrorDescription": "Make sure you check the checkbox to confirm the deletion and try again.",
         "deleteSuccess": "Team deleted successfully"
       },
-      "role": "Do you want to change \"{name}\" role from \"{role}\" to \"{newRole}\"?"
+      "role": "Do you want to change \"{name}\" role from \"{role}\" to \"{newRole}\"?",
+      "roleSuccess": "Member role updated successfully",
+      "roleError": "Member role update failed"
     }
   },
 

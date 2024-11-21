@@ -58,7 +58,9 @@
         "deletedErrorDescription": "Se till att du kryssar i rutan för att bekräfta borttagningen och försök igen.",
         "deleteSuccess": "Team borttagningen lyckades"
       },
-      "role": "Vill du ändra \"{name}\" roll från \"{role}\" till \"{newRole}\"?"
+      "role": "Vill du ändra roll för \"{name}\" från \"{role}\" till \"{newRole}\"?",
+      "roleSuccess": "Roll uppdaterad!",
+      "roleError": "Roll uppdatering misslyckades"
     }
     
   },

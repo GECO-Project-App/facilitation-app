@@ -1,5 +1,6 @@
 'use server';
 import {revalidatePath} from 'next/cache';
+import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
 import {CreateTeamSchema, createTeamSchema, UpdateTeamSchema} from '../zodSchemas';
 
@@ -295,7 +296,7 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
 export async function updateTeamMemberRole(
   teamId: string,
   userId: string,
-  newRole: 'facilitator' | 'member',
+  newRole: Enums<'team_role'>,
 ) {
   const supabase = createClient();
 

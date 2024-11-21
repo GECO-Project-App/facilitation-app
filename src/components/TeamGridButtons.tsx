@@ -2,10 +2,10 @@
 
 import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
-import {removeTeamMember} from '@/lib/actions/teamActions';
+import {removeTeamMember, updateTeamMemberRole} from '@/lib/actions/teamActions';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
-import {Tables} from '../../database.types';
+import {Enums, Tables} from '../../database.types';
 import {ChangeRole, RemoveMember} from './icons';
 import {TeamActionAlert} from './TeamActionAlert';
 import {Button} from './ui';
@@ -34,9 +34,22 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
     }
   };
 
-  const handleChangeRole = async (userId: string, newRole: string) => {
+  const handleChangeRole = async (userId: string, newRole: Enums<'team_role'>) => {
     if (!currentTeam) return;
-    // const result = await changeTeamMemberRole(currentTeam.id, userId, 'facilitator');
+    const result = await updateTeamMemberRole(currentTeam.id, userId, newRole);
+
+    if (result?.error) {
+      toast({
+        variant: 'destructive',
+        title: t('team.edit.roleError'),
+        description: result.error,
+      });
+    } else {
+      toast({
+        variant: 'success',
+        title: t('team.edit.roleSuccess'),
+      });
+    }
   };
 
   return (
