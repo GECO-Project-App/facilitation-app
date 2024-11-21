@@ -1,7 +1,14 @@
 'use server';
 import {revalidatePath} from 'next/cache';
+import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
-import {CreateTeamSchema, createTeamSchema} from '../zodSchemas';
+import {
+  CreateTeamSchema,
+  createTeamSchema,
+  memberSchema,
+  MemberSchema,
+  UpdateTeamSchema,
+} from '../zodSchemas';
 
 export async function createTeam(data: CreateTeamSchema) {
   const supabase = createClient();
@@ -59,71 +66,60 @@ export async function createTeam(data: CreateTeamSchema) {
   }
 }
 
+export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
+  const supabase = createClient();
+
+  try {
+    const validatedFields = createTeamSchema.parse(data);
+    const {data: user, error: userError} = await supabase.auth.getUser();
+    if (userError) throw userError;
+
+    // Check if user is a facilitator
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: user.user.id,
+      },
+    );
+
+    if (authError || !isAuthorized) {
+      return {error: 'Not authorized to update team'};
+    }
+
+    // Update team name
+    const {error: updateError} = await supabase
+      .from('teams')
+      .update({name: validatedFields.name})
+      .eq('id', teamId);
+
+    if (updateError) {
+      console.log('Team update error:', updateError);
+      return {error: 'Failed to update team'};
+    }
+
+    revalidatePath('/team', 'page');
+  } catch (error) {
+    console.log('Unexpected error:', error);
+    return {error: 'Failed to update team'};
+  }
+}
+
 export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
 
   try {
-    // Get the current user
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
-
-    // Get the user's profile data first
-    const {data: profile, error: profileError} = await supabase
-      .from('profiles')
-      .select('first_name, last_name, avatar_url')
-      .eq('id', user.user.id)
-      .single();
-
-    if (profileError) {
-      console.log('Profile lookup error:', profileError);
-      return {error: 'Failed to get profile data'};
-    }
-
-    // Find the team with the given code
-    const {data: teamData, error: teamError} = await supabase
-      .from('teams')
-      .select('id')
-      .eq('team_code', teamCode.toUpperCase())
-      .maybeSingle();
-
-    if (teamError) {
-      console.log('Team lookup error:', teamError);
-      return {error: 'Failed to lookup team'};
-    }
-
-    if (!teamData) {
-      return {error: 'Invalid team code'};
-    }
-
-    // Check if user is already a member
-    const {data: existingMember, error: memberCheckError} = await supabase
-      .from('team_members')
-      .select()
-      .eq('team_id', teamData.id)
-      .eq('user_id', user.user.id)
-      .maybeSingle();
-
-    if (existingMember) {
-      return {error: 'You are already a member of this team'};
-    }
-
-    // Add user as a member with profile data
-    const {error: insertError} = await supabase.from('team_members').insert({
-      team_id: teamData.id,
-      user_id: user.user.id,
-      role: 'member',
-      first_name: profile.first_name,
-      last_name: profile.last_name,
-      avatar_url: profile.avatar_url,
+    const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_code', {
+      team_code_input: teamCode.toUpperCase(),
     });
 
-    if (insertError) {
-      console.log('Join team error:', insertError);
+    if (joinError) {
+      console.log('Join team error:', joinError);
       return {error: 'Failed to join team'};
     }
 
-    revalidatePath('/team', 'page');
-    return {success: true, teamId: teamData.id};
+    revalidatePath(`/team?id=${teamId}`, 'page');
+    return {success: true, teamId};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to join team'};
@@ -193,24 +189,15 @@ export async function removeTeamMember(teamId: string, userId: string) {
     if (userError) throw userError;
 
     // Check if the current user is a facilitator of the team
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .maybeSingle();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError) {
-      console.log('Facilitator check error:', facilitatorError);
-      return {error: 'Failed to verify permissions'};
-    }
-
-    if (!facilitator) {
-      return {error: 'Not a team member'};
-    }
-
-    // Only allow facilitators to remove members (or users removing themselves)
-    if (facilitator.role !== 'facilitator' && currentUser.user.id !== userId) {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to remove team members'};
     }
 
@@ -254,6 +241,9 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
     console.error('Error uploading avatar:', uploadError);
     return {success: false, error: uploadError.message};
   }
+
+  // Revalidate all team member paths
+  revalidatePath('/team/[teamId]/member/[id]', 'page');
   revalidatePath('/team', 'page');
 
   return {success: true, url: data.path};
@@ -262,7 +252,7 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
 export async function updateTeamMemberRole(
   teamId: string,
   userId: string,
-  newRole: 'facilitator' | 'member',
+  newRole: Enums<'team_role'>,
 ) {
   const supabase = createClient();
 
@@ -272,14 +262,15 @@ export async function updateTeamMemberRole(
     if (userError) throw userError;
 
     // Check if the current user is a facilitator of the team
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .single();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError || facilitator?.role !== 'facilitator') {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to change member roles'};
     }
 
@@ -311,14 +302,15 @@ export async function deleteTeam(teamId: string) {
     const {data: currentUser, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
 
-    const {data: facilitator, error: facilitatorError} = await supabase
-      .from('team_members')
-      .select('role')
-      .eq('team_id', teamId)
-      .eq('user_id', currentUser.user.id)
-      .single();
+    const {data: isAuthorized, error: authError} = await supabase.rpc(
+      'check_team_management_permission',
+      {
+        team_id: teamId,
+        user_id: currentUser.user.id,
+      },
+    );
 
-    if (facilitatorError || facilitator?.role !== 'facilitator') {
+    if (authError || !isAuthorized) {
       return {error: 'Not authorized to delete team'};
     }
 
@@ -331,9 +323,7 @@ export async function deleteTeam(teamId: string) {
     }
 
     revalidatePath('/team', 'page');
-    return {success: true};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to delete team'};
   }
 }
@@ -371,5 +361,28 @@ export async function getTeamMember(teamId: string, userId: string) {
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to get team member'};
+  }
+}
+
+export async function updateTeamMemberProfile(teamId: string, data: MemberSchema) {
+  const supabase = createClient();
+
+  const validatedFields = memberSchema.parse(data);
+  try {
+    const {data, error} = await supabase.rpc('update_team_member_profile', {
+      p_team_id: teamId,
+      p_profile_name: validatedFields.profile_name,
+      p_description: validatedFields.description ?? '',
+    });
+
+    if (error) throw error;
+
+    // Revalidate all team member paths
+    revalidatePath('/team/[teamId]/member/[id]', 'page');
+    revalidatePath('/team', 'page');
+    return {success: true, data};
+  } catch (error) {
+    console.error('Team member profile update error:', error);
+    return {error: 'Failed to update team member profile'};
   }
 }

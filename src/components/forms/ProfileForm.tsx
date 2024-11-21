@@ -19,13 +19,10 @@ export const ProfileForm = ({user}: {user: User}) => {
       email: user.email,
       first_name: user.user_metadata.first_name ?? '',
       last_name: user.user_metadata.last_name ?? '',
-      username: user.user_metadata.username ?? '',
     },
   });
-
   const onSubmit = async (data: ProfileSchema) => {
     const result = await updateProfile(data);
-    console.log('result', result);
 
     if (result.error) {
       toast({
@@ -34,7 +31,6 @@ export const ProfileForm = ({user}: {user: User}) => {
         variant: 'destructive',
       });
     } else {
-      console.log('result', result);
       toast({
         variant: 'success',
         title: t('profile.success'),
@@ -49,24 +45,6 @@ export const ProfileForm = ({user}: {user: User}) => {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 h-full justify-center">
-          <FormField
-            control={form.control}
-            name="username"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>{t('profile.metadata.username')}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    {...field}
-                    placeholder={t('profile.metadata.enterUsername')}
-                    autoComplete="username"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="first_name"

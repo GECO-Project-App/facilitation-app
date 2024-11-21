@@ -14,16 +14,27 @@ export const ProfileAvatar = ({
   size?: 'sm' | 'lg';
 }) => {
   const {downloadImage} = useUserStore();
-  const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
 
   useEffect(() => {
+    let isMounted = true;
+
     async function getImage(path: string) {
       const url = await downloadImage(path);
-
-      setAvatarUrl(url ?? '');
+      if (isMounted) {
+        setUrl(url ?? '');
+      }
     }
 
-    if (memberProfile?.avatar_url) getImage(memberProfile.avatar_url);
+    if (memberProfile?.avatar_url) {
+      getImage(memberProfile.avatar_url);
+    } else {
+      setUrl('');
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [memberProfile?.avatar_url, downloadImage]);
 
   if (!memberProfile) return null;
@@ -34,7 +45,7 @@ export const ProfileAvatar = ({
         size === 'sm' ? 'w-16 h-16 p-1' : 'w-32 h-32 p-2',
       )}>
       <AvatarImage
-        src={avatarUrl}
+        src={url}
         alt={`${memberProfile?.first_name} ${memberProfile?.last_name}`}
         className="relative"
       />

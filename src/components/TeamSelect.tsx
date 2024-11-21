@@ -21,14 +21,19 @@ export const TeamSelect = ({
 
   const teamValue = useMemo(() => {
     const teamId = searchParams.get('id');
-    setCurrentTeamId(teamId);
 
-    return searchParams.get('id') ?? '';
-  }, [setCurrentTeamId, searchParams]);
+    if (teamId) {
+      setCurrentTeamId(teamId);
+    } else {
+      setCurrentTeamId(teams[0].id);
+    }
+
+    return searchParams.get('id') ?? teams[0].id;
+  }, [setCurrentTeamId, searchParams, teams]);
 
   return (
     <Select
-      defaultValue={currentTeam?.name ?? teams[0].name}
+      defaultValue={currentTeam?.id ?? teams[0].id}
       value={teamValue}
       onValueChange={(value) => router.push(`?id=${value}`)}>
       <SelectTrigger className="">

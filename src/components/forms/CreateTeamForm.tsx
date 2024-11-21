@@ -32,6 +32,7 @@ export const CreateTeamForm = () => {
       });
     } else {
       toast({
+        duration: 2000,
         variant: 'transparent',
         size: 'fullscreen',
         className: 'text-black bg-white',
@@ -58,7 +59,7 @@ export const CreateTeamForm = () => {
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <Input type="text" {...field} placeholder={t('tabs.name')} />
+                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="off" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

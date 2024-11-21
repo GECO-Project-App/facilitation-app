@@ -19,6 +19,7 @@ interface UserState {
     svgString: string,
   ) => Promise<{success: boolean; avatarUrl: string; error?: string} | undefined>;
   downloadImage: (path: string) => Promise<string | undefined>;
+  imageCache: Record<string, string>;
 }
 
 export const useUserStore = create<UserState>()(
@@ -42,17 +43,29 @@ export const useUserStore = create<UserState>()(
         set({user: null});
       },
 
+      imageCache: {},
+
       downloadImage: async (path: string) => {
         const supabase = createClient();
+        const cache = get().imageCache;
+
+        if (cache[path]) {
+          return cache[path];
+        }
 
         try {
           const {data, error} = await supabase.storage.from('avatars').download(path);
+
           if (error) {
             throw error;
           }
 
           const url = URL.createObjectURL(data);
-          set({avatarUrl: url});
+
+          set((state) => ({
+            imageCache: {...state.imageCache, [path]: url},
+          }));
+
           return url;
         } catch (error) {
           console.log('Error downloading image: ', error);
@@ -80,6 +93,7 @@ export const useUserStore = create<UserState>()(
             },
           });
 
+          set((state) => ({imageCache: {}}));
           get().downloadImage(url);
           return {success: true, avatarUrl: url};
         } else {

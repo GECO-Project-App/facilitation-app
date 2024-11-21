@@ -33,6 +33,7 @@ export const JoinTeamForm = () => {
         variant: 'transparent',
         size: 'fullscreen',
         className: 'text-black bg-white',
+        duration: 2000,
         children: (
           <div className="flex flex-col gap-2 w-full items-center justify-center">
             <h3 className="text-lg font-semibold">{t('toast.joined')}</h3>

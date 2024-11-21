@@ -20,8 +20,8 @@ export default async function TeamMemberPage({
         user?.user?.id === member.user_id
           ? 'bg-white'
           : member.role === 'facilitator'
-            ? 'bg-pink'
-            : 'bg-yellow',
+            ? 'bg-yellow'
+            : 'bg-pink',
 
         'min-h-svh h-full flex flex-col',
       )}>

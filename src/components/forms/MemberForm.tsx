@@ -1,41 +1,50 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {logOut} from '@/lib/actions/authActions';
-import {updateProfile} from '@/lib/actions/profileActions';
-import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
+import {updateTeamMemberProfile} from '@/lib/actions/teamActions';
+import {memberSchema, MemberSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {User} from '@supabase/supabase-js';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
-import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
+import {Tables} from '../../../database.types';
+import {Save} from '../icons';
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Textarea,
+} from '../ui';
 
-export const MemberForm = ({user}: {user: User}) => {
+export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
   const {toast} = useToast();
-  const t = useTranslations();
+  const t = useTranslations('team.edit.memberForm');
 
-  const form = useForm<ProfileSchema>({
-    resolver: zodResolver(profileSchema),
+  const form = useForm<MemberSchema>({
+    resolver: zodResolver(memberSchema),
     defaultValues: {
-      email: user.email,
-      first_name: user.user_metadata.first_name ?? '',
-      last_name: user.user_metadata.last_name ?? '',
-      username: user.user_metadata.username ?? '',
+      profile_name: user.profile_name ?? '',
+      role: user.role ?? 'member',
+      description: user.description ?? '',
     },
   });
 
-  const onSubmit = async (data: ProfileSchema) => {
-    const result = await updateProfile(data);
+  const onSubmit = async (data: MemberSchema) => {
+    const result = await updateTeamMemberProfile(user.team_id, data);
 
-    if (result.error) {
+    if (result?.error) {
       toast({
-        title: t('profile.error'),
-        description: result.error,
         variant: 'destructive',
+        title: t('profileError'),
+        description: result.error,
       });
     } else {
       toast({
-        title: t('profile.success'),
-        description: t('profile.updateSuccess'),
+        variant: 'success',
+        title: t('profileInfo'),
       });
     }
   };
@@ -43,21 +52,20 @@ export const MemberForm = ({user}: {user: User}) => {
   return (
     <>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 h-full justify-center">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <FormField
             control={form.control}
-            name="username"
+            name="profile_name"
             render={({field}) => (
-              <FormItem>
-                <FormLabel>{t('profile.metadata.username')}</FormLabel>
+              <FormItem className="items-center flex flex-col gap-1">
+                <FormLabel>{t('profileName')}</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    placeholder={t('profile.metadata.enterUsername')}
+                    placeholder={t('enterProfileName')}
                     autoComplete="username"
+                    className="bg-yellow font-bold"
                   />
                 </FormControl>
                 <FormMessage />
@@ -66,99 +74,59 @@ export const MemberForm = ({user}: {user: User}) => {
           />
           <FormField
             control={form.control}
-            name="first_name"
+            name="role"
             render={({field}) => (
-              <FormItem>
-                <FormLabel>{t('profile.metadata.firstName')}</FormLabel>
-
+              <FormItem className="items-center flex flex-col gap-1">
+                <FormLabel>{t('role')}</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    placeholder={t('profile.metadata.firstName')}
-                    autoComplete="given-name"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="last_name"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>{t('profile.metadata.lastName')}</FormLabel>
-
-                <FormControl>
-                  <Input
-                    type="text"
-                    {...field}
-                    placeholder={t('profile.metadata.lastName')}
-                    autoComplete="family-name"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({field}) => (
-              <FormItem>
-                <FormLabel>{t('profile.metadata.email')}</FormLabel>
-
-                <FormControl>
-                  <Input
-                    type="email"
-                    {...field}
-                    placeholder={t('profile.metadata.email')}
-                    autoComplete="email"
+                    placeholder={t('role')}
+                    autoComplete="off"
+                    className="bg-yellow font-bold"
                     readOnly
-                    disabled
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({field}) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="password"
-                  {...field}
-                  placeholder={t('metadata.password')}
-                  autoComplete="current-password"
-                  readOnly
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-          <div className="mt-8 flex justify-center gap-4">
-            <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
-              {form.formState.isSubmitting ? (
-                <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin" />
-              ) : (
-                t('profile.save')
-              )}
-            </Button>
-          </div>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({field}) => (
+              <FormItem className="items-center flex flex-col gap-1">
+                <FormLabel>{t('description')}</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder={t('descriptionPlaceholder')}
+                    maxLength={480}
+                    {...field}
+                    value={field.value ?? ''}
+                    className="bg-yellow font-bold"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            variant="green"
+            size="small"
+            className="mx-auto">
+            {form.formState.isSubmitting ? (
+              <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin" />
+            ) : (
+              t('save')
+            )}
+            <Save />
+          </Button>
         </form>
       </Form>
-      <form className="flex justify-center ">
-        <Button variant="red" formAction={logOut}>
-          {t('profile.logout')}
-        </Button>
-      </form>
     </>
   );
 };
