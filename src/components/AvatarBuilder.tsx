@@ -1,97 +1,89 @@
 'use client';
-import {
-  Avatar10,
-  Avatar11,
-  Avatar12,
-  Avatar13,
-  Avatar14,
-  Avatar15,
-  Avatar16,
-  Avatar17,
-  Avatar18,
-  Avatar19,
-  Avatar2,
-  Avatar20,
-  Avatar21,
-  Avatar22,
-  Avatar23,
-  Avatar24,
-  Avatar25,
-  Avatar26,
-  Avatar27,
-  Avatar3,
-  Avatar4,
-  Avatar5,
-  Avatar6,
-  Avatar7,
-  Avatar8,
-  Avatar9,
-} from '@/components/icons/avatar';
+import {avatars} from '@/components/icons/avatar';
+import {toast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
-import {FC} from 'react';
+import {useTranslations} from 'next-intl';
+import {FC, useState} from 'react';
+import ReactDOMServer from 'react-dom/server';
 import {AvatarColorPicker} from './AvatarColorPicker';
-
-const avatars = [
-  Avatar2,
-  Avatar3,
-  Avatar4,
-  Avatar5,
-  Avatar6,
-  Avatar7,
-  Avatar8,
-  Avatar9,
-  Avatar10,
-  Avatar11,
-  Avatar12,
-  Avatar13,
-  Avatar14,
-  Avatar15,
-  Avatar16,
-  Avatar17,
-  Avatar18,
-  Avatar19,
-  Avatar20,
-  Avatar21,
-  Avatar22,
-  Avatar23,
-  Avatar24,
-  Avatar25,
-  Avatar26,
-  Avatar27,
-];
+import {Header} from './Header';
+import {PageLayout} from './PageLayout';
+import {Save} from './icons';
+import {Button} from './ui/button';
 
 export const AvatarBuilder: FC = () => {
-  const {avatar, setAvatar} = useUserStore();
-
+  const {avatar, setAvatar, updateAvatar} = useUserStore();
+  const [idx, setIdx] = useState<number | null>(null);
+  const t = useTranslations('team.edit.avatar');
+  const router = useRouter();
   return (
-    <section className="flex flex-col gap-6">
-      <section className="flex flex-col gap-4">
-        <p className="text-xl font-semibold text-center">Choose Your Avatar</p>
+    <PageLayout
+      header={<Header />}
+      footer={
+        <Button
+          variant="green"
+          onClick={async () => {
+            const AvatarComponent = avatars[idx ?? 0];
 
-        <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 ">
-          {avatars.map((AvatarItem, index) => (
-            <button
-              key={index}
-              className={cn(
-                avatar.shape === index ? 'bg-slate-100 border-black' : 'border-white',
-                'flex justify-center items-center aspect-square  animation-transition rounded-full p-4 overflow-hidden border',
-              )}
-              onClick={() => setAvatar({color: avatar.color, shape: index})}>
-              <AvatarItem
+            const svgString = ReactDOMServer.renderToString(
+              <AvatarComponent
                 fill={avatar.color}
                 height="100%"
                 width="100%"
                 className="aspect-square"
-              />
-            </button>
-          ))}
-        </div>
+              />,
+            );
+
+            const result = await updateAvatar(svgString);
+            if (result?.error) {
+              toast({
+                variant: 'destructive',
+                title: result.error,
+              });
+            } else {
+              toast({
+                variant: 'success',
+                title: t('updateSuccess'),
+              });
+
+              router.back();
+            }
+          }}>
+          {t('button')} <Save />
+        </Button>
+      }>
+      <section className="flex flex-col gap-6">
+        <section className="flex flex-col gap-4">
+          <p className="text-xl font-semibold text-center">{t('chooseAvatar')}</p>
+
+          <div className="grid grid-cols-3 lg:grid-cols-4 gap-0 ">
+            {avatars.map((AvatarItem, index) => (
+              <button
+                key={index}
+                className={cn(
+                  idx === index ? 'bg-slate-100 border-black' : 'border-white',
+                  'flex justify-center items-center aspect-square  animation-transition rounded-full p-4 overflow-hidden border',
+                )}
+                onClick={() => {
+                  setIdx(index);
+                }}>
+                <AvatarItem
+                  fill={avatar.color}
+                  height="100%"
+                  width="100%"
+                  className="aspect-square"
+                />
+              </button>
+            ))}
+          </div>
+        </section>
+        <section className="flex flex-col gap-4">
+          <p className="text-xl font-semibold">{t('skinTone')}</p>
+          <AvatarColorPicker onColorSelect={(color) => setAvatar({color, shape: avatar.shape})} />
+        </section>
       </section>
-      <section className="flex flex-col gap-4">
-        <p className="text-xl font-semibold">Skin Tone</p>
-        <AvatarColorPicker onColorSelect={(color) => setAvatar({color, shape: avatar.shape})} />
-      </section>
-    </section>
+    </PageLayout>
   );
 };

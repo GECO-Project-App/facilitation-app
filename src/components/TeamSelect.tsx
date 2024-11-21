@@ -1,7 +1,9 @@
 'use client';
+import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
-import {useExercisesStore} from '@/store/useExercises';
-import {useEffect} from 'react';
+import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
+import {useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 export const TeamSelect = ({
   teams,
@@ -12,11 +14,21 @@ export const TeamSelect = ({
   }[];
 }) => {
   const {setCurrentTeamId, currentTeam} = useTeamStore();
+  const t = useTranslations('team.page');
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    // if (currentTeam) return;
-    useTeamStore.getState().init();
-  }, []);
+  const teamValue = useMemo(() => {
+    const teamId = searchParams.get('id');
+
+    if (teamId) {
+      setCurrentTeamId(teamId);
+    } else {
+      setCurrentTeamId(teams[0].id);
+    }
+
+    return searchParams.get('id') ?? teams[0].id;
+  }, [setCurrentTeamId, searchParams, teams]);
 
   useEffect(() => {
     useExercisesStore.getState().init(currentTeam?.id || '');
@@ -24,9 +36,9 @@ export const TeamSelect = ({
 
   return (
     <Select
-      defaultValue={currentTeam?.name ?? teams[0].name}
-      value={currentTeam?.id}
-      onValueChange={(value) => setCurrentTeamId(value)}>
+      defaultValue={currentTeam?.id ?? teams[0].id}
+      value={teamValue}
+      onValueChange={(value) => router.push(`?id=${value}`)}>
       <SelectTrigger className="">
         <SelectValue placeholder={currentTeam?.name ?? teams[0].name ?? 'Select a team'} />
       </SelectTrigger>
@@ -36,6 +48,7 @@ export const TeamSelect = ({
             {team.name}
           </SelectItem>
         ))}
+        <SelectItem value="new">{t('createOrJoin')}</SelectItem>
       </SelectContent>
     </Select>
   );

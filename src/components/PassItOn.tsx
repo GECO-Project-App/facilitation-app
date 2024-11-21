@@ -1,5 +1,6 @@
 'use client';
-import {Link} from '@/i18n/routing';
+import {useToast} from '@/hooks/useToast';
+import {Link, useRouter} from '@/i18n/routing';
 import {mockPassItOn} from '@/lib/mock';
 import {useTranslations} from 'next-intl';
 import {FC, useEffect, useState} from 'react';
@@ -21,8 +22,10 @@ import {
 export const PassItOn: FC<{slug: string}> = ({slug}) => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
-  const t = useTranslations('exercises.passItOn');
-  const steps: string[] = t.raw('steps').map((step: string) => step);
+  const t = useTranslations();
+  const steps: string[] = t.raw('exercises.passItOn.steps').map((step: string) => step);
+  const router = useRouter();
+  const {toast} = useToast();
 
   useEffect(() => {
     if (!api) {
@@ -46,10 +49,25 @@ export const PassItOn: FC<{slug: string}> = ({slug}) => {
       }
       footer={
         currentStep === steps.length - 1 ? (
-          <Button variant="blue" className="mx-auto" asChild>
-            <Link href={`/exercises/${slug}/accomplishment`}>
-              {t('completeButton')} <Complete />
-            </Link>
+          <Button
+            variant="blue"
+            className="mx-auto"
+            onClick={() => {
+              router.push(`/`);
+              toast({
+                variant: 'transparent',
+                size: 'fullscreen',
+                duration: 2000,
+                className: 'text-black bg-blue',
+                children: (
+                  <>
+                    <h3 className="text-3xl font-bold">{t('common.greatJob')}</h3>
+                    <RiveAnimation src="geckograttis.riv" width={300} height={300} />
+                  </>
+                ),
+              });
+            }}>
+            {t('exercises.passItOn.completeButton')} <Complete />
           </Button>
         ) : (
           <Button variant="yellow" className="mx-auto" asChild>

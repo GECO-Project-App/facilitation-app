@@ -11,33 +11,71 @@
       "name": "Team Name",
       "invite": "Invite Members",
       "button": "Let's Go!",
-      "code": "Team Code"
+      "code": "Team Code",
+      "save": "Save"
     },
-
     "page": {
     "inviteCode": "Invite Code",
     "inviteTeam": "Invite team members",
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
+      "createOrJoin": "Create or Join a team",
       "buttons": {
         "remove": "Remove",
         "changeRole": "Change role",
         "showProfile": "Show profile",
         "editProfile": "Edit profile"
-      }
+      },
+
+      "removeMemberSuccess": "Team member removed successfully",
+      "removeMemberConfirmation": "Are you sure you want to remove \"{name}\" as a member?",
+      "removeMemberDescription": "This action cannot be undone. This will permanently delete this member from the team."
     },
     "toast": {
       "created": "You have created a team!",
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },
-      "edit": {
+    "edit": {
       "avatar": {
         "title": "Choose your avatar",
         "subtitle": "Skin Tone",
-        "button": "Save Changes"
+        "button": "Save Changes",
+        "updateSuccess": "Avatar updated successfully",
+        "chooseAvatar": "Choose your avatar",
+        "skinTone": "Skin Tone"
+      },
+      "title": "Edit Team",
+      "description": "Make changes to your team here. Click save when you're done.",
+      "deletionTitle": "I want to delete this team",
+      "deletionDescription": "Make sure you check the checkbox to confirm the deletion.",
+      "toast": {
+        "success": "Team information updated successfully",
+        "error": "Team information update failed"
+      },
+      "delete": {
+        "title": "Are you sure you want to delete \"{name}\"?",
+        "description": "This action cannot be undone. This will permanently delete this team and all data associated with it.",
+        "deleteError": "Team deletion failed",
+        "deletedErrorDescription": "Make sure you check the checkbox to confirm the deletion and try again.",
+        "deleteSuccess": "Team deleted successfully"
+      },
+      "role": "Do you want to change \"{name}\" role from \"{role}\" to \"{newRole}\"?",
+      "roleSuccess": "Member role updated successfully",
+      "roleError": "Member role update failed",
+      "memberForm": {
+        "profileName": "Profile Name",
+        "enterProfileName": "Select profile name",
+        "role": "Role",
+        "description": "Description",
+        "descriptionPlaceholder": "240-480 characters *",
+        "profileInfo": "Profile information updated successfully",
+        "profileError": "Profile information update failed",
+        "save": "Save changes"
       }
     }
+
+
   },
 
   "profile": {
@@ -52,7 +90,10 @@
       "email": "Email",
       "enterUsername": "Select profile name",
       "password": "Password"
-    }
+    },
+    "success": "Success",
+    "error": "Error",
+    "updateSuccess": "Profile updated successfully"
   },
   "home": {
     "title": "Project GECO",
@@ -319,6 +360,7 @@
     "goToHome": "Go to home",
     "pressToGetNewQuestion": "Press to get a new question!",
     "thankYouText": "Thank you for your feedback!",
+    "greatJob": "GREAT JOB! YOU DID IT!",
     "logOut": "Log Out",
     "languages": [
       {
@@ -329,7 +371,9 @@
         "label": "Svenska",
         "locale": "sv"
       }
-    ]
+    ],
+    "facilitator": "facilitator",
+    "member": "member"
   },
 
   "errors": {

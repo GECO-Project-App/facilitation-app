@@ -79,8 +79,71 @@ To start Storybook, follow these steps:
 3. Wait until Storybook has started. You will see a message indicating that Storybook is running on a local address (usually http://localhost:6006).
 4. Open the specified address in your web browser to view the Storybook interface.
 
-## Questions?
+## Supabase Development
 
-If you have any questions, don't hesitate to open an issue or contact the project maintainers.
+### Setting Up Supabase CLI
 
-Thank you for your contribution!
+1. Install the Supabase CLI according to the [docs](https://supabase.com/docs/guides/local-development/cli/getting-started)
+
+2. Make sure to initialize Supabase in your project:
+```bash
+npx supabase init
+```
+
+### Local Development
+Check out the [docs](https://supabase.com/docs/reference/cli) for more useful CLI commands.
+
+
+1. Start the local Supabase db. (Make sure docker is running before starting the db)
+```bash
+npx supabase start
+```
+You will see a message indicating that the local Supabase db is running on a local address (usually http://127.0.0.1:54321). 
+
+Make sure to replace the .env variables with the correct values for your local db.
+`
+NEXT_PUBLIC_SUPABASE_URL=API URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=anon key`
+
+
+2. Link your supabase project to your local db. This command is **not** available for a self-hosted supabase db.
+
+```bash
+npx supabase link --project-ref your-project-ref
+```
+
+
+### Database Migrations
+See the [docs](https://supabase.com/docs/reference/cli/supabase-db-pull) for more information on how to create and apply migrations.
+
+1. Create a new migration containing the changes from the remote db:
+```bash
+npx  supabase db pull
+```
+
+A self-hosted supabase db can pull changes from a remote db by using the --db-url flag and the database url:
+
+```bash
+npx supabase db diff -f initial_structure --db-url postgresql://your-db-url 
+```
+
+2. Apply migrations to your local db:
+```bash
+npx supabase db reset
+```
+
+### Deployment
+
+1. If you're using the SQL-Editor in Supabase studio to create new migrations, you will need to pull the migration files into your project:
+```bash
+npx supabase db pull --local
+```
+
+2. Push local database changes to production:
+```bash
+npx supabase db push
+```
+
+**Note:** Always test migrations locally before applying them to production.
+
+

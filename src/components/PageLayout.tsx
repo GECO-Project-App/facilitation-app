@@ -25,7 +25,11 @@ export const PageLayout: FC<{
           contentColor ?? 'bg-white',
           'relative flex w-full flex-1 flex-col justify-center',
         )}>
-        <div className={cn(hasPadding ? 'px-4' : '', 'page-constraints h-full w-full')}>
+        <div
+          className={cn(
+            hasPadding ? 'px-4' : '',
+            'page-constraints h-full w-full py-8 flex-1 flex flex-col justify-center gap-4',
+          )}>
           {children}
         </div>
       </section>

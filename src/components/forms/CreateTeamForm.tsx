@@ -1,15 +1,18 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {createTeam} from '@/lib/actions/teamActions';
 import {createTeamSchema, CreateTeamSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
+import {TeamToast} from '../icons';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
 export const CreateTeamForm = () => {
   const {toast} = useToast();
   const t = useTranslations('team');
+  const router = useRouter();
 
   const form = useForm<CreateTeamSchema>({
     resolver: zodResolver(createTeamSchema),
@@ -24,14 +27,24 @@ export const CreateTeamForm = () => {
     if (result?.error) {
       toast({
         variant: 'destructive',
-        title: 'Error',
+        title: t('error.title'),
         description: result.error,
       });
     } else {
       toast({
-        variant: 'default',
-        title: t('toast.created'),
+        duration: 2000,
+        variant: 'transparent',
+        size: 'fullscreen',
+        className: 'text-black bg-white',
+        children: (
+          <div className="flex flex-col gap-2 w-full items-center justify-center">
+            <h3 className="text-lg font-semibold">{t('toast.created')}</h3>
+            <TeamToast />
+          </div>
+        ),
       });
+
+      router.push(`/team?id=${result.teamId}`);
     }
   };
 
@@ -46,7 +59,7 @@ export const CreateTeamForm = () => {
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <Input type="text" {...field} placeholder={t('tabs.name')} />
+                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="off" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

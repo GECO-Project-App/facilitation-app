@@ -41,6 +41,17 @@ Our project uses the following technologies:
 - [next-intl](https://next-intl-docs.vercel.app/) - For internationalization
 - [Tailwind CSS](https://tailwindcss.com/docs) - For styling
 - [Lucide React](https://lucide.dev/guide/packages/lucide-react) - For icons
+- [Supabase](https://supabase.com/docs) - Open source Firebase alternative
+
+## Supabase Integration
+
+Key Supabase documentation:
+- [Supabase CLI](https://supabase.com/docs/reference/cli/supabase-db-diff)
+- [Local development](https://supabase.com/docs/guides/local-development/overview)
+- [Database Functions](https://supabase.com/docs/guides/database/functions)
+- [Row Level Security](https://supabase.com/docs/guides/auth/row-level-security)
+- [TypeScript Types](https://supabase.com/docs/guides/api/rest/generating-types)
+- [Server-side auth](https://supabase.com/docs/guides/auth/server-side/nextjs)
 
 ## Internationalization (i18n)
 

@@ -45,13 +45,15 @@ export type AboutProps = {
 };
 
 export type BaseballCardType = {
-  member: TeamMember;
+  member: Tables<'team_members'>;
   children?: React.ReactNode;
 } & React.ComponentPropsWithoutRef<typeof Collapsible>;
 
-export type TeamMember = {
-  user_id: string;
-  role: string[];
+export type Profile = {
+  id: string;
+  updated_at?: string;
+  username?: string;
+  email?: string;
   avatar_url?: string;
   first_name?: string;
   last_name?: string;

@@ -7,6 +7,8 @@ export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 export type ProfileSchema = z.infer<typeof profileSchema>;
 export type CreateTeamSchema = z.infer<typeof createTeamSchema>;
 export type JoinTeamSchema = z.infer<typeof joinTeamSchema>;
+export type MemberSchema = z.infer<typeof memberSchema>;
+export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -55,18 +57,27 @@ export const resetPasswordSchema = z.object({
 
 export const profileSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
   first_name: z.string(),
   last_name: z.string(),
-  username: z.string(),
+});
+
+export const memberSchema = z.object({
+  profile_name: z.string(),
+  role: z.enum(['member', 'facilitator']),
+  description: z.string().max(480).nullable(),
 });
 
 export const createTeamSchema = z.object({
-  name: z.string(),
+  name: z.string().min(4),
 });
 
 export const joinTeamSchema = z.object({
   code: z.string().regex(/^[0-9A-F]{6}$/, {
     message: 'Code must be 6 alphanumeric characters',
   }),
+});
+
+export const updateTeamSchema = z.object({
+  name: z.string().min(4),
+  delete: z.boolean(),
 });
