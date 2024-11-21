@@ -28,8 +28,10 @@ type TeamWithMembers = Tables<'teams'> & {
 
 export const UpdateTeamForm = ({
   currentTeam,
+  onComplete,
 }: {
   currentTeam: Omit<TeamWithMembers, 'created_at'> | null;
+  onComplete?: () => void;
 }) => {
   const {toast} = useToast();
   const t = useTranslations('team');
@@ -60,7 +62,7 @@ export const UpdateTeamForm = ({
         title: t('edit.toast.success'),
       });
     }
-    router.push(`/team`);
+    onComplete?.();
   };
 
   return (
@@ -74,7 +76,7 @@ export const UpdateTeamForm = ({
               <FormItem>
                 <FormLabel>{t('tabs.name')}</FormLabel>
                 <FormControl>
-                  <Input type="text" {...field} placeholder={t('tabs.name')} />
+                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="off" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,6 +100,7 @@ export const UpdateTeamForm = ({
                   onAction={async () => {
                     if (currentTeam?.id && form.getValues('delete')) {
                       await deleteTeam(currentTeam.id);
+                      onComplete?.();
                     } else {
                       toast({
                         duration: 4000,
@@ -106,6 +109,7 @@ export const UpdateTeamForm = ({
                         description: t('edit.delete.deletedErrorDescription'),
                       });
                     }
+                    onComplete?.();
                   }}
                   title={t('edit.delete.title', {name: currentTeam?.name})}
                   description={t('edit.delete.description')}>
