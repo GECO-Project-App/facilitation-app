@@ -1,6 +1,6 @@
 'use client';
-import {Button} from '@/components/ui';
 import {useExercisesStore} from '@/store/useExercises';
+import {ArrowDown, ArrowUp} from 'lucide-react';
 import {useEffect, useRef} from 'react';
 import ChapterAnswer from './ChapterAnswer';
 export default function ReviewAnswers({chapter}: {chapter: string}) {
@@ -78,18 +78,23 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
 
   return (
     <>
-      <Button className="fixed bottom-0 right-0 p-2 m-4 text-sm " onClick={handleNextClick}>
-        Next
-      </Button>
-      <Button className="fixed bottom-0 left-0 p-2 m-4 text-sm" onClick={handleBackClick}>
-        Back
-      </Button>
+      <div className="fixed top-0 right-0 m-2 text-sm" onClick={handleBackClick}>
+        <ArrowUp size={32} color="black" />
+      </div>
+      <div className="fixed bottom-0 right-0 m-2 text-sm" onClick={handleNextClick}>
+        <ArrowDown size={32} color="black" />
+      </div>
       <div ref={containerRef} className="h-full text-black overflow-auto w-full">
-        {answersData?.map((a, index) => (
+        {answersData?.map((answers, index) => (
           <div key={index} className="h-full text-black w-full">
             <div className="flex flex-col">
-              <ChapterAnswer chapter={chapter} answers={a} />
+              <ChapterAnswer chapter={chapter} answers={answers} />
             </div>
+            {index === answersData.length - 1 && (
+              <div className="h-full w-full bg-red-500 text-center pt-4 text-lg">
+                <button className="mx-auto">Back To home</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
