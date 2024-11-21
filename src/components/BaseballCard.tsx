@@ -1,11 +1,13 @@
 'use client';
 import {BaseballCardType} from '@/lib/types';
 import {cn} from '@/lib/utils';
+import {useTranslations} from 'next-intl';
 import {FC} from 'react';
 import {ProfileAvatar} from './ProfileAvatar';
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from './ui/collapsible';
 
 export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, children, open}) => {
+  const t = useTranslations('common');
   return (
     <Collapsible
       className={cn(
@@ -19,7 +21,7 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
           <ProfileAvatar memberProfile={member} />
           <div className="text-center">
             <p className="font-bold">{`${member.first_name} ${member.last_name}`}</p>
-            <p>{member.role}</p>
+            <p>{t(member.role)}</p>
           </div>
         </div>
       </CollapsibleTrigger>

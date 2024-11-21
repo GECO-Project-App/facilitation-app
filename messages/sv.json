@@ -57,7 +57,8 @@
         "deleteError": "Team borttagning misslyckades",
         "deletedErrorDescription": "Se till att du kryssar i rutan för att bekräfta borttagningen och försök igen.",
         "deleteSuccess": "Team borttagningen lyckades"
-      }
+      },
+      "role": "Vill du ändra \"{name}\" roll från \"{role}\" till \"{newRole}\"?"
     }
     
   },
@@ -351,7 +352,9 @@
         "label": "Svenska",
         "locale": "sv"
       }
-    ]
+    ],
+    "facilitator": "facilitator",
+    "member": "medlem"
   },
 
   "errors": {

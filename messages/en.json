@@ -60,7 +60,8 @@
         "deleteError": "Team deletion failed",
         "deletedErrorDescription": "Make sure you check the checkbox to confirm the deletion and try again.",
         "deleteSuccess": "Team deleted successfully"
-      }
+      },
+      "role": "Do you want to change \"{name}\" role from \"{role}\" to \"{newRole}\"?"
     }
   },
 
@@ -354,7 +355,9 @@
         "label": "Svenska",
         "locale": "sv"
       }
-    ]
+    ],
+    "facilitator": "facilitator",
+    "member": "member"
   },
 
   "errors": {

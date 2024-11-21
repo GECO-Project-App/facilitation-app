@@ -1,6 +1,7 @@
 import {Link} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {Pencil} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
 
@@ -11,15 +12,16 @@ export const ProfileStats = ({
   member: Tables<'team_members'>;
   isCurrentUser: boolean;
 }) => {
+  const t = useTranslations('common');
   return (
     <section className="h-full flex-1 flex flex-col justify-center gap-6">
       <div className="text-center space-y-1">
         <h3 className=" text-xl font-bold">{`${member.first_name} ${member.last_name}`}</h3>
-        <p>{member.role}</p>
+        <p>{t(member.role)}</p>
       </div>
       <div
         className={cn(
-          member.role === 'facilitator' ? 'bg-yellow' : 'bg-pink',
+          member.role === 'facilitator' ? 'bg-pink' : 'bg-yellow',
           'border-black border-y-2 py-4',
           isCurrentUser && 'border-b-2',
         )}>

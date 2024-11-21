@@ -15,10 +15,10 @@ import {
 } from './ui';
 
 export const EditTeamDialog = () => {
-  const {currentTeam, currentTeamId} = useTeamStore();
+  const {currentTeam, currentTeamId, isFacilitator} = useTeamStore();
   const t = useTranslations('team.edit');
 
-  if (!currentTeam || currentTeamId === 'new') return null;
+  if (!currentTeam || currentTeamId === 'new' || !isFacilitator) return null;
 
   return (
     <>

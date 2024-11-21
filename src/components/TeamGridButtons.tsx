@@ -11,7 +11,8 @@ import {TeamActionAlert} from './TeamActionAlert';
 import {Button} from './ui';
 
 export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at' | 'team_id'>) => {
-  const t = useTranslations('team.page');
+  const t = useTranslations();
+
   const {currentTeam, facilitator, isFacilitator, userProfile, currentTeamId} = useTeamStore();
   const {toast} = useToast();
 
@@ -28,9 +29,14 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
     } else {
       toast({
         variant: 'success',
-        title: t('removeMemberSuccess'),
+        title: t('team.page.removeMemberSuccess'),
       });
     }
+  };
+
+  const handleChangeRole = async (userId: string, newRole: string) => {
+    if (!currentTeam) return;
+    // const result = await changeTeamMemberRole(currentTeam.id, userId, 'facilitator');
   };
 
   return (
@@ -38,11 +44,11 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
       <Button variant="white" size="xs" className=" justify-between w-full" asChild>
         {member.user_id === userProfile?.user_id ? (
           <Link href={`/team/${currentTeamId}/member/${userProfile.user_id}`}>
-            {t('buttons.editProfile')} <ChangeRole />
+            {t('team.page.buttons.editProfile')} <ChangeRole />
           </Link>
         ) : (
           <Link href={`/team/${currentTeamId}/member/${member.user_id}`}>
-            {t('buttons.showProfile')}
+            {t('team.page.buttons.showProfile')}
           </Link>
         )}
       </Button>
@@ -50,18 +56,28 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
         <>
           <TeamActionAlert
             onAction={() => handleRemoveMember(member.user_id)}
-            title={t('removeMemberConfirmation', {
+            title={t('team.page.removeMemberConfirmation', {
               name: `${member.first_name} ${member.last_name}`,
             })}
-            description={t('removeMemberDescription')}>
+            description={t('team.page.removeMemberDescription')}>
             <Button variant="white" size="xs" className=" justify-between w-full">
-              {t('buttons.remove')}
+              {t('team.page.buttons.remove')}
               <RemoveMember />
             </Button>
           </TeamActionAlert>
-          <Button variant="white" size="xs" className=" justify-between w-full">
-            {t('buttons.changeRole')} <ChangeRole />
-          </Button>
+          <TeamActionAlert
+            onAction={() =>
+              handleChangeRole(member.user_id, member.role === 'member' ? 'facilitator' : 'member')
+            }
+            title={t('team.edit.role', {
+              name: `${member.first_name} ${member.last_name}`,
+              role: t(`common.${member.role}`),
+              newRole: member.role === 'member' ? t('common.facilitator') : t('common.member'),
+            })}>
+            <Button variant="white" size="xs" className=" justify-between w-full">
+              {t('team.page.buttons.changeRole')} <ChangeRole />
+            </Button>
+          </TeamActionAlert>
         </>
       )}
     </div>
