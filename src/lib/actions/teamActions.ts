@@ -109,67 +109,17 @@ export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
 
   try {
-    // Get the current user
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
-
-    // Get the user's profile data first
-    const {data: profile, error: profileError} = await supabase
-      .from('profiles')
-      .select('first_name, last_name, avatar_url')
-      .eq('id', user.user.id)
-      .single();
-
-    if (profileError) {
-      console.log('Profile lookup error:', profileError);
-      return {error: 'Failed to get profile data'};
-    }
-
-    // Find the team with the given code
-    const {data: teamData, error: teamError} = await supabase
-      .from('teams')
-      .select('id')
-      .eq('team_code', teamCode.toUpperCase())
-      .maybeSingle();
-
-    if (teamError) {
-      console.log('Team lookup error:', teamError);
-      return {error: 'Failed to lookup team'};
-    }
-
-    if (!teamData) {
-      return {error: 'Invalid team code'};
-    }
-
-    // Check if user is already a member
-    const {data: existingMember, error: memberCheckError} = await supabase
-      .from('team_members')
-      .select()
-      .eq('team_id', teamData.id)
-      .eq('user_id', user.user.id)
-      .maybeSingle();
-
-    if (existingMember) {
-      return {error: 'You are already a member of this team'};
-    }
-
-    // Add user as a member with profile data
-    const {error: insertError} = await supabase.from('team_members').insert({
-      team_id: teamData.id,
-      user_id: user.user.id,
-      role: 'member',
-      first_name: profile.first_name,
-      last_name: profile.last_name,
-      avatar_url: profile.avatar_url,
+    const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_code', {
+      team_code_input: teamCode.toUpperCase(),
     });
 
-    if (insertError) {
-      console.log('Join team error:', insertError);
+    if (joinError) {
+      console.log('Join team error:', joinError);
       return {error: 'Failed to join team'};
     }
 
-    revalidatePath('/team', 'page');
-    return {success: true, teamId: teamData.id};
+    revalidatePath(`/team?id=${teamId}`, 'page');
+    return {success: true, teamId};
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to join team'};

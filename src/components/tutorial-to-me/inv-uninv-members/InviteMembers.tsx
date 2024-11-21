@@ -21,7 +21,7 @@ const InviteMembers: FC = () => {
   return (
     <section className="text-center p-4">
       <h1 className="text-xl font-bold">Invite Team Members</h1>
-      <div className="bg-green w-[80%] h-24 rounded-3xl border-2 border-black p-4 mx-auto flex flex-col gap-4 h-full">
+      <div className="bg-green w-[80%] rounded-3xl border-2 border-black p-4 mx-auto flex flex-col gap-4 h-full">
         <Input
           placeholder="Enter email address"
           className="w-full bg-white border-black rounded-full"

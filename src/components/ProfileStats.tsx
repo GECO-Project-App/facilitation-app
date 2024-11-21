@@ -40,7 +40,7 @@ export const ProfileStats = ({
         )}
       </div>
       <section className="page-constraints flex flex-col gap-6">
-        {isCurrentUser && <MemberForm user={member} />}
+        {isCurrentUser ? <MemberForm user={member} /> : <div>{member.description}</div>}
 
         {/* TODO: add a stats section from tutorial to me here */}
         <section className="grid grid-cols-1 gap-4  ">
