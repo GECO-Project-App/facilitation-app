@@ -9,12 +9,23 @@ import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link} from '@/i18n/routing';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/navigation';
 import {FC} from 'react';
-
 const Review: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
   const {isAllDone, theTimePassed} = useDoneTutorialExercise();
   const {allReviewsDone, removeLocalStorageItem} = useSSCChaptersHandler();
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (allReviewsDone()) {
+      router.push('/exercises/tutorial-to-me/feedback');
+      removeLocalStorageItem('reviewDone');
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <PageLayout
       hasPadding={false}
@@ -33,8 +44,8 @@ const Review: FC = () => {
           variant="blue"
           className="mx-auto"
           disabled={!allReviewsDone()}
-          onClick={() => removeLocalStorageItem('reviewDone')}>
-          <Link href={'/'}>{isAllDone ? t('reviewComplete') : t('backToHome')}</Link>
+          onClick={handleClick}>
+          {isAllDone ? t('reviewComplete') : t('backToHome')}
         </Button>
       }>
       {isAllDone || theTimePassed ? <ReviewCompleted /> : <ReviewNotCompleted />}

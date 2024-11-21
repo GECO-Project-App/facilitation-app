@@ -2,7 +2,13 @@
 import {PageLayout} from '@/components';
 import {Confetti} from '@/components/icons/confetti';
 import DialogView from '@/components/modal/DialogView';
-import {CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, SSC_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
+import {
+  CH_IN_SURVEY_ID,
+  CH_OUT_SURVEY_ID,
+  SSC_SURVEY_ID,
+  TEST_SURVEY_ID,
+  TUTORIAL_TO_ME_SURVEY_ID,
+} from '@/lib/surveys-id';
 import {useTranslations} from 'next-intl';
 import {usePostHog} from 'posthog-js/react';
 import {useEffect, useState} from 'react';
@@ -29,6 +35,8 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
         return CH_OUT_SURVEY_ID;
       case 'test':
         return TEST_SURVEY_ID;
+      case 'tutorial-to-me':
+        return TUTORIAL_TO_ME_SURVEY_ID;
       default:
         return '';
     }
@@ -65,7 +73,9 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
                 ? 'Check-In'
                 : slug === 'check-out'
                   ? 'Check-Out'
-                  : ''
+                  : slug === 'tutorial-to-me'
+                    ? 'Tutorial to Me'
+                    : ''
           }
           onSubmit={handleSubmit}
         />
