@@ -17,7 +17,6 @@ export async function updateProfile(data: ProfileSchema) {
       data: {
         first_name: validatedFields.first_name,
         last_name: validatedFields.last_name,
-        username: validatedFields.username,
       },
     });
 
@@ -29,7 +28,6 @@ export async function updateProfile(data: ProfileSchema) {
       .update({
         first_name: validatedFields.first_name,
         last_name: validatedFields.last_name,
-        username: validatedFields.username,
         updated_at: new Date().toISOString(),
       })
       .eq('id', user.user.id);

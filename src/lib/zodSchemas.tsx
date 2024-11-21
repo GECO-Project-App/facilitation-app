@@ -59,11 +59,12 @@ export const profileSchema = z.object({
   email: z.string().email(),
   first_name: z.string(),
   last_name: z.string(),
-  username: z.string(),
 });
 
 export const memberSchema = z.object({
-  description: z.string().max(480),
+  profile_name: z.string(),
+  role: z.enum(['member', 'facilitator']),
+  description: z.string().max(480).nullable(),
 });
 
 export const createTeamSchema = z.object({

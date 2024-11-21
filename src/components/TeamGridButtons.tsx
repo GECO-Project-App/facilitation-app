@@ -10,14 +10,14 @@ import {ChangeRole, RemoveMember} from './icons';
 import {TeamActionAlert} from './TeamActionAlert';
 import {Button} from './ui';
 
-export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at' | 'team_id'>) => {
+export const TeamGridButtons = ({member}: {member: Tables<'team_members'>}) => {
   const t = useTranslations();
 
   const {currentTeam, facilitator, isFacilitator, userProfile, currentTeamId} = useTeamStore();
   const {toast} = useToast();
 
   const handleRemoveMember = async (userId: string) => {
-    if (!currentTeam) return;
+    if (!currentTeam || !member) return;
     const result = await removeTeamMember(currentTeam.id, userId);
 
     if (result?.error) {
@@ -52,10 +52,11 @@ export const TeamGridButtons = (member: Omit<Tables<'team_members'>, 'joined_at'
     }
   };
 
+  if (!member || !userProfile) return null;
   return (
     <div className="flex flex-col gap-2">
       <Button variant="white" size="xs" className=" justify-between w-full" asChild>
-        {member.user_id === userProfile?.user_id ? (
+        {member.user_id === userProfile.user_id ? (
           <Link href={`/team/${currentTeamId}/member/${userProfile.user_id}`}>
             {t('team.page.buttons.editProfile')} <ChangeRole />
           </Link>

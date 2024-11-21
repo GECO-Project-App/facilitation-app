@@ -14,7 +14,6 @@
       "code": "Team Code",
       "save": "Save"
     },
-
     "page": {
     "inviteCode": "Invite Code",
     "inviteTeam": "Invite team members",
@@ -63,8 +62,20 @@
       },
       "role": "Do you want to change \"{name}\" role from \"{role}\" to \"{newRole}\"?",
       "roleSuccess": "Member role updated successfully",
-      "roleError": "Member role update failed"
+      "roleError": "Member role update failed",
+      "memberForm": {
+        "profileName": "Profile Name",
+        "enterProfileName": "Select profile name",
+        "role": "Role",
+        "description": "Description",
+        "descriptionPlaceholder": "240-480 characters *",
+        "profileInfo": "Profile information updated successfully",
+        "profileError": "Profile information update failed",
+        "save": "Save changes"
+      }
     }
+
+
   },
 
   "profile": {

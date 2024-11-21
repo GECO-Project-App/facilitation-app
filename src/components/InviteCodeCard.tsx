@@ -23,7 +23,7 @@ export const InviteCodeCard = () => {
         });
       })
       .catch((err) => {
-        console.log(err.message);
+        console.error(err.message);
       });
   };
 

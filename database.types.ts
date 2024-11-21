@@ -64,27 +64,33 @@ export type Database = {
       team_members: {
         Row: {
           avatar_url: string | null
+          description: string | null
           first_name: string | null
           joined_at: string | null
           last_name: string | null
+          profile_name: string | null
           role: Database["public"]["Enums"]["team_role"] | null
           team_id: string
           user_id: string
         }
         Insert: {
           avatar_url?: string | null
+          description?: string | null
           first_name?: string | null
           joined_at?: string | null
           last_name?: string | null
+          profile_name?: string | null
           role?: Database["public"]["Enums"]["team_role"] | null
           team_id: string
           user_id: string
         }
         Update: {
           avatar_url?: string | null
+          description?: string | null
           first_name?: string | null
           joined_at?: string | null
           last_name?: string | null
+          profile_name?: string | null
           role?: Database["public"]["Enums"]["team_role"] | null
           team_id?: string
           user_id?: string
@@ -191,6 +197,21 @@ export type Database = {
           p_avatar_url?: string
         }
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
+      }
+      update_team_member_profile: {
+        Args: {
+          p_team_id: string
+          p_profile_name?: string
+          p_description?: string
+        }
+        Returns: Json
+      }
+      update_team_member_profile_name: {
+        Args: {
+          p_team_id: string
+          p_profile_name: string
+        }
+        Returns: boolean
       }
     }
     Enums: {

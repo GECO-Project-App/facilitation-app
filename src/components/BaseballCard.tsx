@@ -8,6 +8,7 @@ import {Collapsible, CollapsibleContent, CollapsibleTrigger} from './ui/collapsi
 
 export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, children, open}) => {
   const t = useTranslations('common');
+
   return (
     <Collapsible
       className={cn(
@@ -20,7 +21,7 @@ export const BaseballCard: FC<BaseballCardType> = ({member, onOpenChange, childr
         <div className="items-center w-full flex flex-col gap-4">
           <ProfileAvatar memberProfile={member} />
           <div className="text-center">
-            <p className="font-bold">{`${member.first_name} ${member.last_name}`}</p>
+            <p className="font-bold">{`${member.profile_name}`}</p>
             <p>{t(member.role)}</p>
           </div>
         </div>

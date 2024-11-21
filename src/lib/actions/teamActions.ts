@@ -2,7 +2,13 @@
 import {revalidatePath} from 'next/cache';
 import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
-import {CreateTeamSchema, createTeamSchema, UpdateTeamSchema} from '../zodSchemas';
+import {
+  CreateTeamSchema,
+  createTeamSchema,
+  memberSchema,
+  MemberSchema,
+  UpdateTeamSchema,
+} from '../zodSchemas';
 
 export async function createTeam(data: CreateTeamSchema) {
   const supabase = createClient();
@@ -405,5 +411,28 @@ export async function getTeamMember(teamId: string, userId: string) {
   } catch (error) {
     console.log('Unexpected error:', error);
     return {error: 'Failed to get team member'};
+  }
+}
+
+export async function updateTeamMemberProfile(teamId: string, data: MemberSchema) {
+  const supabase = createClient();
+
+  const validatedFields = memberSchema.parse(data);
+  try {
+    const {data, error} = await supabase.rpc('update_team_member_profile', {
+      p_team_id: teamId,
+      p_profile_name: validatedFields.profile_name,
+      p_description: validatedFields.description ?? '',
+    });
+
+    if (error) throw error;
+
+    // Revalidate all team member paths
+    revalidatePath('/team/[teamId]/member/[id]', 'page');
+    revalidatePath('/team', 'page');
+    return {success: true, data};
+  } catch (error) {
+    console.error('Team member profile update error:', error);
+    return {error: 'Failed to update team member profile'};
   }
 }

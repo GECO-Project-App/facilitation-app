@@ -8,7 +8,6 @@ const InviteMembers: FC = () => {
   const [inviteMember, setInviteMember] = useState('');
   const {addMember} = useTeamMembers();
   const handleInviteMemberChange = () => {
-    console.log(inviteMember);
     if (inviteMember.trim() !== '') {
       addMember({
         nickname: inviteMember,

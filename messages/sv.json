@@ -60,7 +60,14 @@
       },
       "role": "Vill du ändra roll för \"{name}\" från \"{role}\" till \"{newRole}\"?",
       "roleSuccess": "Roll uppdaterad!",
-      "roleError": "Roll uppdatering misslyckades"
+      "roleError": "Roll uppdatering misslyckades",
+      "memberForm": {
+        "profileName": "Profilnamn",
+        "enterUsername": "Välj profilnamn",
+        "role": "Roll",
+        "description": "Beskrivning",
+        "descriptionPlaceholder": "240-480 tecken *"
+      }
     }
     
   },

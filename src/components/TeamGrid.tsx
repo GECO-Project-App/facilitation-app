@@ -9,10 +9,12 @@ import {TeamTabs} from './TeamTabs';
 
 export const TeamGrid: FC = () => {
   const [openCards, setOpenCards] = useState([0]);
-  const {currentTeam, facilitator, isFacilitator, userProfile, currentTeamId} = useTeamStore();
+  const {currentTeam, facilitator, currentTeamId} = useTeamStore();
   const t = useTranslations('team.page');
 
-  const facilitators = currentTeam?.team_members?.filter((member) => member.role === 'facilitator');
+  const facilitators = currentTeam?.team_members?.filter(
+    (member) => member && member?.role === 'facilitator',
+  );
   const toggleCard = useCallback((index: number) => {
     setOpenCards((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index],
@@ -20,7 +22,6 @@ export const TeamGrid: FC = () => {
   }, []);
 
   if (!currentTeam) return null;
-
   return (
     <>
       {currentTeamId === 'new' ? (
@@ -38,9 +39,9 @@ export const TeamGrid: FC = () => {
                   <BaseballCard
                     member={member}
                     onOpenChange={() => toggleCard(index)}
-                    open={openCards.includes(index) || facilitator?.user_id == member.user_id}
+                    open={openCards.includes(index) || facilitator?.user_id == member?.user_id}
                     onClick={() => toggleCard(index)}>
-                    <TeamGridButtons {...member} />
+                    <TeamGridButtons member={member} />
                   </BaseballCard>
                 </div>
               ))}
@@ -48,7 +49,7 @@ export const TeamGrid: FC = () => {
             <h3 className="font-bold text-xl text-center col-span-2">{currentTeam?.name}</h3>
             {// Filter out the facilitator from the team members
             currentTeam?.team_members
-              ?.filter((member) => member.role !== 'facilitator')
+              ?.filter((member) => member?.role !== 'facilitator')
               .map((member, index) => (
                 <BaseballCard
                   key={index}
@@ -56,7 +57,7 @@ export const TeamGrid: FC = () => {
                   onOpenChange={() => toggleCard(index)}
                   open={openCards.includes(index)}
                   onClick={() => toggleCard(index)}>
-                  <TeamGridButtons {...member} />
+                  <TeamGridButtons member={member} />
                 </BaseballCard>
               ))}
           </div>

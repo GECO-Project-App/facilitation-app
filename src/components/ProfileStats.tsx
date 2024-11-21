@@ -4,6 +4,7 @@ import {Pencil} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
+import {MemberForm} from './forms';
 
 export const ProfileStats = ({
   member,
@@ -16,7 +17,7 @@ export const ProfileStats = ({
   return (
     <section className="h-full flex-1 flex flex-col justify-center gap-6">
       <div className="text-center space-y-1">
-        <h3 className=" text-xl font-bold">{`${member.first_name} ${member.last_name}`}</h3>
+        <h3 className=" text-xl font-bold">{`${member.profile_name}`}</h3>
         <p>{t(member.role)}</p>
       </div>
       <div
@@ -38,14 +39,18 @@ export const ProfileStats = ({
           <ProfileAvatar memberProfile={member} size="lg" />
         )}
       </div>
+      <section className="page-constraints flex flex-col gap-6">
+        {isCurrentUser && <MemberForm user={member} />}
 
-      <section className="grid grid-cols-1 gap-4 page-constraints ">
-        {['Strength', 'Weakness', 'Communication Style', 'Skills Assessment'].map((stat) => (
-          <div key={stat}>
-            <h4>{stat}:</h4>
-            <p className="font-light">Value</p>
-          </div>
-        ))}
+        {/* TODO: add a stats section from tutorial to me here */}
+        <section className="grid grid-cols-1 gap-4  ">
+          {['Strength', 'Weakness', 'Communication Style', 'Skills Assessment'].map((stat) => (
+            <div key={stat}>
+              <h4>{stat}:</h4>
+              <p className="font-light">Value</p>
+            </div>
+          ))}
+        </section>
       </section>
     </section>
   );
