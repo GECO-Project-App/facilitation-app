@@ -30,7 +30,7 @@ const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
       ) : (
         <>
           <Button variant="white" className="w-full h-12">
-            <Link href={'/exercises/tutorial-to-me/members/invite'}>
+            <Link href={'/team'}>
               <div className="flex items-center justify-center text-md">
                 {t('inviteTeamMember')}
                 <UserRoundPlus size={24} className="ml-2" />
@@ -38,7 +38,7 @@ const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
             </Link>
           </Button>
           <Button variant="white" className="w-full h-12">
-            <Link href={'/exercises/tutorial-to-me/members/remove'}>
+            <Link href={'/team'}>
               <div className="flex items-center justify-center text-md">
                 {t('removeTeamMember')}
                 <UserRoundMinus size={24} className="ml-2" />
