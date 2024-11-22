@@ -1,9 +1,10 @@
 'use client';
 import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
+import {useExercisesStore} from '@/store/useExercises';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 export const TeamSelect = ({
   teams,
