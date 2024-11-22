@@ -6,6 +6,7 @@ import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 import {useEffect, useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
+
 export const TeamSelect = ({
   teams,
 }: {
@@ -21,15 +22,14 @@ export const TeamSelect = ({
 
   const teamValue = useMemo(() => {
     const teamId = searchParams.get('id');
+    return teamId ?? teams[0].id;
+  }, [searchParams, teams]);
 
-    if (teamId) {
-      setCurrentTeamId(teamId);
-    } else {
-      setCurrentTeamId(teams[0].id);
+  useEffect(() => {
+    if (teamValue) {
+      setCurrentTeamId(teamValue);
     }
-
-    return searchParams.get('id') ?? teams[0].id;
-  }, [setCurrentTeamId, searchParams, teams]);
+  }, [setCurrentTeamId, teamValue]);
 
   useEffect(() => {
     useExercisesStore.getState().init(currentTeamId ?? '');
