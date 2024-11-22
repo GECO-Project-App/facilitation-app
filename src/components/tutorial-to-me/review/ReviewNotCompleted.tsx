@@ -1,11 +1,15 @@
+import {RiveAnimation} from '@/components/RiveAnimation';
+import {useTranslations} from 'next-intl';
 import {FC} from 'react';
 
-const ReviewNotCompleted: FC<{message: string}> = ({message}) => {
+const ReviewNotCompleted: FC = () => {
+  const t = useTranslations('exercises.tutorialToMe');
   return (
-    <div className="simple-text">
-      <h2>Review Is Not Completed</h2>
-      <p>{message}</p>
-    </div>
+    <section className="flex flex-col items-center justify-evenly h-full space-y-8">
+      <h2 className="text-2xl font-bold">{t('waiting')}</h2>
+      <RiveAnimation src="timer.riv" width={300} height={300} />
+      <p className="px-4">{t('waitingForOthers')}</p>
+    </section>
   );
 };
 

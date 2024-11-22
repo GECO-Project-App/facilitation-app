@@ -1,5 +1,4 @@
 'use client';
-import {useToast} from '@/hooks/useToast';
 import {logOut} from '@/lib/actions/authActions';
 import {updateProfile} from '@/lib/actions/profileActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
@@ -10,7 +9,6 @@ import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
 export const ProfileForm = ({user}: {user: User}) => {
-  const {toast} = useToast();
   const t = useTranslations();
 
   const form = useForm<ProfileSchema>({

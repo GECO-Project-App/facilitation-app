@@ -1,9 +1,10 @@
 'use client';
 import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
+import {useExercisesStore} from '@/store/useExercises';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
 export const TeamSelect = ({
@@ -14,22 +15,25 @@ export const TeamSelect = ({
     name: string;
   }[];
 }) => {
-  const {setCurrentTeamId, currentTeam} = useTeamStore();
+  const {setCurrentTeamId, currentTeam, currentTeamId} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const teamValue = useMemo(() => {
     const teamId = searchParams.get('id');
+    return teamId ?? teams[0].id;
+  }, [searchParams, teams]);
 
-    if (teamId) {
-      setCurrentTeamId(teamId);
-    } else {
-      setCurrentTeamId(teams[0].id);
+  useEffect(() => {
+    if (teamValue) {
+      setCurrentTeamId(teamValue);
     }
+  }, [setCurrentTeamId, teamValue]);
 
-    return searchParams.get('id') ?? teams[0].id;
-  }, [setCurrentTeamId, searchParams, teams]);
+  useEffect(() => {
+    useExercisesStore.getState().init(currentTeamId ?? '');
+  }, [currentTeamId]);
 
   return (
     <Select
