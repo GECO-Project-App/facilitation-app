@@ -3,7 +3,13 @@ import {PageLayout} from '@/components';
 import {Confetti} from '@/components/icons/confetti';
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
-import {CH_IN_SURVEY_ID, CH_OUT_SURVEY_ID, SSC_SURVEY_ID, TEST_SURVEY_ID} from '@/lib/surveys-id';
+import {
+  CH_IN_SURVEY_ID,
+  CH_OUT_SURVEY_ID,
+  SSC_SURVEY_ID,
+  TEST_SURVEY_ID,
+  TUTORIAL_TO_ME_SURVEY_ID,
+} from '@/lib/surveys-id';
 import {useTranslations} from 'next-intl';
 import {usePostHog} from 'posthog-js/react';
 import {useEffect, useState} from 'react';
@@ -79,7 +85,9 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
               ? 'Check-In'
               : slug === 'check-out'
                 ? 'Check-Out'
-                : ''
+                : slug === 'tutorial-to-me'
+                  ? 'Tutorial to Me'
+                  : ''
         }
         onSubmit={handleSubmit}
       />

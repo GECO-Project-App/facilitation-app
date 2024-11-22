@@ -1,16 +1,14 @@
 'use client';
 import {RiveAnimation} from '@/components';
 import {Header} from '@/components/Header';
-// import DialogView from '@/components/modal/DialogView';
 import {PageLayout} from '@/components/PageLayout';
 import ReviewCompleted from '@/components/tutorial-to-me/review/ReviewCompleted';
 import ReviewNotCompleted from '@/components/tutorial-to-me/review/ReviewNotCompleted';
 import {Button} from '@/components/ui';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
-import {Link} from '@/i18n/routing';
-// import {useDialog} from '@/store/useDialog';
 import {useToast} from '@/hooks/useToast';
+import {Link} from '@/i18n/routing';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
@@ -20,7 +18,6 @@ const Review: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
   const {isAllDone, theTimePassed} = useDoneTutorialExercise();
   const {allReviewsDone, removeLocalStorageItem} = useSSCChaptersHandler();
-  // const {isDialogOpen, setIsDialogOpen} = useDialog();
   const router = useRouter();
   const {toast} = useToast();
 
@@ -39,7 +36,6 @@ const Review: FC = () => {
           </>
         ),
       });
-      // setIsDialogOpen(true);
       removeLocalStorageItem('reviewDone');
     } else {
       router.push('/');
@@ -47,14 +43,6 @@ const Review: FC = () => {
   };
 
   return (
-    // <>
-    //   {isDialogOpen ? (
-    //     <DialogView
-    //       destinationRoute="/exercises/tutorial-to-me/feedback"
-    //       message={t('greatJob')}
-    //       sticker={<RiveAnimation src="geckograttis.riv" width={300} height={300} />}
-    //     />
-    //   ) : (
     <PageLayout
       hasPadding={false}
       backgroundColor={`bg-purple`}
@@ -78,8 +66,6 @@ const Review: FC = () => {
       }>
       {isAllDone || theTimePassed ? <ReviewCompleted /> : <ReviewNotCompleted />}
     </PageLayout>
-    //   )}
-    // </>
   );
 };
 

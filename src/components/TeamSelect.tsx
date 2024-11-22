@@ -14,7 +14,7 @@ export const TeamSelect = ({
     name: string;
   }[];
 }) => {
-  const {setCurrentTeamId, currentTeam} = useTeamStore();
+  const {setCurrentTeamId, currentTeam, currentTeamId} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,8 +32,8 @@ export const TeamSelect = ({
   }, [setCurrentTeamId, searchParams, teams]);
 
   useEffect(() => {
-    useExercisesStore.getState().init(currentTeam?.id || '');
-  }, [currentTeam?.id]);
+    useExercisesStore.getState().init(currentTeamId ?? '');
+  }, [currentTeamId]);
 
   return (
     <Select
