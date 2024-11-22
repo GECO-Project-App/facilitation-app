@@ -54,8 +54,9 @@ export const useUserStore = create<UserState>()(
         }
 
         try {
-          const {data, error} = await supabase.storage.from('avatars').download(path);
-
+          const {data, error} = await supabase.storage
+            .from('avatars')
+            .download(path + `?t=${new Date().getTime()}`);
           if (error) {
             throw error;
           }

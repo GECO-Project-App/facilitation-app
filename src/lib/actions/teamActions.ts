@@ -227,12 +227,13 @@ export const updateTeamMemberAvatar = async (svgString: string) => {
 
   if (userError) throw userError;
 
-  const blob = new Blob([svgString], {type: 'image/svg+xml'});
-  const file = new File([blob], 'avatar.svg', {type: 'image/svg+xml'});
+  // Convert string directly to buffer instead of using Blob/File
+  const buffer = Buffer.from(svgString, 'utf-8');
 
   const {data, error: uploadError} = await supabase.storage
     .from('avatars')
-    .upload(`avatar-${user.user.id}.svg`, file, {
+    .upload(`avatar-${user.user.id}.svg`, buffer, {
+      contentType: 'image/svg+xml',
       cacheControl: '3600',
       upsert: true,
     });
