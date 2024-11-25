@@ -136,6 +136,37 @@ export type Database = {
         }
         Relationships: []
       }
+      tutorial_to_me: {
+        Row: {
+          exercise_id: string;
+          replied_id: string
+          created_at: string
+          created_by: string | null
+          team_id: string
+          writing_date: string | null
+          writing_time: string | null
+          reviewing_date: string | null
+          reviewing_time: string | null
+          is_active: boolean
+          strengths: string | null
+          weaknesses: string | null
+          communications: string | null
+          reviewed: boolean | null
+        }
+        Insert: {
+          replied_id: string
+          created_at?: string
+          created_by?: string | null
+          team_id: string
+          writing_date?: string | null
+          writing_time?: string | null
+          reviewing_date?: string | null
+          reviewing_time?: string | null
+          strengths?: string | null
+          weaknesses?: string | null
+          communications?: string | null
+        }
+      }
     }
     Views: {
       team_permissions: {
