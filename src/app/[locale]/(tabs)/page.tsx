@@ -1,5 +1,5 @@
 import {ExerciseCard, LanguageSelector, PageLayout, RiveAnimation} from '@/components';
-import FetchData from '@/components/FetchData';
+// import FetchData from '@/components/FetchData';
 import {ExerciseCardType} from '@/lib/types';
 import {getTranslations} from 'next-intl/server';
 
@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <FetchData />
+      {/* <FetchData /> */}
       <PageLayout backgroundColor="bg-yellow" hasPadding={false} contentColor="bg-yellow">
         <section className="flex flex-col items-center justify-between h-fit mb-[-42px] py-8">
           <div className="space-y-6 p-6">
