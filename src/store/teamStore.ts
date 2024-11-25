@@ -32,14 +32,20 @@ export const useTeamStore = create<TeamState>()(
 
       // Initialize the store by loading the user's first team
       init: async () => {
+        const supabase = createClient();
         try {
-          const supabase = createClient();
-
           // Get all teams the user belongs to
           const {teams} = await getUserTeams();
 
           // Get current user info
-          const user = useUserStore.getState().user;
+          const {
+            data: {user},
+            error: userError,
+          } = await supabase.auth.getUser();
+
+          if (userError || !user) {
+            return;
+          }
 
           if (teams?.[0] && user) {
             // Sort team members with current user first, then facilitator, then alphabetically

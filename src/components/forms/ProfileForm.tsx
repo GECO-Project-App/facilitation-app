@@ -3,22 +3,24 @@ import {useToast} from '@/hooks/useToast';
 import {logOut} from '@/lib/actions/authActions';
 import {updateProfile} from '@/lib/actions/profileActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
+import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {User} from '@supabase/supabase-js';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
+import {AuthTabs} from '../AuthTabs';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
-export const ProfileForm = ({user}: {user: User}) => {
+export const ProfileForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
+  const {user} = useUserStore();
 
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      email: user.email,
-      first_name: user.user_metadata.first_name ?? '',
-      last_name: user.user_metadata.last_name ?? '',
+      email: user?.email ?? '',
+      first_name: user?.user_metadata.first_name ?? '',
+      last_name: user?.user_metadata.last_name ?? '',
     },
   });
   const onSubmit = async (data: ProfileSchema) => {
@@ -38,9 +40,13 @@ export const ProfileForm = ({user}: {user: User}) => {
       });
     }
   };
+  if (!user) return <AuthTabs />;
 
   return (
-    <>
+    <section className="flex flex-col gap-6">
+      <h1 className="text-2xl font-bold">
+        {t('profile.welcome', {name: user.user_metadata.first_name})}
+      </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -140,6 +146,6 @@ export const ProfileForm = ({user}: {user: User}) => {
           {t('profile.logout')}
         </Button>
       </form>
-    </>
+    </section>
   );
 };

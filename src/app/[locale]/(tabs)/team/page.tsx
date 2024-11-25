@@ -1,5 +1,4 @@
 import {
-  AuthTabs,
   EditTeamDialog,
   Header,
   InviteCodeCard,
@@ -9,13 +8,11 @@ import {
   TeamTabs,
 } from '@/components';
 import {getUserTeams} from '@/lib/actions/teamActions';
-import {useUserStore} from '@/store/userStore';
 
 export default async function TeamPage() {
   const {teams} = await getUserTeams();
 
-  const user = useUserStore.getState().user;
-
+  console.log(teams);
   return (
     <PageLayout
       header={
@@ -37,7 +34,7 @@ export default async function TeamPage() {
           <TeamGrid />
         </section>
       ) : (
-        <>{user ? <TeamTabs /> : <AuthTabs />}</>
+        <TeamTabs />
       )}
     </PageLayout>
   );

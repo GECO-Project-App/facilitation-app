@@ -1,5 +1,4 @@
 'use server';
-import {useUserStore} from '@/store/userStore';
 import {revalidatePath} from 'next/cache';
 import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
@@ -16,9 +15,13 @@ export async function createTeam(data: CreateTeamSchema) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-    const user = useUserStore.getState().user;
 
-    if (!user) {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
@@ -75,9 +78,12 @@ export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-    const user = useUserStore.getState().user;
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
@@ -137,8 +143,12 @@ export async function getUserTeams() {
   const supabase = createClient();
 
   try {
-    const user = useUserStore.getState().user;
-    if (!user) {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
@@ -194,9 +204,12 @@ export async function removeTeamMember(teamId: string, userId: string) {
 
   try {
     // Get the current user (the one performing the removal)
-    const user = useUserStore.getState().user;
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
@@ -235,9 +248,12 @@ export async function removeTeamMember(teamId: string, userId: string) {
 
 export const updateTeamMemberAvatar = async (svgString: string) => {
   const supabase = createClient();
-  const user = useUserStore.getState().user;
+  const {
+    data: {user},
+    error: userError,
+  } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (userError || !user) {
     return {error: 'User not found'};
   }
 
@@ -273,8 +289,12 @@ export async function updateTeamMemberRole(
 
   try {
     // Get the current user (the one performing the role change)
-    const user = useUserStore.getState().user;
-    if (!user) {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
@@ -316,8 +336,12 @@ export async function deleteTeam(teamId: string) {
 
   try {
     // Check if user is a facilitator
-    const user = useUserStore.getState().user;
-    if (!user) {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 

@@ -1,11 +1,14 @@
 'use client';
+import {useUserStore} from '@/store/userStore';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
+import {AuthTabs} from './AuthTabs';
 import {CreateTeamForm, JoinTeamForm} from './forms';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from './ui/tabs';
 
 export const TeamTabs = () => {
   const t = useTranslations('team.tabs');
+  const {user} = useUserStore();
 
   const tabVariants = {
     hidden: {y: 20, opacity: 0},
@@ -14,38 +17,44 @@ export const TeamTabs = () => {
   };
 
   return (
-    <Tabs defaultValue="join" className="mx-auto w-fit">
-      <TabsList className="bg-pink">
-        <TabsTrigger value="join" variant="yellow">
-          {t('join')}
-        </TabsTrigger>
-        <TabsTrigger value="create" variant="yellow">
-          {t('create')}
-        </TabsTrigger>
-      </TabsList>
-      <AnimatePresence mode="popLayout">
-        <TabsContent value="join" key="join">
-          <motion.div
-            variants={tabVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{type: 'spring', stiffness: 100, damping: 15}}>
-            <JoinTeamForm />
-          </motion.div>
-        </TabsContent>
+    <>
+      {user ? (
+        <Tabs defaultValue="join" className="mx-auto w-fit">
+          <TabsList className="bg-pink">
+            <TabsTrigger value="join" variant="yellow">
+              {t('join')}
+            </TabsTrigger>
+            <TabsTrigger value="create" variant="yellow">
+              {t('create')}
+            </TabsTrigger>
+          </TabsList>
+          <AnimatePresence mode="popLayout">
+            <TabsContent value="join" key="join">
+              <motion.div
+                variants={tabVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{type: 'spring', stiffness: 100, damping: 15}}>
+                <JoinTeamForm />
+              </motion.div>
+            </TabsContent>
 
-        <TabsContent value="create" key="create">
-          <motion.div
-            variants={tabVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{type: 'spring', stiffness: 100, damping: 15}}>
-            <CreateTeamForm />
-          </motion.div>
-        </TabsContent>
-      </AnimatePresence>
-    </Tabs>
+            <TabsContent value="create" key="create">
+              <motion.div
+                variants={tabVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{type: 'spring', stiffness: 100, damping: 15}}>
+                <CreateTeamForm />
+              </motion.div>
+            </TabsContent>
+          </AnimatePresence>
+        </Tabs>
+      ) : (
+        <AuthTabs />
+      )}
+    </>
   );
 };

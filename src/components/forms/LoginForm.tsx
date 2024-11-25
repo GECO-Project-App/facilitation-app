@@ -3,6 +3,7 @@ import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
 import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
+import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
@@ -11,6 +12,7 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 export const LoginForm = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
+  const setUser = useUserStore((state) => state.setUser);
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -22,6 +24,7 @@ export const LoginForm = () => {
 
   const onSubmit = async (data: LoginSchema) => {
     const result = await login(data);
+    console.log('Login result:', result);
 
     if (result?.error) {
       toast({
@@ -29,7 +32,9 @@ export const LoginForm = () => {
         title: 'Error',
         description: result.error,
       });
-    } else {
+    } else if (result?.session) {
+      console.log('Setting user after login:', result.session.user);
+      setUser(result.session.user);
       toast({
         variant: 'success',
         title: t('loggedIn'),

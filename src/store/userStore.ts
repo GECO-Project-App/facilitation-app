@@ -1,14 +1,15 @@
 import {updateTeamMemberAvatar} from '@/lib/actions/teamActions';
 import {createClient} from '@/lib/supabase/client';
-import {User} from '@supabase/supabase-js';
+import {Session, User} from '@supabase/supabase-js';
 import {create} from 'zustand';
 import {devtools, persist} from 'zustand/middleware';
 
 interface UserState {
   user: User | null;
+  session: Session | null;
   isLoading: boolean;
   initialized: boolean;
-  setUser: (user: User | null) => void;
+  setUser: (user: User, session?: Session) => void;
   avatarUrl: string | null;
   initialize: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -25,23 +26,36 @@ export const useUserStore = create<UserState>()(
       (set, get) => ({
         avatarUrl: null,
         user: null,
+        session: null,
         isLoading: true,
         initialized: false,
-        setUser: (user) => set({user}),
+        setUser: (user, session = undefined) => {
+          set({user, session});
+        },
+
         initialize: async () => {
           const supabase = createClient();
 
           // Get initial session
           const {
-            data: {user},
-          } = await supabase.auth.getUser();
-          set({user, isLoading: false, initialized: true});
+            data: {session},
+          } = await supabase.auth.getSession();
+          set({
+            user: session?.user ?? null,
+            session: session ?? null,
+            isLoading: false,
+            initialized: true,
+          });
 
           // Listen for auth changes
           supabase.auth.onAuthStateChange((_event, session) => {
-            set({user: session?.user ?? null});
+            set({
+              user: session?.user ?? null,
+              session: session ?? null,
+            });
           });
         },
+
         signOut: async () => {
           const supabase = createClient();
           await supabase.auth.signOut();
@@ -74,7 +88,7 @@ export const useUserStore = create<UserState>()(
 
             return url;
           } catch (error) {
-            console.log('Error downloading image: ', error);
+            console.error('Error downloading image: ', error);
             return '';
           }
         },
@@ -107,7 +121,7 @@ export const useUserStore = create<UserState>()(
           }
         },
       }),
-      {name: 'UserStore', partialize: (state) => ({user: state.user})},
+      {name: 'UserStore'},
     ),
   ),
 );

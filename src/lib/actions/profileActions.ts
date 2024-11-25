@@ -1,5 +1,4 @@
 'use server';
-import {useUserStore} from '@/store/userStore';
 import {revalidatePath} from 'next/cache';
 import {createClient} from '../supabase/server';
 import {profileSchema, ProfileSchema} from '../zodSchemas';
@@ -10,8 +9,12 @@ export async function updateProfile(data: ProfileSchema) {
   try {
     const validatedFields = profileSchema.parse(data);
 
-    const user = useUserStore.getState().user;
-    if (!user) {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
       return {error: 'User not found'};
     }
 
