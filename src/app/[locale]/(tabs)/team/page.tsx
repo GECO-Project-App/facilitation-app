@@ -9,16 +9,12 @@ import {
   TeamTabs,
 } from '@/components';
 import {getUserTeams} from '@/lib/actions/teamActions';
-import {createClient} from '@/lib/supabase/server';
+import {useUserStore} from '@/store/userStore';
 
 export default async function TeamPage() {
-  const supabase = createClient();
   const {teams} = await getUserTeams();
 
-  const {
-    data: {user},
-    error: AuthError,
-  } = await supabase.auth.getUser();
+  const user = useUserStore.getState().user;
 
   return (
     <PageLayout

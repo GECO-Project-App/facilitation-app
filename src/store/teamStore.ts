@@ -3,6 +3,7 @@ import {createClient} from '@/lib/supabase/client';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 import {Tables} from '../../database.types';
+import {useUserStore} from './userStore';
 
 type TeamWithMembers = Tables<'teams'> & {
   team_members: Array<Tables<'team_members'>> | [];
@@ -38,9 +39,7 @@ export const useTeamStore = create<TeamState>()(
           const {teams} = await getUserTeams();
 
           // Get current user info
-          const {
-            data: {user},
-          } = await supabase.auth.getUser();
+          const user = useUserStore.getState().user;
 
           if (teams?.[0] && user) {
             // Sort team members with current user first, then facilitator, then alphabetically
@@ -117,9 +116,7 @@ export const useTeamStore = create<TeamState>()(
             .single();
 
           if (error) throw error;
-          const {
-            data: {user},
-          } = await supabase.auth.getUser();
+          const user = useUserStore.getState().user;
 
           set({currentTeam: team, isLoading: false});
 

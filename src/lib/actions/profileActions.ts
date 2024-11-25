@@ -1,4 +1,5 @@
 'use server';
+import {useUserStore} from '@/store/userStore';
 import {revalidatePath} from 'next/cache';
 import {createClient} from '../supabase/server';
 import {profileSchema, ProfileSchema} from '../zodSchemas';
@@ -9,8 +10,10 @@ export async function updateProfile(data: ProfileSchema) {
   try {
     const validatedFields = profileSchema.parse(data);
 
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // Update auth metadata
     const {error: updateAuthError} = await supabase.auth.updateUser({
@@ -30,12 +33,12 @@ export async function updateProfile(data: ProfileSchema) {
         last_name: validatedFields.last_name,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', user.user.id);
+      .eq('id', user.id);
 
     if (updateProfileError) throw updateProfileError;
 
     revalidatePath('/settings', 'page');
-    return {success: true, user: user.user};
+    return {success: true, user: user};
   } catch (error) {
     console.error('Profile update error:', error);
     return {error: 'Failed to update profile'};

@@ -1,4 +1,5 @@
 'use server';
+import {useUserStore} from '@/store/userStore';
 import {revalidatePath} from 'next/cache';
 import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
@@ -15,14 +16,17 @@ export async function createTeam(data: CreateTeamSchema) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // Get or create user profile
     let {data: profile} = await supabase
       .from('profiles')
       .select('first_name, last_name, avatar_url')
-      .eq('id', user.user.id)
+      .eq('id', user.id)
       .maybeSingle();
 
     if (!profile) {
@@ -30,10 +34,10 @@ export async function createTeam(data: CreateTeamSchema) {
       const {data: newProfile, error: createError} = await supabase
         .from('profiles')
         .insert({
-          id: user.user.id,
-          first_name: user.user.user_metadata?.first_name || '',
-          last_name: user.user.user_metadata?.last_name || '',
-          avatar_url: user.user.user_metadata?.avatar_url || '',
+          id: user.id,
+          first_name: user.user_metadata?.first_name || '',
+          last_name: user.user_metadata?.last_name || '',
+          avatar_url: user.user_metadata?.avatar_url || '',
         })
         .select()
         .single();
@@ -47,7 +51,7 @@ export async function createTeam(data: CreateTeamSchema) {
       .from('teams')
       .insert({
         name: validatedFields.name,
-        created_by: user.user.id,
+        created_by: user.id,
       })
       .select('*')
       .maybeSingle();
@@ -71,15 +75,18 @@ export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
 
   try {
     const validatedFields = createTeamSchema.parse(data);
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // Check if user is a facilitator
     const {data: isAuthorized, error: authError} = await supabase.rpc(
       'check_team_management_permission',
       {
         team_id: teamId,
-        user_id: user.user.id,
+        user_id: user.id,
       },
     );
 
@@ -94,13 +101,13 @@ export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
       .eq('id', teamId);
 
     if (updateError) {
-      console.log('Team update error:', updateError);
+      console.error('Team update error:', updateError);
       return {error: 'Failed to update team'};
     }
 
     revalidatePath('/team', 'page');
   } catch (error) {
-    console.log('Unexpected error:', error);
+    console.error('Unexpected error:', error);
     return {error: 'Failed to update team'};
   }
 }
@@ -114,14 +121,14 @@ export async function joinTeamByCode(teamCode: string) {
     });
 
     if (joinError) {
-      console.log('Join team error:', joinError);
+      console.error('Join team error:', joinError);
       return {error: 'Failed to join team'};
     }
 
     revalidatePath(`/team?id=${teamId}`, 'page');
     return {success: true, teamId};
   } catch (error) {
-    console.log('Unexpected error:', error);
+    console.error('Unexpected error:', error);
     return {error: 'Failed to join team'};
   }
 }
@@ -130,14 +137,16 @@ export async function getUserTeams() {
   const supabase = createClient();
 
   try {
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // First get the teams the user is a member of
     const {data: memberTeams, error: memberError} = await supabase
       .from('team_members')
       .select('team_id')
-      .eq('user_id', user.user.id);
+      .eq('user_id', user.id);
 
     if (memberError) {
       console.log('Error fetching member teams:', memberError);
@@ -185,15 +194,18 @@ export async function removeTeamMember(teamId: string, userId: string) {
 
   try {
     // Get the current user (the one performing the removal)
-    const {data: currentUser, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // Check if the current user is a facilitator of the team
     const {data: isAuthorized, error: authError} = await supabase.rpc(
       'check_team_management_permission',
       {
         team_id: teamId,
-        user_id: currentUser.user.id,
+        user_id: user.id,
       },
     );
 
@@ -223,16 +235,18 @@ export async function removeTeamMember(teamId: string, userId: string) {
 
 export const updateTeamMemberAvatar = async (svgString: string) => {
   const supabase = createClient();
-  const {data: user, error: userError} = await supabase.auth.getUser();
+  const user = useUserStore.getState().user;
 
-  if (userError) throw userError;
+  if (!user) {
+    return {error: 'User not found'};
+  }
 
   // Convert string directly to buffer instead of using Blob/File
   const buffer = Buffer.from(svgString, 'utf-8');
 
   const {data, error: uploadError} = await supabase.storage
     .from('avatars')
-    .upload(`avatar-${user.user.id}.svg`, buffer, {
+    .upload(`avatar-${user.id}.svg`, buffer, {
       contentType: 'image/svg+xml',
       cacheControl: '3600',
       upsert: true,
@@ -259,15 +273,17 @@ export async function updateTeamMemberRole(
 
   try {
     // Get the current user (the one performing the role change)
-    const {data: currentUser, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     // Check if the current user is a facilitator of the team
     const {data: isAuthorized, error: authError} = await supabase.rpc(
       'check_team_management_permission',
       {
         team_id: teamId,
-        user_id: currentUser.user.id,
+        user_id: user.id,
       },
     );
 
@@ -300,14 +316,16 @@ export async function deleteTeam(teamId: string) {
 
   try {
     // Check if user is a facilitator
-    const {data: currentUser, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const user = useUserStore.getState().user;
+    if (!user) {
+      return {error: 'User not found'};
+    }
 
     const {data: isAuthorized, error: authError} = await supabase.rpc(
       'check_team_management_permission',
       {
         team_id: teamId,
-        user_id: currentUser.user.id,
+        user_id: user.id,
       },
     );
 

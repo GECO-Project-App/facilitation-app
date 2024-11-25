@@ -1,4 +1,5 @@
 import {Toaster} from '@/components/ui/toast/toaster';
+import {AuthProvider} from '@/lib/providers/AuthProvider';
 import {PHProvider} from '@/lib/providers/PHProvider';
 import {cn} from '@/lib/utils';
 import type {Metadata} from 'next';
@@ -28,15 +29,17 @@ export default async function RootLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <html lang={locale} suppressHydrationWarning>
-        <PHProvider>
-          <body
-            className={cn(jetbrains_mono.variable, roboto.variable, '')}
-            suppressHydrationWarning>
-            <PostHogPageView />
-            {children}
-            <Toaster />
-          </body>
-        </PHProvider>
+        <AuthProvider>
+          <PHProvider>
+            <body
+              className={cn(jetbrains_mono.variable, roboto.variable, '')}
+              suppressHydrationWarning>
+              <PostHogPageView />
+              {children}
+              <Toaster />
+            </body>
+          </PHProvider>
+        </AuthProvider>
       </html>
     </NextIntlClientProvider>
   );

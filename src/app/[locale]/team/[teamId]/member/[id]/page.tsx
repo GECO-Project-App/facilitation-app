@@ -1,23 +1,22 @@
 import {Header, ProfileStats} from '@/components';
 import {getTeamMember} from '@/lib/actions/teamActions';
-import {createClient} from '@/lib/supabase/server';
 import {cn} from '@/lib/utils';
+import {useUserStore} from '@/store/userStore';
 
 export default async function TeamMemberPage({
   params: {teamId, id},
 }: {
   params: {teamId: string; id: string};
 }) {
-  const supabase = createClient();
   const {member, error} = await getTeamMember(teamId, id);
-  const {data: user} = await supabase.auth.getUser();
+  const user = useUserStore.getState().user;
 
   if (!member) return <div>Member not found</div>;
 
   return (
     <section
       className={cn(
-        user?.user?.id === member.user_id
+        user?.id === member.user_id
           ? 'bg-white'
           : member.role === 'facilitator'
             ? 'bg-yellow'
@@ -28,7 +27,7 @@ export default async function TeamMemberPage({
       <div className="p-4">
         <Header />
       </div>
-      <ProfileStats member={member} isCurrentUser={user?.user?.id === member.user_id} />
+      <ProfileStats member={member} isCurrentUser={user?.id === member.user_id} />
     </section>
   );
 }

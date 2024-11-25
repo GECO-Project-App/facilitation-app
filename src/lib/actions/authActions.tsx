@@ -1,6 +1,7 @@
 'use server';
 
 import {createClient} from '@/lib/supabase/server';
+import {useUserStore} from '@/store/userStore';
 import {getTranslations} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
 import {redirect} from 'next/navigation';
@@ -116,12 +117,9 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
   try {
     const validatedFields = updatePasswordSchema.parse(data);
 
-    const {
-      data: {user},
-      error: AuthError,
-    } = await supabase.auth.getUser();
+    const user = useUserStore.getState().user;
 
-    if (AuthError || !user) {
+    if (!user) {
       return {error: t('userNotFound')};
     }
 
