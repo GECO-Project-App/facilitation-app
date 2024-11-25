@@ -1,4 +1,5 @@
 import {updateTeamMemberAvatar} from '@/lib/actions/teamActions';
+import {ShapeColors} from '@/lib/constants';
 import {createClient} from '@/lib/supabase/client';
 import {Session, User} from '@supabase/supabase-js';
 import {create} from 'zustand';
@@ -9,6 +10,12 @@ interface UserState {
   session: Session | null;
   isLoading: boolean;
   initialized: boolean;
+  localAvatar: {
+    color: string;
+    shape: number;
+  };
+  setLocalAvatar: (avatar: {color: string; shape: number}) => void;
+
   setUser: (user: User, session?: Session) => void;
   avatarUrl: string | null;
   initialize: () => Promise<void>;
@@ -29,6 +36,11 @@ export const useUserStore = create<UserState>()(
         session: null,
         isLoading: true,
         initialized: false,
+        localAvatar: {
+          color: ShapeColors.Green,
+          shape: 0,
+        },
+        setLocalAvatar: (avatar) => set({localAvatar: avatar}),
         setUser: (user, session = undefined) => {
           set({user, session});
         },

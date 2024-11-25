@@ -60,7 +60,6 @@ export async function createTeam(data: CreateTeamSchema) {
       .maybeSingle();
 
     if (teamError || !teamData) {
-      console.log(teamError);
       return {error: teamError?.message || 'Failed to create team'};
     }
 
@@ -68,7 +67,6 @@ export async function createTeam(data: CreateTeamSchema) {
 
     return {success: true, teamId: teamData.id};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to create team'};
   }
 }
@@ -159,7 +157,6 @@ export async function getUserTeams() {
       .eq('user_id', user.id);
 
     if (memberError) {
-      console.log('Error fetching member teams:', memberError);
       return {error: 'Failed to fetch teams'};
     }
 
@@ -188,13 +185,11 @@ export async function getUserTeams() {
       .order('name', {ascending: true});
 
     if (teamsError) {
-      console.log('Error fetching teams:', teamsError);
       return {error: 'Failed to fetch teams'};
     }
 
     return {teams: teams || []};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to fetch teams'};
   }
 }
@@ -234,14 +229,12 @@ export async function removeTeamMember(teamId: string, userId: string) {
       .eq('user_id', userId);
 
     if (deleteError) {
-      console.log('Remove member error:', deleteError);
       return {error: 'Failed to remove team member'};
     }
 
     revalidatePath('/team', 'page');
     return {success: true};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to remove team member'};
   }
 }
@@ -319,14 +312,12 @@ export async function updateTeamMemberRole(
       .eq('user_id', userId);
 
     if (updateError) {
-      console.log('Role update error:', updateError);
       return {error: 'Failed to update member role'};
     }
 
     revalidatePath('/team', 'page');
     return {success: true};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to update member role'};
   }
 }
@@ -361,7 +352,6 @@ export async function deleteTeam(teamId: string) {
     const {error: deleteError} = await supabase.from('teams').delete().eq('id', teamId);
 
     if (deleteError) {
-      console.log('Team deletion error:', deleteError);
       return {error: 'Failed to delete team'};
     }
 
@@ -392,7 +382,6 @@ export async function getTeamMember(teamId: string, userId: string) {
       .single();
 
     if (error) {
-      console.log('Team member lookup error:', error);
       return {error: 'Failed to get team member'};
     }
 
@@ -402,7 +391,6 @@ export async function getTeamMember(teamId: string, userId: string) {
 
     return {success: true, member};
   } catch (error) {
-    console.log('Unexpected error:', error);
     return {error: 'Failed to get team member'};
   }
 }

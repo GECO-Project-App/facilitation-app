@@ -24,7 +24,6 @@ export const LoginForm = () => {
 
   const onSubmit = async (data: LoginSchema) => {
     const result = await login(data);
-    console.log('Login result:', result);
 
     if (result?.error) {
       toast({
@@ -33,7 +32,6 @@ export const LoginForm = () => {
         description: result.error,
       });
     } else if (result?.session) {
-      console.log('Setting user after login:', result.session.user);
       setUser(result.session.user);
       toast({
         variant: 'success',
