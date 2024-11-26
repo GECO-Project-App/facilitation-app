@@ -1,6 +1,5 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {logOut} from '@/lib/actions/authActions';
 import {updateProfile} from '@/lib/actions/profileActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {useUserStore} from '@/store/userStore';
@@ -13,7 +12,7 @@ import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, 
 export const ProfileForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
-  const {user} = useUserStore();
+  const {user, signOut} = useUserStore();
 
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
@@ -40,6 +39,7 @@ export const ProfileForm = () => {
       });
     }
   };
+
   if (!user) return <AuthTabs />;
 
   return (
@@ -141,11 +141,11 @@ export const ProfileForm = () => {
           </div>
         </form>
       </Form>
-      <form className="flex justify-center ">
-        <Button variant="red" formAction={logOut}>
+      <div className="flex justify-center ">
+        <Button variant="red" type="submit" onClick={signOut}>
           {t('profile.logout')}
         </Button>
-      </form>
+      </div>
     </section>
   );
 };

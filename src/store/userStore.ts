@@ -88,7 +88,7 @@ export const useUserStore = create<UserState>()(
             .from('avatars')
             .upload(`avatar-${user.id}.svg`, file, {
               contentType: 'image/svg+xml',
-              cacheControl: '3600',
+              cacheControl: '8600',
               upsert: true,
             });
 

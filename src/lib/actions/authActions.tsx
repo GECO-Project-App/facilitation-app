@@ -3,7 +3,6 @@
 import {createClient} from '@/lib/supabase/server';
 import {getTranslations} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
-import {redirect} from 'next/navigation';
 import {z} from 'zod';
 import {
   loginSchema,
@@ -105,12 +104,6 @@ export async function resetPassword(data: ResetPasswordSchema) {
     }
     return {error: t('errorOccurred')};
   }
-}
-
-export async function logOut() {
-  const supabase = createClient();
-  await supabase.auth.signOut();
-  redirect('/');
 }
 
 export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
