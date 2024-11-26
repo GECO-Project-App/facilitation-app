@@ -121,7 +121,10 @@ export const useTeamStore = create<TeamState>()(
             .eq('id', teamId)
             .single();
 
-          if (error) throw error;
+          if (error) {
+            console.log(error);
+          }
+
           const user = useUserStore.getState().user;
 
           set({currentTeam: team, isLoading: false});
@@ -147,7 +150,6 @@ export const useTeamStore = create<TeamState>()(
             });
           }
         } catch (error) {
-          console.error('Error fetching team:', error);
           set({currentTeam: null, isLoading: false});
         }
       },

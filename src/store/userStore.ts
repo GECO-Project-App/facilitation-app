@@ -1,7 +1,6 @@
-import {updateTeamMemberAvatar} from '@/lib/actions/teamActions';
 import {ShapeColors} from '@/lib/constants';
 import {createClient} from '@/lib/supabase/client';
-import {Session, User} from '@supabase/supabase-js';
+import type {Session, User} from '@supabase/supabase-js';
 import {create} from 'zustand';
 import {devtools, persist} from 'zustand/middleware';
 
@@ -15,16 +14,10 @@ interface UserState {
     shape: number;
   };
   setLocalAvatar: (avatar: {color: string; shape: number}) => void;
-
   setUser: (user: User, session?: Session) => void;
   avatarUrl: string | null;
   initialize: () => Promise<void>;
   signOut: () => Promise<void>;
-  updateAvatar: (
-    svgString: string,
-  ) => Promise<{success: boolean; avatarUrl: string; error?: string} | undefined>;
-  downloadImage: (path: string) => Promise<string | undefined>;
-  imageCache: Record<string, string>;
 }
 
 export const useUserStore = create<UserState>()(
@@ -74,62 +67,48 @@ export const useUserStore = create<UserState>()(
           set({user: null});
         },
 
-        imageCache: {},
-
-        downloadImage: async (path: string) => {
-          const supabase = createClient();
-          const cache = get().imageCache;
-
-          if (cache[path]) {
-            return cache[path];
-          }
-
-          try {
-            const {data, error} = await supabase.storage
-              .from('avatars')
-              .download(path + `?t=${new Date().getTime()}`);
-            if (error) {
-              throw error;
-            }
-
-            const url = URL.createObjectURL(data);
-
-            set((state) => ({
-              imageCache: {...state.imageCache, [path]: url},
-            }));
-
-            return url;
-          } catch (error) {
-            console.error('Error downloading image: ', error);
-            return '';
-          }
-        },
         updateAvatar: async (svgString: string) => {
           const supabase = createClient();
 
-          const {data: user, error: userError} = await supabase.auth.getUser();
-          if (userError) throw userError;
+          const {
+            data: {user},
+            error: userError,
+          } = await supabase.auth.getUser();
+          if (userError) {
+            return {success: false, avatarUrl: '', error: userError.message};
+          }
+          if (!user) {
+            return {success: false, avatarUrl: '', error: 'User not found'};
+          }
 
-          const {success, url, error} = await updateTeamMemberAvatar(svgString);
-          if (success && url) {
+          const blob = new Blob([svgString], {type: 'image/svg+xml'});
+          const file = new File([blob], 'avatar.svg', {type: 'image/svg+xml'});
+
+          const {data, error: uploadError} = await supabase.storage
+            .from('avatars')
+            .upload(`avatar-${user.id}.svg`, file, {
+              contentType: 'image/svg+xml',
+              cacheControl: '3600',
+              upsert: true,
+            });
+
+          if (data) {
             const {error: profileError} = await supabase
               .from('profiles')
-              .update({avatar_url: url})
-              .eq('id', user.user.id);
+              .update({avatar_url: data.path})
+              .eq('id', user.id);
 
             if (profileError) throw profileError;
 
             await supabase.auth.updateUser({
               data: {
-                avatar_url: url,
+                avatar_url: data.path,
               },
             });
 
-            set((state) => ({imageCache: {}}));
-            get().downloadImage(url);
-            return {success: true, avatarUrl: url};
+            return {success: true, avatarUrl: data.path};
           } else {
-            return {success: false, avatarUrl: '', error: error};
+            return {success: false, avatarUrl: '', error: uploadError?.message};
           }
         },
       }),

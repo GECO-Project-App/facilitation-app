@@ -239,40 +239,6 @@ export async function removeTeamMember(teamId: string, userId: string) {
   }
 }
 
-export const updateTeamMemberAvatar = async (svgString: string) => {
-  const supabase = createClient();
-  const {
-    data: {user},
-    error: userError,
-  } = await supabase.auth.getUser();
-
-  if (userError || !user) {
-    return {error: 'User not found'};
-  }
-
-  // Convert string directly to buffer instead of using Blob/File
-  const buffer = Buffer.from(svgString, 'utf-8');
-
-  const {data, error: uploadError} = await supabase.storage
-    .from('avatars')
-    .upload(`avatar-${user.id}.svg`, buffer, {
-      contentType: 'image/svg+xml',
-      cacheControl: '3600',
-      upsert: true,
-    });
-
-  if (uploadError) {
-    console.error('Error uploading avatar:', uploadError);
-    return {success: false, error: uploadError.message};
-  }
-
-  // Revalidate all team member paths
-  revalidatePath('/team/[teamId]/member/[id]', 'page');
-  revalidatePath('/team', 'page');
-
-  return {success: true, url: data.path};
-};
-
 export async function updateTeamMemberRole(
   teamId: string,
   userId: string,
