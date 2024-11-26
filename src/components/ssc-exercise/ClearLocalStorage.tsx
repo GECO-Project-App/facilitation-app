@@ -7,7 +7,7 @@ const ClearLocalStorage = () => {
   const {removeLocalStorageItem} = useSSCChaptersHandler();
 
   useEffect(() => {
-    removeLocalStorageItem();
+    removeLocalStorageItem('chapterDone');
   }, [removeLocalStorageItem]);
 
   return null;

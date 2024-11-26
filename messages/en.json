@@ -303,11 +303,19 @@
       "greatJob": "GREAT JOB! YOU DID IT!"
     },
     "tutorialToMe": {
+      "greatJob": "GREAT JOB! YOU DID IT!",
       "title": "Tutorial to me",
       "subtitle": "30 minutes | 2-15 people | Multiplayer, Asynchronous",
       "description": "The 'Tutorial to me' exercise helps your team share their strengths, weaknesses, and preferred ways of communicating when starting to work together. This ensures everyone is aligned on how they like working and how to best collaborate. Team members can refer to the results of this exercise in the 'Team' tab of the GECO app throughout the project.",
       "button": "Let's Start",
       "nextStep": "Next step",
+      "backToHome": "Back to Home",
+      "reviewComplete": "Review Complete",
+      "letsGetStarted": "Let's Get Started",
+      "takeALookAtYourTeammates": "Take a look at your teammates",
+      "preferences": "Preferences.",
+      "waiting": "Waiting...",
+      "waitingForOthers": "We are still waiting on others, to finish their Tutorial to me. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else answers.",
       "defineTimeline": {
         "title": "Define Timeline",
         "description": "Let's set the deadline for the exercise.",
@@ -333,11 +341,6 @@
           "title": "Communication",
           "description": "What three communication practices do you value when working on a project?",
           "button": "Submit"
-        },
-        {
-          "title": "Finish",
-          "description": "You're done! You can now see the results of the exercise in the 'Team' tab in the GECO app.",
-          "button": "Finish"
         }
       ]
     }

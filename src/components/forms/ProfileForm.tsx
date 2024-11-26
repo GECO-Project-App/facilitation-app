@@ -111,25 +111,7 @@ export const ProfileForm = () => {
               </FormItem>
             )}
           />
-          {/* 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({field}) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="password"
-                  {...field}
-                  placeholder={t('metadata.password')}
-                  autoComplete="current-password"
-                  readOnly
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+
           <div className="mt-8 flex justify-center gap-4">
             <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
               {form.formState.isSubmitting ? (

@@ -1,6 +1,8 @@
 'use client';
+import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {useExercisesStore} from '@/store/useExercises';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -10,6 +12,7 @@ import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
 import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
 import {Button} from './ui';
+
 export const About: FC<{
   slug: string;
   title: string;
@@ -18,6 +21,8 @@ export const About: FC<{
   buttonText: string;
 }> = ({slug, title, subtitle, description, buttonText}) => {
   const posthog = usePostHog();
+  const {currentTutorialExerciseId} = useExercisesStore();
+  const {done, theTimePassed} = useDoneTutorialExercise();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {
@@ -51,7 +56,14 @@ export const About: FC<{
       header={<Header />}
       footer={
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link href={mock.button.link}>
+          <Link
+            href={
+              currentTutorialExerciseId && slug === 'tutorial-to-me'
+                ? done || theTimePassed
+                  ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}/review`
+                  : `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
+                : mock.button.link
+            }>
             {buttonText} <ArrowRight size={28} />
           </Link>
         </Button>
@@ -73,7 +85,9 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && <InvOrDelMembers />}
+          {slug === 'tutorial-to-me' && (
+            <InvOrDelMembers toturianExerciseId={currentTutorialExerciseId} />
+          )}
         </div>
       </div>
     </PageLayout>

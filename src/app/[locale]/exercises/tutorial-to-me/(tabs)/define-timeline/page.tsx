@@ -1,19 +1,27 @@
-import {Header, PageLayout} from '@/components';
+'use client';
+import {Button, Header, PageLayout} from '@/components';
 import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
-import {Button} from '@/components/ui/button/button';
-import {Link} from '@/i18n/routing';
+import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {ArrowRight} from 'lucide-react';
-import {getTranslations} from 'next-intl/server';
-export default async function TutorialToMePage() {
-  const t = await getTranslations('exercises.tutorialToMe');
+import {useTranslations} from 'next-intl';
+import Link from 'next/link';
+
+export default function DefineTimeForTutorialToMePage() {
+  const t = useTranslations('exercises.tutorialToMe');
+  const {writingDate, reviewingDate, writingTime, reviewingTime} = useTutorialToMe();
   return (
     <PageLayout
       backgroundColor="bg-red"
       header={<Header />}
       footer={
-        <Button variant="blue" asChild className="mx-auto">
-          <Link href={`/exercises/tutorial-to-me`}>
-            {t('nextStep')} <ArrowRight size={28} />
+        <Button
+          variant="white"
+          disabled={!writingDate || !reviewingDate || !writingTime || !reviewingTime}>
+          <Link href={`/exercises/tutorial-to-me/id/create`}>
+            <span className="flex items-center gap-2">
+              {t('nextStep')}
+              <ArrowRight size={28} />
+            </span>
           </Link>
         </Button>
       }>
@@ -22,11 +30,19 @@ export default async function TutorialToMePage() {
         <p className="mt-4 text-lg">{t('defineTimeline.description')}</p>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.writingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="purple" />
+          <DateAndTimePicker
+            btnText={t('defineTimeline.pickADateAndTime')}
+            variant="purple"
+            mode="writing"
+          />
         </article>
         <article className="flex flex-col gap-6">
           <p className="text-2xl font-bold">{t('defineTimeline.reviewingPhase')}</p>
-          <DateAndTimePicker btnText={t('defineTimeline.pickADateAndTime')} variant="blue" />
+          <DateAndTimePicker
+            btnText={t('defineTimeline.pickADateAndTime')}
+            variant="blue"
+            mode="reviewing"
+          />
         </article>
       </section>
     </PageLayout>

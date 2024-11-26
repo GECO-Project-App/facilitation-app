@@ -6,6 +6,7 @@ export type SignupSchema = z.infer<typeof signupSchema>;
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;
 export type ProfileSchema = z.infer<typeof profileSchema>;
 export type CreateTeamSchema = z.infer<typeof createTeamSchema>;
+export type TutorialToMeSchema = z.infer<typeof tutorialToMeSchema>;
 export type JoinTeamSchema = z.infer<typeof joinTeamSchema>;
 export type MemberSchema = z.infer<typeof memberSchema>;
 export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
@@ -80,4 +81,15 @@ export const joinTeamSchema = z.object({
 export const updateTeamSchema = z.object({
   name: z.string().min(4),
   delete: z.boolean(),
+});
+
+export const tutorialToMeSchema = z.object({
+  team_id: z.string(),
+  writing_date: z.string(),
+  writing_time: z.string(),
+  reviewing_date: z.string(),
+  reviewing_time: z.string(),
+  strengths: z.string(),
+  weaknesses: z.string(),
+  communications: z.string(),
 });
