@@ -13,6 +13,9 @@ interface UserState {
     color: string;
     shape: number;
   };
+  updateAvatar: (
+    svgString: string,
+  ) => Promise<{success: boolean; avatarUrl: string; error?: string}>;
   setLocalAvatar: (avatar: {color: string; shape: number}) => void;
   setUser: (user: User, session?: Session) => void;
   avatarUrl: string | null;
@@ -67,7 +70,9 @@ export const useUserStore = create<UserState>()(
           set({user: null});
         },
 
-        updateAvatar: async (svgString: string) => {
+        updateAvatar: async (
+          svgString: string,
+        ): Promise<{success: boolean; avatarUrl: string; error?: string}> => {
           const supabase = createClient();
 
           const {
