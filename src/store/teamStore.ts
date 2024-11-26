@@ -3,6 +3,7 @@ import {createClient} from '@/lib/supabase/client';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 import {Tables} from '../../database.types';
+import {useUserStore} from './userStore';
 
 type TeamWithMembers = Tables<'teams'> & {
   team_members: Array<Tables<'team_members'>> | [];
@@ -31,16 +32,20 @@ export const useTeamStore = create<TeamState>()(
 
       // Initialize the store by loading the user's first team
       init: async () => {
+        const supabase = createClient();
         try {
-          const supabase = createClient();
-
           // Get all teams the user belongs to
           const {teams} = await getUserTeams();
 
           // Get current user info
           const {
             data: {user},
+            error: userError,
           } = await supabase.auth.getUser();
+
+          if (userError || !user) {
+            return;
+          }
 
           if (teams?.[0] && user) {
             // Sort team members with current user first, then facilitator, then alphabetically
@@ -116,10 +121,11 @@ export const useTeamStore = create<TeamState>()(
             .eq('id', teamId)
             .single();
 
-          if (error) throw error;
-          const {
-            data: {user},
-          } = await supabase.auth.getUser();
+          if (error) {
+            console.log(error);
+          }
+
+          const user = useUserStore.getState().user;
 
           set({currentTeam: team, isLoading: false});
 
@@ -144,7 +150,6 @@ export const useTeamStore = create<TeamState>()(
             });
           }
         } catch (error) {
-          console.error('Error fetching team:', error);
           set({currentTeam: null, isLoading: false});
         }
       },

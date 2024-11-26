@@ -1,5 +1,4 @@
 import {
-  AuthTabs,
   EditTeamDialog,
   Header,
   InviteCodeCard,
@@ -9,16 +8,9 @@ import {
   TeamTabs,
 } from '@/components';
 import {getUserTeams} from '@/lib/actions/teamActions';
-import {createClient} from '@/lib/supabase/server';
 
 export default async function TeamPage() {
-  const supabase = createClient();
   const {teams} = await getUserTeams();
-
-  const {
-    data: {user},
-    error: AuthError,
-  } = await supabase.auth.getUser();
 
   return (
     <PageLayout
@@ -41,7 +33,7 @@ export default async function TeamPage() {
           <TeamGrid />
         </section>
       ) : (
-        <>{user ? <TeamTabs /> : <AuthTabs />}</>
+        <TeamTabs />
       )}
     </PageLayout>
   );

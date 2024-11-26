@@ -3,7 +3,6 @@
 import {createClient} from '@/lib/supabase/server';
 import {getTranslations} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
-import {redirect} from 'next/navigation';
 import {z} from 'zod';
 import {
   loginSchema,
@@ -25,17 +24,21 @@ export async function login(data: LoginSchema) {
 
     const {
       error,
-      data: {user},
+      data: {session},
     } = await supabase.auth.signInWithPassword(validatedFields);
 
     if (error) {
       return {error: error.message};
     }
 
-    revalidatePath('/settings ', 'page');
+    if (!session) {
+      return {error: 'No session created'};
+    }
 
-    return {success: true};
+    revalidatePath('/settings', 'page');
+    return {success: true, session};
   } catch (error) {
+    console.error('Login error:', error);
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
     }
@@ -103,12 +106,6 @@ export async function resetPassword(data: ResetPasswordSchema) {
   }
 }
 
-export async function logOut() {
-  const supabase = createClient();
-  await supabase.auth.signOut();
-  redirect('/');
-}
-
 export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
   const supabase = createClient();
   const t = await getTranslations('error');
@@ -118,10 +115,10 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
 
     const {
       data: {user},
-      error: AuthError,
+      error: userError,
     } = await supabase.auth.getUser();
 
-    if (AuthError || !user) {
+    if (userError) {
       return {error: t('userNotFound')};
     }
 
