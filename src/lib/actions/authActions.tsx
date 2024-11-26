@@ -35,7 +35,6 @@ export async function login(data: LoginSchema) {
       return {error: 'No session created'};
     }
 
-    revalidatePath('/settings', 'page');
     return {success: true, session};
   } catch (error) {
     console.error('Login error:', error);
@@ -55,7 +54,7 @@ export async function signup(data: SignupSchema) {
 
     const {
       error,
-      data: {user},
+      data: {session},
     } = await supabase.auth.signUp({
       email: validatedFields.email,
       password: validatedFields.password,
@@ -71,9 +70,7 @@ export async function signup(data: SignupSchema) {
       return {error: error.message};
     }
 
-    revalidatePath('/settings', 'page');
-
-    return {success: true};
+    return {success: true, session};
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};
@@ -105,6 +102,14 @@ export async function resetPassword(data: ResetPasswordSchema) {
     return {error: t('errorOccurred')};
   }
 }
+
+export const sendResetPasswordEmail = async (email: string) => {
+  const supabase = createClient();
+
+  const {data, error} = await supabase.auth.resetPasswordForEmail(email);
+
+  return {data, error};
+};
 
 export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
   const supabase = createClient();

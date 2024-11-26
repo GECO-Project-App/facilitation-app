@@ -1,9 +1,9 @@
 'use client';
 
 import {useToast} from '@/hooks/useToast';
-import {useRouter} from '@/i18n/routing';
 import {signup} from '@/lib/actions/authActions';
 import {SignupSchema, signupSchema} from '@/lib/zodSchemas';
+import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
@@ -12,8 +12,7 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 export const SignUpForm = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
-  const router = useRouter();
-
+  const {setUser} = useUserStore();
   const form = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -31,7 +30,8 @@ export const SignUpForm = () => {
         title: t('error'),
         description: result.error,
       });
-    } else {
+    } else if (result?.session) {
+      setUser(result.session.user);
       toast({
         variant: 'default',
         title: t('loggedIn'),
