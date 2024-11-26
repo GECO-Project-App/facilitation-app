@@ -32,7 +32,8 @@ export const TeamSelect = ({
   }, [setCurrentTeamId, teamValue]);
 
   useEffect(() => {
-    useExercisesStore.getState().init(currentTeamId ?? '');
+    if (!currentTeamId) return;
+    useExercisesStore.getState().init(currentTeamId);
   }, [currentTeamId]);
 
   return (
