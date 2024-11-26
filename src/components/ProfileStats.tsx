@@ -1,19 +1,19 @@
+'use client';
 import {Link} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
+import {useUserStore} from '@/store/userStore';
 import {Pencil} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useMemo} from 'react';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
 import {MemberForm} from './forms';
 
-export const ProfileStats = ({
-  member,
-  isCurrentUser,
-}: {
-  member: Tables<'team_members'>;
-  isCurrentUser: boolean;
-}) => {
+export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
+  const {user} = useUserStore();
   const t = useTranslations('common');
+
+  const isCurrentUser = useMemo(() => user?.id === member.user_id, [user, member]);
   return (
     <section className="h-full flex-1 flex flex-col justify-center gap-6">
       <div className="text-center space-y-1">

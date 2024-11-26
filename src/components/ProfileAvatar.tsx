@@ -1,6 +1,6 @@
 'use client';
+import {createClient} from '@/lib/supabase/client';
 import {cn} from '@/lib/utils';
-import {useUserStore} from '@/store/userStore';
 import {ImagePlus} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {Tables} from '../../database.types';
@@ -13,31 +13,26 @@ export const ProfileAvatar = ({
   memberProfile: Tables<'team_members'>;
   size?: 'sm' | 'lg';
 }) => {
-  const {downloadImage} = useUserStore();
-  const [url, setUrl] = useState<string>('');
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
 
   useEffect(() => {
-    let isMounted = true;
+    async function downloadImage(path: string) {
+      const supabase = createClient();
+      try {
+        const {data, error} = await supabase.storage.from('avatars').download(path);
+        if (error) {
+          throw error;
+        }
 
-    async function getImage(path: string) {
-      const url = await downloadImage(path);
-      if (isMounted) {
-        setUrl(url ?? '');
+        const url = URL.createObjectURL(data);
+        setAvatarUrl(url);
+      } catch (error) {
+        console.error('Error downloading image: ', error);
       }
     }
+    if (memberProfile?.avatar_url) downloadImage(memberProfile.avatar_url);
+  }, [memberProfile?.avatar_url]);
 
-    if (memberProfile?.avatar_url) {
-      getImage(memberProfile.avatar_url);
-    } else {
-      setUrl('');
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [memberProfile?.avatar_url, downloadImage]);
-
-  if (!memberProfile) return null;
   return (
     <Avatar
       className={cn(
@@ -45,7 +40,7 @@ export const ProfileAvatar = ({
         size === 'sm' ? 'w-16 h-16 p-1' : 'w-32 h-32 p-2',
       )}>
       <AvatarImage
-        src={url}
+        src={avatarUrl}
         alt={`${memberProfile?.first_name} ${memberProfile?.last_name}`}
         className="relative"
       />

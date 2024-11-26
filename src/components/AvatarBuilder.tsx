@@ -2,6 +2,7 @@
 import {avatars} from '@/components/icons/avatar';
 import {toast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
+import {ShapeColors} from '@/lib/constants';
 import {cn} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
@@ -14,7 +15,7 @@ import {Save} from './icons';
 import {Button} from './ui/button';
 
 export const AvatarBuilder: FC = () => {
-  const {avatar, setAvatar, updateAvatar} = useUserStore();
+  const {localAvatar, setLocalAvatar, updateAvatar} = useUserStore();
   const [idx, setIdx] = useState<number | null>(null);
   const t = useTranslations('team.edit.avatar');
   const router = useRouter();
@@ -29,7 +30,7 @@ export const AvatarBuilder: FC = () => {
 
             const svgString = ReactDOMServer.renderToString(
               <AvatarComponent
-                fill={avatar.color}
+                fill={localAvatar.color ?? ShapeColors.Green}
                 height="100%"
                 width="100%"
                 className="aspect-square"
@@ -70,7 +71,7 @@ export const AvatarBuilder: FC = () => {
                   setIdx(index);
                 }}>
                 <AvatarItem
-                  fill={avatar.color}
+                  fill={localAvatar.color}
                   height="100%"
                   width="100%"
                   className="aspect-square"
@@ -81,7 +82,9 @@ export const AvatarBuilder: FC = () => {
         </section>
         <section className="flex flex-col gap-4">
           <p className="text-xl font-semibold">{t('skinTone')}</p>
-          <AvatarColorPicker onColorSelect={(color) => setAvatar({color, shape: avatar.shape})} />
+          <AvatarColorPicker
+            onColorSelect={(color) => setLocalAvatar({color, shape: localAvatar.shape})}
+          />
         </section>
       </section>
     </PageLayout>

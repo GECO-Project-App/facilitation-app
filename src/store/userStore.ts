@@ -1,106 +1,123 @@
-import {updateTeamMemberAvatar} from '@/lib/actions/teamActions';
 import {ShapeColors} from '@/lib/constants';
 import {createClient} from '@/lib/supabase/client';
-import {User} from '@supabase/supabase-js';
+import type {Session, User} from '@supabase/supabase-js';
 import {create} from 'zustand';
-import {devtools} from 'zustand/middleware';
+import {devtools, persist} from 'zustand/middleware';
 
 interface UserState {
   user: User | null;
-  avatar: {
+  session: Session | null;
+  isLoading: boolean;
+  initialized: boolean;
+  localAvatar: {
     color: string;
     shape: number;
   };
-  setAvatar: (avatar: {color: string; shape: number}) => void;
-  setUser: (user: User | null) => void;
-  avatarUrl: string | null;
-  signOut: () => Promise<void>;
   updateAvatar: (
     svgString: string,
-  ) => Promise<{success: boolean; avatarUrl: string; error?: string} | undefined>;
-  downloadImage: (path: string) => Promise<string | undefined>;
-  imageCache: Record<string, string>;
+  ) => Promise<{success: boolean; avatarUrl: string; error?: string}>;
+  setLocalAvatar: (avatar: {color: string; shape: number}) => void;
+  setUser: (user: User, session?: Session) => void;
+  avatarUrl: string | null;
+  initialize: () => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 export const useUserStore = create<UserState>()(
   devtools(
-    (set, get) => ({
-      avatarUrl: null,
-      user: null,
-      avatar: {
-        color: ShapeColors.Green,
-        shape: 0,
-      },
-      setAvatar: (avatar) => set({avatar}),
-      setUser: () =>
-        createClient().auth.onAuthStateChange((_event, session) => {
-          set({user: session?.user ?? null});
-        }),
+    persist(
+      (set, get) => ({
+        avatarUrl: null,
+        user: null,
+        session: null,
+        isLoading: true,
+        initialized: false,
+        localAvatar: {
+          color: ShapeColors.Green,
+          shape: 0,
+        },
+        setLocalAvatar: (avatar) => set({localAvatar: avatar}),
+        setUser: (user, session = undefined) => {
+          set({user, session});
+        },
 
-      signOut: async () => {
-        const supabase = createClient();
-        await supabase.auth.signOut();
-        set({user: null});
-      },
+        initialize: async () => {
+          const supabase = createClient();
 
-      imageCache: {},
-
-      downloadImage: async (path: string) => {
-        const supabase = createClient();
-        const cache = get().imageCache;
-
-        if (cache[path]) {
-          return cache[path];
-        }
-
-        try {
-          const {data, error} = await supabase.storage.from('avatars').download(path);
-
-          if (error) {
-            throw error;
-          }
-
-          const url = URL.createObjectURL(data);
-
-          set((state) => ({
-            imageCache: {...state.imageCache, [path]: url},
-          }));
-
-          return url;
-        } catch (error) {
-          console.log('Error downloading image: ', error);
-          return '';
-        }
-      },
-      updateAvatar: async (svgString: string) => {
-        const supabase = createClient();
-
-        const {data: user, error: userError} = await supabase.auth.getUser();
-        if (userError) throw userError;
-
-        const {success, url, error} = await updateTeamMemberAvatar(svgString);
-        if (success && url) {
-          const {error: profileError} = await supabase
-            .from('profiles')
-            .update({avatar_url: url})
-            .eq('id', user.user.id);
-
-          if (profileError) throw profileError;
-
-          await supabase.auth.updateUser({
-            data: {
-              avatar_url: url,
-            },
+          // Get initial session
+          const {
+            data: {session},
+          } = await supabase.auth.getSession();
+          set({
+            user: session?.user ?? null,
+            session: session ?? null,
+            isLoading: false,
+            initialized: true,
           });
 
-          set((state) => ({imageCache: {}}));
-          get().downloadImage(url);
-          return {success: true, avatarUrl: url};
-        } else {
-          return {success: false, avatarUrl: '', error: error};
-        }
-      },
-    }),
-    {name: 'UserStore'},
+          // Listen for auth changes
+          supabase.auth.onAuthStateChange((_event, session) => {
+            set({
+              user: session?.user ?? null,
+              session: session ?? null,
+            });
+          });
+        },
+
+        signOut: async () => {
+          const supabase = createClient();
+          await supabase.auth.signOut();
+          set({user: null});
+        },
+
+        updateAvatar: async (
+          svgString: string,
+        ): Promise<{success: boolean; avatarUrl: string; error?: string}> => {
+          const supabase = createClient();
+
+          const {
+            data: {user},
+            error: userError,
+          } = await supabase.auth.getUser();
+          if (userError) {
+            return {success: false, avatarUrl: '', error: userError.message};
+          }
+          if (!user) {
+            return {success: false, avatarUrl: '', error: 'User not found'};
+          }
+
+          const blob = new Blob([svgString], {type: 'image/svg+xml'});
+          const file = new File([blob], 'avatar.svg', {type: 'image/svg+xml'});
+
+          const {data, error: uploadError} = await supabase.storage
+            .from('avatars')
+            .upload(`avatar-${user.id}.svg`, file, {
+              contentType: 'image/svg+xml',
+              cacheControl: '8600',
+              upsert: true,
+            });
+
+          if (data) {
+            const {error: profileError} = await supabase
+              .from('profiles')
+              .update({avatar_url: data.path})
+              .eq('id', user.id);
+
+            if (profileError) throw profileError;
+
+            await supabase.auth.updateUser({
+              data: {
+                avatar_url: data.path,
+              },
+            });
+
+            return {success: true, avatarUrl: data.path};
+          } else {
+            return {success: false, avatarUrl: '', error: uploadError?.message};
+          }
+        },
+      }),
+      {name: 'UserStore'},
+    ),
   ),
 );

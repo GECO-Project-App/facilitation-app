@@ -9,8 +9,14 @@ export async function updateProfile(data: ProfileSchema) {
   try {
     const validatedFields = profileSchema.parse(data);
 
-    const {data: user, error: userError} = await supabase.auth.getUser();
-    if (userError) throw userError;
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return {error: 'User not found'};
+    }
 
     // Update auth metadata
     const {error: updateAuthError} = await supabase.auth.updateUser({
@@ -30,12 +36,12 @@ export async function updateProfile(data: ProfileSchema) {
         last_name: validatedFields.last_name,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', user.user.id);
+      .eq('id', user.id);
 
     if (updateProfileError) throw updateProfileError;
 
     revalidatePath('/settings', 'page');
-    return {success: true, user: user.user};
+    return {success: true, user: user};
   } catch (error) {
     console.error('Profile update error:', error);
     return {error: 'Failed to update profile'};

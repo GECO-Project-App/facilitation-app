@@ -1,22 +1,25 @@
 'use client';
-import {toast} from '@/hooks/useToast';
-import {logOut} from '@/lib/actions/authActions';
+import {useToast} from '@/hooks/useToast';
 import {updateProfile} from '@/lib/actions/profileActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
+import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {User} from '@supabase/supabase-js';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
+import {AuthTabs} from '../AuthTabs';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
-export const ProfileForm = ({user}: {user: User}) => {
+
+export const ProfileForm = () => {
+  const {toast} = useToast();
   const t = useTranslations();
+  const {user, signOut} = useUserStore();
 
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      email: user.email,
-      first_name: user.user_metadata.first_name ?? '',
-      last_name: user.user_metadata.last_name ?? '',
+      email: user?.email ?? '',
+      first_name: user?.user_metadata.first_name ?? '',
+      last_name: user?.user_metadata.last_name ?? '',
     },
   });
   const onSubmit = async (data: ProfileSchema) => {
@@ -37,8 +40,13 @@ export const ProfileForm = ({user}: {user: User}) => {
     }
   };
 
+  if (!user) return <AuthTabs />;
+
   return (
-    <>
+    <section className="flex flex-col gap-6">
+      <h1 className="text-2xl font-bold">
+        {t('profile.welcome', {name: user.user_metadata.first_name})}
+      </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -103,25 +111,7 @@ export const ProfileForm = ({user}: {user: User}) => {
               </FormItem>
             )}
           />
-          {/* 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({field}) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="password"
-                  {...field}
-                  placeholder={t('metadata.password')}
-                  autoComplete="current-password"
-                  readOnly
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
+
           <div className="mt-8 flex justify-center gap-4">
             <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
               {form.formState.isSubmitting ? (
@@ -133,11 +123,11 @@ export const ProfileForm = ({user}: {user: User}) => {
           </div>
         </form>
       </Form>
-      <form className="flex justify-center ">
-        <Button variant="red" formAction={logOut}>
+      <div className="flex justify-center ">
+        <Button variant="red" type="submit" onClick={signOut}>
           {t('profile.logout')}
         </Button>
-      </form>
-    </>
+      </div>
+    </section>
   );
 };
