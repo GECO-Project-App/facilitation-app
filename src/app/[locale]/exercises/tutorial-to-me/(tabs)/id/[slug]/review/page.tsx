@@ -9,9 +9,10 @@ import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
+import {updateReviewAndActiveTutorialToMe} from '@/lib/actions/createTutorialToMeActions';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useRouter} from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import {FC} from 'react';
 
 const Review: FC = () => {
@@ -20,9 +21,16 @@ const Review: FC = () => {
   const {allReviewsDone, removeLocalStorageItem} = useSSCChaptersHandler();
   const router = useRouter();
   const {toast} = useToast();
-
-  const handleClick = () => {
+  const {slug} = useParams();
+  const handleClick = async () => {
     if (allReviewsDone()) {
+      const result = await updateReviewAndActiveTutorialToMe(slug as string);
+      if (result?.error) {
+        toast({
+          variant: 'destructive',
+          title: t('review.toast.error'),
+        });
+      }
       router.push('/exercises/tutorial-to-me/feedback');
       toast({
         variant: 'transparent',
