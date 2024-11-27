@@ -16,6 +16,8 @@ export const ProfileAvatar = ({
   const [avatarUrl, setAvatarUrl] = useState<string>('');
 
   useEffect(() => {
+    let objectUrl = '';
+
     async function downloadImage(path: string) {
       const supabase = createClient();
       try {
@@ -24,13 +26,26 @@ export const ProfileAvatar = ({
           throw error;
         }
 
-        const url = URL.createObjectURL(data);
-        setAvatarUrl(url);
+        objectUrl = URL.createObjectURL(data);
+        setAvatarUrl(objectUrl);
       } catch (error) {
         console.error('Error downloading image: ', error);
       }
     }
-    if (memberProfile?.avatar_url) downloadImage(memberProfile.avatar_url);
+
+    // Reset the avatar URL when memberProfile changes
+    setAvatarUrl('');
+
+    if (memberProfile?.avatar_url) {
+      downloadImage(memberProfile.avatar_url);
+    }
+
+    // Cleanup function to revoke the object URL
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
   }, [memberProfile?.avatar_url]);
 
   return (
