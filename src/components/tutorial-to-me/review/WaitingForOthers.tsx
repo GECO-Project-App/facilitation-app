@@ -2,7 +2,7 @@ import {RiveAnimation} from '@/components/RiveAnimation';
 import {useTranslations} from 'next-intl';
 import {FC} from 'react';
 
-const ReviewNotCompleted: FC = () => {
+const WaitingForOthers: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
   return (
     <section className="flex flex-col items-center justify-evenly h-full space-y-8">
@@ -13,4 +13,4 @@ const ReviewNotCompleted: FC = () => {
   );
 };
 
-export default ReviewNotCompleted;
+export default WaitingForOthers;

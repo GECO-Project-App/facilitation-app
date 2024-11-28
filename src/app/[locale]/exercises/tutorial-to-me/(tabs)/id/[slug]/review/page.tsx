@@ -2,8 +2,8 @@
 import {RiveAnimation} from '@/components';
 import {Header} from '@/components/Header';
 import {PageLayout} from '@/components/PageLayout';
-import ReviewCompleted from '@/components/tutorial-to-me/review/ReviewCompleted';
-import ReviewNotCompleted from '@/components/tutorial-to-me/review/ReviewNotCompleted';
+import ReviewComponent from '@/components/tutorial-to-me/review/ReviewComponent';
+import WaitingForOthers from '@/components/tutorial-to-me/review/WaitingForOthers';
 import {Button} from '@/components/ui';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
@@ -72,7 +72,7 @@ const Review: FC = () => {
           {isAllDone ? t('reviewComplete') : t('backToHome')}
         </Button>
       }>
-      {isAllDone || theTimePassed ? <ReviewCompleted /> : <ReviewNotCompleted />}
+      {isAllDone || theTimePassed ? <ReviewComponent /> : <WaitingForOthers />}
     </PageLayout>
   );
 };
