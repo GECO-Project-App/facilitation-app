@@ -5,7 +5,7 @@ import {Step} from '@/lib/types';
 import {ArrowRight, Check} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {FC} from 'react';
-const ReviewCompleted: FC = () => {
+const ReviewComponent: FC = () => {
   const {reviewDone} = useSSCChaptersHandler();
   const t = useTranslations('exercises.tutorialToMe');
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
@@ -47,4 +47,4 @@ const ReviewCompleted: FC = () => {
   );
 };
 
-export default ReviewCompleted;
+export default ReviewComponent;

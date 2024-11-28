@@ -18,6 +18,7 @@ interface ExerciseType {
   reviewingDate: string;
   reviewingTime: string;
   isActive: boolean;
+  reviewed: boolean;
   type: 'tutorial_to_me';
   replied_id: string;
   answers: {
