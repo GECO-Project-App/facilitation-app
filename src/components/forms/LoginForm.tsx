@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {Link, useRouter} from '@/i18n/routing';
+import {Link} from '@/i18n/routing';
 import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
 import {useUserStore} from '@/store/userStore';
@@ -13,7 +13,7 @@ export const LoginForm = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
   const setUser = useUserStore((state) => state.setUser);
-  const router = useRouter();
+
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,6 +33,7 @@ export const LoginForm = () => {
       });
     } else if (result?.session) {
       setUser(result.session.user);
+      console.log(result.session.user);
       toast({
         variant: 'success',
         title: t('loggedIn'),

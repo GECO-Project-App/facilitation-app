@@ -1,14 +1,12 @@
 'use server';
 
 import {createClient} from '@/lib/supabase/server';
-import {getTranslations} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
 import {z} from 'zod';
 import {
   loginSchema,
   LoginSchema,
-  resetPasswordSchema,
-  ResetPasswordSchema,
   signupSchema,
   SignupSchema,
   updatePasswordSchema,
@@ -79,34 +77,13 @@ export async function signup(data: SignupSchema) {
   }
 }
 
-export async function resetPassword(data: ResetPasswordSchema) {
-  const supabase = createClient();
-  const t = await getTranslations('error');
-  try {
-    const validatedFields = resetPasswordSchema.parse(data);
-    // TODO: Fix redirectTo
-    const {error} = await supabase.auth.resetPasswordForEmail(validatedFields.email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_URL}/settings/update-password`,
-    });
-
-    if (error) {
-      return {error: error.message};
-    }
-
-    revalidatePath('/');
-    return {success: true};
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return {error: error.errors[0].message};
-    }
-    return {error: t('errorOccurred')};
-  }
-}
-
 export const sendResetPasswordEmail = async (email: string) => {
   const supabase = createClient();
+  const locale = await getLocale();
 
-  const {data, error} = await supabase.auth.resetPasswordForEmail(email);
+  const {data, error} = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_URL}/${locale}/settings/update-password`,
+  });
 
   return {data, error};
 };
@@ -117,15 +94,6 @@ export async function resetPasswordForEmail(data: UpdatePasswordSchema) {
 
   try {
     const validatedFields = updatePasswordSchema.parse(data);
-
-    const {
-      data: {user},
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError) {
-      return {error: t('userNotFound')};
-    }
 
     const {error} = await supabase.auth.updateUser({
       password: validatedFields.password,

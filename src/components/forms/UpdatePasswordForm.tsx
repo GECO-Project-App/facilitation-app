@@ -1,15 +1,21 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {resetPasswordForEmail} from '@/lib/actions/authActions';
 import {updatePasswordSchema, UpdatePasswordSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
 export const UpdatePasswordForm = () => {
   const t = useTranslations('authenticate');
   const {toast} = useToast();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  const errorDescription = searchParams.get('error_description');
 
   const form = useForm<UpdatePasswordSchema>({
     resolver: zodResolver(updatePasswordSchema),
@@ -29,12 +35,10 @@ export const UpdatePasswordForm = () => {
         description: result.error,
       });
     } else {
+      router.push('/settings');
       toast({
-        title: 'Success',
-        description: 'Your password has been reset successfully.',
+        title: t('updatePassword.success'),
       });
-      // Reset form
-      form.reset();
     }
   };
 
@@ -46,13 +50,14 @@ export const UpdatePasswordForm = () => {
           name="password"
           render={({field}) => (
             <FormItem>
-              <FormLabel>New Password</FormLabel>
+              <FormLabel>{t('updatePassword.newPassword')}</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   {...field}
                   autoComplete="new-password"
                   placeholder={t('enterPassword')}
+                  disabled={!!error}
                 />
               </FormControl>
               <FormMessage />
@@ -65,22 +70,28 @@ export const UpdatePasswordForm = () => {
           name="confirmPassword"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel>{t('updatePassword.confirmPassword')}</FormLabel>
               <FormControl>
                 <Input
                   type="password"
                   {...field}
                   autoComplete="new-password"
                   placeholder={t('confirmPassword')}
+                  disabled={!!error}
                 />
               </FormControl>
+              {error && (
+                <FormMessage className="text-center">
+                  {errorDescription?.replace(/\+/g, ' ')}
+                </FormMessage>
+              )}
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
-          {form.formState.isSubmitting ? 'Resetting...' : 'Reset Password'}
+        <Button type="submit" disabled={form.formState.isSubmitting || !!error} className="w-full">
+          {form.formState.isSubmitting ? '...' : t('updatePassword.button')}
         </Button>
       </form>
     </Form>

@@ -66,7 +66,10 @@
         "enterUsername": "Välj profilnamn",
         "role": "Roll",
         "description": "Beskrivning",
-        "descriptionPlaceholder": "240-480 tecken *"
+        "descriptionPlaceholder": "240-480 tecken *",
+        "profileInfo": "Profilinformation uppdaterad",
+        "profileError": "Profilinformation uppdatering misslyckades",
+        "save": "Spara ändringar"
       }
     }
     
@@ -400,6 +403,17 @@
     "signOut": "Logga ut",
     "loading": "Laddar...",
     "button": "Skicka",
+    "updatePassword": {
+      "title": "Uppdatera lösenord",
+      "description": "Ange ditt nya lösenord nedan.",
+      "email": "E-postadress",
+      "newPassword": "Nytt lösenord",
+      "confirmPassword": "Bekräfta lösenord",
+      "button": "Uppdatera lösenord",
+    "emailSent": "Email skickat",
+      "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
+      "success": "Ditt lösenord har uppdaterats!"
+    },
     "loggedIn": "Du är inloggad!",
     "enterEmail": "Ange e-postadress",
     "enterPassword": "Ange lösenord",
@@ -407,11 +421,9 @@
     "forgotPassword": "Glömt ditt lösenord?",
     "firstName": "Förnamn",
     "lastName": "Efternamn",
-    "emailSent": "Email skickat",
-    "emailSentDescription": "Kolla din email för en länk för att återställa ditt lösenord",
+
     "error": "Fel",
     "errorDescription": "Ett fel uppstod. Försök igen.",
-    "updatePassword": "Uppdatera lösenord",
     "updatePasswordDescription": "Ange ditt nya lösenord nedan.",
     "passwordsDoNotMatch": "Lösenorden matchar inte",
     "passwordUpdated": "Lösenord uppdaterat"

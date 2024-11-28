@@ -1,6 +1,6 @@
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "facilitation-app"
+project_id = "geco-app "
 
 [api]
 enabled = true
@@ -92,9 +92,12 @@ enabled = true
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-site_url = "http://127.0.0.1:3000"
+site_url = "env(NEXT_PUBLIC_URL)"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://127.0.0.1:3000"]
+additional_redirect_urls = [
+  "env(NEXT_PUBLIC_URL)",
+  "env(NEXT_PUBLIC_URL)/*/settings/update-password"
+]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -128,12 +131,12 @@ otp_expiry = 3600
 
 # Use a production-ready SMTP server
 # [auth.email.smtp]
-# host = "smtp.sendgrid.net"
-# port = 587
-# user = "apikey"
-# pass = "env(SENDGRID_API_KEY)"
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+# host = "smtp.resend.com"
+# port = 465
+# user = "resend"
+# pass = "env(RESEND_API_KEY)"
+# admin_email = "support@info.projectgeco.com"
+# sender_name = "GECO Team"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

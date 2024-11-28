@@ -1,19 +1,17 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {useRouter} from '@/i18n/routing';
 import {sendResetPasswordEmail} from '@/lib/actions/authActions';
 import {resetPasswordSchema, ResetPasswordSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RefreshCcw} from 'lucide-react';
-import {useLocale, useTranslations} from 'next-intl';
+import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
 export const ResetPasswordForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
-  const router = useRouter();
-  const locale = useLocale();
+
   const form = useForm<ResetPasswordSchema>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
