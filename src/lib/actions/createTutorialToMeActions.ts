@@ -64,5 +64,29 @@ export async function updateReviewAndActiveTutorialToMe(exerciseId: string) {
     return {error: updateReviewError.message};
   }
 
+  const {data: allReviews, error: allReviewsError} = await supabase
+    .from('tutorial_to_me')
+    .select('reviewed')
+    .eq('exercise_id', exerciseId);
+
+  if (allReviewsError) {
+    console.error('Error fetching reviews:', allReviewsError);
+    return {error: allReviewsError.message};
+  }
+
+  const allReviewed = allReviews.every((review) => review.reviewed);
+
+  if (allReviewed) {
+    const {error: updateActiveError} = await supabase
+      .from('tutorial_to_me')
+      .update({is_active: false})
+      .eq('exercise_id', exerciseId);
+
+    if (updateActiveError) {
+      console.error('Error updating is_active:', updateActiveError);
+      return {error: updateActiveError.message};
+    }
+  }
+
   return {success: true};
 }
