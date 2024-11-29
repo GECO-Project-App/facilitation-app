@@ -3,47 +3,47 @@ import {useTutorialToMe} from '@/store/useTutorialToMe';
 
 const ReviewTimeAtHeader = () => {
   const {currentTutorialExerciseId} = useExercisesStore();
-  const {reviewingDate, reviewingTime} = useTutorialToMe();
+  const {writingDate, writingTime} = useTutorialToMe();
 
-  const reviewingDateExerciseString = useExercisesStore
+  const writingDateExerciseString = useExercisesStore
     .getState()
-    .exercises.find((e) => e.exerciseId === currentTutorialExerciseId)?.reviewingDate;
+    .exercises.find((e) => e.exerciseId === currentTutorialExerciseId)?.writingDate;
 
-  const reviewingTimeExercise = useExercisesStore
+  const writingTimeExercise = useExercisesStore
     .getState()
-    .exercises.find((e) => e.exerciseId === currentTutorialExerciseId)?.reviewingTime;
+    .exercises.find((e) => e.exerciseId === currentTutorialExerciseId)?.writingTime;
 
-  const reviewingDateExercise = reviewingDateExerciseString
-    ? new Date(reviewingDateExerciseString)
+  const writingDateExercise = writingDateExerciseString
+    ? new Date(writingDateExerciseString)
     : undefined;
 
-  if (reviewingDate && reviewingTime) {
+  if (writingDate && writingTime) {
     return (
       <div>
         <div className="bg-white rounded-full p-2 border border-black border-2 text-sm font-bold text-center w-fit mx-auto">
           <p>
-            {reviewingDate.toLocaleDateString('en-US', {
+            {writingDate.toLocaleDateString('en-US', {
               weekday: 'short',
               month: 'short',
               day: 'numeric',
             })}
           </p>
-          <p>{reviewingTime}</p>
+          <p>{writingTime}</p>
         </div>
       </div>
     );
-  } else if (reviewingDateExercise && reviewingTimeExercise) {
+  } else if (writingDateExercise && writingTimeExercise) {
     return (
       <div>
         <div className="bg-white rounded-full p-2 border border-black border-2 text-sm font-bold text-center w-fit mx-auto">
           <p>
-            {reviewingDateExercise.toLocaleDateString('en-US', {
+            {writingDateExercise.toLocaleDateString('en-US', {
               weekday: 'short',
               month: 'short',
               day: 'numeric',
             })}
           </p>
-          <p>{reviewingTimeExercise}</p>
+          <p>{writingTimeExercise}</p>
         </div>
       </div>
     );
