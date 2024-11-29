@@ -15,7 +15,12 @@
     },
     "page": {
        "inviteCode": "Inbjudningskod",
-    "inviteTeam": "Bjud in teammedlemmar",
+    "inviteTeam": {
+      "title": "Bjud in teammedlem",
+      "email": "E-post",
+      "label": "Ange e-postadress",
+      "button": "Skicka inbjudan"
+    },
     "copied": "Kopierat",
       "copiedDescription": "Inbjudningskoden har kopierats",
       "createOrJoin": "Skapa eller gå med i ett team",

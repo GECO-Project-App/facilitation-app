@@ -7,3 +7,7 @@
 .branches
 .temp
 .env
+
+# Environment variables
+*.env
+.env.*

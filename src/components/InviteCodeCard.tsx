@@ -4,6 +4,7 @@ import {useTeamStore} from '@/store/teamStore';
 import {Copy} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRef} from 'react';
+import {InviteTeamMemberDialog} from './dialogs';
 import {Button} from './ui/button';
 
 export const InviteCodeCard = () => {
@@ -40,10 +41,7 @@ export const InviteCodeCard = () => {
         onClick={copyCode}>
         {currentTeam?.team_code ?? ''} <Copy className="absolute right-4" size={20} />
       </Button>
-      {/* TODO: Add invite team button when emails are implemented */}
-      {/* <Button variant="white" size="xs" className=" justify-between w-full ">
-        {t('inviteTeam')} <InviteTeam />
-      </Button> */}
+      <InviteTeamMemberDialog />
     </div>
   );
 };

@@ -385,3 +385,84 @@ export async function updateTeamMemberProfile(teamId: string, data: MemberSchema
     return {error: 'Failed to update team member profile'};
   }
 }
+
+export async function acceptInvitationAfterSignup(invitationId: string, userId: string) {
+  const supabase = createClient();
+
+  try {
+    const {data: invitation, error: inviteError} = await supabase
+      .from('team_invitations')
+      .select('*, teams(name)')
+      .eq('id', invitationId)
+      .eq('status', 'awaiting_signup')
+      .single();
+
+    if (inviteError || !invitation) {
+      return {error: 'Invalid invitation'};
+    }
+
+    // Add user to team
+    const {error: memberError} = await supabase.from('team_members').insert({
+      team_id: invitation.team_id,
+      user_id: userId,
+      role: 'member',
+    });
+
+    if (memberError) throw memberError;
+
+    // Update invitation status
+    await supabase.from('team_invitations').update({status: 'accepted'}).eq('id', invitationId);
+
+    revalidatePath('/team', 'page');
+    return {success: true};
+  } catch (error) {
+    console.error('Error accepting invitation:', error);
+    return {error: 'Failed to accept invitation'};
+  }
+}
+
+export async function acceptTeamInvitation(invitationId: string) {
+  const supabase = createClient();
+
+  try {
+    // Get current user
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return {error: 'User not found'};
+    }
+
+    // Get and validate invitation
+    const {data: invitation, error: inviteError} = await supabase
+      .from('team_invitations')
+      .select('*, teams(name)')
+      .eq('id', invitationId)
+      .eq('status', 'pending')
+      .single();
+
+    if (inviteError || !invitation) {
+      return {error: 'Invalid invitation'};
+    }
+
+    // Add user to team
+    const {error: memberError} = await supabase.from('team_members').insert({
+      team_id: invitation.team_id,
+      user_id: user.id,
+      role: 'member',
+    });
+
+    if (memberError) throw memberError;
+
+    // Update invitation status
+    await supabase.from('team_invitations').update({status: 'accepted'}).eq('id', invitationId);
+
+    revalidatePath('/team', 'page');
+    return {success: true, teamId: invitation.team_id};
+  } catch (error) {
+    console.error('Error accepting invitation:', error);
+    return {error: 'Failed to accept invitation'};
+  }
+}

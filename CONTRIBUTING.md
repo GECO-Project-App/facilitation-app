@@ -113,7 +113,7 @@ npx supabase link --project-ref your-project-ref
 ```
 
 
-### Database Migrations
+#### Database Migrations
 See the [docs](https://supabase.com/docs/reference/cli/supabase-db-pull) for more information on how to create and apply migrations.
 
 1. Create a new migration containing the changes from the remote db:
@@ -132,7 +132,7 @@ npx supabase db diff -f initial_structure --db-url postgresql://your-db-url
 npx supabase db reset
 ```
 
-### Deployment
+#### Deployment
 
 1. If you're using the SQL-Editor in Supabase studio to create new migrations, you will need to pull the migration files into your project:
 ```bash
@@ -146,4 +146,7 @@ npx supabase db push
 
 **Note:** Always test migrations locally before applying them to production.
 
+
+#### Testing emails
+Emails will not be sent when testing on a local db. They will instead be monitored in a inbucket that can be accessed through the Inbucket URL that's provided when you run `npx supabase status`
 

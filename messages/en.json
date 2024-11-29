@@ -16,7 +16,12 @@
     },
     "page": {
     "inviteCode": "Invite Code",
-    "inviteTeam": "Invite team members",
+    "inviteTeam": {
+      "title": "Invite team members",
+      "email": "Email",
+      "label": "Enter email address",
+      "button": "Send invitation"
+    },
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
       "createOrJoin": "Create or Join a team",

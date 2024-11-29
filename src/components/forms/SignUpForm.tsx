@@ -2,40 +2,62 @@
 
 import {useToast} from '@/hooks/useToast';
 import {signup} from '@/lib/actions/authActions';
+import {acceptInvitationAfterSignup} from '@/lib/actions/teamActions';
 import {SignupSchema, signupSchema} from '@/lib/zodSchemas';
-import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/navigation';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
-export const SignUpForm = () => {
+interface SignUpFormProps {
+  defaultEmail?: string | null;
+  invitationId?: string | null;
+}
+
+export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
   const {toast} = useToast();
-  const t = useTranslations('authenticate');
-  const {setUser} = useUserStore();
+  const t = useTranslations('auth');
+  const router = useRouter();
+
   const form = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      email: '',
+      email: defaultEmail || '',
       password: '',
+      confirmPassword: '',
+      first_name: '',
+      last_name: '',
     },
   });
 
   const onSubmit = async (data: SignupSchema) => {
     const result = await signup(data);
 
-    if (result?.error) {
+    if (result.error) {
       toast({
         variant: 'destructive',
-        title: t('error'),
+        title: t('error.title'),
         description: result.error,
       });
-    } else if (result?.session) {
-      setUser(result.session.user);
-      toast({
-        variant: 'default',
-        title: t('loggedIn'),
-      });
+    } else if (result.session?.user) {
+      if (invitationId) {
+        // Handle team invitation
+        const inviteResult = await acceptInvitationAfterSignup(
+          invitationId,
+          result.session.user.id,
+        );
+        if (inviteResult.error) {
+          toast({
+            variant: 'destructive',
+            title: t('error.title'),
+            description: inviteResult.error,
+          });
+        }
+        router.push('/team');
+      } else {
+        router.push('/team');
+      }
     }
   };
 
