@@ -30,5 +30,5 @@
     ".next/types/**/*.ts",
     "src/app/[locale]/dictionaries.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "supabase"]
 }
