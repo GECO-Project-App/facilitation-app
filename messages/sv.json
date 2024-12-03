@@ -13,13 +13,21 @@
       "code": "Teamkod",
       "save": "Spara"
     },
+    "error": {
+      "notLoggedIn": "Logga in för att acceptera inbjudan",
+      "invalidInvitation": "Ogiltig eller utgången inbjudan",
+      "wrongUser": "Denna inbjudan skickades till en annan användare. Vill du logga ut och logga in med den korrekta e-postadressen?"
+    },
+    "processing": "Bearbetar inbjudan...",
     "page": {
-       "inviteCode": "Inbjudningskod",
+      "inviteCode": "Inbjudningskod",
     "inviteTeam": {
       "title": "Bjud in teammedlem",
       "email": "E-post",
       "label": "Ange e-postadress",
-      "button": "Skicka inbjudan"
+      "button": "Skicka inbjudan",
+      "success": "Inbjudan skickad",
+      "error": "Inbjudan misslyckades"
     },
     "copied": "Kopierat",
       "copiedDescription": "Inbjudningskoden har kopierats",

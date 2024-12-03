@@ -235,6 +235,7 @@ export async function removeTeamMember(teamId: string, userId: string) {
     }
 
     revalidatePath('/team', 'page');
+
     return {success: true};
   } catch (error) {
     return {error: 'Failed to remove team member'};
@@ -425,7 +426,6 @@ export async function acceptTeamInvitation(invitationId: string) {
   const supabase = createClient();
 
   try {
-    // Get current user
     const {
       data: {user},
       error: userError,
@@ -435,32 +435,22 @@ export async function acceptTeamInvitation(invitationId: string) {
       return {error: 'User not found'};
     }
 
-    // Get and validate invitation
-    const {data: invitation, error: inviteError} = await supabase
-      .from('team_invitations')
-      .select('*, teams(name)')
-      .eq('id', invitationId)
-      .eq('status', 'pending')
-      .single();
+    const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
+      invitation_id: invitationId,
+      p_user_id: user.id,
+    });
 
-    if (inviteError || !invitation) {
+    if (error) {
+      console.error('Error accepting invitation:', error);
+      return {error: 'Failed to accept invitation'};
+    }
+
+    if (!teamId) {
       return {error: 'Invalid invitation'};
     }
 
-    // Add user to team
-    const {error: memberError} = await supabase.from('team_members').insert({
-      team_id: invitation.team_id,
-      user_id: user.id,
-      role: 'member',
-    });
-
-    if (memberError) throw memberError;
-
-    // Update invitation status
-    await supabase.from('team_invitations').update({status: 'accepted'}).eq('id', invitationId);
-
     revalidatePath('/team', 'page');
-    return {success: true, teamId: invitation.team_id};
+    return {success: true, teamId};
   } catch (error) {
     console.error('Error accepting invitation:', error);
     return {error: 'Failed to accept invitation'};

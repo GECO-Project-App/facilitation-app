@@ -10,7 +10,7 @@ const handler = async (_request: Request): Promise<Response> => {
         },
         body: JSON.stringify({
             from: 'GECO Team <support@info.projectgeco.com>',
-            to: ['elias.faltin@speldesign.uu.se'],
+            to: ['aanglesjo@gmail.com'],
             subject: 'hello world',
             html: '<strong>Testing testing :)</strong>',
         })

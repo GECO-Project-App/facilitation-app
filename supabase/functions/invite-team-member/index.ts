@@ -5,34 +5,39 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY") as string);
+const supabaseClient = createClient(
+  Deno.env.get('SUPABASE_URL') ?? '',
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '', 
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+)
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const supabase = createClient(
-      Deno.env.get('NEXT_PUBLIC_SUPABASE_URL') ?? '',
-      Deno.env.get('NEXT_PUBLIC_SUPABASE_ANON_KEY') ?? ''
-    )
+    const { teamId, email, language = 'en', authUserId } = await req.json()
+    console.log('Received request with:', { teamId, email, language, authUserId });
 
-    const { teamId, email } = await req.json()
-    const { data: { user } } = await supabase.auth.getUser(req.headers.get('Authorization')?.split('Bearer ')[1] ?? '')
-
-    if (!user) {
+    if ( !authUserId) {
       return new Response(
         JSON.stringify({ error: 'Unauthorized' }),
         { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    // Check authorization
-    const { data: isAuthorized, error: authError } = await supabase.rpc(
+    // Check authorization using database function
+    const { data: isAuthorized, error: authError } = await supabaseClient.rpc(
       'check_team_management_permission',
-      { team_id: teamId, user_id: user.id }
+      { team_id: teamId, user_id: authUserId }
     )
+    console.log('Authorization check:', { isAuthorized, authError });
 
     if (authError || !isAuthorized) {
       return new Response(
@@ -41,27 +46,43 @@ serve(async (req) => {
       )
     }
 
-    // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', email)
-      .single()
+    // Check if user already exists in either profiles or auth.users
+    const { data: existingUser, error: userError } = await supabaseClient
+      .rpc('check_user_exists', { 
+        email_input: email.toLowerCase() 
+      });
+    
+    console.log('Existing user check:', { existingUser, userError });
+
+    if (userError) {
+      console.error('User lookup error:', userError);
+      throw userError;
+    }
 
     // Get team info
-    const { data: team } = await supabase
+    const { data: team, error: teamError } = await supabaseClient
       .from('teams')
       .select('name')
       .eq('id', teamId)
-      .single()
+      .single();
+    
+    console.log('Team query:', { team, teamError, teamId });
+
+    if (teamError || !team) {
+      console.error('Team error:', teamError);
+      return new Response(
+        JSON.stringify({ error: 'Team not found', details: teamError }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Create invitation record
-    const { data: invitation, error: inviteError } = await supabase
+    const { data: invitation, error: inviteError } = await supabaseClient
       .from('team_invitations')
       .insert({
         team_id: teamId,
-        email,
-        invited_by: user.id,
+        email: email.toLowerCase(),
+        invited_by: authUserId,
         status: existingUser ? 'pending' : 'awaiting_signup'
       })
       .select()
@@ -69,36 +90,40 @@ serve(async (req) => {
 
     if (inviteError) throw inviteError
 
-    // Different email templates for existing vs new users
-    const emailTemplate = existingUser ? {
-      subject: `You've been invited to join ${team.name}`,
-      html: `
-        <p>You've been invited to join ${team.name} on GECO.</p>
-        <p>Click the link below to accept the invitation:</p>
-        <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/team/join?invitation=${invitation.id}">
-          Accept Invitation
-        </a>
-      `
-    } : {
-      subject: `You've been invited to join ${team.name} on GECO`,
-      html: `
-        <p>You've been invited to join ${team.name} on GECO.</p>
-        <p>Since you don't have an account yet, click the link below to sign up:</p>
-        <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/auth/signup?invitation=${invitation.id}&email=${encodeURIComponent(email)}">
-          Create Account
-        </a>
-      `
+    // Replace the Resend SDK call with fetch
+    const emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${Deno.env.get("RESEND_API_KEY")}`
+      },
+      body: JSON.stringify({
+        from: 'GECO Team <support@info.projectgeco.com>',
+        to: email,
+        subject: existingUser ? 
+          `You've been invited to join ${team.name}` :
+          `You've been invited to join ${team.name} on GECO`,
+        html: existingUser ?
+          `
+            <p>You've been invited to join ${team.name} on GECO.</p>
+            <p>Click the link below to accept the invitation:</p>
+            <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/team/join?invitation=${invitation.id}">
+              Accept Invitation
+            </a>
+          ` :
+          `<p>You've been invited to join ${team.name} on GECO.</p>
+            <p>Since you don't have an account yet, click the link below to sign up:</p>
+            <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/auth/signup?invitation=${invitation.id}&email=${encodeURIComponent(email)}">
+              Create Account
+            </a>
+          `
+      })
+    });
+
+    if (!emailResponse.ok) {
+      const emailError = await emailResponse.json();
+      throw new Error(emailError.message || 'Failed to send email');
     }
-
-    // Send email using Resend
-    const { error: emailError } = await resend.emails.send({
-      from: 'GECO Team <support@info.projectgeco.com>',
-      to: email,
-      subject: emailTemplate.subject,
-      html: emailTemplate.html,
-    })
-
-    if (emailError) throw emailError
 
     return new Response(
       JSON.stringify({ success: true }),
@@ -111,4 +136,5 @@ serve(async (req) => {
     )
   }
 })
+
 

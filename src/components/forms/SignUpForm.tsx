@@ -17,7 +17,7 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
   const {toast} = useToast();
-  const t = useTranslations('auth');
+  const t = useTranslations('authenticate');
   const router = useRouter();
 
   const form = useForm<SignupSchema>({

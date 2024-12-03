@@ -1,12 +1,14 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {inviteTeamMember} from '@/lib/actions/emailActions';
+import {InviteTeamMemberSchema, inviteTeamMemberSchema} from '@/lib/zodSchemas';
 import {useTeamStore} from '@/store/teamStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import {Rocket} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {z} from 'zod';
 import {InviteTeam} from '../icons';
 import {Button} from '../ui/button';
 import {
@@ -20,28 +22,32 @@ import {
 import {Form, FormControl, FormField, FormItem, FormMessage} from '../ui/form';
 import {Input} from '../ui/input';
 
-const inviteSchema = z.object({
-  email: z.string().email(),
-});
-
-export function InviteTeamMemberDialog() {
+export const InviteTeamMemberDialog = () => {
   const {currentTeam, isFacilitator} = useTeamStore();
   const {toast} = useToast();
   const t = useTranslations('team');
+  const [open, setOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof inviteSchema>>({
-    resolver: zodResolver(inviteSchema),
-    defaultValues: {email: ''},
+  const form = useForm<InviteTeamMemberSchema>({
+    resolver: zodResolver(inviteTeamMemberSchema),
+    defaultValues: {email: '', teamId: currentTeam?.id},
   });
 
   if (!currentTeam || !isFacilitator) return null;
 
-  const onSubmit = async (data: z.infer<typeof inviteSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: InviteTeamMemberSchema) => {
+    const {error} = await inviteTeamMember(data);
+    if (error) {
+      toast({description: t('page.inviteTeam.error'), variant: 'destructive'});
+    } else {
+      toast({description: t('page.inviteTeam.success'), variant: 'success'});
+      setOpen(false);
+      form.reset();
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="white" size="xs" className="justify-between w-full">
           {t('page.inviteTeam.title')} <InviteTeam />
@@ -78,4 +84,4 @@ export function InviteTeamMemberDialog() {
       </DialogContent>
     </Dialog>
   );
-}
+};

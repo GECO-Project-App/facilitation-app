@@ -14,13 +14,21 @@
       "code": "Team Code",
       "save": "Save"
     },
+        "error": {
+      "notLoggedIn": "Please log in to accept the invitation",
+      "invalidInvitation": "Invalid or expired invitation",
+      "wrongUser": "This invitation was sent to another user. Do you want to log out?"
+    },
+    "processing": "Processing invitation...",
     "page": {
     "inviteCode": "Invite Code",
     "inviteTeam": {
       "title": "Invite team members",
       "email": "Email",
       "label": "Enter email address",
-      "button": "Send invitation"
+      "button": "Send invitation",
+      "success": "Invitation sent successfully",
+      "error": "Invitation sending failed"
     },
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
