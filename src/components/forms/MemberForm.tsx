@@ -21,7 +21,7 @@ import {
 
 export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
   const {toast} = useToast();
-  const t = useTranslations('team.edit.memberForm');
+  const t = useTranslations();
 
   const form = useForm<MemberSchema>({
     resolver: zodResolver(memberSchema),
@@ -38,13 +38,13 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
     if (result?.error) {
       toast({
         variant: 'destructive',
-        title: t('profileError'),
+        title: t('team.edit.memberForm.profileError'),
         description: result.error,
       });
     } else {
       toast({
         variant: 'success',
-        title: t('profileInfo'),
+        title: t('team.edit.memberFormprofileInfo'),
       });
     }
   };
@@ -58,12 +58,12 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
             name="profile_name"
             render={({field}) => (
               <FormItem className="items-center flex flex-col gap-1">
-                <FormLabel>{t('profileName')}</FormLabel>
+                <FormLabel>{t('team.edit.memberForm.profileName')}</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    placeholder={t('enterProfileName')}
+                    placeholder={t('team.edit.memberForm.enterProfileName')}
                     autoComplete="username"
                     className="bg-yellow font-bold"
                   />
@@ -77,14 +77,14 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
             name="role"
             render={({field}) => (
               <FormItem className="items-center flex flex-col gap-1">
-                <FormLabel>{t('role')}</FormLabel>
+                <FormLabel>{t('team.edit.memberForm.role')}</FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    placeholder={t('role')}
                     autoComplete="off"
                     className="bg-yellow font-bold"
+                    value={t(`common.${field.value}`)}
                     readOnly
                   />
                 </FormControl>
@@ -97,10 +97,10 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
             name="description"
             render={({field}) => (
               <FormItem className="items-center flex flex-col gap-1">
-                <FormLabel>{t('description')}</FormLabel>
+                <FormLabel>{t('team.edit.memberForm.description')}</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder={t('descriptionPlaceholder')}
+                    placeholder={t('team.edit.memberForm.descriptionPlaceholder')}
                     maxLength={480}
                     {...field}
                     value={field.value ?? ''}
@@ -121,7 +121,7 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
             {form.formState.isSubmitting ? (
               <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin" />
             ) : (
-              t('save')
+              t('team.edit.memberForm.save')
             )}
             <Save />
           </Button>

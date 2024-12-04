@@ -20,6 +20,12 @@
     },
     "processing": "Bearbetar inbjudan...",
     "page": {
+      "linkCopied": "Länk kopierad",
+      "inviteLinkCopied": "Inbjudningslänk kopierad till urklippet",
+      "generating": "Genererar länk...",
+      "shareInviteLink": "Dela inbjudningslänk",
+      "error": "Fel",
+      "failedToGenerateLink": "Misslyckades med att generera inbjudningslänk",
       "inviteCode": "Inbjudningskod",
     "inviteTeam": {
       "title": "Bjud in teammedlem",

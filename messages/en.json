@@ -21,8 +21,14 @@
     },
     "processing": "Processing invitation...",
     "page": {
-    "inviteCode": "Invite Code",
-    "inviteTeam": {
+      "linkCopied": "Link Copied",
+      "inviteLinkCopied": "Invite link copied to clipboard",
+      "generating": "Generating link...",
+      "shareInviteLink": "Share invite link",
+      "error": "Error",
+      "failedToGenerateLink": "Failed to generate invite link",
+      "inviteCode": "Invite Code",
+      "inviteTeam": {
       "title": "Invite team members",
       "email": "Email",
       "label": "Enter email address",

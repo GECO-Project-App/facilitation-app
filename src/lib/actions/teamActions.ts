@@ -456,3 +456,59 @@ export async function acceptTeamInvitation(invitationId: string) {
     return {error: 'Failed to accept invitation'};
   }
 }
+
+export async function shareInviteLink(teamId: string) {
+  const supabase = createClient();
+
+  try {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError || !user) return {error: 'User not found'};
+
+    // Create invite link record
+    const {data: inviteLink, error: createError} = await supabase
+      .from('team_invite_links')
+      .insert({
+        team_id: teamId,
+        created_by: user.id,
+      })
+      .select()
+      .single();
+
+    if (createError) throw createError;
+
+    const inviteUrl = `${process.env.NEXT_PUBLIC_URL}/team/join?link=${inviteLink.id}`;
+    return {success: true, inviteUrl};
+  } catch (error) {
+    console.error('Share invite link error:', error);
+    return {error: 'Failed to generate invite link'};
+  }
+}
+
+export async function joinTeamByInviteLink(linkId: string) {
+  const supabase = createClient();
+
+  try {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError || !user) return {error: 'User not found'};
+
+    const {data: teamId, error} = await supabase.rpc('join_team_by_invite_link', {
+      link_id: linkId,
+      p_user_id: user.id,
+    });
+
+    if (error) throw error;
+    if (!teamId) return {error: 'Invalid invite link'};
+
+    revalidatePath('/team', 'page');
+    return {success: true, teamId};
+  } catch (error) {
+    console.error('Error joining team:', error);
+    return {error: 'Failed to join team'};
+  }
+}
