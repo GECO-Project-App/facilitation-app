@@ -37,6 +37,7 @@ export const UpdatePasswordForm = () => {
     } else {
       router.push('/settings');
       toast({
+        variant: 'success',
         title: t('updatePassword.success'),
       });
     }
