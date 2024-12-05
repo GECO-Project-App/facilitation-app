@@ -437,7 +437,7 @@ export async function acceptTeamInvitation(invitationId: string) {
 
     const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
       invitation_id: invitationId,
-      p_user_id: user.id,
+      user_id: user.id,
     });
 
     if (error) {

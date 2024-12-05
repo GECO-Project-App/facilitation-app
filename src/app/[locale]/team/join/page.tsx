@@ -35,10 +35,9 @@ export default function JoinTeamPage() {
       if (userError || !user) {
         toast({
           variant: 'destructive',
-          title: t('error.title'),
-          description: t('error.notLoggedIn'),
+          title: t('error.notLoggedIn'),
         });
-        router.push('/auth/login');
+        router.push('/settings');
         return;
       }
 
@@ -52,8 +51,7 @@ export default function JoinTeamPage() {
       if (inviteError || !invitationData) {
         toast({
           variant: 'destructive',
-          title: t('error.title'),
-          description: t('error.invalidInvitation'),
+          title: t('error.invalidInvitation'),
         });
         router.push('/team');
         return;
@@ -70,8 +68,7 @@ export default function JoinTeamPage() {
       if (result.error) {
         toast({
           variant: 'destructive',
-          title: t('error.title'),
-          description: result.error,
+          title: result.error,
         });
         router.push('/team');
       } else {

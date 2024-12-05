@@ -41,11 +41,21 @@ export async function acceptInvitationAfterSignup(invitationId: string, userId: 
   try {
     const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
       invitation_id: invitationId,
-      p_user_id: userId,
+      user_id: userId,
     });
 
     if (error) throw error;
     if (!teamId) return {error: 'Invalid invitation'};
+
+    // Sync profile data
+    const {data: synced, error: syncError} = await supabase.rpc('sync_team_member_profile', {
+      p_team_id: teamId,
+      p_user_id: userId,
+    });
+
+    if (syncError) {
+      console.error('Profile sync error:', syncError);
+    }
 
     revalidatePath('/team', 'page');
     return {success: true, teamId};

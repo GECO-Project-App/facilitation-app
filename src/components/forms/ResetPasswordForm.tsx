@@ -21,8 +21,6 @@ export const ResetPasswordForm = () => {
 
   const onSubmit = async (data: ResetPasswordSchema) => {
     const result = await sendResetPasswordEmail(data.email);
-
-    console.log(result);
   };
 
   return (
