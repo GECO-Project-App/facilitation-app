@@ -5,6 +5,7 @@ import ReviewTimeAtHeader from '@/components/tutorial-to-me/ReviewTimeAtHeader';
 import TextAreaForTutorial from '@/components/tutorial-to-me/text-area/TextAreaForTutorial';
 import {Button} from '@/components/ui/button/button';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
+import {toast} from '@/hooks/useToast';
 import {useTutorialLocalStorage} from '@/hooks/useTutorialLocalStorage';
 import {saveTutorialToMeAnswer} from '@/lib/actions/exerciseAnswerAction';
 import {Step} from '@/lib/types';
@@ -14,7 +15,7 @@ import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 import {useEffect, useRef, useState} from 'react';
-// import {createExercise} from './create-exercise';
+
 const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
@@ -89,15 +90,19 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       team_id: currentTeam?.id as string,
       created_by: currentTutorialExerciseCreatedBy as string,
     };
-
-    console.log('saveAnswerDat------------>', saveAnswerDat);
     if (currentTeam?.id) {
-      saveTutorialToMeAnswer(saveAnswerDat).then(() => {
-        clearTutorialLocalStorage();
-      });
+      saveTutorialToMeAnswer(saveAnswerDat)
+        .then(() => {
+          clearTutorialLocalStorage();
+          router.push(`./${slug}/review`);
+        })
+        .catch((error) => {
+          toast({
+            variant: 'destructive',
+            title: error.message ?? 'Something went wrong',
+          });
+        });
     }
-
-    //   router.push(`./${slug}/review`);
   };
 
   const colorClass = getColorClass(currentStep);

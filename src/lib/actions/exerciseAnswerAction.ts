@@ -16,7 +16,6 @@ function arrayToString(arr: string[]): string {
 
 export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerType) {
   const supabase = createClient();
-  console.log('answerExerciseData------------>', answerExerciseData);
   try {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
