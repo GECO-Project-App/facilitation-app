@@ -89,7 +89,7 @@ export const tutorialToMeSchema = z.object({
   writing_time: z.string(),
   reviewing_date: z.string(),
   reviewing_time: z.string(),
-  strengths: z.string(),
-  weaknesses: z.string(),
-  communications: z.string(),
+  strengths: z.string().optional(),
+  weaknesses: z.string().optional(),
+  communications: z.string().optional(),
 });
