@@ -33,7 +33,6 @@ export const LoginForm = () => {
       });
     } else if (result?.session) {
       setUser(result.session.user);
-      console.log(result.session.user);
       toast({
         variant: 'success',
         title: t('loggedIn'),

@@ -2,7 +2,6 @@
 import {WrongUserAlert} from '@/components/WrongUserAlert';
 import {useToast} from '@/hooks/useToast';
 import {acceptTeamInvitation, joinTeamByInviteLink} from '@/lib/actions/teamActions';
-import {createClient} from '@/lib/supabase/client';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useRouter, useSearchParams} from 'next/navigation';
@@ -17,74 +16,51 @@ export default function JoinTeamPage() {
   const t = useTranslations('team');
   const [wrongUser, setWrongUser] = useState(false);
   const {signOut} = useUserStore();
+  const [isProcessing, setIsProcessing] = useState(true);
 
   useEffect(() => {
-    const handleJoin = async () => {
+    let isActive = true;
+
+    const processInvitation = async () => {
       if (!invitation && !inviteLink) {
-        router.push('/team');
+        setIsProcessing(false);
         return;
       }
 
-      const supabase = createClient();
-      const {
-        data: {user},
-        error: userError,
-      } = await supabase.auth.getUser();
-      if (userError || !user) {
-        toast({
-          variant: 'destructive',
-          title: t('error.title'),
-          description: t('error.notLoggedIn'),
-        });
-        router.push('/auth/login');
-        return;
-      }
+      try {
+        if (!isActive) return;
+        const result = invitation
+          ? await acceptTeamInvitation(invitation)
+          : await joinTeamByInviteLink(inviteLink!);
 
-      if (invitation) {
-        const {data: invitationData, error: inviteError} = await supabase
-          .from('team_invitations')
-          .select('email')
-          .eq('id', invitation)
-          .single();
-
-        if (inviteError || !invitationData) {
+        if (!isActive) return;
+        if (result.error) {
           toast({
             variant: 'destructive',
-            title: t('error.title'),
-            description: t('error.invalidInvitation'),
+            title: result.error,
           });
-          router.push('/team');
+          setIsProcessing(false);
           return;
         }
 
-        if (user.email?.toLowerCase() !== invitationData.email.toLowerCase()) {
-          setWrongUser(true);
-          return;
-        }
-      }
-
-      const result = invitation
-        ? await acceptTeamInvitation(invitation)
-        : await joinTeamByInviteLink(inviteLink!);
-
-      if (result.error) {
-        toast({
-          variant: 'destructive',
-          title: t('error.title'),
-          description: result.error,
-        });
-        router.push('/team');
-      } else {
         toast({
           variant: 'success',
-          title: t('toast.joined'),
+          title: t('success.title'),
+          description: t('success.joined'),
         });
         router.replace(`/team?id=${result.teamId}`);
+      } catch (error) {
+        console.error('Invitation processing error:', error);
+        setIsProcessing(false);
       }
     };
 
-    handleJoin();
-  }, [invitation, inviteLink, router, toast, t, signOut]);
+    processInvitation();
+
+    return () => {
+      isActive = false;
+    };
+  }, [invitation, inviteLink, router, t, toast]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -99,6 +75,7 @@ export default function JoinTeamPage() {
           title={t('error.wrongUser')}
         />
       )}
+
       <div className="animate-pulse">{t('processing')}</div>
     </div>
   );

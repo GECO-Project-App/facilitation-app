@@ -1,18 +1,19 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {updateProfile} from '@/lib/actions/profileActions';
+import {createClient} from '@/lib/supabase/client';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
-import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {User} from '@supabase/supabase-js';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
 import {AuthTabs} from '../AuthTabs';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
 
-export const ProfileForm = () => {
+export const ProfileForm = ({user}: {user: User}) => {
   const {toast} = useToast();
   const t = useTranslations();
-  const {user, signOut} = useUserStore();
+  const supabase = createClient();
 
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
@@ -124,7 +125,7 @@ export const ProfileForm = () => {
         </form>
       </Form>
       <div className="flex justify-center ">
-        <Button variant="red" type="submit" onClick={signOut}>
+        <Button variant="red" onClick={() => supabase.auth.signOut()}>
           {t('profile.logout')}
         </Button>
       </div>

@@ -435,14 +435,29 @@ export async function acceptTeamInvitation(invitationId: string) {
       return {error: 'User not found'};
     }
 
+    // Check if profile is complete
+    const {data: profile, error: profileError} = await supabase
+      .from('profiles')
+      .select('first_name, last_name')
+      .eq('id', user.id)
+      .single();
+
+    console.log('Profile check:', {profile, profileError});
+
+    if (profileError || !profile?.first_name || !profile?.last_name) {
+      return {error: 'Please complete your profile before joining a team'};
+    }
+
     const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
       invitation_id: invitationId,
       p_user_id: user.id,
     });
 
+    console.log('Join team result:', {teamId, error});
+
     if (error) {
       console.error('Error accepting invitation:', error);
-      return {error: 'Failed to accept invitation'};
+      return {error: error.message};
     }
 
     if (!teamId) {

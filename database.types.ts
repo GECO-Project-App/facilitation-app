@@ -61,6 +61,79 @@ export type Database = {
         }
         Relationships: []
       }
+      team_invitations: {
+        Row: {
+          created_at: string | null
+          email: string
+          expires_at: string | null
+          id: string
+          invited_by: string
+          status: Database["public"]["Enums"]["team_invitation_status"] | null
+          team_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          expires_at?: string | null
+          id?: string
+          invited_by: string
+          status?: Database["public"]["Enums"]["team_invitation_status"] | null
+          team_id: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          expires_at?: string | null
+          id?: string
+          invited_by?: string
+          status?: Database["public"]["Enums"]["team_invitation_status"] | null
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_invitations_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_invite_links: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          expires_at: string | null
+          id: string
+          status: Database["public"]["Enums"]["team_invite_link_status"] | null
+          team_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["team_invite_link_status"] | null
+          team_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          expires_at?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["team_invite_link_status"] | null
+          team_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_invite_links_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_members: {
         Row: {
           avatar_url: string | null
@@ -138,34 +211,69 @@ export type Database = {
       }
       tutorial_to_me: {
         Row: {
-          exercise_id: string;
-          replied_id: string
-          created_at: string
+          communications: string | null
+          created_at: string | null
           created_by: string | null
-          team_id: string
-          writing_date: string | null
-          writing_time: string | null
+          exercise_id: string
+          is_active: boolean | null
+          replied_id: string
+          reviewed: boolean | null
           reviewing_date: string | null
           reviewing_time: string | null
-          is_active: boolean
           strengths: string | null
+          team_id: string | null
           weaknesses: string | null
-          communications: string | null
-          reviewed: boolean | null
+          writing_date: string | null
+          writing_time: string | null
         }
         Insert: {
-          replied_id: string
-          created_at?: string
+          communications?: string | null
+          created_at?: string | null
           created_by?: string | null
-          team_id: string
-          writing_date?: string | null
-          writing_time?: string | null
+          exercise_id?: string
+          is_active?: boolean | null
+          replied_id: string
+          reviewed?: boolean | null
           reviewing_date?: string | null
           reviewing_time?: string | null
           strengths?: string | null
+          team_id?: string | null
           weaknesses?: string | null
-          communications?: string | null
+          writing_date?: string | null
+          writing_time?: string | null
         }
+        Update: {
+          communications?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          exercise_id?: string
+          is_active?: boolean | null
+          replied_id?: string
+          reviewed?: boolean | null
+          reviewing_date?: string | null
+          reviewing_time?: string | null
+          strengths?: string | null
+          team_id?: string | null
+          weaknesses?: string | null
+          writing_date?: string | null
+          writing_time?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tutorial_to_me_replied_id_fkey"
+            columns: ["replied_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tutorial_to_me_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -200,6 +308,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_user_exists: {
+        Args: {
+          email_input: string
+        }
+        Returns: boolean
+      }
       generate_team_code: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -217,6 +331,20 @@ export type Database = {
       join_team_by_code: {
         Args: {
           team_code_input: string
+        }
+        Returns: string
+      }
+      join_team_by_invitation: {
+        Args: {
+          invitation_id: string
+          p_user_id: string
+        }
+        Returns: string
+      }
+      join_team_by_invite_link: {
+        Args: {
+          link_id: string
+          p_user_id: string
         }
         Returns: string
       }
@@ -246,6 +374,14 @@ export type Database = {
       }
     }
     Enums: {
+      team_invitation_status:
+        | "pending"
+        | "awaiting_signup"
+        | "accepted"
+        | "rejected"
+        | "expired"
+        | "cancelled"
+      team_invite_link_status: "active" | "expired"
       team_role: "member" | "facilitator"
     }
     CompositeTypes: {
