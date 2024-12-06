@@ -35,26 +35,32 @@ export async function inviteTeamMember(data: InviteTeamMemberSchema) {
   }
 }
 
-export async function acceptInvitationAfterSignup(invitationId: string, userId: string) {
+export async function acceptTeamInvitation(invitationId: string) {
   const supabase = createClient();
 
   try {
-    const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return {error: 'User not found'};
+    }
+
+    // Try to join the team
+    const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_invitation', {
       invitation_id: invitationId,
-      user_id: userId,
+      p_user_id: user.id,
     });
 
-    if (error) throw error;
-    if (!teamId) return {error: 'Invalid invitation'};
+    if (joinError) {
+      console.error('Join error:', joinError);
+      return {error: joinError.message};
+    }
 
-    // Sync profile data
-    const {data: synced, error: syncError} = await supabase.rpc('sync_team_member_profile', {
-      p_team_id: teamId,
-      p_user_id: userId,
-    });
-
-    if (syncError) {
-      console.error('Profile sync error:', syncError);
+    if (!teamId) {
+      return {error: 'Failed to join team'};
     }
 
     revalidatePath('/team', 'page');

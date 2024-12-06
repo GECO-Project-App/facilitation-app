@@ -52,7 +52,7 @@ export async function signup(data: SignupSchema) {
 
     const {
       error,
-      data: {session},
+      data: {user},
     } = await supabase.auth.signUp({
       email: validatedFields.email,
       password: validatedFields.password,
@@ -68,7 +68,7 @@ export async function signup(data: SignupSchema) {
       return {error: error.message};
     }
 
-    return {success: true, session};
+    return {success: true, user};
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {error: error.errors[0].message};

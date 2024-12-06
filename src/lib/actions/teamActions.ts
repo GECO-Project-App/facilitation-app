@@ -386,42 +386,6 @@ export async function updateTeamMemberProfile(teamId: string, data: MemberSchema
     return {error: 'Failed to update team member profile'};
   }
 }
-
-export async function acceptInvitationAfterSignup(invitationId: string, userId: string) {
-  const supabase = createClient();
-
-  try {
-    const {data: invitation, error: inviteError} = await supabase
-      .from('team_invitations')
-      .select('*, teams(name)')
-      .eq('id', invitationId)
-      .eq('status', 'awaiting_signup')
-      .single();
-
-    if (inviteError || !invitation) {
-      return {error: 'Invalid invitation'};
-    }
-
-    // Add user to team
-    const {error: memberError} = await supabase.from('team_members').insert({
-      team_id: invitation.team_id,
-      user_id: userId,
-      role: 'member',
-    });
-
-    if (memberError) throw memberError;
-
-    // Update invitation status
-    await supabase.from('team_invitations').update({status: 'accepted'}).eq('id', invitationId);
-
-    revalidatePath('/team', 'page');
-    return {success: true};
-  } catch (error) {
-    console.error('Error accepting invitation:', error);
-    return {error: 'Failed to accept invitation'};
-  }
-}
-
 export async function acceptTeamInvitation(invitationId: string) {
   const supabase = createClient();
 
@@ -435,18 +399,19 @@ export async function acceptTeamInvitation(invitationId: string) {
       return {error: 'User not found'};
     }
 
-    const {data: teamId, error} = await supabase.rpc('join_team_by_invitation', {
+    // Try to join the team
+    const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_invitation', {
       invitation_id: invitationId,
-      user_id: user.id,
+      p_user_id: user.id,
     });
 
-    if (error) {
-      console.error('Error accepting invitation:', error);
-      return {error: 'Failed to accept invitation'};
+    if (joinError) {
+      console.error('Join error:', joinError);
+      return {error: joinError.message};
     }
 
     if (!teamId) {
-      return {error: 'Invalid invitation'};
+      return {error: 'Failed to join team'};
     }
 
     revalidatePath('/team', 'page');

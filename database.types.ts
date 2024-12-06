@@ -279,6 +279,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      current_user_email: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_team_code: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -302,7 +306,7 @@ export type Database = {
       join_team_by_invitation: {
         Args: {
           invitation_id: string
-          user_id: string
+          p_user_id: string
         }
         Returns: string
       }

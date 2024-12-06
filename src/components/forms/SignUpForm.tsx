@@ -2,7 +2,7 @@
 
 import {useToast} from '@/hooks/useToast';
 import {signup} from '@/lib/actions/authActions';
-import {acceptInvitationAfterSignup} from '@/lib/actions/teamActions';
+import {acceptTeamInvitation} from '@/lib/actions/emailActions';
 import {SignupSchema, signupSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
@@ -37,21 +37,17 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
     if (result.error) {
       toast({
         variant: 'destructive',
-        title: t('error.title'),
-        description: result.error,
+        title: result.error,
       });
-    } else if (result.session?.user) {
+    } else if (result?.user) {
       if (invitationId) {
         // Handle team invitation
-        const inviteResult = await acceptInvitationAfterSignup(
-          invitationId,
-          result.session.user.id,
-        );
+        console.log('invitationIdUsers', result.user.id);
+        const inviteResult = await acceptTeamInvitation(invitationId);
         if (inviteResult.error) {
           toast({
             variant: 'destructive',
-            title: t('error.title'),
-            description: inviteResult.error,
+            title: inviteResult.error,
           });
         }
         router.push('/team');
