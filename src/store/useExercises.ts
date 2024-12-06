@@ -31,7 +31,7 @@ interface ExerciseType {
 interface ExercisesState {
   exercises: ExerciseType[];
   currentTutorialExerciseId: string | undefined;
-  currentTutorialExerciseCreatedBy: string | undefined;
+  currentTutorialExerciseCreatedBy?: string | null;
   writingDate: string | undefined;
   writingTime: string | undefined;
   reviewingDate: string | undefined;
