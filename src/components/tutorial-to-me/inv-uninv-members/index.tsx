@@ -3,10 +3,10 @@ import {Button} from '@/components/ui/button/button';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
 import {getUserTeams} from '@/lib/actions/teamActions';
-import {Team} from '@/lib/types';
 import {UserRoundMinus, UserRoundPlus} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {FC, useEffect, useState} from 'react';
+import {Tables} from '../../../../database.types';
 import CurrentAvatars from '../CurrentAvatars';
 import SelectTutorialTeam from '../SelectTutorialTeam';
 interface InvOrDelMemberProps {
@@ -16,7 +16,7 @@ interface InvOrDelMemberProps {
 const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
   const t = useTranslations('exercises.tutorialToMe');
   const {done} = useDoneTutorialExercise();
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = useState<Tables<'teams'>[]>([]);
 
   useEffect(() => {
     async function getTeams() {

@@ -1,8 +1,8 @@
 import {TeamSelect} from '@/components';
-import {Team} from '@/lib/types';
 import {FC} from 'react';
+import {Tables} from '../../../database.types';
 
-const SelectTutorialTeam: FC<{selectedTeam: Team[]; disableCreateOrJoin?: boolean}> = ({
+const SelectTutorialTeam: FC<{selectedTeam: Tables<'teams'>[]; disableCreateOrJoin?: boolean}> = ({
   selectedTeam,
   disableCreateOrJoin = false,
 }) => {
