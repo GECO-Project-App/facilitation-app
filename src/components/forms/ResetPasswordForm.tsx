@@ -1,7 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {useRouter} from '@/i18n/routing';
-import {resetPassword} from '@/lib/actions/authActions';
+import {sendResetPasswordEmail} from '@/lib/actions/authActions';
 import {resetPasswordSchema, ResetPasswordSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {RefreshCcw} from 'lucide-react';
@@ -12,7 +11,6 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 export const ResetPasswordForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
-  const router = useRouter();
 
   const form = useForm<ResetPasswordSchema>({
     resolver: zodResolver(resetPasswordSchema),
@@ -22,17 +20,7 @@ export const ResetPasswordForm = () => {
   });
 
   const onSubmit = async (data: ResetPasswordSchema) => {
-    const result = await resetPassword(data);
-
-    if (result?.error) {
-      toast({
-        variant: 'destructive',
-        title: t('errors.error'),
-        description: result.error,
-      });
-    } else {
-      router.replace('/settings');
-    }
+    const result = await sendResetPasswordEmail(data.email);
   };
 
   return (

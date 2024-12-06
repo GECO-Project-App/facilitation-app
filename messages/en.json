@@ -14,9 +14,22 @@
       "code": "Team Code",
       "save": "Save"
     },
+        "error": {
+      "notLoggedIn": "Please log in to accept the invitation",
+      "invalidInvitation": "Invalid or expired invitation",
+      "wrongUser": "This invitation was sent to another user. Do you want to log out?"
+    },
+    "processing": "Processing invitation...",
     "page": {
     "inviteCode": "Invite Code",
-    "inviteTeam": "Invite team members",
+    "inviteTeam": {
+      "title": "Invite team members",
+      "email": "Email",
+      "label": "Enter email address",
+      "button": "Send invitation",
+      "success": "Invitation sent successfully",
+      "error": "Invitation sending failed"
+    },
     "copied": "Copied",
       "copiedDescription": "Invite code copied to clipboard",
       "createOrJoin": "Create or Join a team",
@@ -406,18 +419,25 @@
     "loading": "Loading...",
     "button": "Submit",
     "loggedIn": "You're logged in!",
-
+    "updatePassword": {
+      "title": "Update Password",
+      "description": "Please enter your new password below.",
+      "email": "Email",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "button": "Update Password",
+      "emailSent": "Email sent",
+      "emailSentDescription": "Check your email for a link to reset your password",
+      "success": "Your password has been reset successfully!"
+    },
     "enterEmail": "Enter your email",
     "enterPassword": "Enter the password",
     "confirmPassword": "Confirm the password",
     "forgotPassword": "Forgot your password?",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "emailSent": "Email sent",
-    "emailSentDescription": "Check your email for a link to reset your password",
     "error": "Error",
     "errorDescription": "An error occurred. Please try again.",
-    "updatePassword": "Update Password",
     "updatePasswordDescription": "Please enter your new password below.",
     "passwordsDoNotMatch": "Passwords do not match",
     "passwordUpdated": "Password updated"

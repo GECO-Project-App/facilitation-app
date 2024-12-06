@@ -3,8 +3,8 @@
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
-import {UpdateTeamForm} from './forms/UpdateTeamForm';
-import {EditTeam} from './icons';
+import {UpdateTeamForm} from '../forms/UpdateTeamForm';
+import {EditTeam} from '../icons';
 import {
   Button,
   Dialog,
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui';
+} from '../ui';
 
 export const EditTeamDialog = () => {
   const {currentTeam, currentTeamId, isFacilitator} = useTeamStore();
