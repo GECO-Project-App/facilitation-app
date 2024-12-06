@@ -53,6 +53,7 @@ Key Supabase documentation:
 - [TypeScript Types](https://supabase.com/docs/guides/api/rest/generating-types)
 - [Server-side auth](https://supabase.com/docs/guides/auth/server-side/nextjs)
 
+
 ## Internationalization (i18n)
 
 This project supports multiple languages. To add or update translations, see the `messages` directory.

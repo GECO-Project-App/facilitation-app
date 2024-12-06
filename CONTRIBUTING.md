@@ -92,6 +92,7 @@ npx supabase init
 
 ### Local Development
 Check out the [docs](https://supabase.com/docs/reference/cli) for more useful CLI commands.
+Working with Edge functions [locally](https://supabase.com/docs/guides/functions/quickstart)
 
 
 1. Start the local Supabase db. (Make sure docker is running before starting the db)
