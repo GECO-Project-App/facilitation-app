@@ -4,7 +4,7 @@ import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useExercisesStore} from '@/store/useExercises';
 import {ArrowDown, ArrowUp} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useEffect, useRef} from 'react';
+import {useRef} from 'react';
 import ChapterAnswer from './ChapterAnswer';
 export default function ReviewAnswers({chapter}: {chapter: string}) {
   const {setThisReviewDone} = useSSCChaptersHandler();
@@ -40,51 +40,37 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
     }
   };
 
-  useEffect(() => {
-    const handleTouchStart = (e: TouchEvent) => {
-      const touchStartY = e.touches[0].clientY;
-      const handleTouchMove = (moveEvent: TouchEvent) => {
-        const touchEndY = moveEvent.touches[0].clientY;
-        const touchDifference = touchStartY - touchEndY;
-
-        if (containerRef.current) {
-          const screenHeight = window.innerHeight;
-          if (touchDifference > 50) {
-            // Swipe up
-            containerRef.current.scrollBy({
-              top: screenHeight,
-              behavior: 'smooth',
-            });
-          } else if (touchDifference < -50) {
-            // Swipe down
-            containerRef.current.scrollBy({
-              top: -screenHeight,
-              behavior: 'smooth',
-            });
-          }
-        }
-      };
-
-      const handleTouchEnd = () => {
-        window.removeEventListener('touchmove', handleTouchMove);
-        window.removeEventListener('touchend', handleTouchEnd);
-      };
-
-      window.addEventListener('touchmove', handleTouchMove);
-      window.addEventListener('touchend', handleTouchEnd);
-    };
-
-    window.addEventListener('touchstart', handleTouchStart);
-
-    return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-    };
-  }, []);
-
   const chapterDone = () => {
     console.log('chapterDone :', chapter);
     setThisReviewDone(chapter);
     router.back();
+  };
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const startY = event.touches[0].clientY;
+
+    const handleTouchMove = (() => {
+      let hasLogged = false;
+      return (moveEvent: TouchEvent) => {
+        const currentY = moveEvent.touches[0].clientY;
+        if (!hasLogged) {
+          if (currentY < startY) {
+            handleNextClick();
+          } else if (currentY > startY) {
+            handleBackClick();
+          }
+          hasLogged = true;
+        }
+      };
+    })();
+
+    const handleTouchEnd = () => {
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
   };
 
   return (
@@ -95,7 +81,10 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
       <div className="fixed bottom-0 right-0 m-2 text-sm" onClick={handleNextClick}>
         <ArrowDown size={32} color="black" />
       </div>
-      <div ref={containerRef} className="h-full text-black overflow-auto w-full">
+      <div
+        ref={containerRef}
+        className="h-full text-black overflow-y-hidden w-full"
+        onTouchStart={handleTouchStart}>
         {answersData?.map((answers, index) => (
           <div key={index} className="h-full text-black w-full">
             <div className="flex flex-col">
