@@ -107,13 +107,13 @@ Deno.serve(async (req) => {
           `
             <p>You've been invited to join ${team.name} on GECO.</p>
             <p>Click the link below to accept the invitation:</p>
-            <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/team/join?invitation=${invitation.id}">
+            <a href="${Deno.env.get('APP_URL')}/team/join?invitation=${invitation.id}">
               Accept Invitation
             </a>
           ` :
           `<p>You've been invited to join ${team.name} on GECO.</p>
             <p>Since you don't have an account yet, click the link below to sign up:</p>
-            <a href="${Deno.env.get('NEXT_PUBLIC_URL')}/auth/signup?invitation=${invitation.id}&email=${encodeURIComponent(email)}">
+            <a href="${Deno.env.get('APP_URL')}/auth/signup?invitation=${invitation.id}&email=${encodeURIComponent(email)}">
               Create Account
             </a>
           `
