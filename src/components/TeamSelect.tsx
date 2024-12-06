@@ -7,14 +7,15 @@ import {useSearchParams} from 'next/navigation';
 import {useEffect, useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
-export const TeamSelect = ({
-  teams,
-}: {
+interface TeamSelectProps {
   teams: {
     id: string;
     name: string;
   }[];
-}) => {
+  disableCreateOrJoin?: boolean;
+}
+
+export const TeamSelect = ({teams, disableCreateOrJoin}: TeamSelectProps) => {
   const {setCurrentTeamId, currentTeam, currentTeamId} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
@@ -35,7 +36,6 @@ export const TeamSelect = ({
     if (!currentTeamId) return;
     useExercisesStore.getState().init(currentTeamId);
   }, [currentTeamId]);
-
   return (
     <Select
       defaultValue={currentTeam?.id ?? teams[0].id}
@@ -50,7 +50,7 @@ export const TeamSelect = ({
             {team.name}
           </SelectItem>
         ))}
-        <SelectItem value="new">{t('createOrJoin')}</SelectItem>
+        <>{!disableCreateOrJoin && <SelectItem value="new">{t('createOrJoin')}</SelectItem>}</>
       </SelectContent>
     </Select>
   );

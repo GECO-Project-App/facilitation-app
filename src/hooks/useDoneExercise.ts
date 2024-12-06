@@ -45,5 +45,9 @@ export const useDoneTutorialExercise = () => {
 
   const theTimePassed = checkTimePassed();
 
-  return {done, isAllDone, theTimePassed};
+  // TODO: Add review done
+  const reviews = currentExercise?.filter((e) => e.reviewed).map((e) => e.replied_id);
+  const reviewDone = currentUserId ? reviews?.includes(currentUserId) : false;
+
+  return {done, isAllDone, theTimePassed, reviewDone};
 };

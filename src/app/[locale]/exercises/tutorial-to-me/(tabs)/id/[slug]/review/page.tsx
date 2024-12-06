@@ -2,27 +2,37 @@
 import {RiveAnimation} from '@/components';
 import {Header} from '@/components/Header';
 import {PageLayout} from '@/components/PageLayout';
-import ReviewCompleted from '@/components/tutorial-to-me/review/ReviewCompleted';
-import ReviewNotCompleted from '@/components/tutorial-to-me/review/ReviewNotCompleted';
+import ReviewComponent from '@/components/tutorial-to-me/review/ReviewComponent';
+import WaitingForOthers from '@/components/tutorial-to-me/review/WaitingForOthers';
 import {Button} from '@/components/ui';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
+import {updateReviewAndActiveTutorialToMe} from '@/lib/actions/createTutorialToMeActions';
+import {useExercisesStore} from '@/store/useExercises';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useRouter} from 'next/navigation';
+import {useParams, useRouter} from 'next/navigation';
 import {FC} from 'react';
 
 const Review: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
-  const {isAllDone, theTimePassed} = useDoneTutorialExercise();
+  const {isAllDone, theTimePassed, reviewDone} = useDoneTutorialExercise();
+  const {exercises} = useExercisesStore();
   const {allReviewsDone, removeLocalStorageItem} = useSSCChaptersHandler();
   const router = useRouter();
   const {toast} = useToast();
-
-  const handleClick = () => {
+  const {slug} = useParams();
+  const handleClick = async () => {
     if (allReviewsDone()) {
+      const result = await updateReviewAndActiveTutorialToMe(slug as string);
+      if (result?.error) {
+        toast({
+          variant: 'destructive',
+          title: t('review.toast.error'),
+        });
+      }
       router.push('/exercises/tutorial-to-me/feedback');
       toast({
         variant: 'transparent',
@@ -64,7 +74,13 @@ const Review: FC = () => {
           {isAllDone ? t('reviewComplete') : t('backToHome')}
         </Button>
       }>
-      {isAllDone || theTimePassed ? <ReviewCompleted /> : <ReviewNotCompleted />}
+      {reviewDone ? (
+        <WaitingForOthers message="Review" />
+      ) : isAllDone || theTimePassed ? (
+        <ReviewComponent />
+      ) : (
+        <WaitingForOthers message={t('waitingForOthers')} />
+      )}
     </PageLayout>
   );
 };
