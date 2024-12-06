@@ -5,6 +5,7 @@ import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
+import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {AuthTabs} from '../AuthTabs';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
@@ -17,11 +18,25 @@ export const ProfileForm = () => {
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      email: user?.email ?? '',
+      email: user?.email ?? user?.user_metadata.email ?? '',
+      first_name: user?.user_metadata.first_name ?? '',
+      last_name: user?.user_metadata.last_name ?? '',
+    },
+    values: {
+      email: user?.email ?? user?.user_metadata.email ?? '',
       first_name: user?.user_metadata.first_name ?? '',
       last_name: user?.user_metadata.last_name ?? '',
     },
   });
+
+  useEffect(() => {
+    form.reset({
+      email: user?.email ?? user?.user_metadata.email ?? '',
+      first_name: user?.user_metadata.first_name ?? '',
+      last_name: user?.user_metadata.last_name ?? '',
+    });
+  }, [form, user]);
+
   const onSubmit = async (data: ProfileSchema) => {
     const result = await updateProfile(data);
 
