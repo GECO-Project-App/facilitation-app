@@ -31,9 +31,6 @@ export async function createTutorialToMe(tutorialData: TutorialToMeSchema) {
         writing_time: validatedFields.writing_time,
         reviewing_date: validatedFields.reviewing_date,
         reviewing_time: validatedFields.reviewing_time,
-        strengths: validatedFields.strengths,
-        weaknesses: validatedFields.weaknesses,
-        communications: validatedFields.communications,
       })
       .select();
 

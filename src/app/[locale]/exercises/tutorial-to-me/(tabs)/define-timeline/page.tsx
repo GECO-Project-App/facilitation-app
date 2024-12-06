@@ -1,14 +1,44 @@
 'use client';
 import {Button, Header, PageLayout} from '@/components';
 import {DateAndTimePicker} from '@/components/date-and-time-picker/DateAndTimePicker';
+import {useRouter} from '@/i18n/routing';
+import {createTutorialToMe} from '@/lib/actions/createTutorialToMeActions';
+import {useTeamStore} from '@/store/teamStore';
 import {useTutorialToMe} from '@/store/useTutorialToMe';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import Link from 'next/link';
-
+import {useState} from 'react';
 export default function DefineTimeForTutorialToMePage() {
   const t = useTranslations('exercises.tutorialToMe');
   const {writingDate, reviewingDate, writingTime, reviewingTime} = useTutorialToMe();
+  const [loading, setLoading] = useState(false);
+  const {currentTeam} = useTeamStore();
+  const router = useRouter();
+
+  const createExercise = () => {
+    if (!currentTeam) return;
+    setLoading(true);
+    createTutorialToMe({
+      team_id: currentTeam.id,
+      writing_date: writingDate?.toISOString().split('T')[0] ?? '',
+      writing_time: writingTime ?? '',
+      reviewing_date: reviewingDate?.toISOString().split('T')[0] ?? '',
+      reviewing_time: reviewingTime ?? '',
+    })
+      .then((res) => {
+        const exerciseId = res?.data?.[0].exercise_id;
+        if (exerciseId) {
+          router.push(`/exercises/tutorial-to-me/id/${exerciseId}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <PageLayout
       backgroundColor="bg-red"
@@ -16,13 +46,14 @@ export default function DefineTimeForTutorialToMePage() {
       footer={
         <Button
           variant="white"
-          disabled={!writingDate || !reviewingDate || !writingTime || !reviewingTime}>
-          <Link href={`/exercises/tutorial-to-me/id/create`}>
-            <span className="flex items-center gap-2">
-              {t('nextStep')}
-              <ArrowRight size={28} />
-            </span>
-          </Link>
+          onClick={createExercise}
+          disabled={!writingDate || !reviewingDate || !writingTime || !reviewingTime || loading}>
+          {/* <Link href={`/exercises/tutorial-to-me/id/create`}> */}
+          <span className="flex items-center gap-2">
+            {loading ? 'Loading...' : t('nextStep')}
+            <ArrowRight size={28} />
+          </span>
+          {/* </Link> */}
         </Button>
       }>
       <section className="p-6 space-y-8 flex flex-col justify-evenly items-left h-full">

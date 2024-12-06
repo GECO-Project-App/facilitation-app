@@ -31,6 +31,7 @@ interface ExerciseType {
 interface ExercisesState {
   exercises: ExerciseType[];
   currentTutorialExerciseId: string | undefined;
+  currentTutorialExerciseCreatedBy: string | undefined;
   writingDate: string | undefined;
   writingTime: string | undefined;
   reviewingDate: string | undefined;
@@ -44,6 +45,7 @@ export const useExercisesStore = create<ExercisesState>()(
     (set) => ({
       exercises: [],
       currentTutorialExerciseId: undefined,
+      currentTutorialExerciseCreatedBy: undefined,
       writingDate: undefined,
       writingTime: undefined,
       reviewingDate: undefined,
@@ -56,6 +58,11 @@ export const useExercisesStore = create<ExercisesState>()(
           currentTutorialExerciseId: exercises?.find(
             (e) => e.isActive && e.type === 'tutorial_to_me',
           )?.exerciseId,
+        });
+        set({
+          currentTutorialExerciseCreatedBy: exercises?.find(
+            (e) => e.isActive && e.type === 'tutorial_to_me',
+          )?.createdBy,
         });
         set({
           writingDate: exercises?.find(

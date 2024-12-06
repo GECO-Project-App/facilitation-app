@@ -16,10 +16,18 @@ function arrayToString(arr: string[]): string {
 
 export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerType) {
   const supabase = createClient();
-
   try {
     const {data: user, error: userError} = await supabase.auth.getUser();
     if (userError) throw userError;
+
+    const {data: existingData, error: fetchError} = await supabase
+      .from('tutorial_to_me')
+      .select('exercise_id, replied_id')
+      .eq('exercise_id', answerExerciseData.exercise_id)
+      .eq('replied_id', user.user.id)
+      .maybeSingle();
+
+    if (fetchError) throw fetchError;
 
     const saveData = {
       strengths: arrayToString(answerExerciseData.strengths),
@@ -30,25 +38,29 @@ export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerT
       team_id: answerExerciseData.team_id,
       created_by: answerExerciseData.created_by,
     };
-    const {data, error} = await supabase.from('tutorial_to_me').insert([saveData]).select();
-    if (error) throw error;
-    return data;
+
+    let result;
+    if (existingData) {
+      const {data, error} = await supabase
+        .from('tutorial_to_me')
+        .update({
+          strengths: saveData.strengths,
+          weaknesses: saveData.weaknesses,
+          communications: saveData.communications,
+        })
+        .eq('exercise_id', answerExerciseData.exercise_id)
+        .eq('replied_id', user.user.id)
+        .select();
+      if (error) throw error;
+      result = data;
+    } else {
+      const {data, error} = await supabase.from('tutorial_to_me').insert([saveData]).select();
+      if (error) throw error;
+      result = data;
+    }
+
+    return result;
   } catch (error) {
     console.error('Unexpected error:', error);
   }
-
-  //   const supabase = createClient();
-  //   try {
-  //     const {data, error} = await supabase.from('tutorial_to_me').insert([answerExerciseData]).select();
-
-  //     if (error) {
-  //       console.error('Error inserting data:', error);
-  //     } else {
-  //       console.log('Data inserted successfully:', data);
-  //       console.log('supabaseData:', data);
-  //       return data;
-  //     }
-  //   } catch (error) {
-  //     console.error('Unexpected error:', error);
-  //   }
 }

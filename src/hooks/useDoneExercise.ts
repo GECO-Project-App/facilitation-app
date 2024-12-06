@@ -13,7 +13,9 @@ export const useDoneTutorialExercise = () => {
   const currentExercise = exercises?.filter((e) => e.exerciseId === currentTutorialExerciseId);
   const currentUserId = userProfile?.user_id;
 
-  const didIt = currentExercise?.find((ce) => ce.replied_id === currentUserId);
+  const didIt = currentExercise?.find(
+    (ce) => ce.replied_id === currentUserId && ce.answers.strengths,
+  );
   if (didIt) {
     done = true;
   }
