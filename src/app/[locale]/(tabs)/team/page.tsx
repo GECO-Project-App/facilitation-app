@@ -11,7 +11,6 @@ import {getUserTeams} from '@/lib/actions/teamActions';
 
 export default async function TeamPage() {
   const {teams} = await getUserTeams();
-
   return (
     <PageLayout
       header={

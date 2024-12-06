@@ -10,6 +10,7 @@ export type TutorialToMeSchema = z.infer<typeof tutorialToMeSchema>;
 export type JoinTeamSchema = z.infer<typeof joinTeamSchema>;
 export type MemberSchema = z.infer<typeof memberSchema>;
 export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
+export type InviteTeamMemberSchema = z.infer<typeof inviteTeamMemberSchema>;
 
 export const updatePasswordSchema = z
   .object({
@@ -92,4 +93,10 @@ export const tutorialToMeSchema = z.object({
   strengths: z.string().optional(),
   weaknesses: z.string().optional(),
   communications: z.string().optional(),
+});
+
+export const inviteTeamMemberSchema = z.object({
+  teamId: z.string().uuid(),
+  email: z.string().email(),
+  language: z.string().optional(),
 });

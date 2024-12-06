@@ -1,15 +1,21 @@
 'use client';
 
 import {useToast} from '@/hooks/useToast';
-import {useRouter} from '@/i18n/routing';
 import {signup} from '@/lib/actions/authActions';
+import {acceptTeamInvitation} from '@/lib/actions/emailActions';
 import {SignupSchema, signupSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
+import {useRouter} from 'next/navigation';
 import {useForm} from 'react-hook-form';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from '../ui';
 
-export const SignUpForm = () => {
+interface SignUpFormProps {
+  defaultEmail?: string | null;
+  invitationId?: string | null;
+}
+
+export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
   const router = useRouter();
@@ -17,25 +23,37 @@ export const SignUpForm = () => {
   const form = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      email: '',
+      email: defaultEmail || '',
       password: '',
+      confirmPassword: '',
+      first_name: '',
+      last_name: '',
     },
   });
 
   const onSubmit = async (data: SignupSchema) => {
     const result = await signup(data);
 
-    if (result?.error) {
+    if (result.error) {
       toast({
         variant: 'destructive',
-        title: t('error'),
-        description: result.error,
+        title: result.error,
       });
-    } else {
-      toast({
-        variant: 'default',
-        title: t('loggedIn'),
-      });
+    } else if (result?.user) {
+      if (invitationId) {
+        // Handle team invitation
+        console.log('invitationIdUsers', result.user.id);
+        const inviteResult = await acceptTeamInvitation(invitationId);
+        if (inviteResult.error) {
+          toast({
+            variant: 'destructive',
+            title: inviteResult.error,
+          });
+        }
+        router.push('/team');
+      } else {
+        router.push('/team');
+      }
     }
   };
 

@@ -1,4 +1,5 @@
 'use server';
+import {getLocale} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
 import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
@@ -118,7 +119,7 @@ export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
 
 export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
-
+  const locale = await getLocale();
   try {
     const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_code', {
       team_code_input: teamCode.toUpperCase(),
@@ -129,7 +130,8 @@ export async function joinTeamByCode(teamCode: string) {
       return {error: 'Failed to join team'};
     }
 
-    revalidatePath(`/team?id=${teamId}`, 'page');
+    revalidatePath(`/team`, 'page');
+
     return {success: true, teamId};
   } catch (error) {
     console.error('Unexpected error:', error);
@@ -233,6 +235,7 @@ export async function removeTeamMember(teamId: string, userId: string) {
     }
 
     revalidatePath('/team', 'page');
+
     return {success: true};
   } catch (error) {
     return {error: 'Failed to remove team member'};
@@ -381,5 +384,40 @@ export async function updateTeamMemberProfile(teamId: string, data: MemberSchema
   } catch (error) {
     console.error('Team member profile update error:', error);
     return {error: 'Failed to update team member profile'};
+  }
+}
+export async function acceptTeamInvitation(invitationId: string) {
+  const supabase = createClient();
+
+  try {
+    const {
+      data: {user},
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      return {error: 'User not found'};
+    }
+
+    // Try to join the team
+    const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_invitation', {
+      invitation_id: invitationId,
+      p_user_id: user.id,
+    });
+
+    if (joinError) {
+      console.error('Join error:', joinError);
+      return {error: joinError.message};
+    }
+
+    if (!teamId) {
+      return {error: 'Failed to join team'};
+    }
+
+    revalidatePath('/team', 'page');
+    return {success: true, teamId};
+  } catch (error) {
+    console.error('Error accepting invitation:', error);
+    return {error: 'Failed to accept invitation'};
   }
 }
