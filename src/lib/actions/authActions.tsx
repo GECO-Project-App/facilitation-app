@@ -82,7 +82,7 @@ export const sendResetPasswordEmail = async (email: string) => {
   const locale = await getLocale();
 
   const {data, error} = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_URL}/${locale}/settings/update-password`,
+    redirectTo: `${process.env.APP_URL}/${locale}/settings/update-password`,
   });
 
   return {data, error};

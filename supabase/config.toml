@@ -92,11 +92,11 @@ enabled = true
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-site_url = "env(NEXT_PUBLIC_URL)"
+site_url = "env(APP_URL)"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = [
-  "env(NEXT_PUBLIC_URL)",
-  "env(NEXT_PUBLIC_URL)/*/settings/update-password"
+  "env(APP_URL)",
+  "env(APP_URL)/*/settings/update-password"
 ]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
