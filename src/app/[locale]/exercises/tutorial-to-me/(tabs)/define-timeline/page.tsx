@@ -18,13 +18,23 @@ export default function DefineTimeForTutorialToMePage() {
   const createExercise = () => {
     if (!currentTeam) return;
     setLoading(true);
-    createTutorialToMe({
+    const savedData = {
       team_id: currentTeam.id,
-      writing_date: writingDate?.toISOString().split('T')[0] ?? '',
+      writing_date: writingDate
+        ? new Date(writingDate.getTime() - writingDate.getTimezoneOffset() * 60000)
+            .toISOString()
+            .split('T')[0]
+        : '',
       writing_time: writingTime ?? '',
-      reviewing_date: reviewingDate?.toISOString().split('T')[0] ?? '',
+      reviewing_date: reviewingDate
+        ? new Date(reviewingDate.getTime() - reviewingDate.getTimezoneOffset() * 60000)
+            .toISOString()
+            .split('T')[0]
+        : '',
       reviewing_time: reviewingTime ?? '',
-    })
+    };
+    console.log(savedData);
+    createTutorialToMe(savedData)
       .then((res) => {
         const exerciseId = res?.data?.[0].exercise_id;
         if (exerciseId) {
