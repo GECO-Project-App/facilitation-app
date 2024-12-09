@@ -1,14 +1,12 @@
 'use client';
+import {TeamAvatars} from '@/components/TeamAvatars';
+import {TeamSelect} from '@/components/TeamSelect';
 import {Button} from '@/components/ui/button/button';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
-import {getUserTeams} from '@/lib/actions/teamActions';
 import {UserRoundMinus, UserRoundPlus} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {FC, useEffect, useState} from 'react';
-import {Tables} from '../../../../database.types';
-import CurrentAvatars from '../CurrentAvatars';
-import SelectTutorialTeam from '../SelectTutorialTeam';
+import {FC} from 'react';
 interface InvOrDelMemberProps {
   toturianExerciseId?: string;
 }
@@ -16,23 +14,12 @@ interface InvOrDelMemberProps {
 const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
   const t = useTranslations('exercises.tutorialToMe');
   const {done} = useDoneTutorialExercise();
-  const [teams, setTeams] = useState<Tables<'teams'>[]>([]);
-
-  useEffect(() => {
-    async function getTeams() {
-      const {teams} = await getUserTeams();
-      setTeams(teams || []);
-    }
-    getTeams();
-  }, []);
 
   return (
     <>
-      {teams && teams.length > 0 && (
-        <SelectTutorialTeam selectedTeam={teams} disableCreateOrJoin={true} />
-      )}
+      <TeamSelect disableCreateOrJoin />
       <section className="bg-yellow w-[80%] h-24 rounded-3xl border-2 border-black p-4 mx-auto flex flex-col gap-4 h-full">
-        <CurrentAvatars />
+        <TeamAvatars />
         {toturianExerciseId ? (
           <div className="text-center text-lg">
             {!done ? 'There is an exercises to do' : 'You already did this exercise'}

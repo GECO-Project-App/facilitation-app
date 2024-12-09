@@ -38,7 +38,11 @@ export const InviteTeamMemberDialog = () => {
   const onSubmit = async (data: InviteTeamMemberSchema) => {
     const {error} = await inviteTeamMember(data);
     if (error) {
-      toast({description: t('page.inviteTeam.error'), variant: 'destructive'});
+      toast({
+        title: t('page.inviteTeam.error'),
+        description: error.message,
+        variant: 'destructive',
+      });
     } else {
       toast({description: t('page.inviteTeam.success'), variant: 'success'});
       setOpen(false);

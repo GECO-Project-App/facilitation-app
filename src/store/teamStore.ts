@@ -8,7 +8,7 @@ import {useUserStore} from './userStore';
 type TeamWithMembers = Tables<'teams'> & {
   team_members: Array<Tables<'team_members'>> | [];
 };
-interface TeamState {
+type TeamState = {
   currentTeamId: string | null; // ID of currently selected team
   currentTeam: TeamWithMembers | null; // Currently selected team data with members
   isLoading: boolean; // Loading state indicator
@@ -17,7 +17,9 @@ interface TeamState {
   facilitator: Tables<'team_members'> | null; // Team facilitator/leader
   isFacilitator: boolean; // Whether current user is facilitator
   userProfile: Tables<'team_members'> | null; // Current user's profile
-}
+  userTeams: Tables<'teams'>[];
+  updateUserTeams: () => Promise<void>;
+};
 
 // Create the team store using Zustand
 export const useTeamStore = create<TeamState>()(
@@ -29,7 +31,11 @@ export const useTeamStore = create<TeamState>()(
       currentTeam: null,
       isLoading: true,
       userProfile: null,
-
+      userTeams: [],
+      updateUserTeams: async () => {
+        const {teams} = await getUserTeams();
+        set({userTeams: teams});
+      },
       // Initialize the store by loading the user's first team
       init: async () => {
         const supabase = createClient();
@@ -45,6 +51,9 @@ export const useTeamStore = create<TeamState>()(
 
           if (userError || !user) {
             return;
+          }
+          if (teams && teams.length > 0) {
+            set({userTeams: teams});
           }
 
           if (teams?.[0] && user) {

@@ -1,8 +1,8 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {useRouter} from '@/i18n/routing';
 import {deleteTeam, updateTeam} from '@/lib/actions/teamActions';
 import {UpdateTeamSchema, updateTeamSchema} from '@/lib/zodSchemas';
+import {useTeamStore} from '@/store/teamStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Trash} from 'lucide-react';
 import {useTranslations} from 'next-intl';
@@ -35,8 +35,8 @@ export const UpdateTeamForm = ({
 }) => {
   const {toast} = useToast();
   const t = useTranslations('team');
-  const router = useRouter();
 
+  const {updateUserTeams} = useTeamStore();
   const form = useForm<UpdateTeamSchema>({
     resolver: zodResolver(updateTeamSchema),
     defaultValues: {
@@ -100,6 +100,7 @@ export const UpdateTeamForm = ({
                   onAction={async () => {
                     if (currentTeam?.id && form.getValues('delete')) {
                       await deleteTeam(currentTeam.id);
+                      await updateUserTeams();
                       onComplete?.();
                     } else {
                       toast({
