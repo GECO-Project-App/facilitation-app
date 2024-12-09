@@ -2,6 +2,7 @@
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {useTeamStore} from '@/store/teamStore';
 import {useExercisesStore} from '@/store/useExercises';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
@@ -10,7 +11,7 @@ import {FC, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
-import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
+import {TeamSelect} from './TeamSelect';
 import {Button} from './ui';
 
 export const About: FC<{
@@ -23,7 +24,7 @@ export const About: FC<{
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
-
+  const {currentTeam} = useTeamStore();
   const handleClick = () => {
     posthog.capture('exercise_start', {
       name: slug,
@@ -85,9 +86,10 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && (
+          <TeamSelect />
+          {/* {slug === 'tutorial-to-me' && (
             <InvOrDelMembers toturianExerciseId={currentTutorialExerciseId} />
-          )}
+          )} */}
         </div>
       </div>
     </PageLayout>

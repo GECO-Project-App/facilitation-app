@@ -9,7 +9,7 @@ const SelectTutorialTeam: FC<{selectedTeam: Tables<'teams'>[]; disableCreateOrJo
   return (
     <div className="w-[68%] mx-auto py-2">
       {selectedTeam && selectedTeam.length > 0 && (
-        <TeamSelect teams={selectedTeam} disableCreateOrJoin={disableCreateOrJoin} />
+        <TeamSelect disableCreateOrJoin={disableCreateOrJoin} />
       )}
     </div>
   );
