@@ -11,6 +11,7 @@ import {FC, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
+import {TeamCard} from './TeamCard';
 import {TeamSelect} from './TeamSelect';
 import {Button} from './ui';
 
@@ -86,11 +87,9 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          <TeamSelect />
-          {/* {slug === 'tutorial-to-me' && (
-            <InvOrDelMembers toturianExerciseId={currentTutorialExerciseId} />
-          )} */}
         </div>
+        <TeamSelect disableCreateOrJoin />
+        <TeamCard />
       </div>
     </PageLayout>
   );

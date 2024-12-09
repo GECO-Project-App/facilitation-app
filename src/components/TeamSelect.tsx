@@ -32,7 +32,7 @@ export const TeamSelect = ({disableCreateOrJoin}: {disableCreateOrJoin?: boolean
       defaultValue={currentTeam?.id ?? ''}
       value={teamValue}
       onValueChange={(value) => router.push(`?id=${value}`)}>
-      <SelectTrigger className="">
+      <SelectTrigger>
         <SelectValue placeholder={currentTeam?.name ?? 'Select a team'} />
       </SelectTrigger>
       <SelectContent>
