@@ -4,6 +4,7 @@ import {TeamSelect} from '@/components/TeamSelect';
 import {Button} from '@/components/ui/button/button';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
+import {useExercisesStore} from '@/store/useExercises';
 import {UserRoundMinus, UserRoundPlus} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {FC} from 'react';
@@ -14,6 +15,7 @@ interface InvOrDelMemberProps {
 const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
   const t = useTranslations('exercises.tutorialToMe');
   const {done} = useDoneTutorialExercise();
+  const {currentTutorialExerciseId} = useExercisesStore();
 
   return (
     <>

@@ -49,6 +49,15 @@
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },
+    "teamCard": {
+      "edit": "Edit team",
+      "invite": "Invite team member",
+      "existingExercise": "There is an exercises to do",
+      "existingExerciseDescription": "You already did this exercise",
+      "noTeam": "Can not see your team?<br></br>Enter team code here:",
+      "enterCode": "Enter code",
+      "ready": "I am ready!"
+    },
     "edit": {
       "avatar": {
         "title": "Choose your avatar",
