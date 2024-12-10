@@ -33,6 +33,8 @@ export const TeamSelect = ({
     }
   }, [setCurrentTeamId, teamValue]);
 
+  if (!currentTeam) return null;
+
   return (
     <Select
       defaultValue={currentTeam?.id ?? ''}

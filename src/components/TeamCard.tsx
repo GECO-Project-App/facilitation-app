@@ -23,7 +23,7 @@ export const TeamCard = () => {
   };
 
   return (
-    <div className="md:w-[80%] mx-auto">
+    <div className="max-w-xs mx-auto">
       {currentTeam ? (
         <div className="bg-yellow  rounded-3xl border-2 border-black p-4 flex flex-col gap-4 h-full">
           <TeamAvatars />

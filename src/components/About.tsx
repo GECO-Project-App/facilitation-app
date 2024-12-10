@@ -2,7 +2,6 @@
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {Link} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
-import {useTeamStore} from '@/store/teamStore';
 import {useExercisesStore} from '@/store/useExercises';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
@@ -25,7 +24,6 @@ export const About: FC<{
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
-  const {currentTeam} = useTeamStore();
 
   const handleClick = () => {
     posthog.capture('exercise_start', {

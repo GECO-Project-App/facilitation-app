@@ -33,7 +33,7 @@ export const InviteTeamMemberDialog = () => {
     defaultValues: {email: '', teamId: currentTeam?.id},
   });
 
-  if (!currentTeam || !isFacilitator) return null;
+  if (!currentTeam) return null;
 
   const onSubmit = async (data: InviteTeamMemberSchema) => {
     const {error} = await inviteTeamMember(data);
