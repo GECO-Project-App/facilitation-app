@@ -1,6 +1,7 @@
 import {RiveAnimation} from '@/components/RiveAnimation';
 import {useTranslations} from 'next-intl';
 import {FC} from 'react';
+import UsersNotCompletedTutorialToMeReview from '../UsersNotCompletedTutorialToMeReview';
 import UsersNotCompletedTutorialToMeTask from '../UsersNotCompletedTutorialToMeTask';
 
 const WaitingForOthers: FC<{message?: string}> = ({message}) => {
@@ -12,6 +13,7 @@ const WaitingForOthers: FC<{message?: string}> = ({message}) => {
       <p className="px-4">
         {t('waitingForOthersP1')}
         <UsersNotCompletedTutorialToMeTask />
+        <UsersNotCompletedTutorialToMeReview />
         {t('waitingForOthersP2')}
       </p>
     </section>
