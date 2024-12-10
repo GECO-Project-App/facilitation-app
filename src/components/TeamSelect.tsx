@@ -6,7 +6,13 @@ import {useSearchParams} from 'next/navigation';
 import {useEffect, useMemo} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
-export const TeamSelect = ({disableCreateOrJoin}: {disableCreateOrJoin?: boolean}) => {
+export const TeamSelect = ({
+  disableCreateOrJoin,
+  className,
+}: {
+  disableCreateOrJoin?: boolean;
+  className?: string;
+}) => {
   const {setCurrentTeamId, currentTeam, currentTeamId, userTeams} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
@@ -32,7 +38,7 @@ export const TeamSelect = ({disableCreateOrJoin}: {disableCreateOrJoin?: boolean
       defaultValue={currentTeam?.id ?? ''}
       value={teamValue}
       onValueChange={(value) => router.push(`?id=${value}`)}>
-      <SelectTrigger>
+      <SelectTrigger className={className}>
         <SelectValue placeholder={currentTeam?.name ?? 'Select a team'} />
       </SelectTrigger>
       <SelectContent>

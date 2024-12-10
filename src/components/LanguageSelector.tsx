@@ -1,10 +1,9 @@
 'use client';
 import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
-import {ChevronDownIcon, ChevronUpIcon} from 'lucide-react';
 import {useLocale, useTranslations} from 'next-intl';
 import {useParams} from 'next/navigation';
-import {FC, useMemo, useState, useTransition} from 'react';
+import {FC, useMemo, useTransition} from 'react';
 import {EnFlag, SvFlag} from './icons';
 import {Select, SelectContent, SelectItem, SelectTrigger} from './ui';
 
@@ -21,7 +20,6 @@ export const LanguageSelector: FC = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const params = useParams();
-  const [open, setOpen] = useState(false);
 
   const countries = useMemo(() => {
     return languages.map((lang) => {
@@ -64,15 +62,11 @@ export const LanguageSelector: FC = () => {
   return (
     <Select
       defaultValue={countries.find((lang) => lang.value === currentLocale)?.value}
-      onValueChange={switchLanguage}
-      onOpenChange={setOpen}>
+      onValueChange={switchLanguage}>
       <SelectTrigger className="w-[180px]">
         <div className="flex w-full items-center justify-between">
           <span className="bg-red-100 flex w-fit items-center gap-2 font-semibold">
             {selectedCountry?.smFlag} {selectedCountry?.label}
-          </span>
-          <span className="w-fit transition-transform duration-200">
-            {open ? <ChevronUpIcon className="h-4 w-4" /> : <ChevronDownIcon className="h-4 w-4" />}
           </span>
         </div>
       </SelectTrigger>

@@ -1,15 +1,17 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {teamCodeSchema, TeamCodeSchema} from '@/lib/zodSchemas';
 import {useTeamStore} from '@/store/teamStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Rocket} from 'lucide-react';
 import {useForm} from 'react-hook-form';
-import {RemoveMember} from './icons';
+import {InviteTeamMemberDialog} from './dialogs/InviteTeamMemberDialog';
+import {EditTeam} from './icons';
 import {TeamAvatars} from './TeamAvatars';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from './ui';
 
 export const TeamCard = () => {
-  const {currentTeam} = useTeamStore();
+  const {currentTeam, isFacilitator} = useTeamStore();
   const form = useForm({
     resolver: zodResolver(teamCodeSchema),
     defaultValues: {
@@ -23,6 +25,19 @@ export const TeamCard = () => {
   return (
     <div className="md:w-[80%] mx-auto">
       {currentTeam ? (
+        <div className="bg-yellow  rounded-3xl border-2 border-black p-4 flex flex-col gap-4 h-full">
+          <TeamAvatars />
+          <InviteTeamMemberDialog />
+          {isFacilitator && (
+            <Link href={`/team?id=${currentTeam.id}`}>
+              <Button variant="white" size="xs" className=" justify-between w-full">
+                Edit team
+                <EditTeam />
+              </Button>
+            </Link>
+          )}
+        </div>
+      ) : (
         <div className="bg-green rounded-3xl border-2 border-black p-4  flex flex-col gap-4 h-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -54,23 +69,11 @@ export const TeamCard = () => {
                 variant="white"
                 size="xs"
                 className="mx-auto">
-                {form.formState.isSubmitting ? '...' : 'Join team'}
+                {form.formState.isSubmitting ? '...' : 'I am ready!'}
                 <Rocket size={20} />
               </Button>
             </form>
           </Form>
-        </div>
-      ) : (
-        <div className="bg-yellow  rounded-3xl border-2 border-black p-4 flex flex-col gap-4 h-full">
-          <TeamAvatars />
-          <Button variant="white" size="xs" className=" justify-between w-full">
-            Test
-            <RemoveMember />
-          </Button>
-          <Button variant="white" size="xs" className=" justify-between w-full">
-            Test
-            <RemoveMember />
-          </Button>
         </div>
       )}
     </div>

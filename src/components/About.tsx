@@ -26,6 +26,7 @@ export const About: FC<{
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
   const {currentTeam} = useTeamStore();
+
   const handleClick = () => {
     posthog.capture('exercise_start', {
       name: slug,
@@ -88,7 +89,7 @@ export const About: FC<{
           </div>
           <p>{description}</p>
         </div>
-        <TeamSelect disableCreateOrJoin />
+        <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
         <TeamCard />
       </div>
     </PageLayout>
