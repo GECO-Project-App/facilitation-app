@@ -17,7 +17,7 @@ export default async function TeamPage() {
         teams &&
         teams.length > 0 && (
           <Header showBackButton={false}>
-            <TeamSelect teams={teams} />
+            <TeamSelect />
           </Header>
         )
       }>

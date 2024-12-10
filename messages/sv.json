@@ -47,6 +47,15 @@
       "joined": "Du har gått med i ett team!",
       "inviteSent": "Du har skickat en inbjudan till ett teammedlem!"
     },
+       "teamCard": {
+      "edit": "Redigera team",
+      "invite": "Bjud in teammedlem",
+      "existingExercise": "Det finns en övning att göra",
+      "existingExerciseDescription": "Du har redan gjort denna övning",
+      "noTeam": "Syns inte ditt team?<br></br>Ange teamkod här:",
+      "enterCode": "Ange kod",
+      "ready": "Jag är redo!"
+    },
       "edit": {
       "avatar": {
         "title": "Välj din avatar",
