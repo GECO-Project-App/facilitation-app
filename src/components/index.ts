@@ -15,6 +15,7 @@ export * from './ProfileAvatar';
 export * from './ProfileStats';
 export * from './RandomQuestion';
 export * from './RiveAnimation';
+export * from './SSCSwipe';
 export * from './TabBar';
 export * from './TeamGrid';
 export * from './TeamSelect';
