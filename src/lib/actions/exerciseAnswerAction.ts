@@ -2,17 +2,19 @@
 import {createClient} from '../supabase/server';
 
 type ExerciseAnswerType = {
-  strengths: string[];
-  weaknesses: string[];
-  communications: string[];
+  strengths: string;
+  weaknesses: string;
+  communications: string;
   exercise_id: string;
   team_id: string;
   created_by: string;
+  reviewing_date?: string;
+  reviewing_time?: string;
 };
 
-function arrayToString(arr: string[]): string {
-  return arr.join(', ');
-}
+// function arrayToString(arr: string[]): string {
+//   return arr.join(', ');
+// }
 
 export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerType) {
   const supabase = createClient();
@@ -30,13 +32,15 @@ export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerT
     if (fetchError) throw fetchError;
 
     const saveData = {
-      strengths: arrayToString(answerExerciseData.strengths),
-      weaknesses: arrayToString(answerExerciseData.weaknesses),
-      communications: arrayToString(answerExerciseData.communications),
+      strengths: answerExerciseData.strengths,
+      weaknesses: answerExerciseData.weaknesses,
+      communications: answerExerciseData.communications,
       exercise_id: answerExerciseData.exercise_id,
       replied_id: user.user.id,
       team_id: answerExerciseData.team_id,
       created_by: answerExerciseData.created_by,
+      reviewing_date: answerExerciseData.reviewing_date ? answerExerciseData.reviewing_date : '',
+      reviewing_time: answerExerciseData.reviewing_time ? answerExerciseData.reviewing_time : '',
     };
 
     let result;
