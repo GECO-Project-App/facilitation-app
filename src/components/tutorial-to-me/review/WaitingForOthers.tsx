@@ -12,8 +12,7 @@ const WaitingForOthers: FC<{message?: string}> = ({message}) => {
       <RiveAnimation src="timer.riv" width={300} height={300} />
       <p className="px-4">
         {t('waitingForOthersP1')}
-        <UsersNotCompletedTutorialToMeTask />
-        <UsersNotCompletedTutorialToMeReview />
+        {!message ? <UsersNotCompletedTutorialToMeTask /> : <UsersNotCompletedTutorialToMeReview />}
         {t('waitingForOthersP2')}
       </p>
     </section>
