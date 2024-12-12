@@ -8,6 +8,8 @@ type ExerciseAnswerType = {
   exercise_id: string;
   team_id: string;
   created_by: string;
+  reviewing_date?: string;
+  reviewing_time?: string;
 };
 
 // function arrayToString(arr: string[]): string {
@@ -37,6 +39,8 @@ export async function saveTutorialToMeAnswer(answerExerciseData: ExerciseAnswerT
       replied_id: user.user.id,
       team_id: answerExerciseData.team_id,
       created_by: answerExerciseData.created_by,
+      reviewing_date: answerExerciseData.reviewing_date ? answerExerciseData.reviewing_date : '',
+      reviewing_time: answerExerciseData.reviewing_time ? answerExerciseData.reviewing_time : '',
     };
 
     let result;

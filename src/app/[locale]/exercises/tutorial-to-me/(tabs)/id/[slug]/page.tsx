@@ -26,7 +26,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const router = useRouter();
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
   const {currentTeam} = useTeamStore();
-  const {currentTutorialExerciseCreatedBy} = useExercisesStore();
+  const {currentTutorialExerciseCreatedBy, reviewingDate, reviewingTime} = useExercisesStore();
   const getColorClass = (step: number) => {
     switch (step) {
       case 0:
@@ -82,6 +82,8 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       exercise_id: slug,
       team_id: currentTeam?.id as string,
       created_by: currentTutorialExerciseCreatedBy as string,
+      reviewing_date: reviewingDate,
+      reviewing_time: reviewingTime,
     };
     if (currentTeam?.id) {
       saveTutorialToMeAnswer(saveAnswerData)
