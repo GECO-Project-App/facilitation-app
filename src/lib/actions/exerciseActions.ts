@@ -1,7 +1,7 @@
 'use server';
 import {createClient} from '../supabase/server';
 
-export async function getExercisesData(teamId: string) {
+export async function getTutorialToMeExercisesData(teamId: string) {
   const supabase = createClient();
 
   try {

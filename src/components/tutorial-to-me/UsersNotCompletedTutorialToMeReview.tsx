@@ -23,13 +23,10 @@ const UsersNotCompletedTutorialToMeReview = () => {
     lastName: member.last_name,
   }));
 
-  console.log(teamMembers);
-
   const doneUsersId = exercises
     .filter((e) => e.exerciseId === currentTutorialExerciseId && e.reviewed)
     .map((e) => e.replied_id);
 
-  console.log(doneUsersId);
   const teamMembersNotCompletedTask = teamMembers
     ? getTeamMembersNotCompletedTask(teamMembers, doneUsersId)
     : [];
