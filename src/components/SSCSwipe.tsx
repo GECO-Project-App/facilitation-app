@@ -8,6 +8,7 @@ import {Send} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {FC, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {CarouselPagination} from './CarouselPagination';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
 import {Complete} from './icons';
@@ -80,7 +81,11 @@ export const SSCSwipe: FC = () => {
   return (
     <PageLayout
       backgroundColor="bg-yellow"
-      header={<Header rightContent={<DateBadge date={new Date()} />} />}
+      header={
+        <Header rightContent={<DateBadge date={new Date()} />}>
+          <CarouselPagination steps={steps} currentStep={currentStep} />
+        </Header>
+      }
       footer={
         currentStep === steps.length - 1 ? (
           <Button
