@@ -5,43 +5,39 @@ import {useExercisesStore} from '@/store/useExercises';
 import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import ChapterAnswer from './ChapterAnswer';
+
 export default function ReviewAnswers({chapter}: {chapter: string}) {
   const {setThisReviewDone} = useSSCChaptersHandler();
   const router = useRouter();
   const {exercises} = useExercisesStore();
-  const [answersData, setAnswersData] = useState<string[][]>([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
 
+  let answersData;
+  if (chapter === 'strength') {
+    answersData = exercises.map((e) => e.answers.strengths.split(','));
+    answersData.push(['']);
+  } else if (chapter === 'weakness') {
+    answersData = exercises.map((e) => e.answers.weaknesses.split(','));
+    answersData.push(['']);
+  } else if (chapter === 'communication') {
+    answersData = exercises.map((e) => e.answers.communications.split(','));
+    answersData.push(['']);
+  }
   useEffect(() => {
-    if (chapter === 'strength') {
-      setAnswersData(exercises.map((e) => e.answers.strengths.split(',')));
-    } else if (chapter === 'weakness') {
-      setAnswersData(exercises.map((e) => e.answers.weaknesses.split(',')));
-    } else if (chapter === 'communication') {
-      setAnswersData(exercises.map((e) => e.answers.communications.split(',')));
-    }
-
     if (!api) {
       return;
     }
-
     setCurrentStep(api.selectedScrollSnap());
 
     api.on('select', () => {
       setCurrentStep(api.selectedScrollSnap());
     });
-  }, [api, setCurrentStep]);
-
-  console.log('currentStep :', currentStep);
-
-  // const chapterDone = () => {
-  //   console.log('chapterDone :', chapter);
-  //   setThisReviewDone(chapter);
-  //   router.back();
-  // };
-
-  console.log('length :', answersData);
+    if (currentStep + 1 > answersData.length - 1) {
+      setThisReviewDone(chapter);
+      router.back();
+    }
+  }, [api, currentStep]);
 
   return (
     <div className="h-full text-black overflow-hidden w-full">
@@ -53,9 +49,6 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        {/* <Button onClick={chapterDone} variant="noShadow" size="small" className="mx-auto">
-          Done
-        </Button> */}
       </Carousel>
     </div>
   );
