@@ -36,9 +36,9 @@ export const SwipeCard = ({
 
   const leaveX = useMemo(() => {
     if (forceSwipe === 1) {
-      return -1000;
-    } else if (forceSwipe === -1) {
       return 1000;
+    } else if (forceSwipe === -1) {
+      return -1000;
     }
   }, [forceSwipe]);
 
