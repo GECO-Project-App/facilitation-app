@@ -43,7 +43,7 @@ export const SwipeReview: FC = () => {
     <PageLayout
       backgroundColor="black"
       footer={
-        <div className="flex justify-between items-center w-full h-full max-w-lg">
+        <div className="flex justify-between items-center w-full h-full max-w-lg px-4">
           <Button
             variant="red"
             onClick={() => handleDisagree(cards.length > 0 ? cards[cards.length - 1]?.id : 0)}>
