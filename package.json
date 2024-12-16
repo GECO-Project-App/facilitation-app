@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev && npx supabase start && npx supabase functions serve",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "format": "prettier --write src",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "supabase": "npx supabase start && npx supabase functions serve",
     "prepare": "husky"
   },
   "lint-staged": {
