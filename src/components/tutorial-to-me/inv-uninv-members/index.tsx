@@ -35,7 +35,7 @@ const InvOrDelMember: FC<InvOrDelMemberProps> = ({toturianExerciseId}) => {
         <CurrentAvatars />
         {toturianExerciseId ? (
           <div className="text-center text-lg">
-            {!done ? 'There is an exercises to do' : 'You already did this exercise'}
+            {!done ? t('thereIsAnExerciseToDo') : t('youAlreadyDidThisExercise')}
           </div>
         ) : (
           <>

@@ -328,6 +328,8 @@
       "waiting": "Väntar...",
       "waitingForOthersP1": "Vi väntar fortfarande på",
       "waitingForOthersP2": "att slutföra sin Handledning till mig. Vi skickar dig en email när alla har slutfört övningen, så du kan komma tillbaka hit och granska alla andras svar.",
+      "thereIsAnExerciseToDo": "Det finns en övning att göra",
+      "youAlreadyDidThisExercise": "Du har redan gjort denna övning",
       "defineTimeline": {
         "title": "Definiera tid",
         "description": "Låt oss sätta deadline för övningen.",
