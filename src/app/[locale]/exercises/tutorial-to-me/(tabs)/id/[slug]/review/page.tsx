@@ -79,7 +79,7 @@ const Review: FC = () => {
       ) : isAllDone || theTimePassed ? (
         <ReviewComponent />
       ) : (
-        <WaitingForOthers message={t('waitingForOthers')} />
+        <WaitingForOthers />
       )}
     </PageLayout>
   );

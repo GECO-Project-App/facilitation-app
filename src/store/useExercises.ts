@@ -1,4 +1,4 @@
-import {getExercisesData} from '@/lib/actions/exerciseActions';
+import {getTutorialToMeExercisesData} from '@/lib/actions/exerciseActions';
 import {create} from 'zustand';
 import {devtools} from 'zustand/middleware';
 
@@ -52,7 +52,7 @@ export const useExercisesStore = create<ExercisesState>()(
       reviewingTime: undefined,
       isLoading: true,
       init: async (teamId: string) => {
-        const {exercises} = await getExercisesData(teamId);
+        const {exercises} = await getTutorialToMeExercisesData(teamId);
         set({exercises: exercises as ExerciseType[]});
         set({
           currentTutorialExerciseId: exercises?.find(
