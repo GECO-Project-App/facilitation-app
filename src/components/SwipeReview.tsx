@@ -1,6 +1,6 @@
 'use client';
-import {AnimatePresence} from 'framer-motion';
 
+import {AnimatePresence} from 'framer-motion';
 import {Check, X} from 'lucide-react';
 import {FC, useState} from 'react';
 import {PageLayout} from './PageLayout';
@@ -29,12 +29,17 @@ export const SwipeReview: FC = () => {
   };
 
   const handleAgree = (id: number) => {
-    // TODO: Increment
+    if (forceSwipe === 0) {
+      return;
+    }
     setForceSwipe(1);
     removeCard(id);
   };
 
   const handleDisagree = (id: number) => {
+    if (forceSwipe === 0) {
+      return;
+    }
     setForceSwipe(-1);
     removeCard(id);
   };

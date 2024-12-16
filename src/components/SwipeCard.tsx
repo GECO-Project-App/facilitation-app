@@ -3,7 +3,6 @@ import {motion, PanInfo, useMotionValue, useTransform} from 'framer-motion';
 import {Card, CardContent, CardTitle} from './ui';
 
 import {cn} from '@/lib/utils';
-import {useMemo} from 'react';
 import {CardHeader} from './ui';
 
 type SwipeCardProps = {
@@ -34,14 +33,6 @@ export const SwipeCard = ({
     }
   };
 
-  const leaveX = useMemo(() => {
-    if (forceSwipe === 1) {
-      return 1000;
-    } else if (forceSwipe === -1) {
-      return -1000;
-    }
-  }, [forceSwipe]);
-
   return (
     <motion.div
       className={cn(
@@ -60,7 +51,7 @@ export const SwipeCard = ({
         scale: 1,
       }}
       exit={{
-        x: leaveX,
+        x: forceSwipe === 1 ? 1000 : -1000,
         opacity: 0,
         scale: 0.5,
         transition: {duration: 1},
@@ -69,7 +60,7 @@ export const SwipeCard = ({
       onDragEnd={handleDragEnd}>
       <Card
         className={cn(
-          type === 'start' ? 'bg-green' : type === 'stop' ? 'bg-red' : 'bg-green',
+          type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
           'flex-1',
         )}>
         <CardHeader>
