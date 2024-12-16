@@ -15,15 +15,34 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
 
   let answersData;
   if (chapter === 'strength') {
-    answersData = exercises.map((e) => e.answers.strengths.split(','));
-    answersData.push(['']);
+    answersData = exercises.map((e) => ({
+      answers: e.answers.strengths.split(','),
+      replyId: e.replied_id,
+    }));
+    answersData.push({
+      answers: [''],
+      replyId: '',
+    });
   } else if (chapter === 'weakness') {
-    answersData = exercises.map((e) => e.answers.weaknesses.split(','));
-    answersData.push(['']);
+    answersData = exercises.map((e) => ({
+      answers: e.answers.weaknesses.split(','),
+      replyId: e.replied_id,
+    }));
+    answersData.push({
+      answers: [''],
+      replyId: '',
+    });
   } else if (chapter === 'communication') {
-    answersData = exercises.map((e) => e.answers.communications.split(','));
-    answersData.push(['']);
+    answersData = exercises.map((e) => ({
+      answers: e.answers.communications.split(','),
+      replyId: e.replied_id,
+    }));
+    answersData.push({
+      answers: [''],
+      replyId: '',
+    });
   }
+
   useEffect(() => {
     if (!api) {
       return;
@@ -45,7 +64,12 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
         <CarouselContent className="h-[100dvh]">
           {answersData?.map((answers, i) => (
             <CarouselItem key={i} className="space-y-6">
-              <ChapterAnswer key={i} chapter={chapter} answers={answers} />
+              <ChapterAnswer
+                key={i}
+                chapter={chapter}
+                answers={answers.answers}
+                replyId={answers.replyId}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
