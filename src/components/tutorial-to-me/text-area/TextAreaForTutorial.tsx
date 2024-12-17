@@ -21,7 +21,7 @@ const TextAreaForTutorial = ({
         <Textarea
           id={title}
           rows={10}
-          className={`w-[80vw] rounded-2xl border-2 focus:outline-none h-full`}
+          className={`rounded-2xl border-2 focus:outline-none h-full w-[90%] sm:w-full`}
           value={value}
           style={{
             borderColor: borderColor,
