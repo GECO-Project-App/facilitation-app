@@ -6,11 +6,13 @@ const TextAreaForTutorial = ({
   borderColor,
   setValue,
   value,
+  placeholder,
 }: {
   title: string;
   borderColor: string;
   setValue: (value: string) => void;
   value: string;
+  placeholder?: string;
 }) => {
   return (
     <aside className="h-[50vh]">
@@ -20,6 +22,7 @@ const TextAreaForTutorial = ({
         </label>
         <Textarea
           id={title}
+          placeholder={placeholder ? placeholder : ''}
           rows={10}
           className={`rounded-2xl border-2 focus:outline-none h-full w-[90%] sm:w-full`}
           value={value}

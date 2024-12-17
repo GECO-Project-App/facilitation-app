@@ -154,12 +154,13 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               // style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
             >
               <>
-                <h1 className="text-xl font-bold px-2">{step.description}</h1>
+                {/* <h1 className="text-xl font-bold px-2">{step.description}</h1> */}
                 <TextAreaForTutorial
                   title={`${step.title}`}
                   borderColor={colorClass}
                   setValue={setOne}
                   value={one}
+                  placeholder={step.description}
                 />
                 {/* <TextAreaForTutorial
                   title={`${step.title} 2`}
