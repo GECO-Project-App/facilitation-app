@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {Link, useRouter} from '@/i18n/routing';
+import {useRouter} from '@/i18n/routing';
 import {mockPassItOn} from '@/lib/mock';
 import {useTranslations} from 'next-intl';
 import {FC, useEffect, useState} from 'react';
@@ -70,8 +70,8 @@ export const PassItOn: FC<{slug: string}> = ({slug}) => {
             {t('exercises.passItOn.completeButton')} <Complete />
           </Button>
         ) : (
-          <Button variant="yellow" className="mx-auto" asChild>
-            <Link href="/">{t('homeButton')}</Link>
+          <Button variant="yellow" className="mx-auto" onClick={() => api?.scrollNext()}>
+            {t('common.nextStep')}
           </Button>
         )
       }>
