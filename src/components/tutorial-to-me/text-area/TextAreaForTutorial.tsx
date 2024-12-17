@@ -15,7 +15,7 @@ const TextAreaForTutorial = ({
   placeholder?: string;
 }) => {
   return (
-    <aside className="h-[50vh]">
+    <aside className="h-[40vh]">
       <div className="flex flex-col w-full h-full justify-center items-center">
         <label htmlFor={title} className="font-bold h-10">
           {title}
