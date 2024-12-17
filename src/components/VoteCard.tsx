@@ -12,8 +12,12 @@ export const VoteCard = ({
   return (
     <Card
       className={cn(
-        type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
-        'h-fit min-h-32 flex flex-col justify-center items-center relative',
+        type === 'start'
+          ? 'bg-yellow-deactivated'
+          : type === 'stop'
+            ? 'bg-red-deactivated'
+            : 'bg-green-deactivated',
+        'h-fit min-h-32 flex flex-col justify-center items-center relative ',
       )}>
       <div className="absolute -top-4 left-0 w-full flex flex-row justify-center items-center gap-4 ">
         <div className="border-2 border-black bg-red rounded-4xl px-3 py-1 text-xl font-bold ">
