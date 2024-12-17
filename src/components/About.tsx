@@ -1,6 +1,6 @@
 'use client';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
-import {Link} from '@/i18n/routing';
+import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExercisesStore} from '@/store/useExercises';
 import {ArrowRight} from 'lucide-react';
@@ -20,6 +20,7 @@ export const About: FC<{
   description: string;
   buttonText: string;
 }> = ({slug, title, subtitle, description, buttonText}) => {
+  const router = useRouter();
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
@@ -53,7 +54,7 @@ export const About: FC<{
 
   return (
     <PageLayout
-      header={<Header />}
+      header={<Header onBackButton={() => router.push('/')} />}
       footer={
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
           <Link
