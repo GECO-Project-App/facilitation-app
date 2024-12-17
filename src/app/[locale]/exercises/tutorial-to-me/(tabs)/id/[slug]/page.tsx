@@ -87,8 +87,9 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     };
     if (currentTeam?.id) {
       saveTutorialToMeAnswer(saveAnswerData)
-        .then(() => {
+        .then(async () => {
           clearTutorialLocalStorage();
+          await useExercisesStore.getState().init(saveAnswerData.team_id);
           router.push(`./${slug}/review`);
         })
         .catch((error) => {
