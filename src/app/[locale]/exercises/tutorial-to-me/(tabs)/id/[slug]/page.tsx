@@ -139,7 +139,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               {t('submit')}
             </Button>
           ) : (
-            <Button variant="blue" onClick={nextStep} disabled={!one}>
+            <Button variant="blue" onClick={nextStep} disabled={!one.trim()}>
               {t('submit')} <ArrowRight />
             </Button>
           )}
