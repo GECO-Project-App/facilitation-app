@@ -21,6 +21,21 @@ export const ResetPasswordForm = () => {
 
   const onSubmit = async (data: ResetPasswordSchema) => {
     const result = await sendResetPasswordEmail(data.email);
+
+    console.log(result);
+    if (result.error) {
+      toast({
+        title: result.error.message,
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        duration: 4000,
+        title: t('authenticate.updatePassword.emailSent'),
+        description: t('authenticate.updatePassword.emailSentDescription'),
+        variant: 'success',
+      });
+    }
   };
 
   return (
