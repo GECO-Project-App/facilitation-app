@@ -8,12 +8,6 @@ const handleI18nRouting = createMiddleware(routing);
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
 
-  const publicRoutes = ['/settings/update-password'];
-
-  if (publicRoutes.includes(request.nextUrl.pathname)) {
-    return response;
-  }
-
   // A `response` can now be passed here
   return await updateSession(request, response);
 }
