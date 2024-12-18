@@ -1,6 +1,6 @@
 import {ExerciseType} from '@/lib/types';
 
-export const getReviewAnswers = async (chapter: string, exercises: ExerciseType[]) => {
+export const getReviewAnswers = (chapter: string, exercises: ExerciseType[]) => {
   let answers;
   if (chapter === 'strength') {
     answers = exercises.map((e) => ({
@@ -45,5 +45,5 @@ export const getReviewAnswers = async (chapter: string, exercises: ExerciseType[
       replyId: '',
     });
   }
-  return answers;
+  return answers ? answers : [];
 };
