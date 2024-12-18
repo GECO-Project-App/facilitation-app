@@ -30,9 +30,9 @@ const ReviewComponent: FC = () => {
             {t('preferences')}
           </p>
           <div className="flex justify-center pb-8">
-            <Button variant="white" asChild className="h-12">
+            <Button variant="white" asChild className="h-12 w-[70%]">
               <Link href={`./${step.title.toLowerCase()}`}>
-                {t('letsGetStarted')}
+                {reviewDone.includes(step.title.toLowerCase()) ? t('done') : t('letsGetStarted')}
                 {reviewDone.includes(step.title.toLowerCase()) ? (
                   <Check size={28} color="green" />
                 ) : (
