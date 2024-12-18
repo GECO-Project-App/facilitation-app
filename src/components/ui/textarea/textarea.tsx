@@ -22,7 +22,7 @@ const textAreaVariants = cva(
 interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
     VariantProps<typeof textAreaVariants> {
-  placeholder: string;
+  placeholder?: string;
 }
 
 const hideMobileKeyboardOnReturn = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
