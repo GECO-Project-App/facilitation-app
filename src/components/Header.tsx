@@ -36,7 +36,7 @@ export const Header: FC<HeaderProps> = ({
         )}
       </div>
       <nav className="mx-auto flex grow flex-row items-center justify-center">{children}</nav>
-      <div className="aspect-square h-11 flex-none">{rightContent}</div>
+      {rightContent ? <>{rightContent}</> : <div className="aspect-square h-11 flex-none" />}
     </header>
   );
 };

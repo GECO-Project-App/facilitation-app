@@ -28,7 +28,7 @@ export const PageLayout: FC<{
         <div
           className={cn(
             hasPadding ? 'px-4' : '',
-            'page-constraints h-full w-full py-8 flex-1 flex flex-col justify-center gap-4',
+            'page-constraints h-full w-full py-4 md:py-8 flex-1 flex flex-col justify-center gap-4',
           )}>
           {children}
         </div>
