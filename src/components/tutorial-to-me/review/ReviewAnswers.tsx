@@ -1,4 +1,5 @@
 'use client';
+import {RiveAnimation} from '@/components/RiveAnimation';
 import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useExercisesStore} from '@/store/useExercises';
@@ -19,6 +20,11 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
       answers: e.answers.strengths.split(','),
       replyId: e.replied_id,
     }));
+    answersData.unshift({
+      answers: ['start'],
+      replyId: '',
+    });
+
     answersData.push({
       answers: [''],
       replyId: '',
@@ -28,6 +34,11 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
       answers: e.answers.weaknesses.split(','),
       replyId: e.replied_id,
     }));
+    answersData.unshift({
+      answers: ['start'],
+      replyId: '',
+    });
+
     answersData.push({
       answers: [''],
       replyId: '',
@@ -37,11 +48,17 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
       answers: e.answers.communications.split(','),
       replyId: e.replied_id,
     }));
+    answersData.unshift({
+      answers: ['start'],
+      replyId: '',
+    });
+
     answersData.push({
       answers: [''],
       replyId: '',
     });
   }
+  console.log(answersData);
 
   useEffect(() => {
     if (!api) {
@@ -64,12 +81,18 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
         <CarouselContent className="h-[100dvh]">
           {answersData?.map((answers, i) => (
             <CarouselItem key={i} className="space-y-6">
-              <ChapterAnswer
-                key={i}
-                chapter={chapter}
-                answers={answers.answers}
-                replyId={answers.replyId}
-              />
+              {answers.answers[0] === 'start' ? (
+                <div className="flex items-center justify-center h-screen text-lg">
+                  <RiveAnimation src="swipe_up.riv" height={160} width={160} />
+                </div>
+              ) : (
+                <ChapterAnswer
+                  key={i}
+                  chapter={chapter}
+                  answers={answers.answers}
+                  replyId={answers.replyId}
+                />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
