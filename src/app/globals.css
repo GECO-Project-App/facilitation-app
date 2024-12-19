@@ -61,6 +61,9 @@
     --blue: 241 99% 66%;
     --light-blue: 202, 100%, 70%;
     --red: 0 96% 66%;
+    --red-deactivated: 0, 95%, 83%;
+    --green-deactivated: 148, 49%, 68%;
+    --yellow-deactivated: 50, 98%, 80%;
   }
 }
 

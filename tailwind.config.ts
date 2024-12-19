@@ -22,7 +22,7 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        "4xl": '1.6rem',
+        "4xl": '40px',
       },
       colors: {
         darkBorder: '#000',
@@ -77,6 +77,9 @@ const config: Config = {
         deepPurple: 'hsl(var(--deep-purple))',
         blue: 'hsl(var(--blue))',
         red: 'hsl(var(--red))',
+        'red-deactivated': 'hsla(var(--red-deactivated))',
+        'green-deactivated': 'hsla(var(--green-deactivated))',
+        'yellow-deactivated': 'hsla(var(--yellow-deactivated))',
       },
       boxShadow: {
         dark: '0px 6px 0px 0px #000',
