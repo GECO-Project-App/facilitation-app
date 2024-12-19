@@ -36,18 +36,17 @@ export default function ReviewAnswers({chapter}: {chapter: string}) {
         <CarouselContent className="h-[100dvh]">
           {answersData?.map((answers, i) => (
             <CarouselItem key={i} className="space-y-6">
-              {answers.answers[0] === 'start' ? (
+              {i === 0 && (
                 <div className="flex items-center justify-center h-screen text-lg">
                   <RiveAnimation src="swipe_up.riv" height={160} width={160} />
                 </div>
-              ) : (
-                <ChapterAnswer
-                  key={i}
-                  chapter={chapter}
-                  answers={answers.answers}
-                  replyId={answers.replyId}
-                />
               )}
+              <ChapterAnswer
+                key={i}
+                chapter={chapter}
+                answers={answers.answers}
+                replyId={answers.replyId}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>

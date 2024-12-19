@@ -1,49 +1,30 @@
 import {ExerciseType} from '@/lib/types';
 
+type ChapterKey = 'strengths' | 'weaknesses' | 'communications';
+
+const CHAPTER_MAPPING: Record<string, ChapterKey> = {
+  strength: 'strengths',
+  weakness: 'weaknesses',
+  communication: 'communications',
+};
+
 export const getReviewAnswers = (chapter: string, exercises: ExerciseType[]) => {
-  let answers;
-  if (chapter === 'strength') {
-    answers = exercises.map((e) => ({
-      answers: e.answers.strengths.split(','),
-      replyId: e.replied_id,
-    }));
-    answers.unshift({
-      answers: ['start'],
-      replyId: '',
-    });
+  const chapterKey = CHAPTER_MAPPING[chapter];
 
-    answers.push({
-      answers: [''],
-      replyId: '',
-    });
-  } else if (chapter === 'weakness') {
-    answers = exercises.map((e) => ({
-      answers: e.answers.weaknesses.split(','),
-      replyId: e.replied_id,
-    }));
-    answers.unshift({
-      answers: ['start'],
-      replyId: '',
-    });
-
-    answers.push({
-      answers: [''],
-      replyId: '',
-    });
-  } else if (chapter === 'communication') {
-    answers = exercises.map((e) => ({
-      answers: e.answers.communications.split(','),
-      replyId: e.replied_id,
-    }));
-    answers.unshift({
-      answers: ['start'],
-      replyId: '',
-    });
-
-    answers.push({
-      answers: [''],
-      replyId: '',
-    });
+  if (!chapterKey) {
+    return [];
   }
-  return answers ? answers : [];
+
+  const answers = exercises.map((exercise) => ({
+    answers: exercise.answers[chapterKey].split(','),
+    replyId: exercise.replied_id,
+  }));
+
+  // Add empty slides at start and end
+  const emptySlide = {
+    answers: [''],
+    replyId: '',
+  };
+
+  return [emptySlide, ...answers, emptySlide];
 };
