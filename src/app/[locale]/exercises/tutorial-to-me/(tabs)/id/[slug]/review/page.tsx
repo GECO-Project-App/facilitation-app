@@ -10,7 +10,6 @@ import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
 import {updateReviewAndActiveTutorialToMe} from '@/lib/actions/createTutorialToMeActions';
-// import {useExercisesStore} from '@/store/useExercises';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useParams, useRouter} from 'next/navigation';
@@ -19,7 +18,6 @@ import {FC} from 'react';
 const Review: FC = () => {
   const t = useTranslations('exercises.tutorialToMe');
   const {isAllDone, theTimePassed, reviewDone} = useDoneTutorialExercise();
-  // const {exercises} = useExercisesStore();
   const {allReviewsDone, removeLocalStorageItem} = useSSCChaptersHandler();
   const router = useRouter();
   const {toast} = useToast();

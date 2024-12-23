@@ -1,5 +1,6 @@
 'use client';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExercisesStore} from '@/store/useExercises';
@@ -24,8 +25,10 @@ export const About: FC<{
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
+  const {removeLocalStorageItem} = useSSCChaptersHandler();
 
   const handleClick = () => {
+    removeLocalStorageItem('reviewDone');
     posthog.capture('exercise_start', {
       name: slug,
     });
