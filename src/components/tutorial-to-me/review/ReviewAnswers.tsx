@@ -1,105 +1,56 @@
 'use client';
-import {Button} from '@/components/ui/button';
+import {RiveAnimation} from '@/components/RiveAnimation';
+import {Carousel, CarouselApi, CarouselContent, CarouselItem} from '@/components/ui/carousel';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
+import {getReviewAnswers} from '@/lib/getReviewAnswers';
 import {useExercisesStore} from '@/store/useExercises';
-import {ArrowDown, ArrowUp} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useRef} from 'react';
+import {useEffect, useState} from 'react';
 import ChapterAnswer from './ChapterAnswer';
 export default function ReviewAnswers({chapter}: {chapter: string}) {
   const {setThisReviewDone} = useSSCChaptersHandler();
   const router = useRouter();
   const {exercises} = useExercisesStore();
-  let answersData;
-  if (chapter === 'strength') {
-    answersData = exercises.map((e) => e.answers.strengths.split(','));
-  } else if (chapter === 'weakness') {
-    answersData = exercises.map((e) => e.answers.weaknesses.split(','));
-  } else if (chapter === 'communication') {
-    answersData = exercises.map((e) => e.answers.communications.split(','));
-  }
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const answersData = getReviewAnswers(chapter, exercises);
 
-  const handleNextClick = () => {
-    if (containerRef.current) {
-      const screenHeight = window.innerHeight;
-      containerRef.current.scrollBy({
-        top: screenHeight,
-        behavior: 'smooth',
-      });
+  useEffect(() => {
+    if (!api) {
+      return;
     }
-  };
+    setCurrentStep(api.selectedScrollSnap());
 
-  const handleBackClick = () => {
-    if (containerRef.current) {
-      const screenHeight = window.innerHeight;
-      containerRef.current.scrollBy({
-        top: -screenHeight,
-        behavior: 'smooth',
-      });
+    api.on('select', () => {
+      setCurrentStep(api.selectedScrollSnap());
+    });
+    if (currentStep + 1 > answersData.length - 1) {
+      setThisReviewDone(chapter);
+      router.back();
     }
-  };
-
-  const chapterDone = () => {
-    console.log('chapterDone :', chapter);
-    setThisReviewDone(chapter);
-    router.back();
-  };
-
-  const handleTouchStart = (event: React.TouchEvent) => {
-    const startY = event.touches[0].clientY;
-
-    const handleTouchMove = (() => {
-      let hasLogged = false;
-      return (moveEvent: TouchEvent) => {
-        const currentY = moveEvent.touches[0].clientY;
-        if (!hasLogged) {
-          if (currentY < startY) {
-            handleNextClick();
-          } else if (currentY > startY) {
-            handleBackClick();
-          }
-          hasLogged = true;
-        }
-      };
-    })();
-
-    const handleTouchEnd = () => {
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
-
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', handleTouchEnd);
-  };
+  }, [api, currentStep]);
 
   return (
-    <>
-      <div className="fixed top-0 right-0 m-2 text-sm" onClick={handleBackClick}>
-        <ArrowUp size={32} color="black" />
-      </div>
-      <div className="fixed bottom-0 right-0 m-2 text-sm" onClick={handleNextClick}>
-        <ArrowDown size={32} color="black" />
-      </div>
-      <div
-        ref={containerRef}
-        className="h-full text-black overflow-y-hidden w-full"
-        onTouchStart={handleTouchStart}>
-        {answersData?.map((answers, index) => (
-          <div key={index} className="h-full text-black w-full">
-            <div className="flex flex-col">
-              <ChapterAnswer chapter={chapter} answers={answers} />
-            </div>
-            {index === answersData.length - 1 && (
-              <div className="w-full text-center">
-                <Button variant="white" onClick={chapterDone}>
-                  Back
-                </Button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="h-full text-black overflow-hidden w-full">
+      <Carousel className="h-full w-full flex-1" orientation="vertical" setApi={setApi}>
+        <CarouselContent className="h-[100dvh]">
+          {answersData?.map((answers, i) => (
+            <CarouselItem key={i} className="space-y-6">
+              {i === 0 && (
+                <div className="flex items-center justify-center h-screen text-lg">
+                  <RiveAnimation src="swipe_up.riv" height={160} width={160} />
+                </div>
+              )}
+              <ChapterAnswer
+                key={i}
+                chapter={chapter}
+                answers={answers.answers}
+                replyId={answers.replyId}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+    </div>
   );
 }

@@ -20,13 +20,13 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const {slug} = params;
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
-  const {one, two, three, setOne, setTwo, setThree, clearTutorialLocalStorage} =
+  const {one, setOne, setStrengths, setWeaknesses, setCommunications, clearTutorialLocalStorage} =
     useTutorialLocalStorage(currentStep);
   const t = useTranslations('exercises.tutorialToMe');
   const router = useRouter();
   const steps: Step[] = t.raw('steps').map((step: Step) => step);
   const {currentTeam} = useTeamStore();
-  const {currentTutorialExerciseCreatedBy} = useExercisesStore();
+  const {currentTutorialExerciseCreatedBy, reviewingDate, reviewingTime} = useExercisesStore();
   const getColorClass = (step: number) => {
     switch (step) {
       case 0:
@@ -54,16 +54,13 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
 
   const nextStep = () => {
     if (currentStep === 0) {
-      const strengths = [one, two, three];
-      localStorage.setItem('strengths', JSON.stringify(strengths));
+      setStrengths();
     }
     if (currentStep === 1) {
-      const weaknesses = [one, two, three];
-      localStorage.setItem('weaknesses', JSON.stringify(weaknesses));
+      setWeaknesses();
     }
     if (currentStep === 2) {
-      const communications = [one, two, three];
-      localStorage.setItem('communications', JSON.stringify(communications));
+      setCommunications();
     }
     api?.scrollNext();
   };
@@ -77,23 +74,22 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   };
 
   const handleComplete = () => {
-    const communicationsData = [one, two, three];
-    localStorage.setItem('communications', JSON.stringify(communicationsData));
-    const strengths = JSON.parse(localStorage.getItem('strengths') ?? '[]') as string[];
-    const weaknesses = JSON.parse(localStorage.getItem('weaknesses') ?? '[]') as string[];
-    const communications = JSON.parse(localStorage.getItem('communications') ?? '[]') as string[];
-    const saveAnswerDat = {
-      strengths,
-      weaknesses,
-      communications,
+    setCommunications();
+    const saveAnswerData = {
+      strengths: localStorage.getItem('strengths') ?? '',
+      weaknesses: localStorage.getItem('weaknesses') ?? '',
+      communications: localStorage.getItem('communications') ?? '',
       exercise_id: slug,
       team_id: currentTeam?.id as string,
       created_by: currentTutorialExerciseCreatedBy as string,
+      reviewing_date: reviewingDate,
+      reviewing_time: reviewingTime,
     };
     if (currentTeam?.id) {
-      saveTutorialToMeAnswer(saveAnswerDat)
-        .then(() => {
+      saveTutorialToMeAnswer(saveAnswerData)
+        .then(async () => {
           clearTutorialLocalStorage();
+          await useExercisesStore.getState().init(saveAnswerData.team_id);
           router.push(`./${slug}/review`);
         })
         .catch((error) => {
@@ -108,19 +104,19 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
   const colorClass = getColorClass(currentStep);
   const divRef = useRef<HTMLDivElement | null>(null);
   const divFooterRef = useRef<HTMLDivElement | null>(null);
-  const [divHeaderHeight, setDivHeaderHeight] = useState<number>(0);
-  const [divFooterHeight, setDivFooterHeight] = useState<number>(0);
+  // const [divHeaderHeight, setDivHeaderHeight] = useState<number>(0);
+  // const [divFooterHeight, setDivFooterHeight] = useState<number>(0);
 
-  useEffect(() => {
-    if (divRef.current) {
-      setDivHeaderHeight(divRef.current.clientHeight);
-    }
-  }, [divRef]);
-  useEffect(() => {
-    if (divFooterRef.current) {
-      setDivFooterHeight(divFooterRef.current.clientHeight);
-    }
-  }, [divFooterRef]);
+  // useEffect(() => {
+  //   if (divRef.current) {
+  //     setDivHeaderHeight(divRef.current.clientHeight);
+  //   }
+  // }, [divRef]);
+  // useEffect(() => {
+  //   if (divFooterRef.current) {
+  //     setDivFooterHeight(divFooterRef.current.clientHeight);
+  //   }
+  // }, [divFooterRef]);
 
   return (
     <PageLayout
@@ -140,15 +136,11 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
       footer={
         <div ref={divFooterRef}>
           {currentStep === steps.length - 1 ? (
-            <Button
-              variant="blue"
-              className="mx-auto"
-              onClick={handleComplete}
-              disabled={!one || !two || !three}>
+            <Button variant="blue" className="mx-auto" onClick={handleComplete} disabled={!one}>
               {t('submit')}
             </Button>
           ) : (
-            <Button variant="blue" onClick={nextStep} disabled={!one || !two || !three}>
+            <Button variant="blue" onClick={nextStep} disabled={!one.trim()}>
               {t('submit')} <ArrowRight />
             </Button>
           )}
@@ -160,16 +152,18 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
             <CarouselItem
               key={index}
               className={`space-y-6 overflow-y-auto overflow-x-hidden`}
-              style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
+              // style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
+            >
               <>
-                <h1 className="text-xl font-bold">{step.description}</h1>
+                {/* <h1 className="text-xl font-bold px-2">{step.description}</h1> */}
                 <TextAreaForTutorial
-                  title={`${step.title} 1`}
+                  title={`${step.title}`}
                   borderColor={colorClass}
                   setValue={setOne}
                   value={one}
+                  placeholder={step.description}
                 />
-                <TextAreaForTutorial
+                {/* <TextAreaForTutorial
                   title={`${step.title} 2`}
                   borderColor={colorClass}
                   setValue={setTwo}
@@ -180,7 +174,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
                   borderColor={colorClass}
                   setValue={setThree}
                   value={three}
-                />
+                /> */}
               </>
             </CarouselItem>
           ))}
