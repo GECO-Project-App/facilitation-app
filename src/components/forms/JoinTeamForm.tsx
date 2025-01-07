@@ -2,7 +2,7 @@
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
 import {joinTeamByCode} from '@/lib/actions/teamActions';
-import {joinTeamSchema, JoinTeamSchema} from '@/lib/zodSchemas';
+import {teamCodeSchema, TeamCodeSchema} from '@/lib/zodSchemas';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
@@ -13,14 +13,14 @@ export const JoinTeamForm = () => {
   const {toast} = useToast();
   const t = useTranslations('team');
   const router = useRouter();
-  const form = useForm<JoinTeamSchema>({
-    resolver: zodResolver(joinTeamSchema),
+  const form = useForm<TeamCodeSchema>({
+    resolver: zodResolver(teamCodeSchema),
     defaultValues: {
       code: '',
     },
   });
 
-  const onSubmit = async (data: JoinTeamSchema) => {
+  const onSubmit = async (data: TeamCodeSchema) => {
     const result = await joinTeamByCode(data.code);
 
     if (result?.error) {

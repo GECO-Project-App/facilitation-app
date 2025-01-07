@@ -3,6 +3,7 @@ import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
 import {createTeam} from '@/lib/actions/teamActions';
 import {createTeamSchema, CreateTeamSchema} from '@/lib/zodSchemas';
+import {useTeamStore} from '@/store/teamStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useForm} from 'react-hook-form';
@@ -13,6 +14,7 @@ export const CreateTeamForm = () => {
   const {toast} = useToast();
   const t = useTranslations('team');
   const router = useRouter();
+  const {updateUserTeams} = useTeamStore();
 
   const form = useForm<CreateTeamSchema>({
     resolver: zodResolver(createTeamSchema),
@@ -20,6 +22,10 @@ export const CreateTeamForm = () => {
       name: '',
     },
   });
+
+  const updateTeams = async () => {
+    await updateUserTeams();
+  };
 
   const onSubmit = async (data: CreateTeamSchema) => {
     const result = await createTeam(data);
@@ -45,6 +51,7 @@ export const CreateTeamForm = () => {
       });
 
       router.push(`/team?id=${result.teamId}`);
+      updateTeams();
     }
   };
 
