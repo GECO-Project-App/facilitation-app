@@ -3,20 +3,27 @@
 import {Button} from '@/components/ui/button';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {CalendarClock} from 'lucide-react';
+import {CalendarClock, Save} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {Dialog, DialogContent, DialogTrigger} from '../ui';
 import {Calendar} from '../ui/calendar/calendar';
 
 const formSchema = z.object({
-  writingDate: z.date(),
-  reviewingDate: z.date(),
+  writingDate: z.string().datetime({local: true}),
+  reviewingDate: z.string().datetime({local: true}),
 });
 
 export const DeadlineForm = () => {
-  const t = useTranslations('exercises.deadline');
+  const t = useTranslations();
+  const [selected, setSelected] = useState<Date>();
+
+  const [timeValue, setTimeValue] = useState<string>(() => {
+    const now = new Date();
+    return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -33,24 +40,33 @@ export const DeadlineForm = () => {
           name="writingDate"
           render={({field}) => (
             <FormItem className="flex flex-col gap-2 ">
-              <FormLabel className="text-xl font-bold font-roboto ">{t('writingPhase')}</FormLabel>
+              <FormLabel className="text-xl font-bold font-roboto ">
+                {t('exercises.deadline.writingPhase')}
+              </FormLabel>
               <FormControl>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="pink">
                       <CalendarClock size={22} className="text-black" />
-                      {t('pickADateAndTime')}
+                      {t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
                   <DialogContent size="fullscreen">
                     <Calendar
                       mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      //   selected={mode === 'writing' ? writingDate : reviewingDate}
-                      //   onSelect={(date) => selectedDate(date as Date)}
+                      selected={selected}
+                      onSelect={(date) => setSelected(date as Date)}
                       initialFocus
                     />
+                    <input
+                      type="time"
+                      className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
+                      value={timeValue}
+                      onChange={(e) => setTimeValue(e.target.value)}
+                    />
+                    <Button variant="green" className="h-fit mx-auto">
+                      {t('common.save')} <Save size={22} />
+                    </Button>
                   </DialogContent>
                 </Dialog>
               </FormControl>
@@ -63,24 +79,33 @@ export const DeadlineForm = () => {
           name="reviewingDate"
           render={({field}) => (
             <FormItem className="flex flex-col gap-2">
-              <FormLabel className="text-xl font-bold font-roboto">{t('reviewingPhase')}</FormLabel>
+              <FormLabel className="text-xl font-bold font-roboto">
+                {t('exercises.deadline.reviewingPhase')}
+              </FormLabel>
               <FormControl>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant="blue">
                       <CalendarClock size={22} className="text-black" />
-                      {t('pickADateAndTime')}
+                      {t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
                   <DialogContent size="fullscreen">
                     <Calendar
                       mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      //   selected={mode === 'writing' ? writingDate : reviewingDate}
-                      //   onSelect={(date) => selectedDate(date as Date)}
+                      selected={selected}
+                      onSelect={(date) => setSelected(date as Date)}
                       initialFocus
                     />
+                    <input
+                      type="time"
+                      className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
+                      value={timeValue}
+                      onChange={(e) => setTimeValue(e.target.value)}
+                    />
+                    <Button variant="green" className="h-fit mx-auto">
+                      {t('common.save')} <Save size={22} />
+                    </Button>
                   </DialogContent>
                 </Dialog>
               </FormControl>

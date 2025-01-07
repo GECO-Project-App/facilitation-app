@@ -155,10 +155,10 @@
   "exercises": {
     "deadline": {
         "title": "Definiera tid",
-        "description": "Låt oss sätta deadline för övningen.",
-        "writingPhase": "Skrivningsfas",
+        "description": "Börja med att sätta en deadlines för övningen",
+        "writingPhase": "Skrivande",
         "reviewingPhase": "Granskning",
-        "pickADateAndTime": "Välj en datum och tid",
+        "pickADateAndTime": "Välj datum och tid",
         "nextStep": "Nästa steg"
       },
     "checkIn": {
@@ -380,6 +380,7 @@
   },
 
   "common": {
+    "save": "Spara",
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
     "goToHome": "Gå till hem",

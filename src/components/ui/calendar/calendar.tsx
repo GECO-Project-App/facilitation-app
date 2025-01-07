@@ -15,20 +15,20 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
       showOutsideDays={showOutsideDays}
       className={cn('p-3', className)}
       classNames={{
-        months: 'flex flex-col flex-row space-x-4 space-y-0',
-        month: 'space-y-4',
+        months: 'flex flex-col flex-row space-x-4 space-y-0 ',
+        month: 'space-y-4 ',
         caption: 'flex justify-center pt-1 relative items-center',
-        caption_label: 'text-sm font-medium',
+        caption_label: 'text-xl font-medium',
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({variant: 'noShadow'}),
-          'h-8 bg-transparent p-0 opacity-50 hover:opacity-100 aspect-square',
+          'h-8  p-0 opacity-50 hover:opacity-100 aspect-square',
         ),
         nav_button_previous: 'absolute left-1',
         nav_button_next: 'absolute right-1',
         table: 'w-full border-collapse space-y-1',
         head_row: 'flex',
-        head_cell: 'text-muted-foreground rounded-md w-8 font-roboto text-sm flex-1 ',
+        head_cell: 'text-black/60 text-base rounded-md w-8 font-roboto font-semibold flex-1 ',
         row: 'flex w-full mt-2',
         cell: cn(
           'flex-1 aspect-square flex items-center justify-center',
@@ -37,14 +37,12 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
             : '[&:has([aria-selected])]:rounded-md',
         ),
         day: cn(
-          buttonVariants({variant: 'carousel'}),
-          'h-8 w-8 p-0 font-normal aria-selected:opacity-100 ',
+          'h-12 w-auto font-normal aria-selected:opacity-100 text-lg md:text-xl rounded aspect-square hover:bg-black/30 hover:text-white',
         ),
         day_range_start: 'day-range-start',
         day_range_end: 'day-range-end',
-        day_selected:
-          'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
-        day_today: 'bg-green text-accent-foreground',
+        day_selected: 'bg-black text-white',
+        day_today: 'bg-green',
         day_outside:
           'day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
         day_disabled: 'text-muted-foreground opacity-50',
