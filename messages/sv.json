@@ -153,6 +153,14 @@
     ]
   },
   "exercises": {
+    "deadline": {
+        "title": "Definiera tid",
+        "description": "Låt oss sätta deadline för övningen.",
+        "writingPhase": "Skrivningsfas",
+        "reviewingPhase": "Granskning",
+        "pickADateAndTime": "Välj en datum och tid",
+        "nextStep": "Nästa steg"
+      },
     "checkIn": {
       "title": "Incheckningsövning",
       "subtitle": "5-15 minuter | 2-20 deltagare",
@@ -340,14 +348,7 @@
       "waitingForOthersP2": "att slutföra sin Handledning till mig. Vi skickar dig en email när alla har slutfört övningen, så du kan komma tillbaka hit och granska alla andras svar.",
       "thereIsAnExerciseToDo": "Det finns en övning att göra",
       "youAlreadyDidThisExercise": "Du har redan gjort denna övning",
-      "defineTimeline": {
-        "title": "Definiera tid",
-        "description": "Låt oss sätta deadline för övningen.",
-        "writingPhase": "Skrivningsfas",
-        "reviewingPhase": "Granskning",
-        "pickADateAndTime": "Välj en datum och tid"
-        
-      },
+
       "inviteTeamMember": "Bjud in teammedlem",
       "removeTeamMember": "Ta bort teammedlem",
       "submit": "Skicka",

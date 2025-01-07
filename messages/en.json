@@ -156,6 +156,15 @@
     ]
   },
   "exercises": {
+    "deadline": {
+        "title": "Define Timeline",
+        "description": "Let's set the deadline for the exercise.",
+        "writingPhase": "Writing Phase",
+        "reviewingPhase": "Reviewing Phase",
+        "pickADateAndTime": "Pick a date and time",
+        "nextStep": "Next Step"
+      
+    },
     "checkIn": {
       "title": "Check In Exercise",
       "subtitle": "5-15 minutes | 2-20 members",
@@ -342,14 +351,6 @@
       "waitingForOthersP2": "to finish their Tutorial to me. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else answers.",
       "thereIsAnExerciseToDo": "There is an exercise to do",
       "youAlreadyDidThisExercise": "You already did this exercise",
-
-      "defineTimeline": {
-        "title": "Define Timeline",
-        "description": "Let's set the deadline for the exercise.",
-        "writingPhase": "Writing Phase",
-        "reviewingPhase": "Reviewing Phase",
-        "pickADateAndTime": "Pick a date and time"
-      },
       "inviteTeamMember": "Invite team member",
       "removeTeamMember": "Remove team member",
       "submit": "Submit",
