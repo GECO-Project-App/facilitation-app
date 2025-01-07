@@ -75,10 +75,20 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
 
   const handleComplete = () => {
     setCommunications();
+    const strengths = localStorage.getItem('strengths');
+    const weaknesses = localStorage.getItem('weaknesses');
+    const communications = localStorage.getItem('communications');
+    if (!strengths?.trim() || !weaknesses?.trim() || !communications?.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Please fill all fields',
+      });
+      return;
+    }
     const saveAnswerData = {
-      strengths: localStorage.getItem('strengths') ?? '',
-      weaknesses: localStorage.getItem('weaknesses') ?? '',
-      communications: localStorage.getItem('communications') ?? '',
+      strengths,
+      weaknesses,
+      communications,
       exercise_id: slug,
       team_id: currentTeam?.id as string,
       created_by: currentTutorialExerciseCreatedBy as string,
