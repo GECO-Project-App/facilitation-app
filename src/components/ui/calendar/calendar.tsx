@@ -13,7 +13,7 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn('p-3', className)}
+      className={cn('', className)}
       classNames={{
         months: 'flex flex-col flex-row space-x-4 space-y-0 ',
         month: 'space-y-4 ',
@@ -22,7 +22,7 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
         nav: 'space-x-1 flex items-center',
         nav_button: cn(
           buttonVariants({variant: 'noShadow'}),
-          'h-8  p-0 opacity-50 hover:opacity-100 aspect-square',
+          'h-8 p-0 opacity-50 hover:opacity-100 aspect-square',
         ),
         nav_button_previous: 'absolute left-1',
         nav_button_next: 'absolute right-1',
@@ -37,7 +37,7 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
             : '[&:has([aria-selected])]:rounded-md',
         ),
         day: cn(
-          'h-12 w-auto font-normal aria-selected:opacity-100 text-lg md:text-xl rounded aspect-square hover:bg-black/30 hover:text-white',
+          'h-8 md:h-12 w-auto font-normal aria-selected:opacity-100 text-lg md:text-xl rounded aspect-square active:bg-black/30 active:text-white',
         ),
         day_range_start: 'day-range-start',
         day_range_end: 'day-range-end',
@@ -45,7 +45,7 @@ function Calendar({className, classNames, showOutsideDays = true, ...props}: Cal
         day_today: 'bg-green',
         day_outside:
           'day-outside text-muted-foreground opacity-50  aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30',
-        day_disabled: 'text-muted-foreground opacity-50',
+        day_disabled: 'day-outside text-muted-foreground cursor-not-allowed',
         day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
         day_hidden: 'invisible',
         ...classNames,

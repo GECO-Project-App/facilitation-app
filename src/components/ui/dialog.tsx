@@ -13,7 +13,7 @@ const dialogVariants = cva(
     variants: {
       size: {
         default: 'w-full max-w-md',
-        fullscreen: 'w-full h-svh max-w-screen-2xl lg:h-fit',
+        fullscreen: 'w-full max-h-svh max-w-screen-2xl h-fit',
       },
     },
     defaultVariants: {

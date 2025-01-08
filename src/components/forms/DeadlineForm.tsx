@@ -3,6 +3,9 @@
 import {Button} from '@/components/ui/button';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {DialogTitle} from '@radix-ui/react-dialog';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import {format} from 'date-fns';
 import {CalendarClock, Save} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
@@ -12,25 +15,33 @@ import {Dialog, DialogContent, DialogTrigger} from '../ui';
 import {Calendar} from '../ui/calendar/calendar';
 
 const formSchema = z.object({
-  writingDate: z.string().datetime({local: true}),
-  reviewingDate: z.string().datetime({local: true}),
+  writingDate: z.date(),
+  reviewingDate: z.date(),
 });
 
 export const DeadlineForm = () => {
   const t = useTranslations();
-  const [selected, setSelected] = useState<Date>();
-
+  const [writingDialogOpen, setWritingDialogOpen] = useState(false);
+  const [reviewingDialogOpen, setReviewingDialogOpen] = useState(false);
   const [timeValue, setTimeValue] = useState<string>(() => {
     const now = new Date();
     return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log('onSubmit', values);
-  }
+  };
+
+  const combineDateTime = (date: Date, timeStr: string) => {
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const newDate = new Date(date);
+    newDate.setHours(hours, minutes);
+    return newDate;
+  };
 
   return (
     <Form {...form}>
@@ -44,19 +55,22 @@ export const DeadlineForm = () => {
                 {t('exercises.deadline.writingPhase')}
               </FormLabel>
               <FormControl>
-                <Dialog>
+                <Dialog open={writingDialogOpen} onOpenChange={setWritingDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button variant="pink">
+                    <Button variant="pink" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {t('exercises.deadline.pickADateAndTime')}
+                      {field.value
+                        ? format(field.value, 'PP HH:mm')
+                        : t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
                   <DialogContent size="fullscreen">
                     <Calendar
                       mode="single"
-                      selected={selected}
-                      onSelect={(date) => setSelected(date as Date)}
+                      selected={field.value}
+                      onSelect={field.onChange}
                       initialFocus
+                      disabled={(date) => date < new Date()}
                     />
                     <input
                       type="time"
@@ -64,7 +78,15 @@ export const DeadlineForm = () => {
                       value={timeValue}
                       onChange={(e) => setTimeValue(e.target.value)}
                     />
-                    <Button variant="green" className="h-fit mx-auto">
+                    <Button
+                      variant="green"
+                      className="h-fit mx-auto"
+                      onClick={() => {
+                        if (field.value) {
+                          field.onChange(combineDateTime(field.value, timeValue));
+                        }
+                        setWritingDialogOpen(false);
+                      }}>
                       {t('common.save')} <Save size={22} />
                     </Button>
                   </DialogContent>
@@ -83,19 +105,28 @@ export const DeadlineForm = () => {
                 {t('exercises.deadline.reviewingPhase')}
               </FormLabel>
               <FormControl>
-                <Dialog>
+                <Dialog open={reviewingDialogOpen} onOpenChange={setReviewingDialogOpen}>
+                  <VisuallyHidden.Root>
+                    <DialogTitle> {t('exercises.deadline.reviewingPhase')}</DialogTitle>
+                  </VisuallyHidden.Root>
                   <DialogTrigger asChild>
-                    <Button variant="blue">
+                    <Button variant="blue" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {t('exercises.deadline.pickADateAndTime')}
+                      {field.value
+                        ? format(field.value, 'PP HH:mm')
+                        : t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent size="fullscreen">
+                  <DialogContent size="fullscreen" aria-describedby={undefined}>
                     <Calendar
                       mode="single"
-                      selected={selected}
-                      onSelect={(date) => setSelected(date as Date)}
+                      selected={field.value}
+                      onSelect={field.onChange}
                       initialFocus
+                      disabled={(date) => {
+                        const writingDate = form.getValues('writingDate');
+                        return writingDate ? date < writingDate : false;
+                      }}
                     />
                     <input
                       type="time"
@@ -103,7 +134,15 @@ export const DeadlineForm = () => {
                       value={timeValue}
                       onChange={(e) => setTimeValue(e.target.value)}
                     />
-                    <Button variant="green" className="h-fit mx-auto">
+                    <Button
+                      variant="green"
+                      className="h-fit mx-auto text-sm"
+                      onClick={() => {
+                        if (field.value) {
+                          field.onChange(combineDateTime(field.value, timeValue));
+                        }
+                        setReviewingDialogOpen(false);
+                      }}>
                       {t('common.save')} <Save size={22} />
                     </Button>
                   </DialogContent>
