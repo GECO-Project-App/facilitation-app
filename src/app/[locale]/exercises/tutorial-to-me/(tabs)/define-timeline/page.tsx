@@ -3,14 +3,15 @@ import {Button, Header, PageLayout} from '@/components';
 import {DeadlineForm} from '@/components/forms/DeadlineForm';
 import {useRouter} from '@/i18n/routing';
 import {createTutorialToMe} from '@/lib/actions/createTutorialToMeActions';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {useTeamStore} from '@/store/teamStore';
 import {useTutorialToMe} from '@/store/useTutorialToMe';
-import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
 
 export default function DefineTimeForTutorialToMePage() {
   const t = useTranslations('exercises.deadline');
+  const {deadline} = useExerciseStore();
   const {writingDate, reviewingDate, writingTime, reviewingTime} = useTutorialToMe();
   const [loading, setLoading] = useState(false);
   const {currentTeam} = useTeamStore();
@@ -58,13 +59,8 @@ export default function DefineTimeForTutorialToMePage() {
         <Button
           variant="white"
           onClick={createExercise}
-          disabled={!writingDate || !reviewingDate || !writingTime || !reviewingTime || loading}>
-          {/* <Link href={`/exercises/tutorial-to-me/id/create`}> */}
-          <span className="flex items-center gap-2">
-            {loading ? 'Loading...' : t('nextStep')}
-            <ArrowRight size={28} />
-          </span>
-          {/* </Link> */}
+          disabled={!deadline.writingPhase || !deadline.reviewingPhase}>
+          {t('nextStep')}
         </Button>
       }>
       <section className=" space-y-6 flex flex-col ">

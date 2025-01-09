@@ -2,11 +2,12 @@
 
 import {Button} from '@/components/ui/button';
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from '@/components/ui/form';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {DialogTitle} from '@radix-ui/react-dialog';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import {format} from 'date-fns';
-import {CalendarClock, Save} from 'lucide-react';
+import {CalendarClock, Calendar as CalendarIcon, Save} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
@@ -21,6 +22,7 @@ const formSchema = z.object({
 
 export const DeadlineForm = () => {
   const t = useTranslations();
+  const {deadline, setDeadline} = useExerciseStore();
   const [writingDialogOpen, setWritingDialogOpen] = useState(false);
   const [reviewingDialogOpen, setReviewingDialogOpen] = useState(false);
   const [timeValue, setTimeValue] = useState<string>(() => {
@@ -56,15 +58,22 @@ export const DeadlineForm = () => {
               </FormLabel>
               <FormControl>
                 <Dialog open={writingDialogOpen} onOpenChange={setWritingDialogOpen}>
+                  <VisuallyHidden.Root>
+                    <DialogTitle> {t('exercises.deadline.writingPhase')}</DialogTitle>
+                  </VisuallyHidden.Root>
                   <DialogTrigger asChild>
                     <Button variant="pink" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {field.value
-                        ? format(field.value, 'PP HH:mm')
+                      {(field.value ?? deadline.writingPhase)
+                        ? format(field.value ?? deadline.writingPhase, 'PP HH:mm')
                         : t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent size="fullscreen">
+                  <DialogContent size="fullscreen" className="flex flex-col gap-4 md:gap-6">
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon size={18} className="text-black" />
+                      <p>{t('exercises.deadline.pickADate')}</p>
+                    </div>
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -84,6 +93,10 @@ export const DeadlineForm = () => {
                       onClick={() => {
                         if (field.value) {
                           field.onChange(combineDateTime(field.value, timeValue));
+                          setDeadline({
+                            writingPhase: combineDateTime(field.value, timeValue),
+                            reviewingPhase: deadline.reviewingPhase,
+                          });
                         }
                         setWritingDialogOpen(false);
                       }}>
@@ -112,12 +125,19 @@ export const DeadlineForm = () => {
                   <DialogTrigger asChild>
                     <Button variant="blue" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {field.value
-                        ? format(field.value, 'PP HH:mm')
+                      {(field.value ?? deadline.reviewingPhase)
+                        ? format(field.value ?? deadline.reviewingPhase, 'PP HH:mm')
                         : t('exercises.deadline.pickADateAndTime')}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent size="fullscreen" aria-describedby={undefined}>
+                  <DialogContent
+                    size="fullscreen"
+                    aria-describedby={undefined}
+                    className="flex flex-col gap-4 md:gap-6">
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon size={18} className="text-black" />
+                      <p>{t('exercises.deadline.pickADate')}</p>
+                    </div>
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -136,10 +156,14 @@ export const DeadlineForm = () => {
                     />
                     <Button
                       variant="green"
-                      className="h-fit mx-auto text-sm"
+                      className="h-fit mx-auto "
                       onClick={() => {
                         if (field.value) {
                           field.onChange(combineDateTime(field.value, timeValue));
+                          setDeadline({
+                            writingPhase: deadline.writingPhase,
+                            reviewingPhase: combineDateTime(field.value, timeValue),
+                          });
                         }
                         setReviewingDialogOpen(false);
                       }}>

@@ -162,7 +162,9 @@
         "writingPhase": "Writing Phase",
         "reviewingPhase": "Reviewing Phase",
         "pickADateAndTime": "Pick a date and time",
+        "pickADate": "Pick a date",
         "nextStep": "Next Step"
+        
       
     },
     "checkIn": {
