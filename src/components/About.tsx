@@ -1,9 +1,8 @@
 'use client';
-import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
-import {useExercisesStore} from '@/store/useExercises';
+import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -21,12 +20,15 @@ export const About: FC<{
   subtitle: string;
   description: string;
   buttonText: string;
-}> = ({slug, title, subtitle, description, buttonText}) => {
+  hideTeamSelect?: boolean;
+}> = ({slug, title, subtitle, description, buttonText, hideTeamSelect = false}) => {
   const router = useRouter();
   const posthog = usePostHog();
-  const {currentTutorialExerciseId} = useExercisesStore();
-  const {done, theTimePassed} = useDoneTutorialExercise();
+
   const {removeLocalStorageItem} = useSSCChaptersHandler();
+  //TODO: Fetch exercise from database and set user to exercise/name/id if a facilitator has created an exercise - if user is a facilitator > send to / deadline to create exercise
+
+  const {isFacilitator} = useTeamStore();
 
   const handleClick = () => {
     removeLocalStorageItem('reviewDone');
@@ -61,14 +63,7 @@ export const About: FC<{
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link
-            href={
-              currentTutorialExerciseId && slug === 'tutorial-to-me'
-                ? done || theTimePassed
-                  ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}/review`
-                  : `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
-                : mock.button.link
-            }>
+          <Link href={isFacilitator ? `/exercises/${slug}/deadline` : `/exercises/${slug}`}>
             {buttonText} <ArrowRight size={28} />
           </Link>
         </Button>
@@ -91,8 +86,12 @@ export const About: FC<{
           </div>
           <p>{description}</p>
         </div>
-        <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
-        <TeamCard />
+        {!hideTeamSelect && (
+          <>
+            <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
+            <TeamCard />
+          </>
+        )}
       </div>
     </PageLayout>
   );

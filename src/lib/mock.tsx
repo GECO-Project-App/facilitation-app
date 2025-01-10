@@ -117,7 +117,7 @@ export const tutorialMock = {
   about: {
     button: {
       variant: 'yellow' as ButtonProps['variant'],
-      link: '/exercises/tutorial-to-me/define-timeline',
+      link: '/exercises/tutorial-to-me/introduction',
       text: "Let's Start",
     },
   } as AboutProps,

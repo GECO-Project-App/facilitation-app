@@ -86,3 +86,20 @@ export type ExerciseType = {
     communications: string;
   };
 };
+
+export type SubmitExerciseDataParams = {
+  exerciseId: string;
+  data: Json;
+};
+
+export type CreateExerciseParams = {
+  teamId: string;
+  slug: string;
+  reviewType?: Database['public']['Enums']['exercise_review_type'];
+  deadline: {
+    writing: string;
+    reviewing: string;
+  };
+};
+export type Exercise = Database['public']['Tables']['exercises']['Row'];
+export type Submission = Database['public']['Tables']['exercise_data']['Row'];

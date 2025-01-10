@@ -34,6 +34,102 @@ export type Database = {
   }
   public: {
     Tables: {
+      exercise_data: {
+        Row: {
+          author_id: string
+          created_at: string | null
+          data: Json
+          exercise_id: string
+          id: string
+          is_reviewed: boolean | null
+        }
+        Insert: {
+          author_id: string
+          created_at?: string | null
+          data: Json
+          exercise_id: string
+          id?: string
+          is_reviewed?: boolean | null
+        }
+        Update: {
+          author_id?: string
+          created_at?: string | null
+          data?: Json
+          exercise_id?: string
+          id?: string
+          is_reviewed?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercise_data_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercise_data_exercise_id_fkey"
+            columns: ["exercise_id"]
+            isOneToOne: false
+            referencedRelation: "exercises"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exercises: {
+        Row: {
+          created_at: string | null
+          created_by: string
+          deadline: Json
+          id: string
+          review_type:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug: string
+          status: Database["public"]["Enums"]["exercise_status"] | null
+          team_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by: string
+          deadline: Json
+          id?: string
+          review_type?:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug: string
+          status?: Database["public"]["Enums"]["exercise_status"] | null
+          team_id: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string
+          deadline?: Json
+          id?: string
+          review_type?:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug?: string
+          status?: Database["public"]["Enums"]["exercise_status"] | null
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercises_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -343,6 +439,8 @@ export type Database = {
       }
     }
     Enums: {
+      exercise_review_type: "read_only" | "vote"
+      exercise_status: "writing" | "reviewing" | "completed"
       team_invitation_status:
         | "pending"
         | "awaiting_signup"
