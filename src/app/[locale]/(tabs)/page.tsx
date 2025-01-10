@@ -17,26 +17,23 @@ export default async function Home() {
   const catalogue: ExerciseCardType[] = t.raw('catalogue');
 
   return (
-    <>
-      {/* <FetchData /> */}
-      <PageLayout backgroundColor="bg-yellow" hasPadding={false} contentColor="bg-yellow">
-        <section className="flex flex-col items-center justify-between h-fit mb-[-42px] py-8">
-          <div className="space-y-6 p-6">
-            <header className="flex w-full flex-row items-center justify-center">
-              <LanguageSelector />
-            </header>
-            <div className="flex flex-col items-center gap-4 p-4">
-              <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
-              <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
-            </div>
+    <PageLayout backgroundColor="bg-yellow" hasPadding={false} contentColor="bg-yellow">
+      <section className="flex flex-col items-center justify-between h-fit mb-[-42px] py-8">
+        <div className="space-y-6 p-6">
+          <header className="flex w-full flex-row items-center justify-center">
+            <LanguageSelector />
+          </header>
+          <div className="flex flex-col items-center gap-4 p-4">
+            <RiveAnimation src="bulbgecko.riv" height={160} width={160} />
+            <h1 className="text-5xl font-bold uppercase tracking-[0.3em]">GECO</h1>
           </div>
-          <div className="divide-y-2 divide-black border-y-2 border-black md:border-x-2">
-            {catalogue.map((exercise, index) => (
-              <ExerciseCard key={index} {...exercise} />
-            ))}
-          </div>
-        </section>
-      </PageLayout>
-    </>
+        </div>
+        <div className="divide-y-2 divide-black border-y-2 border-black md:border-x-2">
+          {catalogue.map((exercise, index) => (
+            <ExerciseCard key={index} {...exercise} />
+          ))}
+        </div>
+      </section>
+    </PageLayout>
   );
 }
