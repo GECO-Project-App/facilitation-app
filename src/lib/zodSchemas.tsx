@@ -11,7 +11,7 @@ export type TeamCodeSchema = z.infer<typeof teamCodeSchema>;
 export type MemberSchema = z.infer<typeof memberSchema>;
 export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type InviteTeamMemberSchema = z.infer<typeof inviteTeamMemberSchema>;
-
+export type SSCBrainstormSchema = z.infer<typeof sscBrainstormSchema>;
 export const updatePasswordSchema = z
   .object({
     password: z.string(),
@@ -99,4 +99,10 @@ export const inviteTeamMemberSchema = z.object({
   teamId: z.string().uuid(),
   email: z.string().email(),
   language: z.string().optional(),
+});
+
+export const sscBrainstormSchema = z.object({
+  start: z.string().min(240).max(480).default(''),
+  stop: z.string().min(240).max(480).default(''),
+  continue: z.string().min(240).max(480).default(''),
 });
