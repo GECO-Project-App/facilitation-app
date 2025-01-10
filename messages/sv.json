@@ -47,6 +47,15 @@
       "joined": "Du har gått med i ett team!",
       "inviteSent": "Du har skickat en inbjudan till ett teammedlem!"
     },
+       "teamCard": {
+      "edit": "Redigera team",
+      "invite": "Bjud in teammedlem",
+      "existingExercise": "Det finns en övning att göra",
+      "existingExerciseDescription": "Du har redan gjort denna övning",
+      "noTeam": "Syns inte ditt team?<br></br>Ange teamkod här:",
+      "enterCode": "Ange kod",
+      "ready": "Jag är redo!"
+    },
       "edit": {
       "avatar": {
         "title": "Välj din avatar",
@@ -323,11 +332,14 @@
       "backToHome": "Tillbaka till hem",
       "reviewComplete": "Granska slutförd",
       "letsGetStarted": "Låt oss börja",
+      "done": "Slutfört",
       "takeALookAtYourTeammates": "Ta en titt på dina kollegors",
       "preferences": "Föredragna sätt att kommunicera.",
       "waiting": "Väntar...",
       "waitingForOthersP1": "Vi väntar fortfarande på",
       "waitingForOthersP2": "att slutföra sin Handledning till mig. Vi skickar dig en email när alla har slutfört övningen, så du kan komma tillbaka hit och granska alla andras svar.",
+      "thereIsAnExerciseToDo": "Det finns en övning att göra",
+      "youAlreadyDidThisExercise": "Du har redan gjort denna övning",
       "defineTimeline": {
         "title": "Definiera tid",
         "description": "Låt oss sätta deadline för övningen.",

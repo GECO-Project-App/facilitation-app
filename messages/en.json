@@ -49,6 +49,15 @@
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },
+    "teamCard": {
+      "edit": "Edit team",
+      "invite": "Invite team member",
+      "existingExercise": "There is an exercises to do",
+      "existingExerciseDescription": "You already did this exercise",
+      "noTeam": "Can not see your team?<br></br>Enter team code here:",
+      "enterCode": "Enter code",
+      "ready": "I am ready!"
+    },
     "edit": {
       "avatar": {
         "title": "Choose your avatar",
@@ -325,11 +334,15 @@
       "backToHome": "Back to Home",
       "reviewComplete": "Review Complete",
       "letsGetStarted": "Let's Get Started",
+      "done": "Done",
       "takeALookAtYourTeammates": "Take a look at your teammates",
       "preferences": "Preferences.",
       "waiting": "Waiting...",
       "waitingForOthersP1": "We are still waiting for",
       "waitingForOthersP2": "to finish their Tutorial to me. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else answers.",
+      "thereIsAnExerciseToDo": "There is an exercise to do",
+      "youAlreadyDidThisExercise": "You already did this exercise",
+
       "defineTimeline": {
         "title": "Define Timeline",
         "description": "Let's set the deadline for the exercise.",

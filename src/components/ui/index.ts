@@ -1,5 +1,7 @@
 export * from './alert-dialog';
+export * from './avatar';
 export * from './button';
+export * from './card';
 export * from './carousel';
 export * from './dialog';
 export * from './form';

@@ -75,10 +75,20 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
 
   const handleComplete = () => {
     setCommunications();
+    const strengths = localStorage.getItem('strengths');
+    const weaknesses = localStorage.getItem('weaknesses');
+    const communications = localStorage.getItem('communications');
+    if (!strengths?.trim() || !weaknesses?.trim() || !communications?.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Please fill all fields',
+      });
+      return;
+    }
     const saveAnswerData = {
-      strengths: localStorage.getItem('strengths') ?? '',
-      weaknesses: localStorage.getItem('weaknesses') ?? '',
-      communications: localStorage.getItem('communications') ?? '',
+      strengths,
+      weaknesses,
+      communications,
       exercise_id: slug,
       team_id: currentTeam?.id as string,
       created_by: currentTutorialExerciseCreatedBy as string,
@@ -87,8 +97,9 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
     };
     if (currentTeam?.id) {
       saveTutorialToMeAnswer(saveAnswerData)
-        .then(() => {
+        .then(async () => {
           clearTutorialLocalStorage();
+          await useExercisesStore.getState().init(saveAnswerData.team_id);
           router.push(`./${slug}/review`);
         })
         .catch((error) => {
@@ -139,7 +150,7 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               {t('submit')}
             </Button>
           ) : (
-            <Button variant="blue" onClick={nextStep} disabled={!one}>
+            <Button variant="blue" onClick={nextStep} disabled={!one.trim()}>
               {t('submit')} <ArrowRight />
             </Button>
           )}
@@ -154,12 +165,13 @@ const TutorialToMePage = ({params}: {params: {slug: string}}) => {
               // style={{height: `calc(92vh - ${divHeaderHeight + divFooterHeight}px)`}}>
             >
               <>
-                <h1 className="text-xl font-bold px-2">{step.description}</h1>
+                {/* <h1 className="text-xl font-bold px-2">{step.description}</h1> */}
                 <TextAreaForTutorial
                   title={`${step.title}`}
                   borderColor={colorClass}
                   setValue={setOne}
                   value={one}
+                  placeholder={step.description}
                 />
                 {/* <TextAreaForTutorial
                   title={`${step.title} 2`}
