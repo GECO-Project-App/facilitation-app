@@ -17,31 +17,6 @@ import {RiveAnimation} from './RiveAnimation';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
 import {CarouselApi} from './ui/carousel';
 
-const ssc = {
-  description: 'What is one thing the team should {stage} doing? ',
-  stages: {
-    brainstorm: {
-      title: 'Brainstorm',
-      description:
-        'In this chapter, you will brainstorm and discuss what are the things you could start, stop, and continue doing as a community to better support the productivity, communication, etc. Give an example of how this might help you and the community to thrive. ',
-    },
-    review: {
-      title: 'Review',
-      description:
-        'In this chapter, you will review the one thing that everyone from your team wrote down. Swipe right if you agree with their point, swipe left if you disagree with their point.',
-    },
-  },
-  start: {
-    steps: ['Step 1', 'Step 2', 'Step 3'],
-  },
-  stop: {
-    steps: ['Step 4', 'Step 5', 'Step 6'],
-  },
-  continue: {
-    steps: ['Step 7', 'Step 8', 'Step 9'],
-  },
-};
-
 export const SSCSwipe: FC = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
