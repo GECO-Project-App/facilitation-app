@@ -17,7 +17,11 @@ import {RiveAnimation} from './RiveAnimation';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
 import {CarouselApi} from './ui/carousel';
 
-export const SSCSwipe: FC = () => {
+type SSCSwipeProps = {
+  deadline: Date;
+};
+
+export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations();
@@ -26,7 +30,6 @@ export const SSCSwipe: FC = () => {
   const steps: string[] = t.raw(`exercises.ssc.${stage}.steps`).map((step: string) => step);
   const router = useRouter();
   const {toast} = useToast();
-  const today = new Date();
 
   // exercises/ssc?stage=brainstorm?chapter=start?step=1
   const form = useForm<SSCBrainstormSchema>({
@@ -57,7 +60,7 @@ export const SSCSwipe: FC = () => {
     <PageLayout
       backgroundColor="bg-yellow"
       header={
-        <Header rightContent={<DateBadge date={new Date()} />}>
+        <Header rightContent={<DateBadge date={deadline} />}>
           <CarouselPagination steps={steps} currentStep={currentStep} />
         </Header>
       }

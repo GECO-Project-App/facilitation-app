@@ -1,5 +1,6 @@
 'use server';
 import {revalidatePath} from 'next/cache';
+import {Json} from '../../../database.types';
 import {createClient} from '../supabase/server';
 import {CreateExerciseParams, SubmitExerciseDataParams} from '../types';
 
@@ -139,3 +140,38 @@ export async function submitExerciseData({exerciseId, data}: SubmitExerciseDataP
     throw error;
   }
 }
+
+export async function getExerciseById(exerciseId: string) {
+  const supabase = createClient();
+  const {data: exercise, error} = await supabase
+    .from('exercises')
+    .select()
+    .eq('id', exerciseId)
+    .single();
+  return {exercise, error};
+}
+export const getExerciseBySlugAndId = async (slug: string, exerciseId: string) => {
+  const supabase = createClient();
+  const {data: exercise, error} = await supabase
+    .from('exercises')
+    .select()
+    .eq('slug', slug)
+    .eq('id', exerciseId)
+    .single();
+  return {exercise, error};
+};
+
+export const createExerciseData = async (exerciseId: string, data: Json) => {
+  const supabase = createClient();
+  const {
+    data: {user},
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const {data: exerciseData, error} = await supabase
+    .from('exercise_data')
+    .insert({exercise_id: exerciseId, data, author_id: user.id})
+    .select()
+    .single();
+  return {exerciseData, error};
+};

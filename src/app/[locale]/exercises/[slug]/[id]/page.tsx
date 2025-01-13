@@ -1,9 +1,14 @@
+'use client';
 import {About, PageLayout} from '@/components';
 import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
 
-export default function ExerciseDetailPage({params}: {params: {id: string; slug: string}}) {
-  const {id, slug} = params;
+export default function ExerciseDetailPage({
+  params,
+}: {
+  params: {id: string; slug: string; step: string};
+}) {
+  const {id, slug, step} = params;
 
   const tKey = useMemo(() => {
     switch (slug) {
@@ -12,7 +17,7 @@ export default function ExerciseDetailPage({params}: {params: {id: string; slug:
       case 'check-out':
         return 'exercises.checkOut';
       case 'ssc':
-        return 'exercises.ssc.about';
+        return `exercises.ssc.about`;
       case 'start':
         return 'exercises.ssc.start';
       case 'stop':
@@ -24,11 +29,12 @@ export default function ExerciseDetailPage({params}: {params: {id: string; slug:
       default:
         return slug;
     }
-  }, [slug]);
+  }, [slug, step]);
 
   const t = useTranslations(tKey);
-  return (
-    <PageLayout>
+
+  if (step) {
+    return (
       <About
         slug={slug as string}
         title={t('title')}
@@ -37,6 +43,14 @@ export default function ExerciseDetailPage({params}: {params: {id: string; slug:
         buttonText={t('button')}
         hideTeamSelect={true}
       />
+    );
+  }
+
+  return (
+    <PageLayout>
+      <div>
+        <h1>{id}</h1>
+      </div>
     </PageLayout>
   );
 }

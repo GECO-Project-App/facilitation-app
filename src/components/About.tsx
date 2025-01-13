@@ -2,11 +2,12 @@
 import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
-import {FC, useMemo} from 'react';
+import {FC, useEffect, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
@@ -28,7 +29,14 @@ export const About: FC<{
   const {removeLocalStorageItem} = useSSCChaptersHandler();
   //TODO: Fetch exercise from database and set user to exercise/name/id if a facilitator has created an exercise - if user is a facilitator > send to / deadline to create exercise
 
-  const {isFacilitator} = useTeamStore();
+  const {isFacilitator, currentTeam} = useTeamStore();
+  const {currentExercise, fetchExerciseBySlugAndTeamId} = useExerciseStore();
+
+  useEffect(() => {
+    if (currentTeam) {
+      fetchExerciseBySlugAndTeamId(slug, currentTeam.id);
+    }
+  }, [slug, currentTeam, fetchExerciseBySlugAndTeamId]);
 
   const handleClick = () => {
     removeLocalStorageItem('reviewDone');
@@ -58,12 +66,20 @@ export const About: FC<{
     }
   }, [slug]);
 
+  const exerciseLink = useMemo(() => {
+    return currentExercise
+      ? `/exercises/${slug}/${currentExercise.id}`
+      : isFacilitator
+        ? `/exercises/${slug}/deadline`
+        : `/exercises/${slug}`;
+  }, [isFacilitator, currentExercise, slug]);
+
   return (
     <PageLayout
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
         <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link href={isFacilitator ? `/exercises/${slug}/deadline` : `/exercises/${slug}`}>
+          <Link href={exerciseLink}>
             {buttonText} <ArrowRight size={28} />
           </Link>
         </Button>

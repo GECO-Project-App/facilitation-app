@@ -1,49 +1,24 @@
-import {Button, Header, PageLayout} from '@/components';
-import {Lamp} from '@/components/icons/lamp';
-import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-import {Link} from '@/i18n/routing';
-import {buttons} from '@/lib/ssc-mock-data';
-import {ArrowLeft} from 'lucide-react';
-import {getTranslations} from 'next-intl/server';
+'use client';
+import {SSCSwipe} from '@/components';
+import {useExerciseStore} from '@/store/exerciseStore';
+import {useSearchParams} from 'next/navigation';
+import {useEffect} from 'react';
 
-export default async function SSCPage() {
-  const t = await getTranslations('exercises.ssc');
-  const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
+export default function SSCPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const {exercise, getExerciseById} = useExerciseStore();
 
-  return (
-    <PageLayout
-      backgroundColor="bg-deepPurple"
-      contentColor="bg-deepPurple"
-      header={
-        <Header
-          leftContent={
-            <Link href={'/'}>
-              <ArrowLeft size={42} />
-            </Link>
-          }
-          rightContent={
-            <div className="aspect-square h-11 flex-none">
-              <Link href={'./ssc/tips'}>
-                <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
-              </Link>
-            </div>
-          }
-        />
-      }>
-      <section className="mx-auto flex max-w-xs flex-1 flex-col items-center justify-center space-y-10">
-        {buttons.map((button, i) => (
-          <Button
-            variant={button.variant}
-            className="w-full justify-between"
-            asChild
-            key={button.title}>
-            <Link href={button.href}>
-              <CheckBox chapter={button.chapter || ''} />
-              <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
-            </Link>
-          </Button>
-        ))}
-      </section>
-    </PageLayout>
-  );
+  useEffect(() => {
+    if (id && !exercise) {
+      getExerciseById(id);
+    }
+  }, [id, exercise, getExerciseById]);
+
+  console.log(exercise?.deadline);
+  if (!exercise?.id) {
+    return <div>Exercise not found</div>;
+  }
+
+  return <SSCSwipe deadline={new Date(exercise.deadline.writing)} />;
 }
