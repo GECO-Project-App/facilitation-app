@@ -35,7 +35,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
         return CH_OUT_SURVEY_ID;
       case 'test':
         return TEST_SURVEY_ID;
-      case 'tutorial-to-me':
+      case 'ttm':
         return TUTORIAL_TO_ME_SURVEY_ID;
       default:
         return '';
@@ -85,7 +85,7 @@ export default function FeedbackFor({params}: {params: {lang: string; slug: stri
               ? 'Check-In'
               : slug === 'check-out'
                 ? 'Check-Out'
-                : slug === 'tutorial-to-me'
+                : slug === 'ttm'
                   ? 'Tutorial to Me'
                   : ''
         }

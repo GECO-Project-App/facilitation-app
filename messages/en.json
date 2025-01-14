@@ -150,7 +150,7 @@
         "subtitle": "5-15 minutes | 2-20 members",
         "description": "End your meetings right by giving each team member the space to share something with the team.",
         "button": "Start",
-        "link": "/exercises/tutorial-to-me/introduction",
+        "link": "/exercises/ttm/introduction",
         "type": "tutorial-to-me"
       }
     ]
@@ -356,6 +356,12 @@
       "inviteTeamMember": "Invite team member",
       "removeTeamMember": "Remove team member",
       "submit": "Submit",
+      "desc": "Name three <bold>{stage}</bold> you have when working on a project?",
+      "stages": {
+        "strengths": "strengths",
+        "weaknesses": "weaknesses",
+        "communication": "communication practices"
+      },
       "steps": [
         {
           "title": "Strength",

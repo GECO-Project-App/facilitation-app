@@ -147,7 +147,7 @@
         "subtitle": "5-15 minuter | 2-20 deltagare",
         "description": "Avsluta era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
         "button": "Starta",
-        "link": "/exercises/tutorial-to-me/introduction",
+        "link": "/exercises/ttm/introduction",
         "type": "tutorial-to-me"
       }
     ]
@@ -350,9 +350,15 @@
       "thereIsAnExerciseToDo": "Det finns en övning att göra",
       "youAlreadyDidThisExercise": "Du har redan gjort denna övning",
 
-      "inviteTeamMember": "Bjud in teammedlem",
+        "inviteTeamMember": "Bjud in teammedlem",
       "removeTeamMember": "Ta bort teammedlem",
       "submit": "Skicka",
+      "desc": "Vilka tre <bold>{stage}</bold> har du när du arbetar i ett team?",
+      "stages": {
+        "strengths": "styrkor",
+        "weaknesses": "svagheter",
+        "communication": "kommunikationsmetoder"
+      },
       "steps": [
         {
           "title": "Styrka",

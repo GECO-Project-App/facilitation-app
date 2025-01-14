@@ -2,30 +2,36 @@ import {
   createExercise,
   getExerciseById,
   getExerciseBySlugAndId,
+  getExerciseBySlugAndTeamId,
+  getExerciseDataByAuthorAndExerciseId,
   submitExerciseData,
 } from '@/lib/actions/exerciseActions';
-import type {CreateExerciseParams, Exercise, Submission} from '@/lib/types';
+import type {CreateExerciseParams, Exercise, ExerciseData} from '@/lib/types';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {Json} from '../../database.types';
 
-interface ExerciseState {
+type ExerciseState = {
   deadline: {
     writingPhase: Date | null;
     reviewingPhase: Date | null;
   };
+  exerciseData: ExerciseData | null;
   exercise: Exercise | null;
   createdExercise: Exercise | null;
-  submittedExerciseData: Submission | null;
+  submittedExerciseData: ExerciseData | null;
   status: 'writing' | 'reviewing' | 'results';
-  data: JSON | null;
+  data: ExerciseData | null;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
+  setData: (data: Json) => void;
   createExercise: (newExercise: CreateExerciseParams) => Promise<Exercise>;
-  submitExerciseData: (exerciseId: string, data: Json) => Promise<Submission>;
+  submitExerciseData: (exerciseId: string, data: Json) => Promise<ExerciseData>;
   getExerciseById: (exerciseId: string) => Exercise | null;
   getExerciseBySlugAndId: (slug: string, exerciseId: string) => Exercise | null;
+  getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
+  getExerciseDataByAuthorAndExerciseId: (exerciseId: string) => ExerciseData | null;
   currentExercise: Exercise | null;
-}
+};
 
 export const useExerciseStore = create<ExerciseState>()(
   persist(
@@ -34,12 +40,14 @@ export const useExerciseStore = create<ExerciseState>()(
         writingPhase: null,
         reviewingPhase: null,
       },
+      exerciseData: null,
       exercise: null,
       createdExercise: null,
       submittedExerciseData: null,
       status: 'writing',
       data: null,
       setDeadline: (deadline) => set({deadline}),
+      setData: (data) => set({data}),
       createExercise: async (newExercise) => {
         const {exercise} = await createExercise(newExercise);
         set({createdExercise: exercise});
@@ -61,6 +69,17 @@ export const useExerciseStore = create<ExerciseState>()(
         set({exercise});
         console.log(exercise);
         return exercise;
+      },
+      getExerciseBySlugAndTeamId: async (slug, teamId) => {
+        const {exercise} = await getExerciseBySlugAndTeamId(slug, teamId);
+        set({exercise});
+        console.log(exercise);
+        return exercise;
+      },
+      getExerciseDataByAuthorAndExerciseId: async (exerciseId) => {
+        const {exerciseData} = await getExerciseDataByAuthorAndExerciseId(exerciseId);
+        set({exerciseData});
+        return exerciseData;
       },
       currentExercise: null,
     }),

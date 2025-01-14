@@ -1,6 +1,5 @@
 'use server';
 import {revalidatePath} from 'next/cache';
-import {Json} from '../../../database.types';
 import {createClient} from '../supabase/server';
 import {CreateExerciseParams, SubmitExerciseDataParams} from '../types';
 
@@ -103,7 +102,7 @@ export async function createExercise({
     if (exerciseError) throw exerciseError;
     if (!exercise) throw new Error('Failed to create exercise');
 
-    revalidatePath(`/exercises/${slug}`);
+    revalidatePath(`/exercises/${slug}?id=${exercise.id}`);
     return {exercise};
   } catch (error) {
     console.error('Error creating exercise:', error);
@@ -161,8 +160,20 @@ export const getExerciseBySlugAndId = async (slug: string, exerciseId: string) =
   return {exercise, error};
 };
 
-export const createExerciseData = async (exerciseId: string, data: Json) => {
+export const getExerciseBySlugAndTeamId = async (slug: string, teamId: string) => {
   const supabase = createClient();
+  const {data: exercise, error} = await supabase
+    .from('exercises')
+    .select()
+    .eq('slug', slug)
+    .eq('team_id', teamId)
+    .single();
+  return {exercise, error};
+};
+
+export const getExerciseDataByAuthorAndExerciseId = async (exerciseId: string) => {
+  const supabase = createClient();
+
   const {
     data: {user},
   } = await supabase.auth.getUser();
@@ -170,8 +181,8 @@ export const createExerciseData = async (exerciseId: string, data: Json) => {
 
   const {data: exerciseData, error} = await supabase
     .from('exercise_data')
-    .insert({exercise_id: exerciseId, data, author_id: user.id})
     .select()
-    .single();
+    .eq('author_id', user.id)
+    .eq('exercise_id', exerciseId);
   return {exerciseData, error};
 };

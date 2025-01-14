@@ -1,11 +1,14 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
+import {submitExerciseData} from '@/lib/actions/exerciseActions';
 import {cn} from '@/lib/utils';
 import {SSCBrainstormSchema, sscBrainstormSchema} from '@/lib/zodSchemas';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Send} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {FC, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {CarouselPagination} from './CarouselPagination';
@@ -26,12 +29,13 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations();
   const chapters = t.raw(`ssc.chapters`);
-  const [stage, setStage] = useState<'start' | 'stop' | 'continue'>('continue');
+  const [stage, setStage] = useState<'start' | 'stop' | 'continue'>('start');
   const steps: string[] = t.raw(`exercises.ssc.${stage}.steps`).map((step: string) => step);
   const router = useRouter();
   const {toast} = useToast();
+  const {setData, data} = useExerciseStore();
+  const searchParams = useSearchParams();
 
-  // exercises/ssc?stage=brainstorm?chapter=start?step=1
   const form = useForm<SSCBrainstormSchema>({
     resolver: zodResolver(sscBrainstormSchema),
     defaultValues: {
@@ -53,7 +57,30 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   }, [api]);
 
   const onSubmit = async (data: SSCBrainstormSchema) => {
+    const exerciseId = searchParams.get('id');
+    if (!exerciseId) {
+      console.error('Exercise ID not found in search params');
+      return;
+    }
     console.log(data);
+    const stage = Object.keys(data).find(
+      (key) => data[key as keyof SSCBrainstormSchema] === '',
+    ) as keyof SSCBrainstormSchema;
+
+    if (stage) {
+      setStage(stage);
+      setData(JSON.stringify(data));
+      console.log(stage);
+      form.resetField(stage);
+    } else {
+      const submission = await submitExerciseData({exerciseId: exerciseId, data});
+      if (submission) {
+        console.log('Submission successful');
+        setData(submission);
+      } else {
+        console.error('Submission failed');
+      }
+    }
   };
 
   return (
@@ -87,7 +114,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
             {t('exercises.passItOn.completeButton')} <Complete />
           </Button>
         ) : (
-          <Button variant="pink" className="mx-auto" onClick={() => {}}>
+          <Button variant="pink" className="mx-auto" onClick={form.handleSubmit(onSubmit)}>
             Submit <Send size={22} />
           </Button>
         )
@@ -108,7 +135,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
             </button>
           ))}
         </div>
-        <p className="text-center text-2xl ">
+        <p className="text-center text-xl ">
           {t('ssc.description', {stage: t(`ssc.chapters.${stage}`)})}
         </p>
         <Form {...form}>
@@ -121,6 +148,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
                   <FormControl>
                     <Textarea
                       {...field}
+                      {...form.register(stage, {required: true})}
                       placeholder="240-480 characters *"
                       className={cn(
                         'flex-grow resize-none ',
@@ -136,14 +164,6 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
             />
           </form>
         </Form>
-        {/* <div className="flex-1 flex flex-col">
-          <Textarea
-            id="full-height-textarea"
-            placeholder="Type your content here..."
-            className="flex-grow resize-none !border-yellow"
-          />
-
-        </div> */}
       </div>
     </PageLayout>
   );

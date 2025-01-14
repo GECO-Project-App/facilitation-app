@@ -12,6 +12,8 @@ export type MemberSchema = z.infer<typeof memberSchema>;
 export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type InviteTeamMemberSchema = z.infer<typeof inviteTeamMemberSchema>;
 export type SSCBrainstormSchema = z.infer<typeof sscBrainstormSchema>;
+export type TTMExercisesSchema = z.infer<typeof ttmSchema>;
+
 export const updatePasswordSchema = z
   .object({
     password: z.string(),
@@ -102,7 +104,13 @@ export const inviteTeamMemberSchema = z.object({
 });
 
 export const sscBrainstormSchema = z.object({
-  start: z.string().min(240).max(480).default(''),
-  stop: z.string().min(240).max(480).default(''),
-  continue: z.string().min(240).max(480).default(''),
+  start: z.string().max(480).default(''),
+  stop: z.string().max(480).default(''),
+  continue: z.string().max(480).default(''),
+});
+
+export const ttmSchema = z.object({
+  strengths: z.string().max(480).default(''),
+  weaknesses: z.string().max(480).default(''),
+  communications: z.string().max(480).default(''),
 });

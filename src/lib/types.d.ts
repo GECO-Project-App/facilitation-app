@@ -102,4 +102,4 @@ export type CreateExerciseParams = {
   };
 };
 export type Exercise = Database['public']['Tables']['exercises']['Row'];
-export type Submission = Database['public']['Tables']['exercise_data']['Row'];
+export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];

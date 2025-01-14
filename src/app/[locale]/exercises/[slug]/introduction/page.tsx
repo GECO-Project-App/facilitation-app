@@ -20,7 +20,7 @@ export default function IntroductionPage({params}: {params: {slug: string}}) {
         return 'exercises.ssc.stop';
       case 'continue':
         return 'exercises.ssc.continue';
-      case 'tutorial-to-me':
+      case 'ttm':
         return 'exercises.tutorialToMe';
       default:
         return slug;

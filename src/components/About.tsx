@@ -30,13 +30,13 @@ export const About: FC<{
   //TODO: Fetch exercise from database and set user to exercise/name/id if a facilitator has created an exercise - if user is a facilitator > send to / deadline to create exercise
 
   const {isFacilitator, currentTeam} = useTeamStore();
-  const {currentExercise, fetchExerciseBySlugAndTeamId} = useExerciseStore();
+  const {exercise, getExerciseBySlugAndTeamId} = useExerciseStore();
 
   useEffect(() => {
     if (currentTeam) {
-      fetchExerciseBySlugAndTeamId(slug, currentTeam.id);
+      getExerciseBySlugAndTeamId(slug, currentTeam.id);
     }
-  }, [slug, currentTeam, fetchExerciseBySlugAndTeamId]);
+  }, [slug, currentTeam, getExerciseBySlugAndTeamId]);
 
   const handleClick = () => {
     removeLocalStorageItem('reviewDone');
@@ -59,7 +59,7 @@ export const About: FC<{
         return sscMock.continue.about;
       case 'ssc':
         return sscMock.about;
-      case 'tutorial-to-me':
+      case 'ttm':
         return tutorialMock.about;
       default:
         return ccMock.checkOut.about;
@@ -67,12 +67,12 @@ export const About: FC<{
   }, [slug]);
 
   const exerciseLink = useMemo(() => {
-    return currentExercise
-      ? `/exercises/${slug}/${currentExercise.id}`
+    return exercise
+      ? `/exercises/${slug}?id=${exercise.id}`
       : isFacilitator
         ? `/exercises/${slug}/deadline`
         : `/exercises/${slug}`;
-  }, [isFacilitator, currentExercise, slug]);
+  }, [isFacilitator, exercise, slug]);
 
   return (
     <PageLayout
