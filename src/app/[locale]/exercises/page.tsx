@@ -1,5 +1,5 @@
-import {SSCSwipe} from '@/components';
+import {SwipeFeed} from '@/components';
 
 export default async function Page() {
-  return <SSCSwipe />;
+  return <SwipeFeed />;
 }
