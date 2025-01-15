@@ -358,10 +358,11 @@
       "submit": "Submit",
       "desc": "Name three <bold>{stage}</bold> you have when working on a project?",
       "stages": {
-        "strengths": "strengths",
-        "weaknesses": "weaknesses",
-        "communication": "communication practices"
+        "strengths": "Strengths",
+        "weaknesses": "Weaknesses",
+        "communication": "Communication practices"
       },
+      "reviewDescription": "Take a look at your teammates' preferences.",
       "steps": [
         {
           "title": "Strength",

@@ -355,10 +355,11 @@
       "submit": "Skicka",
       "desc": "Vilka tre <bold>{stage}</bold> har du när du arbetar i ett team?",
       "stages": {
-        "strengths": "styrkor",
-        "weaknesses": "svagheter",
-        "communication": "kommunikationsmetoder"
+        "strengths": "Styrkor",
+        "weaknesses": "Svagheter",
+        "communication": "Kommunikationsmetoder"
       },
+      "reviewDescription": "Ta en titt på dina kollegors preferenser.",
       "steps": [
         {
           "title": "Styrka",

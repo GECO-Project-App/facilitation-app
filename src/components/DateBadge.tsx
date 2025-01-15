@@ -14,7 +14,7 @@ export const DateBadge = ({date}: {date: Date}) => {
       </VisuallyHidden.Root>
       <DialogTrigger asChild>
         <div className="bg-white rounded-full border-2 border-black w-fit gap-2 flex flex-row items-center  p-2">
-          <CalendarClock size={24} />
+          <CalendarClock size={20} />
           <div className="flex flex-col items-center">
             <p className="font-jetbrains_mono text-xs">
               {format.dateTime(date, {
