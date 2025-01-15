@@ -1,13 +1,31 @@
 'use client';
-import {Button, DateBadge, Header, PageLayout} from '@/components';
+import {Button, DateBadge, Header, PageLayout, SwipeFeed} from '@/components';
 import {Complete} from '@/components/icons';
+import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 
 export default function TTMReviewPage() {
   //TODO: status != review -> Show waiting screen
+  const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
+  const searchParams = useSearchParams();
+
+  if (searchParams.get('status')) {
+    return (
+      <section className="min-h-svh h-full w-full p-8 max-w-lg mx-auto flex flex-col gap-4">
+        <div className="hidden lg:block">
+          <Header />
+        </div>
+        {/* <Progress value={50} /> */}
+        <main className="flex-1 relative">
+          <SwipeFeed />
+        </main>
+      </section>
+    );
+  }
 
   return (
     <PageLayout
@@ -30,22 +48,17 @@ export default function TTMReviewPage() {
               stage === 'communication' && 'bg-orange',
             )}>
             <h3 className="text-2xl font-bold">{t(`stages.${stage}`)}</h3>
-            <p>{t('reviewDescription')}</p>
-            <Button variant="white" size="small" className="mx-auto">
+            <p>{t('review.description')}</p>
+            <Button
+              variant="white"
+              size="small"
+              className="mx-auto"
+              onClick={() => router.push(`/exercises/ttm/review?status=review&stage=${stage}`)}>
               Let&apos;s get started <ArrowRight />
             </Button>
           </div>
         ))}
       </div>
     </PageLayout>
-    // <section className="min-h-svh h-full w-full p-8 max-w-lg mx-auto flex flex-col gap-4">
-    //   <div className="hidden lg:block">
-    //     <Header />
-    //   </div>
-    //   <Progress value={50} />
-    //   <main className="flex-1 relative">
-    //     <SwipeFeed />
-    //   </main>
-    // </section>
   );
 }

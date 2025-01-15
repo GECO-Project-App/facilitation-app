@@ -362,7 +362,15 @@
         "weaknesses": "Weaknesses",
         "communication": "Communication practices"
       },
-      "reviewDescription": "Take a look at your teammates' preferences.",
+      "review": {
+        "title": "Review",
+        "description": "Take a look at your teammates' preferences.",
+        "button": "Review complete",
+        "swipe": {
+          "read": "to read the cards"
+          
+        }
+      },
       "steps": [
         {
           "title": "Strength",

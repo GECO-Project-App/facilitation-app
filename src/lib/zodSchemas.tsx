@@ -112,5 +112,5 @@ export const sscBrainstormSchema = z.object({
 export const ttmSchema = z.object({
   strengths: z.string().max(480).default(''),
   weaknesses: z.string().max(480).default(''),
-  communications: z.string().max(480).default(''),
+  communication: z.string().max(480).default(''),
 });

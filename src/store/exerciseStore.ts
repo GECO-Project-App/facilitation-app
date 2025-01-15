@@ -60,6 +60,7 @@ export const useExerciseStore = create<ExerciseState>()(
         return exercise;
       },
       submitExerciseData: async (exerciseId, data) => {
+        console.log(exerciseId, data);
         const {submission} = await submitExerciseData({exerciseId, data});
         set({submittedExerciseData: submission});
         return submission;
@@ -73,7 +74,7 @@ export const useExerciseStore = create<ExerciseState>()(
       getExerciseBySlugAndTeamId: async (slug, teamId) => {
         const {exercise} = await getExerciseBySlugAndTeamId(slug, teamId);
         set({exercise});
-        console.log(exercise);
+
         return exercise;
       },
       getExerciseDataByAuthorAndExerciseId: async (exerciseId) => {

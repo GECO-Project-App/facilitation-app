@@ -1,8 +1,12 @@
+'use client';
 import {cn} from '@/lib/utils';
+import {useTranslations} from 'next-intl';
 import {FC} from 'react';
 import {RiveAnimation} from './RiveAnimation';
 
 export const SwipeFeed: FC<{backgroundColor?: string}> = ({backgroundColor = 'bg-yellow'}) => {
+  const t = useTranslations('exercises.tutorialToMe.review.swipe');
+
   return (
     <div
       className={cn(
@@ -12,7 +16,7 @@ export const SwipeFeed: FC<{backgroundColor?: string}> = ({backgroundColor = 'bg
       <h2 className="absolute top-16 left-1/2 -translate-x-1/2 text-2xl font-bold">Strengths</h2>
       <div className="w-full h-full snap-start snap-always flex flex-col items-center justify-center">
         <RiveAnimation src="swipe_up.riv" height={160} width={160} />
-        <h3>to read the cards</h3>
+        <h3>{t('read')}</h3>
       </div>
       {Array.from({length: 10}).map((_, index) => (
         <div

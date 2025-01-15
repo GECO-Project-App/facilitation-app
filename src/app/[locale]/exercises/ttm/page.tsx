@@ -11,6 +11,7 @@ export default function TTMExercisesPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const {data: exerciseData, getExerciseDataByAuthorAndExerciseId} = useExerciseStore();
 
   useEffect(() => {
     if (id && !exercise) {

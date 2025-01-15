@@ -123,7 +123,7 @@ export async function submitExerciseData({exerciseId, data}: SubmitExerciseDataP
       .insert({
         exercise_id: exerciseId,
         author_id: user.id,
-        data,
+        data: data,
         is_reviewed: false,
       })
       .select()

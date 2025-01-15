@@ -359,7 +359,14 @@
         "weaknesses": "Svagheter",
         "communication": "Kommunikationsmetoder"
       },
-      "reviewDescription": "Ta en titt på dina kollegors preferenser.",
+      "review": {
+        "title": "Granska",
+        "description": "Ta en titt på dina kollegors preferenser.",
+        "button": "Granskning slutförd",
+        "swipe": {
+          "read": "att läsa korten"
+        }
+      },
       "steps": [
         {
           "title": "Styrka",
