@@ -18,6 +18,7 @@ export * from './RandomQuestion';
 export * from './RiveAnimation';
 export * from './SSCSwipe';
 export * from './SwipeCard';
+export * from './SwipeFeed';
 export * from './SwipeReview';
 export * from './TabBar';
 export * from './TeamAvatars';
