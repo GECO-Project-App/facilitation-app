@@ -68,7 +68,7 @@ export const About: FC<{
 
   const exerciseLink = useMemo(() => {
     return exercise
-      ? `/exercises/${slug}?id=${exercise.id}`
+      ? `/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`
       : isFacilitator
         ? `/exercises/${slug}/deadline`
         : `/exercises/${slug}`;

@@ -102,7 +102,7 @@ export async function createExercise({
     if (exerciseError) throw exerciseError;
     if (!exercise) throw new Error('Failed to create exercise');
 
-    revalidatePath(`/exercises/${slug}?id=${exercise.id}`);
+    revalidatePath(`/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`);
     return {exercise};
   } catch (error) {
     console.error('Error creating exercise:', error);
@@ -171,7 +171,7 @@ export const getExerciseBySlugAndTeamId = async (slug: string, teamId: string) =
   return {exercise, error};
 };
 
-export const getExerciseDataByAuthorAndExerciseId = async (exerciseId: string) => {
+export const getUserExerciseData = async (exerciseId: string) => {
   const supabase = createClient();
 
   const {
@@ -186,3 +186,36 @@ export const getExerciseDataByAuthorAndExerciseId = async (exerciseId: string) =
     .eq('exercise_id', exerciseId);
   return {exerciseData, error};
 };
+
+export const getTeamExerciseData = async (exerciseId: string) => {
+  const supabase = createClient();
+  const {data: exerciseData, error} = await supabase.rpc('get_team_exercise_data', {
+    p_exercise_id: exerciseId,
+  });
+
+  return {exerciseData, error};
+};
+
+export async function getPendingSubmissions(exerciseId: string) {
+  const supabase = createClient();
+
+  try {
+    const {data: pendingUsers, error} = await supabase.rpc('get_pending_exercise_submissions', {
+      exercise_id: exerciseId,
+    });
+
+    if (error) throw error;
+
+    return {
+      pendingUsers: pendingUsers.map((user) => ({
+        userId: user.user_id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        profileName: user.profile_name,
+      })),
+    };
+  } catch (error) {
+    console.error('Error getting pending submissions:', error);
+    return {error: 'Failed to get pending submissions'};
+  }
+}

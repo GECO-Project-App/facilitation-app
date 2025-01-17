@@ -1,12 +1,21 @@
+'use client';
 import {
   createExercise,
   getExerciseById,
   getExerciseBySlugAndId,
   getExerciseBySlugAndTeamId,
-  getExerciseDataByAuthorAndExerciseId,
+  getPendingSubmissions,
+  getTeamExerciseData,
+  getUserExerciseData,
   submitExerciseData,
 } from '@/lib/actions/exerciseActions';
-import type {CreateExerciseParams, Exercise, ExerciseData} from '@/lib/types';
+import type {
+  CreateExerciseParams,
+  Exercise,
+  ExerciseData,
+  PendingUsers,
+  TeamExerciseData,
+} from '@/lib/types';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {Json} from '../../database.types';
@@ -16,7 +25,9 @@ type ExerciseState = {
     writingPhase: Date | null;
     reviewingPhase: Date | null;
   };
+  pendingUsers: PendingUsers | [];
   exerciseData: ExerciseData | null;
+  teamExerciseData: TeamExerciseData | null;
   exercise: Exercise | null;
   createdExercise: Exercise | null;
   submittedExerciseData: ExerciseData | null;
@@ -29,8 +40,10 @@ type ExerciseState = {
   getExerciseById: (exerciseId: string) => Exercise | null;
   getExerciseBySlugAndId: (slug: string, exerciseId: string) => Exercise | null;
   getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
-  getExerciseDataByAuthorAndExerciseId: (exerciseId: string) => ExerciseData | null;
+  getUserExerciseData: (exerciseId: string) => ExerciseData | null;
   currentExercise: Exercise | null;
+  getPendingSubmissions: (exerciseId: string) => PendingUsers | null;
+  getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
@@ -40,7 +53,9 @@ export const useExerciseStore = create<ExerciseState>()(
         writingPhase: null,
         reviewingPhase: null,
       },
+      pendingUsers: [],
       exerciseData: null,
+      teamExerciseData: null,
       exercise: null,
       createdExercise: null,
       submittedExerciseData: null,
@@ -60,7 +75,6 @@ export const useExerciseStore = create<ExerciseState>()(
         return exercise;
       },
       submitExerciseData: async (exerciseId, data) => {
-        console.log(exerciseId, data);
         const {submission} = await submitExerciseData({exerciseId, data});
         set({submittedExerciseData: submission});
         return submission;
@@ -68,7 +82,7 @@ export const useExerciseStore = create<ExerciseState>()(
       getExerciseBySlugAndId: async (slug, exerciseId) => {
         const {exercise} = await getExerciseBySlugAndId(slug, exerciseId);
         set({exercise});
-        console.log(exercise);
+
         return exercise;
       },
       getExerciseBySlugAndTeamId: async (slug, teamId) => {
@@ -77,13 +91,24 @@ export const useExerciseStore = create<ExerciseState>()(
 
         return exercise;
       },
-      getExerciseDataByAuthorAndExerciseId: async (exerciseId) => {
-        const {exerciseData} = await getExerciseDataByAuthorAndExerciseId(exerciseId);
+      getUserExerciseData: async (exerciseId) => {
+        const {exerciseData} = await getUserExerciseData(exerciseId);
         set({exerciseData});
         return exerciseData;
       },
+      getPendingSubmissions: async (exerciseId) => {
+        const {pendingUsers} = await getPendingSubmissions(exerciseId);
+        set({pendingUsers});
+        return pendingUsers;
+      },
       currentExercise: null,
+      getTeamExerciseData: async (exerciseId) => {
+        const {exerciseData} = await getTeamExerciseData(exerciseId);
+        set({teamExerciseData: exerciseData});
+        return exerciseData;
+      },
     }),
+
     {name: 'ExerciseStore', storage: createJSONStorage(() => localStorage)},
   ),
 );

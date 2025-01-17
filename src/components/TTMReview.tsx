@@ -1,19 +1,39 @@
 'use client';
 import {Button, DateBadge, Header, PageLayout, SwipeFeed} from '@/components';
 import {Complete} from '@/components/icons';
+import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
+import {PendingUsers} from '@/lib/types';
 import {cn} from '@/lib/utils';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
+import {useEffect} from 'react';
 
-export default function TTMReviewPage() {
+export const TTMReview = () => {
   //TODO: status != review -> Show waiting screen
   const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
   const searchParams = useSearchParams();
+  const {getPendingSubmissions, pendingUsers, exercise} = useExerciseStore();
 
-  if (searchParams.get('status')) {
+  useEffect(() => {
+    if (exercise?.id && exercise.status === 'review') {
+      getPendingSubmissions(exercise.id);
+    }
+  }, [exercise?.id, getPendingSubmissions, exercise?.status]);
+
+  if (pendingUsers) {
+    return (
+      <WaitingFor
+        people={pendingUsers.map((user: PendingUsers) => `${user.firstName} ${user.lastName}`)}
+        deadline={new Date(exercise.deadline[exercise.status])}
+      />
+    );
+  }
+
+  if (searchParams.get('stage')) {
     return (
       <section className="min-h-svh h-full w-full p-8 max-w-lg mx-auto flex flex-col gap-4">
         <div className="hidden lg:block">
@@ -21,7 +41,7 @@ export default function TTMReviewPage() {
         </div>
         {/* <Progress value={50} /> */}
         <main className="flex-1 relative">
-          <SwipeFeed />
+          <SwipeFeed stage={searchParams.get('stage') as string} />
         </main>
       </section>
     );
@@ -53,7 +73,7 @@ export default function TTMReviewPage() {
               variant="white"
               size="small"
               className="mx-auto"
-              onClick={() => router.push(`/exercises/ttm/review?status=review&stage=${stage}`)}>
+              onClick={() => router.push(`${window.location.href}&stage=${stage}`)}>
               Let&apos;s get started <ArrowRight />
             </Button>
           </div>
@@ -61,4 +81,4 @@ export default function TTMReviewPage() {
       </div>
     </PageLayout>
   );
-}
+};

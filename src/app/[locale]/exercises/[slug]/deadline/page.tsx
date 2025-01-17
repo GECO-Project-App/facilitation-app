@@ -28,7 +28,7 @@ export default function ExerciseDeadlinePage() {
 
     if (!exercise) return;
 
-    router.push(`/exercises/${slug}/${exercise.id}`);
+    router.push(`/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`);
   };
 
   return (

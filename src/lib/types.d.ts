@@ -103,3 +103,8 @@ export type CreateExerciseParams = {
 };
 export type Exercise = Database['public']['Tables']['exercises']['Row'];
 export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];
+export type PendingUsers =
+  Database['public']['Functions']['get_pending_exercise_submissions']['Returns'][number];
+export type ExerciseStatus = Database['public']['Enums']['exercise_status'];
+export type TeamExerciseData =
+  Database['public']['Functions']['get_team_exercise_data']['Returns'][number];

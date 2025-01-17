@@ -59,22 +59,7 @@ export type Database = {
           id?: string
           is_reviewed?: boolean | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "exercise_data_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "exercise_data_exercise_id_fkey"
-            columns: ["exercise_id"]
-            isOneToOne: false
-            referencedRelation: "exercises"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       exercises: {
         Row: {
@@ -386,6 +371,31 @@ export type Database = {
       get_my_profile: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
+      }
+      get_pending_exercise_submissions: {
+        Args: {
+          exercise_id: string
+        }
+        Returns: {
+          user_id: string
+          first_name: string
+          last_name: string
+          profile_name: string
+        }[]
+      }
+      get_team_exercise_data: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: {
+          id: string
+          exercise_id: string
+          author_id: string
+          data: Json
+          created_at: string
+          is_reviewed: boolean
+          author_name: string
+        }[]
       }
       is_username_available: {
         Args: {
