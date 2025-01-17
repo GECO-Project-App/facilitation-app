@@ -1,37 +1,19 @@
 'use client';
 import {Button, DateBadge, Header, PageLayout, SwipeFeed} from '@/components';
 import {Complete} from '@/components/icons';
-import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
-import {PendingUsers} from '@/lib/types';
 import {cn} from '@/lib/utils';
 import {useExerciseStore} from '@/store/exerciseStore';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight, Check} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useEffect} from 'react';
 
 export const TTMReview = () => {
   //TODO: status != review -> Show waiting screen
   const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
   const searchParams = useSearchParams();
-  const {getPendingSubmissions, pendingUsers, exercise} = useExerciseStore();
-
-  useEffect(() => {
-    if (exercise?.id && exercise.status === 'review') {
-      getPendingSubmissions(exercise.id);
-    }
-  }, [exercise?.id, getPendingSubmissions, exercise?.status]);
-
-  if (pendingUsers) {
-    return (
-      <WaitingFor
-        people={pendingUsers.map((user: PendingUsers) => `${user.firstName} ${user.lastName}`)}
-        deadline={new Date(exercise.deadline[exercise.status])}
-      />
-    );
-  }
+  const {pendingUsers, exercise, reviewedStages, setReviewedStages} = useExerciseStore();
 
   if (searchParams.get('stage')) {
     return (
@@ -53,8 +35,14 @@ export const TTMReview = () => {
       backgroundColor="bg-purple"
       header={<Header rightContent={<DateBadge date={new Date()} />} />}
       footer={
-        <Button variant="white">
-          Review complete <Complete />
+        <Button
+          variant="white"
+          disabled={reviewedStages.length < 2}
+          onClick={() => {
+            console.log('clicked');
+            setReviewedStages(null);
+          }}>
+          {t('review.button')} <Complete />
         </Button>
       }>
       <div className="divide-y-2 divide-black border-y-2 border-black border-x-2">
@@ -74,7 +62,15 @@ export const TTMReview = () => {
               size="small"
               className="mx-auto"
               onClick={() => router.push(`${window.location.href}&stage=${stage}`)}>
-              Let&apos;s get started <ArrowRight />
+              {reviewedStages.includes(stage) ? (
+                <>
+                  {t('review.startButton.reviewed')} <Check />
+                </>
+              ) : (
+                <>
+                  {t('review.startButton.start')} <ArrowRight />
+                </>
+              )}
             </Button>
           </div>
         ))}

@@ -365,12 +365,23 @@
       "review": {
         "title": "Review",
         "description": "Take a look at your teammates' preferences.",
-        "button": "Review complete",
+        "button": "Complete review",
+        "startButton": {
+          "reviewed": "Reviewed",
+          "start": "Let's get started"
+        },
         "swipe": {
-          "read": "to read the cards"
-          
+          "read": "to read the cards",
+          "done": "You have reviewed all your teammates' {stage} preferences!",
+          "markAsReviewed": "Mark as reviewed",
+          "reviewed": "Reviewed"
         }
+
       },
+     "toast": {
+          "success": "Your preferences have been submitted!",
+          "error": "Something went wrong"
+        },
       "steps": [
         {
           "title": "Strength",

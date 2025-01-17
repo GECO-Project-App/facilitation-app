@@ -1,4 +1,6 @@
 'use client';
+import {toast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {TTMExercisesSchema, ttmSchema} from '@/lib/zodSchemas';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -10,23 +12,14 @@ import {CarouselPagination} from './CarouselPagination';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
-import {
-  Button,
-  CarouselApi,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-  Textarea,
-} from './ui';
+import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
 
 export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const t = useTranslations('exercises.tutorialToMe');
   const steps: {title: string; description: string}[] = t
     .raw('steps')
     .map((step: {title: string; description: string}) => step);
-  const [api, setApi] = useState<CarouselApi>();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const searchParams = useSearchParams();
 
@@ -35,9 +28,9 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const form = useForm<TTMExercisesSchema>({
     resolver: zodResolver(ttmSchema),
     defaultValues: {
-      strengths: data?.strengths ?? '',
-      weaknesses: data?.weaknesses ?? '',
-      communication: data?.communication ?? '',
+      strengths: data?.strengths,
+      weaknesses: data?.weaknesses,
+      communication: data?.communication,
     },
   });
 
@@ -52,8 +45,17 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
       const exerciseData = await submitExerciseData(exerciseId, data);
       if (exerciseData) {
         setData(null);
-        console.log(exerciseData);
-        //TODO: Redirect and show toast
+
+        toast({
+          variant: 'success',
+          title: t('toast.success'),
+        });
+        router.replace(`/exercises/ttm?id=${exerciseId}`);
+      } else {
+        toast({
+          variant: 'destructive',
+          title: t('toast.error'),
+        });
       }
     }
   };
@@ -107,41 +109,6 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
           </form>
         </Form>
       </section>
-      {/* <Carousel className="h-full w-full flex-1 bg-blue" setApi={setApi}>
-        <CarouselContent className="bg-red ">
-          <CarouselItem>
-            <section className="flex flex-col gap-4 h-full w-full flex-1 ">
-              <p className="text-center text-xl ">
-                {t.rich('desc', {
-                  stage: t(`stages.${stage}`).toLowerCase(),
-                  bold: (chunks) => <span className="font-bold">{chunks}</span>,
-                })}
-              </p>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 flex flex-col">
-                  <FormField
-                    control={form.control}
-                    name={stage as keyof TTMExercisesSchema}
-                    render={({field}) => (
-                      <FormItem className="flex flex-col flex-1">
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            placeholder="240-480 characters *"
-                            className="flex-grow resize-none"
-                            value={data[stage]}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </form>
-              </Form>
-            </section>
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel> */}
     </PageLayout>
   );
 };

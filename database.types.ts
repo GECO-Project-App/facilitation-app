@@ -372,9 +372,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
       }
-      get_pending_exercise_submissions: {
+      get_pending_users: {
         Args: {
-          exercise_id: string
+          p_exercise_id: string
+          p_status: Database["public"]["Enums"]["exercise_status"]
         }
         Returns: {
           user_id: string

@@ -1,3 +1,4 @@
+import {useRouter} from '@/i18n/routing';
 import {FC} from 'react';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
@@ -12,6 +13,7 @@ type WaitingForProps = {
 };
 
 export const WaitingFor: FC<WaitingForProps> = ({people, deadline, onButtonClick}) => {
+  const router = useRouter();
   return (
     <PageLayout
       header={
@@ -20,7 +22,7 @@ export const WaitingFor: FC<WaitingForProps> = ({people, deadline, onButtonClick
         </Header>
       }
       footer={
-        <Button variant="pink" onClick={onButtonClick}>
+        <Button variant="pink" onClick={() => onButtonClick ?? router.back()}>
           Back to Menu
         </Button>
       }>

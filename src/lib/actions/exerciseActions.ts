@@ -1,7 +1,7 @@
 'use server';
 import {revalidatePath} from 'next/cache';
 import {createClient} from '../supabase/server';
-import {CreateExerciseParams, SubmitExerciseDataParams} from '../types';
+import {CreateExerciseParams, ExerciseStatus, SubmitExerciseDataParams} from '../types';
 
 export async function getTutorialToMeExercisesData(teamId: string) {
   const supabase = createClient();
@@ -196,26 +196,36 @@ export const getTeamExerciseData = async (exerciseId: string) => {
   return {exerciseData, error};
 };
 
-export async function getPendingSubmissions(exerciseId: string) {
+export async function getPendingUsers(exerciseId: string, status: ExerciseStatus) {
   const supabase = createClient();
 
   try {
-    const {data: pendingUsers, error} = await supabase.rpc('get_pending_exercise_submissions', {
-      exercise_id: exerciseId,
+    const {data: pendingUsers, error} = await supabase.rpc('get_pending_users', {
+      p_exercise_id: exerciseId,
+      p_status: status,
     });
 
     if (error) throw error;
 
-    return {
-      pendingUsers: pendingUsers.map((user) => ({
-        userId: user.user_id,
-        firstName: user.first_name,
-        lastName: user.last_name,
-        profileName: user.profile_name,
-      })),
-    };
+    return {pendingUsers};
   } catch (error) {
     console.error('Error getting pending submissions:', error);
     return {error: 'Failed to get pending submissions'};
   }
 }
+
+export const setExerciseDataAsReviewed = async (exerciseId: string) => {
+  const supabase = createClient();
+
+  const {
+    data: {user},
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const {data: exercise, error} = await supabase
+    .from('exercise_data')
+    .update({is_reviewed: true})
+    .eq('exercise_id', exerciseId)
+    .eq('author_id', user.id);
+  return {exercise, error};
+};

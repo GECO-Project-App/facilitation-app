@@ -4,15 +4,17 @@ import {
   getExerciseById,
   getExerciseBySlugAndId,
   getExerciseBySlugAndTeamId,
-  getPendingSubmissions,
+  getPendingUsers,
   getTeamExerciseData,
   getUserExerciseData,
+  setExerciseDataAsReviewed,
   submitExerciseData,
 } from '@/lib/actions/exerciseActions';
 import type {
   CreateExerciseParams,
   Exercise,
   ExerciseData,
+  ExerciseStatus,
   PendingUsers,
   TeamExerciseData,
 } from '@/lib/types';
@@ -33,6 +35,8 @@ type ExerciseState = {
   submittedExerciseData: ExerciseData | null;
   status: 'writing' | 'reviewing' | 'results';
   data: ExerciseData | null;
+  reviewedStages: string[];
+  setReviewedStages: (stage: string | null) => void;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
   setData: (data: Json) => void;
   createExercise: (newExercise: CreateExerciseParams) => Promise<Exercise>;
@@ -42,13 +46,14 @@ type ExerciseState = {
   getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
   getUserExerciseData: (exerciseId: string) => ExerciseData | null;
   currentExercise: Exercise | null;
-  getPendingSubmissions: (exerciseId: string) => PendingUsers | null;
+  getPendingUsers: (exerciseId: string, status: ExerciseStatus) => PendingUsers | null;
   getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
+  setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       deadline: {
         writingPhase: null,
         reviewingPhase: null,
@@ -59,6 +64,7 @@ export const useExerciseStore = create<ExerciseState>()(
       exercise: null,
       createdExercise: null,
       submittedExerciseData: null,
+      reviewedStages: [],
       status: 'writing',
       data: null,
       setDeadline: (deadline) => set({deadline}),
@@ -96,10 +102,15 @@ export const useExerciseStore = create<ExerciseState>()(
         set({exerciseData});
         return exerciseData;
       },
-      getPendingSubmissions: async (exerciseId) => {
-        const {pendingUsers} = await getPendingSubmissions(exerciseId);
+      getPendingUsers: async (exerciseId, status) => {
+        const {pendingUsers} = await getPendingUsers(exerciseId, status);
         set({pendingUsers});
         return pendingUsers;
+      },
+      setExerciseDataAsReviewed: async (exerciseId) => {
+        const {exercise} = await setExerciseDataAsReviewed(exerciseId);
+        set({exercise});
+        return exercise;
       },
       currentExercise: null,
       getTeamExerciseData: async (exerciseId) => {
@@ -107,6 +118,11 @@ export const useExerciseStore = create<ExerciseState>()(
         set({teamExerciseData: exerciseData});
         return exerciseData;
       },
+
+      setReviewedStages: (stage) =>
+        set({
+          reviewedStages: stage ? [...get().reviewedStages, stage] : [],
+        }),
     }),
 
     {name: 'ExerciseStore', storage: createJSONStorage(() => localStorage)},
