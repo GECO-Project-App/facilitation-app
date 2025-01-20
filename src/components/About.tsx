@@ -1,5 +1,4 @@
 'use client';
-import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExerciseStore} from '@/store/exerciseStore';
@@ -26,7 +25,6 @@ export const About: FC<{
   const router = useRouter();
   const posthog = usePostHog();
 
-  const {removeLocalStorageItem} = useSSCChaptersHandler();
   //TODO: Fetch exercise from database and set user to exercise/name/id if a facilitator has created an exercise - if user is a facilitator > send to / deadline to create exercise
 
   const {isFacilitator, currentTeam} = useTeamStore();
@@ -39,7 +37,6 @@ export const About: FC<{
   }, [slug, currentTeam, getExerciseBySlugAndTeamId]);
 
   const handleClick = () => {
-    removeLocalStorageItem('reviewDone');
     posthog.capture('exercise_start', {
       name: slug,
     });

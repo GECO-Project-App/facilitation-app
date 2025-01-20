@@ -1,5 +1,4 @@
 import {About} from '@/components';
-import ClearLocalStorage from '@/components/ssc-exercise/ClearLocalStorage';
 import {useTranslations} from 'next-intl';
 import {useMemo} from 'react';
 
@@ -29,15 +28,12 @@ export default function IntroductionPage({params}: {params: {slug: string}}) {
 
   const t = useTranslations(tKey);
   return (
-    <>
-      {slug === 'ssc' && <ClearLocalStorage />}
-      <About
-        slug={slug}
-        title={t('title')}
-        subtitle={t('subtitle')}
-        description={t('description')}
-        buttonText={t('button')}
-      />
-    </>
+    <About
+      slug={slug}
+      title={t('title')}
+      subtitle={t('subtitle')}
+      description={t('description')}
+      buttonText={t('button')}
+    />
   );
 }
