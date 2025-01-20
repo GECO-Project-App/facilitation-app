@@ -16,9 +16,8 @@ const ChapterAnswer = ({chapter, answers, replyId}: ChapterAnswerProps) => {
         {user?.firstName} {user?.lastName}
       </div>
       <div>
-        {answers.map((answer, index) => (
+        {answers.map((answer) => (
           <div key={answer} className="pl-4 pt-2">
-            <div className="text-gray-500 text-sm opacity-90">{index + 1}.</div>
             <div className="pl-2">{answer}</div>
           </div>
         ))}

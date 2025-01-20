@@ -1,5 +1,6 @@
 'use client';
 import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
+import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExercisesStore} from '@/store/useExercises';
@@ -10,7 +11,8 @@ import {FC, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
-import InvOrDelMembers from './tutorial-to-me/inv-uninv-members';
+import {TeamCard} from './TeamCard';
+import {TeamSelect} from './TeamSelect';
 import {Button} from './ui';
 
 export const About: FC<{
@@ -24,8 +26,10 @@ export const About: FC<{
   const posthog = usePostHog();
   const {currentTutorialExerciseId} = useExercisesStore();
   const {done, theTimePassed} = useDoneTutorialExercise();
+  const {removeLocalStorageItem} = useSSCChaptersHandler();
 
   const handleClick = () => {
+    removeLocalStorageItem('reviewDone');
     posthog.capture('exercise_start', {
       name: slug,
     });
@@ -86,10 +90,9 @@ export const About: FC<{
             <p className="font-light">{subtitle}</p>
           </div>
           <p>{description}</p>
-          {slug === 'tutorial-to-me' && (
-            <InvOrDelMembers toturianExerciseId={currentTutorialExerciseId} />
-          )}
         </div>
+        <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
+        <TeamCard />
       </div>
     </PageLayout>
   );

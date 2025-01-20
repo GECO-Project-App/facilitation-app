@@ -1,6 +1,6 @@
 'use client';
 
-import {CheckIcon, ChevronDownIcon} from '@radix-ui/react-icons';
+import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import * as React from 'react';
 
@@ -19,11 +19,15 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-full border-2 border-black bg-white px-4 py-2 shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+      'group flex h-9 w-full gap-4 items-center justify-between whitespace-nowrap rounded-full border-2 border-black bg-white px-4 py-2 shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
       className,
     )}
     {...props}>
     {children}
+    <span className="w-fit transition-transform duration-200">
+      <ChevronUpIcon className="h-4 w-4 group-data-[state=closed]:hidden" />
+      <ChevronDownIcon className="h-4 w-4 group-data-[state=open]:hidden" />
+    </span>
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;

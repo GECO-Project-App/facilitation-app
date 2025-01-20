@@ -3,6 +3,7 @@ import {useToast} from '@/hooks/useToast';
 import {Link} from '@/i18n/routing';
 import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
+import {useTeamStore} from '@/store/teamStore';
 import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
@@ -13,6 +14,7 @@ export const LoginForm = () => {
   const {toast} = useToast();
   const t = useTranslations('authenticate');
   const setUser = useUserStore((state) => state.setUser);
+  const {init} = useTeamStore();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -33,6 +35,7 @@ export const LoginForm = () => {
       });
     } else if (result?.session) {
       setUser(result.session.user);
+      init();
       toast({
         variant: 'success',
         title: t('loggedIn'),

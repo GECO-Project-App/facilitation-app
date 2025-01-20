@@ -67,3 +67,22 @@ export type Team = {
   created_by: string;
   team_members: TeamMember[];
 };
+
+export type ExerciseType = {
+  exerciseId: string;
+  createdBy: string;
+  teamId: string;
+  writingDate: string;
+  writingTime: string;
+  reviewingDate: string;
+  reviewingTime: string;
+  isActive: boolean;
+  reviewed: boolean;
+  type: 'tutorial_to_me';
+  replied_id: string;
+  answers: {
+    strengths: string;
+    weaknesses: string;
+    communications: string;
+  };
+};

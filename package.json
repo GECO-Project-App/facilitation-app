@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev && npx supabase start && npx supabase functions serve",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "format": "prettier --write src",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "supabase": "npx supabase start && npx supabase functions serve",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -30,6 +31,7 @@
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.2",
+    "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.1",
