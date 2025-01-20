@@ -19,7 +19,7 @@ export const TeamSelect = ({
   const searchParams = useSearchParams();
 
   const teamValue = useMemo(() => {
-    const teamId = searchParams.get('id');
+    const teamId = searchParams.get('teamId');
     if (!teamId) {
       return;
     }
@@ -30,8 +30,14 @@ export const TeamSelect = ({
   useEffect(() => {
     if (teamValue) {
       setCurrentTeamId(teamValue);
+    } else {
+      if (userTeams.length > 0) {
+        router.push(`?teamId=${userTeams[0].id ?? 'new'}`);
+      } else {
+        router.push(`?teamId=new`);
+      }
     }
-  }, [setCurrentTeamId, teamValue]);
+  }, [setCurrentTeamId, teamValue, router, currentTeamId, userTeams]);
 
   if (!currentTeam) return null;
 

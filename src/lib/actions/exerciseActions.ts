@@ -146,9 +146,7 @@ export async function getPendingUsers(exerciseId: string, status: ExerciseStatus
 
     if (error) throw error;
 
-    const isPendingUser = pendingUsers.some((pendingUser) => pendingUser.user_id === user.id);
-
-    return {pendingUsers: isPendingUser ? [] : pendingUsers};
+    return {pendingUsers};
   } catch (error) {
     console.error('Error getting pending submissions:', error);
     return {error: 'Failed to get pending submissions'};
@@ -169,4 +167,21 @@ export const setExerciseDataAsReviewed = async (exerciseId: string) => {
     .eq('exercise_id', exerciseId)
     .eq('author_id', user.id);
   return {exercise, error};
+};
+
+export const getTTMExerciseData = async (userId: string) => {
+  const supabase = createClient();
+
+  try {
+    const {data: ttmData, error} = await supabase.rpc('get_ttm_exercise_data', {
+      p_user_id: userId,
+    });
+
+    if (error) throw error;
+
+    return {ttmData: ttmData[0] || null, error: null};
+  } catch (error) {
+    console.error('Error fetching TTM exercise data:', error);
+    return {ttmData: null, error};
+  }
 };

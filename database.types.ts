@@ -352,6 +352,20 @@ export type Database = {
           author_name: string
         }[]
       }
+      get_ttm_exercise_data: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: {
+          exercise_id: string
+          author_id: string
+          data: Json
+          is_reviewed: boolean
+          created_at: string
+          exercise_status: Database["public"]["Enums"]["exercise_status"]
+          exercise_deadline: Json
+        }[]
+      }
       is_username_available: {
         Args: {
           p_username: string

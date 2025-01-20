@@ -362,6 +362,7 @@
         "weaknesses": "Weaknesses",
         "communication": "Communication practices"
       },
+
       "review": {
         "title": "Review",
         "description": "Take a look at your teammates' preferences.",
@@ -445,7 +446,8 @@
       "check-out": "Check Out",
       "ssc": "Start  Stop Continue",
       "ttm": "Tutorial to me"
-    }
+    },
+    "noStats": "User insights cannot be shown until this user has completed the Tutorial to me exercise."
   },
 
   "errors": {

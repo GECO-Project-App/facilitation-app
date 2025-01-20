@@ -60,7 +60,7 @@ export const TeamCard = () => {
           <TeamAvatars />
           <InviteTeamMemberDialog />
           {isFacilitator && (
-            <Link href={`/team?id=${currentTeam.id}`}>
+            <Link href={`/team?teamId=${currentTeam.id}`}>
               <Button variant="white" size="xs" className=" justify-between w-full">
                 {t('teamCard.edit')}
                 <EditTeam />

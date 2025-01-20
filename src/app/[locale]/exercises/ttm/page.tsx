@@ -5,6 +5,7 @@ import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
+import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 import {useEffect} from 'react';
@@ -16,28 +17,35 @@ export default function TTMExercisesPage() {
   const router = useRouter();
   const {exercise, getExerciseById, getUserExerciseData, getPendingUsers, pendingUsers} =
     useExerciseStore();
+  const {user} = useUserStore();
   const t = useTranslations();
 
   useEffect(() => {
-    if (id && !exercise) {
-      getExerciseById(id);
-    }
-    if (id && exercise) {
-      getUserExerciseData(id);
-    }
-  }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router]);
+    if (id) {
+      if (!exercise) {
+        const getExercise = async () => {
+          const {exercise} = await getExerciseById(id);
+          getPendingUsers(id, exercise.status);
+          router.push(`ttm?id=${id}&status=${exercise.status}`);
+        };
 
-  useEffect(() => {
-    if (id && (status === 'reviewing' || status === 'writing')) {
-      getPendingUsers(id, status);
+        getExercise();
+        return;
+      }
+      getUserExerciseData(id);
+      getPendingUsers(id, exercise.status);
+      router.push(`ttm?id=${id}&status=${exercise.status}`);
+    } else {
+      router.push(`ttm`);
     }
-  }, [id, status, getPendingUsers, router, exercise]);
+  }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
   if (!exercise || !id) {
     return <div>loading...</div>;
   }
 
-  if (pendingUsers && pendingUsers.length > 0) {
+  // If the user is not in the pending users list, show the waiting for component
+  if (!pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id)) {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
@@ -55,6 +63,6 @@ export default function TTMExercisesPage() {
     case 'reviewing':
       return <TTMReview />;
     case 'completed':
-      return <div>completed</div>;
+      return <TTMReview isCompleted={true} />;
   }
 }

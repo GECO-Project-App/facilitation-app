@@ -17,6 +17,7 @@ export const SwipeFeed: FC<{stage: string}> = ({stage}) => {
     useExerciseStore();
   const searchParams = useSearchParams();
   const exerciseId = searchParams.get('id') as string;
+  const status = searchParams.get('status') as string;
   const router = useRouter();
 
   useEffect(() => {
@@ -46,8 +47,8 @@ export const SwipeFeed: FC<{stage: string}> = ({stage}) => {
             key={index}
             className="w-full h-full snap-start snap-always flex items-center justify-center">
             <div className="gap-8 flex flex-col w-full">
-              <h3 className="text-2xl font-bold">{entry.author_name}</h3>
-              <h3 className="text-2xl">{entry.data[stage]}</h3>
+              <h3 className="text-2xl font-bold break-words">{entry.author_name}</h3>
+              <h3 className="text-2xl break-words">{entry.data[stage]}</h3>
             </div>
           </div>
         ))}
@@ -58,7 +59,7 @@ export const SwipeFeed: FC<{stage: string}> = ({stage}) => {
         <Button
           variant="white"
           onClick={() => {
-            if (!reviewedStages.includes(stage)) {
+            if (!reviewedStages.includes(stage) && status !== 'completed') {
               setReviewedStages(stage);
             }
             router.back();

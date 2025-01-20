@@ -1,6 +1,7 @@
 'use client';
-import {Button, DateBadge, Header, PageLayout, SwipeFeed} from '@/components';
+import {Button, DateBadge, Header, PageLayout, RiveAnimation, SwipeFeed} from '@/components';
 import {Complete} from '@/components/icons';
+import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {useExerciseStore} from '@/store/exerciseStore';
@@ -8,12 +9,13 @@ import {ArrowRight, Check} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 
-export const TTMReview = () => {
-  //TODO: status != review -> Show waiting screen
+export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
   const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
   const searchParams = useSearchParams();
-  const {pendingUsers, exercise, reviewedStages, setReviewedStages, setExerciseDataAsReviewed} =
+  const {toast} = useToast();
+
+  const {exercise, reviewedStages, setReviewedStages, setExerciseDataAsReviewed} =
     useExerciseStore();
 
   if (searchParams.get('stage')) {
@@ -36,18 +38,32 @@ export const TTMReview = () => {
       backgroundColor="bg-purple"
       header={<Header rightContent={<DateBadge date={new Date()} />} />}
       footer={
-        <Button
-          variant="white"
-          disabled={reviewedStages.length < 3}
-          onClick={() => {
-            const reviewedExercise = setExerciseDataAsReviewed(exercise.id);
-            if (reviewedExercise) {
-              setReviewedStages(null);
-              router.push(`/exercises/ttm?id=${exercise.id}&status=completed`);
-            }
-          }}>
-          {t('review.button')} <Complete />
-        </Button>
+        isCompleted ? null : (
+          <Button
+            variant="white"
+            disabled={reviewedStages.length < 3}
+            onClick={() => {
+              const reviewedExercise = setExerciseDataAsReviewed(exercise.id);
+              if (reviewedExercise) {
+                setReviewedStages(null);
+                toast({
+                  variant: 'transparent',
+                  size: 'fullscreen',
+                  duration: 2000,
+                  className: 'text-black bg-blue',
+                  children: (
+                    <>
+                      <h3 className="text-3xl font-bold">{t('common.greatJob')}</h3>
+                      <RiveAnimation src="geckograttis.riv" width={300} height={300} />
+                    </>
+                  ),
+                });
+                router.push(`/exercises/ttm/feedback`);
+              }
+            }}>
+            {t('review.button')} <Complete />
+          </Button>
+        )
       }>
       <div className="divide-y-2 divide-black border-y-2 border-black border-x-2">
         {Object.keys(t.raw('stages')).map((stage, index) => (

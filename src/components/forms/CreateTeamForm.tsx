@@ -50,7 +50,7 @@ export const CreateTeamForm = () => {
         ),
       });
 
-      router.push(`/team?id=${result.teamId}`);
+      router.push(`/team?teamId=${result.teamId}`);
       updateTeams();
     }
   };

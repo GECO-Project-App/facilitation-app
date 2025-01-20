@@ -6,6 +6,7 @@ import {
   getExerciseBySlugAndTeamId,
   getPendingUsers,
   getTeamExerciseData,
+  getTTMExerciseData,
   getUserExerciseData,
   setExerciseDataAsReviewed,
   submitExerciseData,
@@ -17,6 +18,7 @@ import type {
   ExerciseStatus,
   PendingUsers,
   TeamExerciseData,
+  TTMExerciseData,
 } from '@/lib/types';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
@@ -36,6 +38,7 @@ type ExerciseState = {
   status: 'writing' | 'reviewing' | 'results';
   data: ExerciseData | null;
   reviewedStages: string[];
+  ttmData: TTMExerciseData | null;
   setReviewedStages: (stage: string | null) => void;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
   setData: (data: Json) => void;
@@ -44,11 +47,12 @@ type ExerciseState = {
   getExerciseById: (exerciseId: string) => Exercise | null;
   getExerciseBySlugAndId: (slug: string, exerciseId: string) => Exercise | null;
   getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
-  getUserExerciseData: (exerciseId: string) => ExerciseData | null;
+  getUserExerciseData: (exerciseId: string, userId?: string) => ExerciseData | null;
   currentExercise: Exercise | null;
   getPendingUsers: (exerciseId: string, status: ExerciseStatus) => PendingUsers | null;
   getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
   setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
+  getTTMExerciseData: (userId: string) => TTMExerciseData | null;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
@@ -67,6 +71,8 @@ export const useExerciseStore = create<ExerciseState>()(
       reviewedStages: [],
       status: 'writing',
       data: null,
+      currentExercise: null,
+      ttmData: null,
       setDeadline: (deadline) => set({deadline}),
       setData: (data) => set({data}),
       createExercise: async (newExercise) => {
@@ -82,6 +88,7 @@ export const useExerciseStore = create<ExerciseState>()(
       },
       submitExerciseData: async (exerciseId, data) => {
         const {submission} = await submitExerciseData({exerciseId, data});
+
         set({submittedExerciseData: submission});
         return submission;
       },
@@ -112,13 +119,16 @@ export const useExerciseStore = create<ExerciseState>()(
         set({exercise});
         return exercise;
       },
-      currentExercise: null,
       getTeamExerciseData: async (exerciseId) => {
         const {exerciseData} = await getTeamExerciseData(exerciseId);
         set({teamExerciseData: exerciseData});
         return exerciseData;
       },
-
+      getTTMExerciseData: async (userId) => {
+        const {ttmData} = await getTTMExerciseData(userId);
+        set({ttmData});
+        return ttmData;
+      },
       setReviewedStages: (stage) =>
         set({
           reviewedStages: stage ? [...get().reviewedStages, stage] : [],

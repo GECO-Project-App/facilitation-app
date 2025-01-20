@@ -24,9 +24,6 @@ export const About: FC<{
 }> = ({slug, title, subtitle, description, buttonText, hideTeamSelect = false}) => {
   const router = useRouter();
   const posthog = usePostHog();
-
-  //TODO: Fetch exercise from database and set user to exercise/name/id if a facilitator has created an exercise - if user is a facilitator > send to / deadline to create exercise
-
   const {isFacilitator, currentTeam} = useTeamStore();
   const {exercise, getExerciseBySlugAndTeamId} = useExerciseStore();
 
