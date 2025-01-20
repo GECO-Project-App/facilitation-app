@@ -1,11 +1,9 @@
 'use client';
-import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
 import {useToast} from '@/hooks/useToast';
 import {Link, useRouter} from '@/i18n/routing';
 import {joinTeamByCode} from '@/lib/actions/teamActions';
 import {teamCodeSchema, TeamCodeSchema} from '@/lib/zodSchemas';
 import {useTeamStore} from '@/store/teamStore';
-import {useExercisesStore} from '@/store/useExercises';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Rocket} from 'lucide-react';
 import {useTranslations} from 'next-intl';
@@ -17,8 +15,6 @@ import {Button, Form, FormControl, FormField, FormItem, FormMessage, Input} from
 
 export const TeamCard = () => {
   const {currentTeam, isFacilitator, updateUserTeams} = useTeamStore();
-  const {done} = useDoneTutorialExercise();
-  const {currentTutorialExerciseId} = useExercisesStore();
   const {toast} = useToast();
   const router = useRouter();
   const t = useTranslations('team');
@@ -61,23 +57,15 @@ export const TeamCard = () => {
     <div className="max-w-xs mx-auto">
       {currentTeam ? (
         <div className="bg-yellow  rounded-3xl border-2 border-black p-4 flex flex-col gap-4 h-full">
-          {currentTutorialExerciseId ? (
-            <div className="text-center text-lg">
-              {!done ? t('teamCard.existingExercise') : t('teamCard.existingExerciseDescription')}
-            </div>
-          ) : (
-            <>
-              <TeamAvatars />
-              <InviteTeamMemberDialog />
-              {isFacilitator && (
-                <Link href={`/team?id=${currentTeam.id}`}>
-                  <Button variant="white" size="xs" className=" justify-between w-full">
-                    {t('teamCard.edit')}
-                    <EditTeam />
-                  </Button>
-                </Link>
-              )}
-            </>
+          <TeamAvatars />
+          <InviteTeamMemberDialog />
+          {isFacilitator && (
+            <Link href={`/team?id=${currentTeam.id}`}>
+              <Button variant="white" size="xs" className=" justify-between w-full">
+                {t('teamCard.edit')}
+                <EditTeam />
+              </Button>
+            </Link>
           )}
         </div>
       ) : (

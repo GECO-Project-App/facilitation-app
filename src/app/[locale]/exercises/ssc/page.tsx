@@ -1,49 +1,63 @@
-import {Button, Header, PageLayout} from '@/components';
-import {Lamp} from '@/components/icons/lamp';
-import CheckBox from '@/components/ssc-exercise/check-box/CheckBox';
-import {Link} from '@/i18n/routing';
-import {buttons} from '@/lib/ssc-mock-data';
-import {ArrowLeft} from 'lucide-react';
-import {getTranslations} from 'next-intl/server';
+'use client';
+import {About, SSCSwipe} from '@/components';
+import {WaitingFor} from '@/components/WaitingFor';
+import {useRouter} from '@/i18n/routing';
+import {ExerciseStatus} from '@/lib/types';
+import {useExerciseStore} from '@/store/exerciseStore';
+import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
+import {useCallback, useEffect} from 'react';
 
-export default async function SSCPage() {
-  const t = await getTranslations('exercises.ssc');
-  const buttonText: string[] = t.raw('buttons').map((btn: string) => btn);
+export default function SSCPage() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const status = searchParams.get('status') as ExerciseStatus;
+  const {
+    exercise,
+    getExerciseById,
+    getUserExerciseData,
+    exerciseData,
+    pendingUsers,
+    getPendingUsers,
+  } = useExerciseStore();
+  const router = useRouter();
+  const t = useTranslations();
 
-  return (
-    <PageLayout
-      backgroundColor="bg-deepPurple"
-      contentColor="bg-deepPurple"
-      header={
-        <Header
-          leftContent={
-            <Link href={'/'}>
-              <ArrowLeft size={42} />
-            </Link>
-          }
-          rightContent={
-            <div className="aspect-square h-11 flex-none">
-              <Link href={'./ssc/tips'}>
-                <Lamp className="fill-white hover:animate-shake hover:fill-yellow" height={50} />
-              </Link>
-            </div>
-          }
-        />
-      }>
-      <section className="mx-auto flex max-w-xs flex-1 flex-col items-center justify-center space-y-10">
-        {buttons.map((button, i) => (
-          <Button
-            variant={button.variant}
-            className="w-full justify-between"
-            asChild
-            key={button.title}>
-            <Link href={button.href}>
-              <CheckBox chapter={button.chapter || ''} />
-              <span className="mx-auto">{buttonText[i].toUpperCase()}</span>
-            </Link>
-          </Button>
-        ))}
-      </section>
-    </PageLayout>
-  );
+  useEffect(() => {
+    if (id && !exercise) {
+      getExerciseById(id);
+    }
+    if (id) {
+      getUserExerciseData(id);
+    }
+  }, [id, exercise, getExerciseById, getUserExerciseData]);
+
+  useCallback(() => {
+    if (id && status) {
+      getPendingUsers(id, status);
+    }
+  }, [id, status, getPendingUsers]);
+
+  if (!id || !exercise?.id) {
+    return (
+      <About
+        slug="ssc"
+        title="ssc.title"
+        subtitle="ssc.subtitle"
+        description="ssc.description"
+        buttonText="ssc.button"
+        hideTeamSelect
+      />
+    );
+  }
+  if (pendingUsers) {
+    return (
+      <WaitingFor
+        deadline={new Date(exercise.deadline[exercise.status])}
+        text={t(`common.waitingStatus.${status}`)}
+      />
+    );
+  }
+
+  return <SSCSwipe deadline={new Date(exercise.deadline[exercise.status])} />;
 }

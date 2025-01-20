@@ -34,6 +34,87 @@ export type Database = {
   }
   public: {
     Tables: {
+      exercise_data: {
+        Row: {
+          author_id: string
+          created_at: string | null
+          data: Json
+          exercise_id: string
+          id: string
+          is_reviewed: boolean | null
+        }
+        Insert: {
+          author_id: string
+          created_at?: string | null
+          data: Json
+          exercise_id: string
+          id?: string
+          is_reviewed?: boolean | null
+        }
+        Update: {
+          author_id?: string
+          created_at?: string | null
+          data?: Json
+          exercise_id?: string
+          id?: string
+          is_reviewed?: boolean | null
+        }
+        Relationships: []
+      }
+      exercises: {
+        Row: {
+          created_at: string | null
+          created_by: string
+          deadline: Json
+          id: string
+          review_type:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug: string
+          status: Database["public"]["Enums"]["exercise_status"] | null
+          team_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          created_by: string
+          deadline: Json
+          id?: string
+          review_type?:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug: string
+          status?: Database["public"]["Enums"]["exercise_status"] | null
+          team_id: string
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string
+          deadline?: Json
+          id?: string
+          review_type?:
+            | Database["public"]["Enums"]["exercise_review_type"]
+            | null
+          slug?: string
+          status?: Database["public"]["Enums"]["exercise_status"] | null
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercises_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -174,72 +255,6 @@ export type Database = {
         }
         Relationships: []
       }
-      tutorial_to_me: {
-        Row: {
-          communications: string | null
-          created_at: string | null
-          created_by: string | null
-          exercise_id: string
-          is_active: boolean | null
-          replied_id: string
-          reviewed: boolean | null
-          reviewing_date: string | null
-          reviewing_time: string | null
-          strengths: string | null
-          team_id: string | null
-          weaknesses: string | null
-          writing_date: string | null
-          writing_time: string | null
-        }
-        Insert: {
-          communications?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          exercise_id?: string
-          is_active?: boolean | null
-          replied_id: string
-          reviewed?: boolean | null
-          reviewing_date?: string | null
-          reviewing_time?: string | null
-          strengths?: string | null
-          team_id?: string | null
-          weaknesses?: string | null
-          writing_date?: string | null
-          writing_time?: string | null
-        }
-        Update: {
-          communications?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          exercise_id?: string
-          is_active?: boolean | null
-          replied_id?: string
-          reviewed?: boolean | null
-          reviewing_date?: string | null
-          reviewing_time?: string | null
-          strengths?: string | null
-          team_id?: string | null
-          weaknesses?: string | null
-          writing_date?: string | null
-          writing_time?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "tutorial_to_me_replied_id_fkey"
-            columns: ["replied_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "tutorial_to_me_team_id_fkey"
-            columns: ["team_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
     }
     Views: {
       team_permissions: {
@@ -266,6 +281,12 @@ export type Database = {
       }
     }
     Functions: {
+      check_exercise_completion: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: boolean
+      }
       check_team_management_permission: {
         Args: {
           team_id: string
@@ -290,6 +311,46 @@ export type Database = {
       get_my_profile: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
+      }
+      get_pending_users:
+        | {
+            Args: {
+              p_exercise_id: string
+              p_status: Database["public"]["Enums"]["exercise_status"]
+            }
+            Returns: {
+              user_id: string
+              first_name: string
+              last_name: string
+              profile_name: string
+            }[]
+          }
+        | {
+            Args: {
+              p_exercise_id: string
+              p_status: Database["public"]["Enums"]["exercise_status"]
+              p_current_user: string
+            }
+            Returns: {
+              user_id: string
+              first_name: string
+              last_name: string
+              profile_name: string
+            }[]
+          }
+      get_team_exercise_data: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: {
+          id: string
+          exercise_id: string
+          author_id: string
+          data: Json
+          created_at: string
+          is_reviewed: boolean
+          author_name: string
+        }[]
       }
       is_username_available: {
         Args: {
@@ -343,6 +404,8 @@ export type Database = {
       }
     }
     Enums: {
+      exercise_review_type: "read_only" | "vote"
+      exercise_status: "writing" | "reviewing" | "completed"
       team_invitation_status:
         | "pending"
         | "awaiting_signup"

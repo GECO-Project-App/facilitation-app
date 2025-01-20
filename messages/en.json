@@ -150,12 +150,23 @@
         "subtitle": "5-15 minutes | 2-20 members",
         "description": "End your meetings right by giving each team member the space to share something with the team.",
         "button": "Start",
-        "link": "/exercises/tutorial-to-me/introduction",
+        "link": "/exercises/ttm/introduction",
         "type": "tutorial-to-me"
       }
     ]
   },
   "exercises": {
+    "deadline": {
+        "title": "Define Timeline",
+        "description": "Let's set the deadline for the exercise.",
+        "writingPhase": "Writing Phase",
+        "reviewingPhase": "Reviewing Phase",
+        "pickADateAndTime": "Pick a date and time",
+        "pickADate": "Pick a date",
+        "nextStep": "Next Step"
+        
+      
+    },
     "checkIn": {
       "title": "Check In Exercise",
       "subtitle": "5-15 minutes | 2-20 members",
@@ -342,17 +353,35 @@
       "waitingForOthersP2": "to finish their Tutorial to me. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else answers.",
       "thereIsAnExerciseToDo": "There is an exercise to do",
       "youAlreadyDidThisExercise": "You already did this exercise",
-
-      "defineTimeline": {
-        "title": "Define Timeline",
-        "description": "Let's set the deadline for the exercise.",
-        "writingPhase": "Writing Phase",
-        "reviewingPhase": "Reviewing Phase",
-        "pickADateAndTime": "Pick a date and time"
-      },
       "inviteTeamMember": "Invite team member",
       "removeTeamMember": "Remove team member",
       "submit": "Submit",
+      "desc": "Name three <bold>{stage}</bold> you have when working on a project?",
+      "stages": {
+        "strengths": "Strengths",
+        "weaknesses": "Weaknesses",
+        "communication": "Communication practices"
+      },
+      "review": {
+        "title": "Review",
+        "description": "Take a look at your teammates' preferences.",
+        "button": "Complete review",
+        "startButton": {
+          "reviewed": "Reviewed",
+          "start": "Let's get started"
+        },
+        "swipe": {
+          "read": "to read the cards",
+          "done": "You have reviewed all your teammates' {stage} preferences!",
+          "markAsReviewed": "Mark as reviewed",
+          "reviewed": "Reviewed"
+        }
+
+      },
+     "toast": {
+          "success": "Your preferences have been submitted!",
+          "error": "Something went wrong"
+        },
       "steps": [
         {
           "title": "Strength",
@@ -370,8 +399,11 @@
           "button": "Submit"
         }
       ]
+
     }
+
   },
+
   "feedback": {
     "title": " What worked well during this exercise? And what didn't?",
     "subtitle": "What didn't?",
@@ -381,7 +413,12 @@
   },
 
 
+
   "common": {
+     "waitingStatus": {
+        "reviewing": "We are still waiting on {people} to finish their review.",
+        "writing": "We are still waiting on {people} to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."
+      },
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
     "goToHome": "Go to home",
@@ -389,6 +426,8 @@
     "thankYouText": "Thank you for your feedback!",
     "greatJob": "GREAT JOB! YOU DID IT!",
     "logOut": "Log Out",
+    "save": "Save",
+    "goBack": "Go Back",
     "languages": [
       {
         "label": "English",
