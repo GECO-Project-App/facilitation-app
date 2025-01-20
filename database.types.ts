@@ -255,72 +255,6 @@ export type Database = {
         }
         Relationships: []
       }
-      tutorial_to_me: {
-        Row: {
-          communications: string | null
-          created_at: string | null
-          created_by: string | null
-          exercise_id: string
-          is_active: boolean | null
-          replied_id: string
-          reviewed: boolean | null
-          reviewing_date: string | null
-          reviewing_time: string | null
-          strengths: string | null
-          team_id: string | null
-          weaknesses: string | null
-          writing_date: string | null
-          writing_time: string | null
-        }
-        Insert: {
-          communications?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          exercise_id?: string
-          is_active?: boolean | null
-          replied_id: string
-          reviewed?: boolean | null
-          reviewing_date?: string | null
-          reviewing_time?: string | null
-          strengths?: string | null
-          team_id?: string | null
-          weaknesses?: string | null
-          writing_date?: string | null
-          writing_time?: string | null
-        }
-        Update: {
-          communications?: string | null
-          created_at?: string | null
-          created_by?: string | null
-          exercise_id?: string
-          is_active?: boolean | null
-          replied_id?: string
-          reviewed?: boolean | null
-          reviewing_date?: string | null
-          reviewing_time?: string | null
-          strengths?: string | null
-          team_id?: string | null
-          weaknesses?: string | null
-          writing_date?: string | null
-          writing_time?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "tutorial_to_me_replied_id_fkey"
-            columns: ["replied_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "tutorial_to_me_team_id_fkey"
-            columns: ["team_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
     }
     Views: {
       team_permissions: {
@@ -347,6 +281,12 @@ export type Database = {
       }
     }
     Functions: {
+      check_exercise_completion: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: boolean
+      }
       check_team_management_permission: {
         Args: {
           team_id: string
@@ -372,18 +312,32 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
       }
-      get_pending_users: {
-        Args: {
-          p_exercise_id: string
-          p_status: Database["public"]["Enums"]["exercise_status"]
-        }
-        Returns: {
-          user_id: string
-          first_name: string
-          last_name: string
-          profile_name: string
-        }[]
-      }
+      get_pending_users:
+        | {
+            Args: {
+              p_exercise_id: string
+              p_status: Database["public"]["Enums"]["exercise_status"]
+            }
+            Returns: {
+              user_id: string
+              first_name: string
+              last_name: string
+              profile_name: string
+            }[]
+          }
+        | {
+            Args: {
+              p_exercise_id: string
+              p_status: Database["public"]["Enums"]["exercise_status"]
+              p_current_user: string
+            }
+            Returns: {
+              user_id: string
+              first_name: string
+              last_name: string
+              profile_name: string
+            }[]
+          }
       get_team_exercise_data: {
         Args: {
           p_exercise_id: string

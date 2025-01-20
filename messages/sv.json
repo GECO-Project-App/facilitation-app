@@ -401,7 +401,13 @@
     "thankYouText": "Tack för din feedback!"
   },
 
+
+
   "common": {
+    "waitingStatus": {
+        "reviewing": "Vi väntar fortfarande på {people} att slutföra sin granskning.",
+        "writing": "Vi väntar fortfarande på {people} att skicka in sina svar. Vi skickar dig en email när alla har slutfört övningen, så du kan komma tillbaka hit och granska andras svar."
+      },
     "save": "Spara",
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",

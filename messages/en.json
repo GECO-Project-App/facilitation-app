@@ -399,8 +399,11 @@
           "button": "Submit"
         }
       ]
+
     }
+
   },
+
   "feedback": {
     "title": " What worked well during this exercise?",
     "subtitle": "What didn't?",
@@ -410,7 +413,12 @@
   },
 
 
+
   "common": {
+     "waitingStatus": {
+        "reviewing": "We are still waiting on {people} to finish their review.",
+        "writing": "We are still waiting on {people} to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."
+      },
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
     "goToHome": "Go to home",
@@ -419,6 +427,7 @@
     "greatJob": "GREAT JOB! YOU DID IT!",
     "logOut": "Log Out",
     "save": "Save",
+    "goBack": "Go Back",
     "languages": [
       {
         "label": "English",

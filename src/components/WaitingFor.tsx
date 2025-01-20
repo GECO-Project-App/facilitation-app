@@ -1,4 +1,5 @@
 import {useRouter} from '@/i18n/routing';
+import {useTranslations} from 'next-intl';
 import {FC} from 'react';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
@@ -7,13 +8,14 @@ import {RiveAnimation} from './RiveAnimation';
 import {Button} from './ui/button';
 
 type WaitingForProps = {
-  people: string[];
   deadline: Date;
-  onButtonClick?: () => void;
+  text?: string;
 };
 
-export const WaitingFor: FC<WaitingForProps> = ({people, deadline, onButtonClick}) => {
+export const WaitingFor: FC<WaitingForProps> = ({deadline, text}) => {
   const router = useRouter();
+  const t = useTranslations('common');
+
   return (
     <PageLayout
       header={
@@ -22,14 +24,13 @@ export const WaitingFor: FC<WaitingForProps> = ({people, deadline, onButtonClick
         </Header>
       }
       footer={
-        <Button variant="pink" onClick={() => onButtonClick ?? router.back()}>
-          Back to Menu
+        <Button variant="pink" onClick={() => router.back()}>
+          {t('goBack')}
         </Button>
       }>
       <RiveAnimation src="timer.riv" width={'100%'} height={200} />
 
-      <h1>Waiting for {people.join(', ')} to review</h1>
-      {/* //TODO: Write function for fetching the names of the team members that we're waiting for */}
+      <h3>{text}</h3>
     </PageLayout>
   );
 };

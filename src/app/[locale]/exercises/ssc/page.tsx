@@ -2,34 +2,41 @@
 import {About, SSCSwipe} from '@/components';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
-import {PendingUsers} from '@/lib/types';
+import {ExerciseStatus} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
+import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 
 export default function SSCPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+  const status = searchParams.get('status') as ExerciseStatus;
   const {
     exercise,
     getExerciseById,
     getUserExerciseData,
     exerciseData,
     pendingUsers,
-    getPendingSubmissions,
+    getPendingUsers,
   } = useExerciseStore();
   const router = useRouter();
+  const t = useTranslations();
 
   useEffect(() => {
     if (id && !exercise) {
       getExerciseById(id);
-      getPendingSubmissions(id);
     }
-
     if (id) {
       getUserExerciseData(id);
     }
-  }, [id, exercise, getExerciseById, getUserExerciseData, getPendingSubmissions]);
+  }, [id, exercise, getExerciseById, getUserExerciseData]);
+
+  useCallback(() => {
+    if (id && status) {
+      getPendingUsers(id, status);
+    }
+  }, [id, status, getPendingUsers]);
 
   if (!id || !exercise?.id) {
     return (
@@ -47,7 +54,7 @@ export default function SSCPage() {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
-        people={pendingUsers.map((user: PendingUsers) => `${user.firstName} ${user.lastName}`)}
+        text={t(`common.waitingStatus.${status}`)}
       />
     );
   }

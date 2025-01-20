@@ -13,7 +13,8 @@ export const TTMReview = () => {
   const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
   const searchParams = useSearchParams();
-  const {pendingUsers, exercise, reviewedStages, setReviewedStages} = useExerciseStore();
+  const {pendingUsers, exercise, reviewedStages, setReviewedStages, setExerciseDataAsReviewed} =
+    useExerciseStore();
 
   if (searchParams.get('stage')) {
     return (
@@ -37,10 +38,13 @@ export const TTMReview = () => {
       footer={
         <Button
           variant="white"
-          disabled={reviewedStages.length < 2}
+          disabled={reviewedStages.length < 3}
           onClick={() => {
-            console.log('clicked');
-            setReviewedStages(null);
+            const reviewedExercise = setExerciseDataAsReviewed(exercise.id);
+            if (reviewedExercise) {
+              setReviewedStages(null);
+              router.push(`/exercises/ttm?id=${exercise.id}&status=completed`);
+            }
           }}>
           {t('review.button')} <Complete />
         </Button>
