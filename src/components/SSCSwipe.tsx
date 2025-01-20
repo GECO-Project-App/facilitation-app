@@ -9,7 +9,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {Send} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {CarouselPagination} from './CarouselPagination';
 import {DateBadge} from './DateBadge';
@@ -18,14 +18,12 @@ import {Complete} from './icons';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
-import {CarouselApi} from './ui/carousel';
 
 type SSCSwipeProps = {
   deadline: Date;
 };
 
 export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
-  const [api, setApi] = useState<CarouselApi>();
   const [currentStep, setCurrentStep] = useState(0);
   const t = useTranslations();
   const chapters = t.raw(`ssc.chapters`);
@@ -44,17 +42,6 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       continue: '',
     },
   });
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCurrentStep(api.selectedScrollSnap());
-
-    api.on('select', () => {
-      setCurrentStep(api.selectedScrollSnap());
-    });
-  }, [api]);
 
   const onSubmit = async (data: SSCBrainstormSchema) => {
     const exerciseId = searchParams.get('id');
@@ -62,7 +49,6 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       console.error('Exercise ID not found in search params');
       return;
     }
-    console.log(data);
     const stage = Object.keys(data).find(
       (key) => data[key as keyof SSCBrainstormSchema] === '',
     ) as keyof SSCBrainstormSchema;
@@ -70,15 +56,22 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
     if (stage) {
       setStage(stage);
       setData(JSON.stringify(data));
-      console.log(stage);
+
       form.resetField(stage);
     } else {
-      const submission = await submitExerciseData({exerciseId: exerciseId, data});
+      const {submission} = await submitExerciseData({exerciseId: exerciseId, data});
       if (submission) {
-        console.log('Submission successful');
-        setData(submission);
+        toast({
+          variant: 'success',
+          title: t('toast.success'),
+        });
+        setData(null);
+        router.push(`/exercises/ssc?id=${submission.exercise_id}`);
       } else {
-        console.error('Submission failed');
+        toast({
+          variant: 'destructive',
+          title: t('toast.error'),
+        });
       }
     }
   };
@@ -147,6 +140,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
                 <FormItem className="flex flex-col flex-1">
                   <FormControl>
                     <Textarea
+                      variant="default"
                       {...field}
                       {...form.register(stage, {required: true})}
                       placeholder="240-480 characters *"

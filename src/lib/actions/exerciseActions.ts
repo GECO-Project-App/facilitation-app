@@ -122,11 +122,11 @@ export const getUserExerciseData = async (exerciseId: string) => {
 
 export const getTeamExerciseData = async (exerciseId: string) => {
   const supabase = createClient();
-  const {data: exerciseData, error} = await supabase.rpc('get_team_exercise_data', {
+  const {data, error} = await supabase.rpc('get_team_exercise_data', {
     p_exercise_id: exerciseId,
   });
 
-  return {exerciseData, error};
+  return {exerciseData: data, error};
 };
 
 export async function getPendingUsers(exerciseId: string, status: ExerciseStatus) {
@@ -141,7 +141,6 @@ export async function getPendingUsers(exerciseId: string, status: ExerciseStatus
     const {data: pendingUsers, error} = await supabase.rpc('get_pending_users', {
       p_exercise_id: exerciseId,
       p_status: status,
-      p_current_user: user.id,
     });
 
     if (error) throw error;

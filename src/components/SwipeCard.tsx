@@ -61,7 +61,7 @@ export const SwipeCard = ({
       <Card
         className={cn(
           type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
-          'flex-1',
+          'flex-1 ',
         )}>
         <CardHeader>
           <CardTitle>{title}</CardTitle>

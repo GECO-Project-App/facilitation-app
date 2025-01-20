@@ -379,10 +379,7 @@
         }
 
       },
-     "toast": {
-          "success": "Your preferences have been submitted!",
-          "error": "Something went wrong"
-        },
+
       "steps": [
         {
           "title": "Strength",
@@ -401,7 +398,11 @@
         }
       ]
 
-    }
+    },
+         "toast": {
+          "success": "Your preferences have been submitted!",
+          "error": "Something went wrong"
+        }
 
   },
 

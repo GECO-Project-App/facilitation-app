@@ -15,9 +15,9 @@ import {PageLayout} from './PageLayout';
 import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
 
 export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
-  const t = useTranslations('exercises.tutorialToMe');
+  const t = useTranslations('exercises');
   const steps: {title: string; description: string}[] = t
-    .raw('steps')
+    .raw('tutorialToMe.steps')
     .map((step: {title: string; description: string}) => step);
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
@@ -48,13 +48,13 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
 
         toast({
           variant: 'success',
-          title: t('toast.success'),
+          title: t('exercises.toast.success'),
         });
         router.replace(`/exercises/ttm?id=${exerciseId}`);
       } else {
         toast({
           variant: 'destructive',
-          title: t('toast.error'),
+          title: t('exercises.toast.error'),
         });
       }
     }
@@ -83,8 +83,8 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
       }>
       <section className="flex flex-col gap-4 h-full w-full flex-1 ">
         <p className="text-center text-xl ">
-          {t.rich('desc', {
-            stage: t(`stages.${stage}`).toLowerCase(),
+          {t.rich('tutorialToMe.desc', {
+            stage: t(`tutorialToMe.stages.${stage}`).toLowerCase(),
             bold: (chunks) => <span className="font-bold">{chunks}</span>,
           })}
         </p>

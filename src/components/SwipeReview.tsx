@@ -1,31 +1,33 @@
 'use client';
 
+import {ExerciseData, TeamExerciseData} from '@/lib/types';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {AnimatePresence} from 'framer-motion';
 import {Check, X} from 'lucide-react';
-import {FC, useState} from 'react';
+import {useSearchParams} from 'next/navigation';
+import {FC, useEffect, useState} from 'react';
+import {DateBadge} from './DateBadge';
+import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {SwipeCard} from './SwipeCard';
 import {Button} from './ui/button';
 
-const mockCards = [
-  {id: 1, title: 'Card 1', content: 'Content 1'},
-  {id: 2, title: 'Card 2', content: 'Content 2'},
-  {id: 3, title: 'Card 3', content: 'Content 3'},
-  {id: 4, title: 'Card 4', content: 'Content 4'},
-  {id: 5, title: 'Card 5', content: 'Content 5'},
-  {id: 6, title: 'Card 6', content: 'Content 6'},
-  {id: 7, title: 'Card 7', content: 'Content 7'},
-  {id: 8, title: 'Card 8', content: 'Content 8'},
-  {id: 9, title: 'Card 9', content: 'Content 9'},
-  {id: 10, title: 'Card 10', content: 'Content 10'},
-];
-
 export const SwipeReview: FC = () => {
-  const [cards, setCards] = useState<typeof mockCards>(mockCards);
+  const {exercise, getTeamExerciseData, teamExerciseData} = useExerciseStore();
   const [forceSwipe, setForceSwipe] = useState<number>(0);
+  const [cards, setCards] = useState<TeamExerciseData>(teamExerciseData);
+  const searchParams = useSearchParams();
+  const exerciseId = searchParams.get('id') as string;
+  useEffect(() => {
+    if (exerciseId) {
+      getTeamExerciseData(exerciseId);
+    }
+  }, [exerciseId, getTeamExerciseData]);
 
   const removeCard = (id: number) => {
-    setCards((prevCards) => prevCards.filter((card) => card.id !== id));
+    setCards((prevCards: TeamExerciseData) =>
+      prevCards.filter((card: TeamExerciseData) => card.id !== id),
+    );
   };
 
   const handleAgree = (id: number) => {
@@ -46,7 +48,8 @@ export const SwipeReview: FC = () => {
 
   return (
     <PageLayout
-      backgroundColor="black"
+      backgroundColor="bg-pink"
+      header={<Header rightContent={<DateBadge date={exercise?.deadline.reviewingPhase} />} />}
       footer={
         <div className="flex justify-between items-center w-full h-full max-w-lg px-4">
           <Button
@@ -63,16 +66,20 @@ export const SwipeReview: FC = () => {
       }>
       <div className="relative flex flex-col justify-center items-center w-full">
         <AnimatePresence>
-          {cards.map((card, index) => (
-            <SwipeCard
-              key={card.id}
-              title={card.title}
-              onAgree={() => handleAgree(card.id)}
-              onDisagree={() => handleDisagree(card.id)}
-              forceSwipe={forceSwipe}>
-              <p>{card.content}</p>
-            </SwipeCard>
-          ))}
+          {cards &&
+            cards.map((card: ExerciseData, index: number) => (
+              <SwipeCard
+                key={card.id}
+                title={'test'}
+                onAgree={() => handleAgree(card.id)}
+                onDisagree={() => handleDisagree(card.id)}
+                forceSwipe={forceSwipe}>
+                <div className="gap-8 flex flex-col w-full  ">
+                  <h3 className="text-2xl font-bold break-words">{card.author_name}</h3>
+                  <h3 className="text-2xl break-words">{card.data['start']}</h3>
+                </div>
+              </SwipeCard>
+            ))}
         </AnimatePresence>
       </div>
     </PageLayout>

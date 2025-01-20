@@ -38,7 +38,6 @@ type ExerciseState = {
   status: 'writing' | 'reviewing' | 'results';
   data: ExerciseData | null;
   reviewedStages: string[];
-  ttmData: TTMExerciseData | null;
   setReviewedStages: (stage: string | null) => void;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
   setData: (data: Json) => void;
@@ -126,7 +125,7 @@ export const useExerciseStore = create<ExerciseState>()(
       },
       getTTMExerciseData: async (userId) => {
         const {ttmData} = await getTTMExerciseData(userId);
-        set({ttmData});
+
         return ttmData;
       },
       setReviewedStages: (stage) =>

@@ -8,7 +8,7 @@ import {useExerciseStore} from '@/store/exerciseStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 
 export default function TTMExercisesPage() {
   const searchParams = useSearchParams();
@@ -25,7 +25,6 @@ export default function TTMExercisesPage() {
       if (!exercise) {
         const getExercise = async () => {
           const {exercise} = await getExerciseById(id);
-          getPendingUsers(id, exercise.status);
           router.push(`ttm?id=${id}&status=${exercise.status}`);
         };
 
@@ -33,12 +32,20 @@ export default function TTMExercisesPage() {
         return;
       }
       getUserExerciseData(id);
-      getPendingUsers(id, exercise.status);
       router.push(`ttm?id=${id}&status=${exercise.status}`);
     } else {
       router.push(`ttm`);
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
+
+  const fetchPendingUsers = useCallback(async () => {
+    if (!id || !exercise?.status) return;
+    await getPendingUsers(id, exercise.status);
+  }, [id, exercise?.status, getPendingUsers]);
+
+  useEffect(() => {
+    fetchPendingUsers();
+  }, [fetchPendingUsers]);
 
   if (!exercise || !id) {
     return <div>loading...</div>;
