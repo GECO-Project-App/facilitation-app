@@ -59,9 +59,9 @@ const TextareaWithHeader = React.forwardRef<
       <div className="flex flex-col gap-2 bg-pink p-4 rounded-t-4xl border-2 border-black border-b-0 pt-6 relative">
         <RiveAnimation
           src="eyes.riv"
-          width={48}
-          height={48}
-          className=" absolute -top-6 left-0 right-0"
+          width="100%"
+          height="100%"
+          className=" absolute -top-6 left-0 right-0 h-11 w-auto "
         />
         <h3 className="text-xl font-bold">{title}</h3>
         <p className="text-black/60 ">{subtitle}</p>

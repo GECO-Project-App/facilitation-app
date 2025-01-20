@@ -32,7 +32,7 @@ export const Survey: FC = () => {
         return CH_IN_SURVEY_ID;
       case 'check-out':
         return CH_OUT_SURVEY_ID;
-      case 'tutorial-to-me':
+      case 'ttm':
         return TUTORIAL_TO_ME_SURVEY_ID;
       default:
         return TEST_SURVEY_ID;
