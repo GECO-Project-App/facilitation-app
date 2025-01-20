@@ -1,3 +1,5 @@
-export default function FeedbackPage() {
-  return <div>FeedbackPage</div>;
+import {Survey} from './Survey';
+
+export default function Feedback() {
+  return <Survey />;
 }

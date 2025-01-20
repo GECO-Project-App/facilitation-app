@@ -405,7 +405,7 @@
   },
 
   "feedback": {
-    "title": " What worked well during this exercise?",
+    "title": " What worked well during this exercise? And what didn't?",
     "subtitle": "What didn't?",
     "placeholder": "Write your feedback here...",
     "button": "Send",
@@ -439,7 +439,13 @@
       }
     ],
     "facilitator": "facilitator",
-    "member": "member"
+    "member": "member",
+    "slugs": {
+      "check-in": "Check In",
+      "check-out": "Check Out",
+      "ssc": "Start  Stop Continue",
+      "ttm": "Tutorial to me"
+    }
   },
 
   "errors": {
