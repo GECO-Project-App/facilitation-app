@@ -38,6 +38,7 @@ type ExerciseState = {
   status: 'writing' | 'reviewing' | 'results';
   data: ExerciseData | null;
   reviewedStages: string[];
+  ttmData: TTMExerciseData | null;
   setReviewedStages: (stage: string | null) => void;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
   setData: (data: Json) => void;
