@@ -48,13 +48,14 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
 
         toast({
           variant: 'success',
-          title: t('exercises.toast.success'),
+          title: t('toast.success'),
         });
         router.replace(`/exercises/ttm?id=${exerciseId}`);
+        router.refresh();
       } else {
         toast({
           variant: 'destructive',
-          title: t('exercises.toast.error'),
+          title: t('toast.error'),
         });
       }
     }

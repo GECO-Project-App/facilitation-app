@@ -8,7 +8,7 @@ import {useExerciseStore} from '@/store/exerciseStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 
 export default function TTMExercisesPage() {
   const searchParams = useSearchParams();
@@ -24,8 +24,7 @@ export default function TTMExercisesPage() {
     if (id) {
       if (!exercise) {
         const getExercise = async () => {
-          const {exercise} = await getExerciseById(id);
-          router.push(`ttm?id=${id}&status=${exercise.status}`);
+          await getExerciseById(id);
         };
 
         getExercise();
@@ -34,25 +33,29 @@ export default function TTMExercisesPage() {
       getUserExerciseData(id);
       router.push(`ttm?id=${id}&status=${exercise.status}`);
     } else {
-      router.push(`ttm`);
+      router.refresh();
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
-  const fetchPendingUsers = useCallback(async () => {
-    if (!id || !exercise?.status) return;
-    await getPendingUsers(id, exercise.status);
-  }, [id, exercise?.status, getPendingUsers]);
-
   useEffect(() => {
+    const fetchPendingUsers = async () => {
+      if (!id || !exercise?.status || exercise.status === 'completed') return;
+      console.log('fetching pending users');
+      const users = await getPendingUsers(id, exercise.status);
+      console.log('users', users);
+    };
     fetchPendingUsers();
-  }, [fetchPendingUsers]);
+  }, [id, exercise?.status, getPendingUsers]);
 
   if (!exercise || !id) {
     return <div>loading...</div>;
   }
 
   // If the user is not in the pending users list, show the waiting for component
-  if (!pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id)) {
+  if (
+    !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
+    exercise.status !== 'completed'
+  ) {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
@@ -66,7 +69,6 @@ export default function TTMExercisesPage() {
   switch (status as ExerciseStatus) {
     case 'writing':
       return <TTMSwipe deadline={new Date(exercise.deadline[exercise.status])} />;
-
     case 'reviewing':
       return <TTMReview />;
     case 'completed':

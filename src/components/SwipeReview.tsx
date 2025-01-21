@@ -1,5 +1,6 @@
 'use client';
 
+import {useRouter} from '@/i18n/routing';
 import {ExerciseData, TeamExerciseData} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {AnimatePresence} from 'framer-motion';
@@ -18,6 +19,7 @@ export const SwipeReview: FC = () => {
   const [cards, setCards] = useState<TeamExerciseData>(teamExerciseData);
   const searchParams = useSearchParams();
   const exerciseId = searchParams.get('id') as string;
+  const router = useRouter();
   useEffect(() => {
     if (exerciseId) {
       getTeamExerciseData(exerciseId);
@@ -49,7 +51,12 @@ export const SwipeReview: FC = () => {
   return (
     <PageLayout
       backgroundColor="bg-pink"
-      header={<Header rightContent={<DateBadge date={exercise?.deadline.reviewingPhase} />} />}
+      header={
+        <Header
+          onBackButton={() => router.replace(`/exercises/ssc/introduction`)}
+          rightContent={<DateBadge date={exercise?.deadline.reviewingPhase} />}
+        />
+      }
       footer={
         <div className="flex justify-between items-center w-full h-full max-w-lg px-4">
           <Button

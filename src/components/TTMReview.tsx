@@ -12,6 +12,7 @@ import {useSearchParams} from 'next/navigation';
 export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
   const router = useRouter();
   const t = useTranslations('exercises.tutorialToMe');
+  const t2 = useTranslations('common');
   const searchParams = useSearchParams();
   const {toast} = useToast();
 
@@ -36,7 +37,12 @@ export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
     <PageLayout
       hasPadding={false}
       backgroundColor="bg-purple"
-      header={<Header rightContent={<DateBadge date={new Date()} />} />}
+      header={
+        <Header
+          rightContent={<DateBadge date={new Date()} />}
+          onBackButton={() => router.push('/exercises/ttm/introduction')}
+        />
+      }
       footer={
         isCompleted ? null : (
           <Button
@@ -53,12 +59,11 @@ export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
                   className: 'text-black bg-blue',
                   children: (
                     <>
-                      <h3 className="text-3xl font-bold">{t('common.greatJob')}</h3>
+                      <h3 className="text-3xl font-bold">{t2('greatJob')}</h3>
                       <RiveAnimation src="geckograttis.riv" width={300} height={300} />
                     </>
                   ),
                 });
-                router.push(`/exercises/ttm/feedback`);
               }
             }}>
             {t('review.button')} <Complete />

@@ -126,6 +126,7 @@ export const useExerciseStore = create<ExerciseState>()(
       },
       getTTMExerciseData: async (userId) => {
         const {ttmData} = await getTTMExerciseData(userId);
+        set({ttmData});
 
         return ttmData;
       },
@@ -135,6 +136,9 @@ export const useExerciseStore = create<ExerciseState>()(
         }),
     }),
 
-    {name: 'ExerciseStore', storage: createJSONStorage(() => localStorage)},
+    {
+      name: 'ExerciseStore',
+      storage: createJSONStorage(() => localStorage),
+    },
   ),
 );
