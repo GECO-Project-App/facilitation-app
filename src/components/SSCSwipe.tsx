@@ -31,7 +31,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   const steps: string[] = t.raw(`exercises.ssc.${stage}.steps`).map((step: string) => step);
   const router = useRouter();
   const {toast} = useToast();
-  const {setData, data} = useExerciseStore();
+  const {setData} = useExerciseStore();
   const searchParams = useSearchParams();
 
   const form = useForm<SSCBrainstormSchema>({
@@ -63,14 +63,15 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       if (submission) {
         toast({
           variant: 'success',
-          title: t('toast.success'),
+          title: t('exercises.toast.success'),
         });
         setData(null);
         router.push(`/exercises/ssc?id=${submission.exercise_id}`);
+        router.refresh();
       } else {
         toast({
           variant: 'destructive',
-          title: t('toast.error'),
+          title: t('exercises.toast.error'),
         });
       }
     }

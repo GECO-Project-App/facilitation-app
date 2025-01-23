@@ -74,11 +74,13 @@ export const About: FC<{
     <PageLayout
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
-        <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link href={exerciseLink}>
-            {buttonText} <ArrowRight size={28} />
-          </Link>
-        </Button>
+        isFacilitator || (exercise && slug !== 'ttm') || slug !== 'ssc' ? (
+          <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
+            <Link href={exerciseLink}>
+              {buttonText} <ArrowRight size={28} />
+            </Link>
+          </Button>
+        ) : null
       }>
       <div className="space-y-6">
         {mock?.rive && (

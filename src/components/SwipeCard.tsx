@@ -1,8 +1,9 @@
 'use client';
-import {motion, PanInfo, useMotionValue, useTransform} from 'framer-motion';
+import {motion, PanInfo, useAnimationControls, useMotionValue, useTransform} from 'framer-motion';
 import {Card, CardContent, CardTitle} from './ui';
 
 import {cn} from '@/lib/utils';
+import {useEffect} from 'react';
 import {CardHeader} from './ui';
 
 type SwipeCardProps = {
@@ -11,7 +12,8 @@ type SwipeCardProps = {
   onAgree: () => void;
   onDisagree: () => void;
   type?: 'start' | 'stop' | 'continue';
-  forceSwipe: number;
+
+  resetCard?: () => Promise<void>;
 };
 
 export const SwipeCard = ({
@@ -20,10 +22,41 @@ export const SwipeCard = ({
   onAgree,
   onDisagree,
   type = 'start',
-  forceSwipe,
+
+  resetCard,
 }: SwipeCardProps) => {
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-100, 100], [-10, 10]);
+  const rotate = useTransform(x, [-300, 300], [-30, 30]);
+  const controls = useAnimationControls();
+
+  resetCard = async () => {
+    await controls.start({
+      x: 0,
+      rotate: 0,
+      transition: {type: 'spring', stiffness: 300, damping: 20},
+      opacity: 1,
+    });
+    x.set(0);
+  };
+
+  onAgree = async () => {
+    console.log('onAgree');
+    await controls.start({
+      x: 300,
+      rotate: 30,
+      opacity: 0,
+      transition: {duration: 0.5},
+    });
+  };
+
+  onDisagree = async () => {
+    await controls.start({
+      x: -300,
+      rotate: -30,
+      opacity: 0,
+      transition: {duration: 0.5},
+    });
+  };
 
   const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x > 100) {
@@ -33,10 +66,15 @@ export const SwipeCard = ({
     }
   };
 
+  useEffect(() => {
+    resetCard();
+  }, [type, resetCard]);
+
   return (
     <motion.div
+      animate={controls}
       className={cn(
-        'absolute h-auto aspect-[9/16] w-11/12 flex-1 flex flex-col cursor-grab active:cursor-grabbing rounded-4xl',
+        'absolute h-[90%] w-[90%] max-w-[350px] max-h-[600px] flex flex-col cursor-grab active:cursor-grabbing rounded-4xl',
       )}
       drag="x"
       style={{
@@ -44,24 +82,15 @@ export const SwipeCard = ({
         rotate,
       }}
       dragConstraints={{
-        left: 0,
-        right: 0,
-      }}
-      initial={{
-        scale: 1,
-      }}
-      exit={{
-        x: forceSwipe === 1 ? 1000 : -1000,
-        opacity: 0,
-        scale: 0.5,
-        transition: {duration: 1},
+        left: -100,
+        right: 100,
       }}
       dragTransition={{bounceStiffness: 600, bounceDamping: 20}}
       onDragEnd={handleDragEnd}>
       <Card
         className={cn(
           type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
-          'flex-1 ',
+          'relative flex-grow',
         )}>
         <CardHeader>
           <CardTitle>{title}</CardTitle>

@@ -108,6 +108,13 @@ export type PendingUser = Database['public']['Functions']['get_pending_users']['
 export type ExerciseStatus = Database['public']['Enums']['exercise_status'];
 export type TeamExerciseData =
   Database['public']['Functions']['get_team_exercise_data']['Returns'][number];
-
+export type ExerciseStage =
+  | 'start'
+  | 'stop'
+  | 'continue'
+  | 'strengths'
+  | 'weaknesses'
+  | 'communication'
+  | null;
 export type TTMExerciseData =
   Database['public']['Functions']['get_ttm_exercise_data']['Returns'][number];
