@@ -1,6 +1,6 @@
 import {useRouter} from '@/i18n/routing';
 import {useTranslations} from 'next-intl';
-import {FC} from 'react';
+import {FC, ReactNode} from 'react';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
@@ -9,7 +9,7 @@ import {Button} from './ui/button';
 
 type WaitingForProps = {
   deadline: Date;
-  text?: string;
+  text: string | ReactNode;
 };
 
 export const WaitingFor: FC<WaitingForProps> = ({deadline, text}) => {

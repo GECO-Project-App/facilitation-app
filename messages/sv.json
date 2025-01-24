@@ -85,7 +85,7 @@
       "roleError": "Roll uppdatering misslyckades",
       "memberForm": {
         "profileName": "Profilnamn",
-        "enterUsername": "Välj profilnamn",
+        "enterProfileName": "Välj profilnamn",
         "role": "Roll",
         "description": "Beskrivning",
         "descriptionPlaceholder": "240-480 tecken *",
@@ -391,8 +391,14 @@
           "button": "Skicka"
         }
       ]
-    }
+    
   },
+    "toast": {
+    "success": "Dina data har skickats!",
+    "error": "Något gick fel, försök igen."
+  }
+  },
+
   "feedback": {
     "title": "Vad fungerade bra under övningen? Och vad fungerade inte?",
     "subtitle": "Vad fungerade inte?",
@@ -405,13 +411,14 @@
 
   "common": {
     "waitingStatus": {
-        "reviewing": "Vi väntar fortfarande på {people} att slutföra sin granskning.",
-        "writing": "Vi väntar fortfarande på {people} att skicka in sina svar. Vi skickar dig en email när alla har slutfört övningen, så du kan komma tillbaka hit och granska andras svar."
+        "reviewing": "Vi väntar fortfarande på att <underline>{people}</underline> ska slutföra sin granskning.",
+        "writing": "Vi väntar fortfarande på att <underline>{people}</underline> ska skicka in sina svar. Vi skickar ett mail när du kan börja granska andras svar."
       },
     "save": "Spara",
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
     "goToHome": "Gå till hem",
+    "goBack": "Gå tillbaka",
     "logOut": "Logga ut",
     "pressToGetNewQuestion": "Tryck för att få en ny fråga!",
     "greatJob": "BRA JOBBAT! DU KLARADE DET!",

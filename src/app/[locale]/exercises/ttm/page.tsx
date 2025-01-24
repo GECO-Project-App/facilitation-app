@@ -32,17 +32,16 @@ export default function TTMExercisesPage() {
       }
       getUserExerciseData(id);
       router.push(`ttm?id=${id}&status=${exercise.status}`);
-    } else {
-      router.refresh();
+    }
+    if (id && !status) {
+      router.push(`ttm?id=${id}&status=${exercise.status}`);
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
   useEffect(() => {
     const fetchPendingUsers = async () => {
       if (!id || !exercise?.status || exercise.status === 'completed') return;
-      console.log('fetching pending users');
-      const users = await getPendingUsers(id, exercise.status);
-      console.log('users', users);
+      await getPendingUsers(id, exercise.status);
     };
     fetchPendingUsers();
   }, [id, exercise?.status, getPendingUsers]);
@@ -59,7 +58,8 @@ export default function TTMExercisesPage() {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
-        text={t(`common.waitingStatus.${status}`, {
+        text={t.rich(`common.waitingStatus.${status}`, {
+          underline: (chunks) => <b>{chunks}</b>,
           people: pendingUsers.map((user: PendingUser) => user.profile_name).join(', '),
         })}
       />

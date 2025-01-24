@@ -6,16 +6,45 @@ import {useExerciseStore} from '@/store/exerciseStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {FC, useMemo, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {CarouselPagination} from './CarouselPagination';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
-import {Button, Form, FormControl, FormField, FormItem, FormMessage, Textarea} from './ui';
+import {
+  Button,
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+  Textarea,
+} from './ui';
+
+const FORM_FIELDS = [
+  {
+    name: 'strengths.value' as const,
+    placeholder: 'Enter strengths...',
+  },
+  {
+    name: 'weaknesses.value' as const,
+    placeholder: 'Enter weaknesses...',
+  },
+  {
+    name: 'communication.value' as const,
+    placeholder: 'Enter communication feedback...',
+  },
+] as const;
 
 export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const t = useTranslations('exercises');
+  const [api, setApi] = useState<CarouselApi>();
+
   const steps: {title: string; description: string}[] = t
     .raw('tutorialToMe.steps')
     .map((step: {title: string; description: string}) => step);
@@ -28,18 +57,50 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const form = useForm<TTMExercisesSchema>({
     resolver: zodResolver(ttmSchema),
     defaultValues: {
-      strengths: data?.strengths,
-      weaknesses: data?.weaknesses,
-      communication: data?.communication,
+      strengths: {
+        value: data?.strengths.value ?? '',
+        vote: {
+          yes: 0,
+          no: 0,
+        },
+      },
+      weaknesses: {
+        value: data?.weaknesses.value ?? '',
+        vote: {
+          yes: 0,
+          no: 0,
+        },
+      },
+      communication: {
+        value: data?.communication.value ?? '',
+        vote: {
+          yes: 0,
+          no: 0,
+        },
+      },
     },
   });
 
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrentStep(api.selectedScrollSnap());
+
+    api.on('select', () => {
+      setCurrentStep(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   const onSubmit = async (data: TTMExercisesSchema) => {
+    const exerciseId = searchParams.get('id');
+
     if (currentStep < 2) {
-      setCurrentStep(currentStep + 1);
+      api?.scrollTo(currentStep + 1);
       setData(data);
+      return;
     } else {
-      const exerciseId = searchParams.get('id');
       if (!exerciseId) return;
 
       const exerciseData = await submitExerciseData(exerciseId, data);
@@ -51,7 +112,6 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
           title: t('toast.success'),
         });
         router.replace(`/exercises/ttm?id=${exerciseId}`);
-        router.refresh();
       } else {
         toast({
           variant: 'destructive',
@@ -61,10 +121,6 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
     }
   };
 
-  const stage = useMemo(() => {
-    return Object.keys(form.getValues())[currentStep];
-  }, [currentStep, form]);
-
   return (
     <PageLayout
       backgroundColor="bg-yellow"
@@ -72,44 +128,51 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
         <Header rightContent={<DateBadge date={deadline} />}>
           <CarouselPagination
             steps={steps}
-            currentStep={Object.keys(form.getValues()).indexOf(stage)}
+            currentStep={currentStep}
             onStepClick={setCurrentStep}
           />
         </Header>
       }
       footer={
         <Button variant="purple" className="mx-auto" onClick={form.handleSubmit(onSubmit)}>
-          {currentStep === 2 ? 'Submit' : 'Next'}
+          {currentStep === 2 ? 'Submit' : ' Next'}
         </Button>
       }>
-      <section className="flex flex-col gap-4 h-full w-full flex-1 ">
-        <p className="text-center text-xl ">
-          {t.rich('tutorialToMe.desc', {
-            stage: t(`tutorialToMe.stages.${stage}`).toLowerCase(),
-            bold: (chunks) => <span className="font-bold">{chunks}</span>,
-          })}
-        </p>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 flex flex-col">
-            <FormField
-              control={form.control}
-              name={stage as keyof TTMExercisesSchema}
-              render={({field}) => (
-                <FormItem className="flex flex-col flex-1">
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="240-480 characters *"
-                      className="flex-grow resize-none"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </section>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full w-full flex-1">
+          <Carousel className="h-full flex-1" setApi={setApi}>
+            <CarouselContent>
+              {Object.entries(form.getValues()).map(([key, _], index) => (
+                <CarouselItem key={index} className="aspect-[4/6]">
+                  <p className="text-center text-xl pb-4">
+                    {t.rich('tutorialToMe.desc', {
+                      stage: t(`tutorialToMe.stages.${key}`).toLowerCase(),
+                      bold: (chunks) => <span className="font-bold">{chunks}</span>,
+                    })}
+                  </p>
+                  <FormField
+                    control={form.control}
+                    name={`${key}.value` as keyof TTMExercisesSchema}
+                    render={({field}) => (
+                      <FormItem className="flex flex-col h-full">
+                        <FormControl>
+                          <Textarea
+                            placeholder={`240 - 480 characters`}
+                            className="flex-grow resize-none"
+                            {...field}
+                            value={field.value.value}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </form>
+      </Form>
     </PageLayout>
   );
 };

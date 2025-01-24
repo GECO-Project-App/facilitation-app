@@ -48,7 +48,7 @@ export const SwipeFeed: FC<{stage: string}> = ({stage}) => {
             className="w-full h-full snap-start snap-always flex items-center justify-center">
             <div className="gap-8 flex flex-col w-full">
               <h3 className="text-2xl font-bold break-words">{entry.author_name}</h3>
-              <h3 className="text-2xl break-words">{entry.data[stage]}</h3>
+              <h3 className="text-2xl break-words">{entry.data[stage].value}</h3>
             </div>
           </div>
         ))}

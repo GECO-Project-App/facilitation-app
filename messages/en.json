@@ -400,8 +400,8 @@
 
     },
          "toast": {
-          "success": "Your preferences have been submitted!",
-          "error": "Something went wrong"
+          "success": "Your contribution have been submitted!",
+          "error": "Something went wrong, please try again."
         }
 
   },
@@ -418,8 +418,8 @@
 
   "common": {
      "waitingStatus": {
-        "reviewing": "We are still waiting on {people} to finish their review.",
-        "writing": "We are still waiting on {people} to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."
+        "reviewing": "We are still waiting on <underline>{people}</underline> to finish their review.",
+        "writing": "We are still waiting on <underline>{people}</underline> to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."
       },
     "nextStep": "Next Step",
     "letsStart": "Let's Start",

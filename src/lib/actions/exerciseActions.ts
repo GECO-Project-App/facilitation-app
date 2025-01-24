@@ -184,3 +184,21 @@ export const getTTMExerciseData = async (userId: string) => {
     return {ttmData: null, error};
   }
 };
+
+export const voteOnExerciseData = async (
+  exerciseId: string,
+  field: 'strengths' | 'weaknesses' | 'communication',
+  voteType: 'yes' | 'no',
+) => {
+  const supabase = createClient();
+
+  const {data, error} = await supabase.rpc('vote_on_exercise', {
+    p_exercise_id: exerciseId,
+    p_field: field,
+    p_vote_type: voteType,
+  });
+
+  if (error) throw error;
+  revalidatePath('/exercises');
+  return {data, error};
+};

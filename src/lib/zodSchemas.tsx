@@ -104,13 +104,49 @@ export const inviteTeamMemberSchema = z.object({
 });
 
 export const sscBrainstormSchema = z.object({
-  start: z.string().max(480).default(''),
-  stop: z.string().max(480).default(''),
-  continue: z.string().max(480).default(''),
+  start: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  stop: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  continue: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
 });
 
 export const ttmSchema = z.object({
-  strengths: z.string().max(480).default(''),
-  weaknesses: z.string().max(480).default(''),
-  communication: z.string().max(480).default(''),
+  strengths: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  weaknesses: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  communication: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
 });

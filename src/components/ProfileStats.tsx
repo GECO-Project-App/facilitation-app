@@ -58,7 +58,7 @@ export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
             {Object.keys(ttmData.data).map((stat) => (
               <div key={stat}>
                 <h4>{t(`exercises.tutorialToMe.stages.${stat}`)}:</h4>
-                <p className="font-light">{ttmData.data[stat]}</p>
+                <p className="font-light">{ttmData.data[stat].value}</p>
               </div>
             ))}
           </section>

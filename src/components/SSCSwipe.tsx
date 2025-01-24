@@ -1,7 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
-import {submitExerciseData} from '@/lib/actions/exerciseActions';
 import {cn} from '@/lib/utils';
 import {SSCBrainstormSchema, sscBrainstormSchema} from '@/lib/zodSchemas';
 import {useExerciseStore} from '@/store/exerciseStore';
@@ -31,15 +30,26 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   const steps: string[] = t.raw(`exercises.ssc.${stage}.steps`).map((step: string) => step);
   const router = useRouter();
   const {toast} = useToast();
-  const {setData} = useExerciseStore();
+  const {setData, setDeadline} = useExerciseStore();
   const searchParams = useSearchParams();
 
   const form = useForm<SSCBrainstormSchema>({
     resolver: zodResolver(sscBrainstormSchema),
     defaultValues: {
-      start: '',
-      stop: '',
-      continue: '',
+      start: {
+        value: '',
+        vote: {
+          yes: 0,
+          no: 0,
+        },
+      },
+      stop: {
+        value: '',
+        vote: {
+          yes: 0,
+          no: 0,
+        },
+      },
     },
   });
 
@@ -50,7 +60,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       return;
     }
     const stage = Object.keys(data).find(
-      (key) => data[key as keyof SSCBrainstormSchema] === '',
+      (key) => data[key as keyof SSCBrainstormSchema].value === '',
     ) as keyof SSCBrainstormSchema;
 
     if (stage) {
@@ -59,21 +69,22 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
 
       form.resetField(stage);
     } else {
-      const {submission} = await submitExerciseData({exerciseId: exerciseId, data});
-      if (submission) {
-        toast({
-          variant: 'success',
-          title: t('exercises.toast.success'),
-        });
-        setData(null);
-        router.push(`/exercises/ssc?id=${submission.exercise_id}`);
-        router.refresh();
-      } else {
-        toast({
-          variant: 'destructive',
-          title: t('exercises.toast.error'),
-        });
-      }
+      console.log('data', data);
+      // const {submission} = await submitExerciseData({exerciseId: exerciseId, data});
+      // if (submission) {
+      //   toast({
+      //     variant: 'success',
+      //     title: t('exercises.toast.success'),
+      //   });
+      //   setData(null);
+      //   router.push(`/exercises/ssc/introduction`);
+      //   setDeadline({writingPhase: null, reviewingPhase: null});
+      // } else {
+      //   toast({
+      //     variant: 'destructive',
+      //     title: t('exercises.toast.error'),
+      //   });
+      // }
     }
   };
 
@@ -142,7 +153,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
                   <FormControl>
                     <Textarea
                       variant="default"
-                      {...field}
+                      {...field.value}
                       {...form.register(stage, {required: true})}
                       placeholder="240-480 characters *"
                       className={cn(

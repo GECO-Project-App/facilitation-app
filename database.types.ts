@@ -416,6 +416,32 @@ export type Database = {
         }
         Returns: boolean
       }
+      vote_on_exercise:
+        | {
+            Args: {
+              p_exercise_id: string
+              p_author_id: string
+              p_field: string
+              p_vote_type: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              p_exercise_id: string
+              p_author_id: string
+              p_vote_type: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              p_exercise_id: string
+              p_field: string
+              p_vote_type: string
+            }
+            Returns: undefined
+          }
     }
     Enums: {
       exercise_review_type: "read_only" | "vote"

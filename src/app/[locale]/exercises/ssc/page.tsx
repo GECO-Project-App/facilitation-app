@@ -56,7 +56,8 @@ export default function SSCPage() {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
-        text={t(`common.waitingStatus.${status}`, {
+        text={t.rich(`common.waitingStatus.${status}`, {
+          underline: (chunks) => <b>{chunks}</b>,
           people: pendingUsers.map((user: PendingUser) => user.profile_name).join(', '),
         })}
       />
