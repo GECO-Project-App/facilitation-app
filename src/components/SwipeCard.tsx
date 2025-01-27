@@ -2,8 +2,9 @@
 import {motion, PanInfo, useAnimationControls, useMotionValue, useTransform} from 'framer-motion';
 import {Card, CardContent, CardTitle} from './ui';
 
+import {TeamExerciseData} from '@/lib/types';
 import {cn} from '@/lib/utils';
-import {forwardRef, useEffect, useImperativeHandle} from 'react';
+import {Dispatch, forwardRef, SetStateAction, useEffect, useImperativeHandle} from 'react';
 import {CardHeader} from './ui';
 
 export type SwipeCardHandle = {
@@ -16,6 +17,7 @@ type SwipeCardProps = {
   title: string;
   onAgree: () => void;
   onDisagree: () => void;
+  setCards: Dispatch<SetStateAction<TeamExerciseData[]>>;
   type?: 'start' | 'stop' | 'continue';
 };
 
