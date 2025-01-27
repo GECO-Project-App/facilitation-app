@@ -185,20 +185,35 @@ export const getTTMExerciseData = async (userId: string) => {
   }
 };
 
-export const voteOnExerciseData = async (
-  exerciseId: string,
-  field: 'strengths' | 'weaknesses' | 'communication',
-  voteType: 'yes' | 'no',
-) => {
+// export const voteOnExerciseData = async (
+//   exerciseId: string,
+//   field: 'strengths' | 'weaknesses' | 'communication',
+//   voteType: 'yes' | 'no',
+// ) => {
+//   const supabase = createClient();
+
+//   const {data, error} = await supabase.rpc('vote_on_exercise', {
+//     p_exercise_id: exerciseId,
+//     p_field: field,
+//     p_vote_type: voteType,
+//   });
+
+//   if (error) throw error;
+//   revalidatePath('/exercises');
+//   return {data, error};
+// };
+
+export const updateExerciseVote = async (cardId: string, stage: string, isYesVote: boolean) => {
   const supabase = createClient();
-
-  const {data, error} = await supabase.rpc('vote_on_exercise', {
-    p_exercise_id: exerciseId,
-    p_field: field,
-    p_vote_type: voteType,
-  });
-
-  if (error) throw error;
-  revalidatePath('/exercises');
-  return {data, error};
+  try {
+    const voteUpdate = isYesVote ? {yes: 1} : {no: 1};
+    await supabase
+      .from('exercise_data')
+      .update({
+        [`data:${stage}:vote:${isYesVote ? 'yes' : 'no'}`]: voteUpdate,
+      })
+      .eq('id', cardId);
+  } catch (error) {
+    console.error('Error updating vote:', error);
+  }
 };

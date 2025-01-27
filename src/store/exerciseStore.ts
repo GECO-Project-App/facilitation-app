@@ -10,6 +10,7 @@ import {
   getUserExerciseData,
   setExerciseDataAsReviewed,
   submitExerciseData,
+  updateExerciseVote,
 } from '@/lib/actions/exerciseActions';
 import type {
   CreateExerciseParams,
@@ -53,6 +54,7 @@ type ExerciseState = {
   getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
   setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
   getTTMExerciseData: (userId: string) => TTMExerciseData | null;
+  updateExerciseVote: (cardId: string, stage: string, isYesVote: boolean) => Promise<void>;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
@@ -134,6 +136,9 @@ export const useExerciseStore = create<ExerciseState>()(
         set({
           reviewedStages: stage ? [...get().reviewedStages, stage] : [],
         }),
+      updateExerciseVote: async (cardId: string, stage: string, isYesVote: boolean) => {
+        await updateExerciseVote(cardId, stage, isYesVote);
+      },
     }),
 
     {

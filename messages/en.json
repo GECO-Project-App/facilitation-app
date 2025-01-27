@@ -219,8 +219,11 @@
         "description": "The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and teams reflect on what activities they should start, stop, or continue doing. It can be used for a variety of purposes, such as, create a framework for feedback, encourage new ideas, focus on action and collaboration, and promote broader thinking.",
         "button": "Start"
       },
-      "buttons": ["Start", "Stop", "Continue"],
-
+  "chapters": {
+    "start": "Start",
+      "stop": "Stop",
+      "continue": "Continue"
+    },
       "start": {
         "title": "Chapter 1: Start",
         "subtitle": "4-5 minutes | 2-20 members",

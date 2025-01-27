@@ -4,65 +4,64 @@ import {TeamExerciseData} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {AnimatePresence} from 'framer-motion';
 import {Check, X} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {SSCButtons} from './SSCButtons';
-import {SwipeCard, SwipeCardHandle} from './SwipeCard';
+import {SwipeCard} from './SwipeCard';
 import {Button} from './ui/button';
 
 export const SwipeReview: FC = () => {
-  const activeCardRef = useRef<SwipeCardHandle>(null);
-  const {exercise, getTeamExerciseData, teamExerciseData} = useExerciseStore();
-  const [cards, setCards] = useState<TeamExerciseData[]>(teamExerciseData);
+  const {getTeamExerciseData} = useExerciseStore();
   const searchParams = useSearchParams();
+  const stage = (searchParams.get('stage') as 'start' | 'stop' | 'continue') ?? 'start';
   const exerciseId = searchParams.get('id') as string;
-  const stage = searchParams.get('stage') as 'start' | 'stop' | 'continue';
+  const [cards, setCards] = useState<TeamExerciseData[]>([]);
+  const t = useTranslations('exercises.ssc');
 
   useEffect(() => {
     if (exerciseId) {
-      getTeamExerciseData(exerciseId);
+      const getCards = async () => {
+        const data = await getTeamExerciseData(exerciseId);
+        console.log(data);
+        const noVotes = data.filter(
+          (item: TeamExerciseData) =>
+            item.data[stage].vote.yes === 0 || item.data[stage].vote.no === 0,
+        );
+        setCards(noVotes);
+      };
+      getCards();
     }
-  }, [exerciseId, getTeamExerciseData]);
-
-  // useEffect(() => {
-  //   if (stage) {
-  //     setCards(teamExerciseData.data);
-  //   }
-  // }, [stage, teamExerciseData]);
-
-  const removeCard = () => {
-    setCards((prevCards) => prevCards.slice(0, -1));
-  };
-
+  }, [exerciseId, getTeamExerciseData, stage]);
   return (
     <section className="flex flex-col items-center w-full min-h-svh h-svh pt-4 pb-6">
-      <div className="flex flex-col items-center w-full flex-1 space-y-4">
+      <div className="flex flex-col items-center w-full flex-1 ">
         <SSCButtons />
-        <div className="relative flex-1 flex items-center justify-center  w-full overflow-hidden">
+        <div className="relative flex-1 flex items-center justify-center w-full overflow-hidden px-4">
+          {/* <SwipeCards /> */}
           <AnimatePresence>
-            {cards &&
-              cards.map((card: TeamExerciseData, index: number) => (
-                <SwipeCard
-                  ref={activeCardRef}
-                  key={card.id}
-                  title={card.author_name}
-                  onAgree={removeCard}
-                  onDisagree={removeCard}
-                  type={stage}>
-                  <div className="gap-8 flex flex-col w-full">
-                    <h3 className="text-xl font-bold break-words">{card.author_name}</h3>
-                    <h3 className="text-xl break-words">{card.data[stage ?? 'start']}</h3>
-                  </div>
-                </SwipeCard>
-              ))}
+            {cards.map((card: TeamExerciseData, index: number) => (
+              <SwipeCard
+                key={card.id}
+                title={t(`chapters.${stage}`)}
+                onAgree={() => {}}
+                onDisagree={() => {}}
+                setCards={setCards}
+                type={stage}>
+                <div className="gap-8 flex flex-col w-full">
+                  <h3 className="text-xl font-bold break-words">{card.author_name}</h3>
+                  <h3 className="text-xl break-words">{card.data[stage ?? 'start'].value}</h3>
+                </div>
+              </SwipeCard>
+            ))}
           </AnimatePresence>
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-lg px-4">
-        <Button variant="red" onClick={() => removeCard()}>
+        <Button variant="red" onClick={() => {}}>
           Disagree <X />
         </Button>
-        <Button variant="green" onClick={() => removeCard()}>
+        <Button variant="green" onClick={() => {}}>
           Agree <Check />
         </Button>
       </div>

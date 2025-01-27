@@ -215,8 +215,11 @@
         "description": "Start, Stopp, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
         "button": "Starta"
       },
-
-      "buttons": ["Börja", "Sluta", "Fortsätta"],
+      "chapters": {
+        "start": "Börja",
+          "stop": "Sluta",
+          "continue": "Fortsätts"
+        },
       "start": {
         "title": "Kapitel 1: Start",
         "subtitle": "4-5 minuter | 2-20 deltagare",
@@ -394,7 +397,7 @@
     
   },
     "toast": {
-    "success": "Dina data har skickats!",
+    "success": "Dina svar har skickats!",
     "error": "Något gick fel, försök igen."
   }
   },

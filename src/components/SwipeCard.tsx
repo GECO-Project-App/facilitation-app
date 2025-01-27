@@ -39,20 +39,18 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
 
     const swipeRight = async () => {
       await controls.start({
-        x: 1000,
+        x: 300,
         rotate: 30,
         opacity: 0,
-        transition: {duration: 0.5},
       });
       onAgree();
     };
 
     const swipeLeft = async () => {
       await controls.start({
-        x: -1000,
+        x: -300,
         rotate: -30,
         opacity: 0,
-        transition: {duration: 0.5},
       });
       onDisagree();
     };

@@ -26,21 +26,6 @@ import {
   Textarea,
 } from './ui';
 
-const FORM_FIELDS = [
-  {
-    name: 'strengths.value' as const,
-    placeholder: 'Enter strengths...',
-  },
-  {
-    name: 'weaknesses.value' as const,
-    placeholder: 'Enter weaknesses...',
-  },
-  {
-    name: 'communication.value' as const,
-    placeholder: 'Enter communication feedback...',
-  },
-] as const;
-
 export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const t = useTranslations('exercises');
   const [api, setApi] = useState<CarouselApi>();

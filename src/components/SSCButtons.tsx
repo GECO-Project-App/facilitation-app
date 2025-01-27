@@ -6,9 +6,9 @@ import {useLocalStore} from '@/store/localStore';
 import {useTranslations} from 'next-intl';
 import {useRouter} from 'next/navigation';
 
-export const SSCButtons = () => {
+export const SSCButtons = ({disableClick = false}: {disableClick?: boolean}) => {
   const t = useTranslations();
-  const chapters = t.raw(`ssc.chapters`);
+  const chapters = t.raw(`exercises.ssc.chapters`);
   const router = useRouter();
   const {exercise} = useExerciseStore();
   const {setStage, stage} = useLocalStore();
@@ -23,6 +23,7 @@ export const SSCButtons = () => {
             chapter === 'start' ? 'bg-yellow' : '',
             chapter === 'stop' ? 'bg-red' : '',
             chapter === 'continue' ? 'bg-green' : '',
+            disableClick ? 'pointer-events-none' : '',
             'px-4 md:px-6 py-1 rounded-full font-semibold text-lg md:text-2xl border-2 border-black disabled:opacity-50 disabled:pointer-events-none',
           )}
           onClick={() => {
