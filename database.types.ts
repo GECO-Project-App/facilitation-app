@@ -40,6 +40,7 @@ export type Database = {
           created_at: string | null
           data: Json
           exercise_id: string
+          hasVoted: boolean | null
           id: string
           is_reviewed: boolean | null
         }
@@ -48,6 +49,7 @@ export type Database = {
           created_at?: string | null
           data: Json
           exercise_id: string
+          hasVoted?: boolean | null
           id?: string
           is_reviewed?: boolean | null
         }
@@ -56,6 +58,7 @@ export type Database = {
           created_at?: string | null
           data?: Json
           exercise_id?: string
+          hasVoted?: boolean | null
           id?: string
           is_reviewed?: boolean | null
         }
@@ -366,6 +369,13 @@ export type Database = {
           exercise_deadline: Json
         }[]
       }
+      increment_exercise_vote: {
+        Args: {
+          p_exercise_data_id: string
+          p_json_path: string[]
+        }
+        Returns: Json
+      }
       is_username_available: {
         Args: {
           p_username: string
@@ -416,32 +426,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      vote_on_exercise:
-        | {
-            Args: {
-              p_exercise_id: string
-              p_author_id: string
-              p_field: string
-              p_vote_type: string
-            }
-            Returns: undefined
-          }
-        | {
-            Args: {
-              p_exercise_id: string
-              p_author_id: string
-              p_vote_type: string
-            }
-            Returns: undefined
-          }
-        | {
-            Args: {
-              p_exercise_id: string
-              p_field: string
-              p_vote_type: string
-            }
-            Returns: undefined
-          }
     }
     Enums: {
       exercise_review_type: "read_only" | "vote"

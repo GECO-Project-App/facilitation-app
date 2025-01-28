@@ -1,7 +1,13 @@
 'use server';
 import {revalidatePath} from 'next/cache';
 import {createClient} from '../supabase/server';
-import {CreateExerciseParams, ExerciseStatus, SubmitExerciseDataParams} from '../types';
+import {
+  CreateExerciseParams,
+  ExerciseStage,
+  ExerciseStatus,
+  SubmitExerciseDataParams,
+  VoteType,
+} from '../types';
 
 export async function createExercise({
   teamId,
@@ -217,3 +223,29 @@ export const updateExerciseVote = async (cardId: string, stage: string, isYesVot
     console.error('Error updating vote:', error);
   }
 };
+
+export async function handleExerciseVote(
+  exerciseDataId: string,
+  category: ExerciseStage,
+  voteType: VoteType,
+) {
+  const supabase = createClient();
+  try {
+    if (!category) {
+      throw new Error('Invalid category');
+    }
+    const {data, error} = await supabase.rpc('increment_exercise_vote', {
+      p_exercise_data_id: exerciseDataId,
+      p_json_path: [category, 'vote', voteType],
+    });
+
+    if (error) {
+      throw new Error(`Error incrementing vote: ${error.message}`);
+    }
+
+    return {success: true, data};
+  } catch (error) {
+    console.error('Failed to increment vote:', error);
+    return {success: false, error: 'Failed to increment vote'};
+  }
+}

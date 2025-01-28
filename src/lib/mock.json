@@ -1,0 +1,9 @@
+{
+  "stop": {"vote": {"no": 0, "yes": 3}, "value": "Sluta"},
+  "start": {"vote": {"no": 1, "yes": 2}, "value": "Börja"},
+  "continue": {"vote": {"no": 0, "yes": 1}, "value": "Forts'tt"},
+  "stop,vote,no": 1,
+  "{start,vote,no}": 1,
+  "{stop,vote,yes}": 1,
+  "{start,vote,yes}": 1
+}

@@ -8,18 +8,20 @@ import {
   getTeamExerciseData,
   getTTMExerciseData,
   getUserExerciseData,
+  handleExerciseVote,
   setExerciseDataAsReviewed,
   submitExerciseData,
-  updateExerciseVote,
 } from '@/lib/actions/exerciseActions';
 import type {
   CreateExerciseParams,
   Exercise,
   ExerciseData,
+  ExerciseStage,
   ExerciseStatus,
   PendingUsers,
   TeamExerciseData,
   TTMExerciseData,
+  VoteType,
 } from '@/lib/types';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
@@ -54,7 +56,11 @@ type ExerciseState = {
   getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
   setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
   getTTMExerciseData: (userId: string) => TTMExerciseData | null;
-  updateExerciseVote: (cardId: string, stage: string, isYesVote: boolean) => Promise<void>;
+  handleExerciseVote: (
+    exerciseDataId: string,
+    category: ExerciseStage,
+    voteType: VoteType,
+  ) => Promise<void>;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
@@ -136,8 +142,12 @@ export const useExerciseStore = create<ExerciseState>()(
         set({
           reviewedStages: stage ? [...get().reviewedStages, stage] : [],
         }),
-      updateExerciseVote: async (cardId: string, stage: string, isYesVote: boolean) => {
-        await updateExerciseVote(cardId, stage, isYesVote);
+      handleExerciseVote: async (exerciseDataId, category, voteType) => {
+        const {success, data} = await handleExerciseVote(exerciseDataId, category, voteType);
+        if (!success) {
+          throw new Error('Failed to increment vote');
+        }
+        console.log(data);
       },
     }),
 
