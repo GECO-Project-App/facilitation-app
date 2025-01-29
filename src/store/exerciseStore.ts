@@ -147,7 +147,6 @@ export const useExerciseStore = create<ExerciseState>()(
         if (!success) {
           throw new Error('Failed to increment vote');
         }
-        console.log(data);
       },
     }),
 

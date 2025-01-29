@@ -129,7 +129,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
         </Button>
       }>
       <div className="flex flex-col gap-4 h-full w-full flex-1 ">
-        <SSCButtons disableClick={true} />
+        <SSCButtons />
 
         <Form {...form}>
           <form

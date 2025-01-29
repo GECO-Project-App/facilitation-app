@@ -1,5 +1,5 @@
 'use client';
-import {SSCSwipe, SwipeReview} from '@/components';
+import {SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
@@ -52,7 +52,10 @@ export default function SSCPage() {
     return <div>loading...</div>;
   }
 
-  if (!pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id)) {
+  if (
+    !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
+    exercise.status !== 'completed'
+  ) {
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}
@@ -67,10 +70,9 @@ export default function SSCPage() {
   switch (status as ExerciseStatus) {
     case 'writing':
       return <SSCSwipe deadline={new Date(exercise.deadline[exercise.status])} />;
-
     case 'reviewing':
       return <SwipeReview />;
     case 'completed':
-      return <h2>completed</h2>;
+      return <SSCCompleted />;
   }
 }

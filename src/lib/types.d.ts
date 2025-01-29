@@ -101,6 +101,14 @@ export type CreateExerciseParams = {
     reviewing: string;
   };
 };
+
+export type FormattedReview = {
+  author_name: string;
+  category: string;
+  id: string;
+  value: string;
+};
+
 export type Exercise = Database['public']['Tables']['exercises']['Row'];
 export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];
 export type PendingUsers = Database['public']['Functions']['get_pending_users']['Returns'][number];

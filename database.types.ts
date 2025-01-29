@@ -402,6 +402,17 @@ export type Database = {
         }
         Returns: boolean
       }
+      update_has_voted:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: boolean
+          }
+        | {
+            Args: {
+              p_exercise_id: string
+            }
+            Returns: boolean
+          }
       update_profile: {
         Args: {
           p_username?: string

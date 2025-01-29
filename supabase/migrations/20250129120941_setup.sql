@@ -221,68 +221,6 @@ END;
 $function$
 ;
 
-CREATE OR REPLACE FUNCTION public.check_exercise_completion(p_exercise_id uuid)
- RETURNS boolean
- LANGUAGE plpgsql
- SECURITY DEFINER
-AS $function$
-DECLARE
-    all_submitted boolean;
-    all_reviewed boolean;
-    current_status exercise_status;
-BEGIN
-    -- Get current exercise status
-    SELECT status INTO current_status
-    FROM tutorial_to_me
-    WHERE exercise_id = p_exercise_id;
-
-    -- Check completion based on current status
-    CASE current_status
-        WHEN 'writing' THEN
-            -- Check if all team members have submitted
-            SELECT COUNT(*) = (
-                SELECT COUNT(*)
-                FROM team_members tm
-                JOIN exercises e ON e.team_id = tm.team_id
-                WHERE e.id = p_exercise_id
-            )
-            INTO all_submitted
-            FROM exercise_data
-            WHERE exercise_id = p_exercise_id;
-
-            -- If all submitted, update to reviewing
-            IF all_submitted THEN
-                UPDATE tutorial_to_me
-                SET status = 'reviewing'::exercise_status
-                WHERE exercise_id = p_exercise_id;
-                RETURN true;
-            END IF;
-
-        WHEN 'reviewing' THEN
-            -- Check if all exercise data entries are reviewed
-            SELECT bool_and(is_reviewed)
-            INTO all_reviewed
-            FROM exercise_data
-            WHERE exercise_id = p_exercise_id;
-
-            -- If all reviewed, update to completed
-            IF all_reviewed THEN
-                UPDATE tutorial_to_me
-                SET 
-                    status = 'completed'::exercise_status,
-                    reviewed = true
-                WHERE exercise_id = p_exercise_id;
-                RETURN true;
-            END IF;
-
-        ELSE 
-            RETURN false;
-    END CASE;
-
-    RETURN false;
-END;
-$function$
-;
 
 CREATE OR REPLACE FUNCTION public.check_exercise_reviews_completion()
  RETURNS trigger
@@ -377,6 +315,7 @@ BEGIN
 END;
 $function$
 ;
+create type "public"."profile_response" as ("id" uuid, "username" text, "first_name" text, "last_name" text, "avatar_url" text, "updated_at" timestamp with time zone);
 
 CREATE OR REPLACE FUNCTION public.get_my_profile()
  RETURNS profile_response
@@ -806,7 +745,6 @@ END;
 $function$
 ;
 
-create type "public"."profile_response" as ("id" uuid, "username" text, "first_name" text, "last_name" text, "avatar_url" text, "updated_at" timestamp with time zone);
 
 CREATE OR REPLACE FUNCTION public.refresh_team_permissions()
  RETURNS trigger
@@ -1409,5 +1347,7 @@ CREATE TRIGGER sync_profile_changes AFTER UPDATE OF first_name, last_name, avata
 CREATE TRIGGER refresh_team_permissions_on_member_change AFTER INSERT OR DELETE OR UPDATE ON public.team_members FOR EACH STATEMENT EXECUTE FUNCTION refresh_team_permissions();
 
 CREATE TRIGGER on_team_created AFTER INSERT ON public.teams FOR EACH ROW EXECUTE FUNCTION handle_new_team();
+
+
 
 

@@ -45,7 +45,7 @@ export const TeamSelect = ({
     <Select
       defaultValue={currentTeam?.id ?? ''}
       value={teamValue}
-      onValueChange={(value) => router.push(`?id=${value}`)}>
+      onValueChange={(value) => router.push(`?teamId=${value}`)}>
       <SelectTrigger className={className}>
         <SelectValue placeholder={currentTeam?.name ?? 'Select a team'} />
       </SelectTrigger>

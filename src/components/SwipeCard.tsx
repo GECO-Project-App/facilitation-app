@@ -18,10 +18,11 @@ type SwipeCardProps = {
   onAgree: () => void;
   onDisagree: () => void;
   type?: ExerciseStage;
+  index?: number;
 };
 
 export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
-  ({children, title, onAgree, onDisagree, type = 'start'}, ref) => {
+  ({children, title, onAgree, onDisagree, type = 'start', index = 0}, ref) => {
     const x = useMotionValue(0);
     const rotate = useTransform(x, [-300, 300], [-30, 30]);
     const controls = useAnimationControls();
@@ -79,6 +80,7 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
         style={{
           x,
           rotate,
+          zIndex: -index,
         }}
         dragConstraints={{
           left: -100,

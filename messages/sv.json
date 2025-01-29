@@ -127,7 +127,7 @@
         "type": "check-in"
       },
       {
-        "title": "Start-Stopp-Fortsätt",
+        "title": "Börja-Sluta-Fortsätta",
         "subtitle": "30-45 minuter | 2-20 deltagare",
         "description": "Förbättra ert sätt att arbeta som team. Dela vad som fungerar bra och vad som behöver förbättras för att samarbeta mer effektivt framöver.",
         "button": "Starta",
@@ -210,21 +210,21 @@
 
     "ssc": {
       "about": {
-        "title": "Start-Stopp-Fortsätt Övning",
+        "title": "Börja-Sluta-Fortsätta Övning",
         "subtitle": "Reflektera och Förbättra",
-        "description": "Start, Stopp, Fortsät (SSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
+        "description": "Börja, Sluta, Fortsätta (BSF) övningen är en feedbackteknik som hjälper människor och team att reflektera över vilka aktiviteter de bör börja med, sluta med eller fortsätta med. Den kan användas för olika ändamål, såsom att skapa en ram för feedback, uppmuntra nya idéer, fokusera på handling och samarbete, och främja bredare tänkande.",
         "button": "Starta"
       },
       "chapters": {
         "start": "Börja",
           "stop": "Sluta",
-          "continue": "Fortsätts"
+          "continue": "Fortsätta"
         },
       "start": {
-        "title": "Kapitel 1: Start",
+        "title": "Kapitel 1: Börja",
         "subtitle": "4-5 minuter | 2-20 deltagare",
         "description": "I detta kapitel kommer ni att brainstorma och diskutera vilka saker ni skulle kunna börja göra som gemenskap för att bättre stödja produktivitet, kommunikation, etc. Ge ett exempel på hur detta kan hjälpa dig och gemenskapen att blomstra.",
-        "button": "Gå till Start",
+        "button": "Gå till Börja",
         "steps": [
           {
             "title": "Starta",
@@ -306,7 +306,7 @@
       },
       "tips": {
         "title": "GECO App",
-        "subtitle": "Start-Stopp-Fortsätt Övning: Tips",
+        "subtitle": "Börja-Sluta-Fortsätta Övning: Tips",
         "description": "Punkter att ha i åtanke när du gör övningen",
         "points": [
           "Sätt tydliga förväntningar",
@@ -318,7 +318,7 @@
       },
       "feedback": {
         "title": "GECO App",
-        "subtitle": "Start-Stopp-Fortsätt Övning: Feedback",
+        "subtitle": "Börja-Sluta-Fortsätta Övning: Feedback",
         "description": "Har du några tankar, kommentarer och förslag om appen? Dela dina tankar med oss.",
         "feedbackButton": "Skicka feedback",
         "button": "Skicka feedback"

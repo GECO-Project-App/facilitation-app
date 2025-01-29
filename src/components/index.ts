@@ -16,6 +16,7 @@ export * from './ProfileAvatar';
 export * from './ProfileStats';
 export * from './RandomQuestion';
 export * from './RiveAnimation';
+export * from './SSCCompleted';
 export * from './SSCSwipe';
 export * from './SwipeCard';
 export * from './SwipeFeed';
