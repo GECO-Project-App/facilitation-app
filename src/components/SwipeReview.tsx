@@ -10,6 +10,7 @@ import {Check, X} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 import {FC, useEffect, useState} from 'react';
+import {Header} from './Header';
 import {RiveAnimation} from './RiveAnimation';
 import {SwipeCard} from './SwipeCard';
 import {Button} from './ui/button';
@@ -55,7 +56,6 @@ export const SwipeReview: FC = () => {
     // Remove the card from the stack
 
     if (cards.length === 1) {
-      console.log('No cards left');
       const reviewedExercise = setExerciseDataAsReviewed(exerciseId);
       if (reviewedExercise) {
         toast({
@@ -79,6 +79,7 @@ export const SwipeReview: FC = () => {
 
   return (
     <section className="flex flex-col items-center w-full min-h-svh h-svh pt-4 pb-6">
+      <Header />
       <div className="flex flex-col items-center w-full flex-1 ">
         <div className="relative flex-1 flex items-center justify-center w-full overflow-hidden px-4">
           <AnimatePresence>

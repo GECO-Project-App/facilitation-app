@@ -44,6 +44,7 @@
     },
     "toast": {
       "created": "Du har skapat ett team!",
+      "error": "Något gick fel, försök igen.",
       "joined": "Du har gått med i ett team!",
       "inviteSent": "Du har skickat en inbjudan till ett teammedlem!"
     },

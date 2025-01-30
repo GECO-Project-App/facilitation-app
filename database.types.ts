@@ -40,7 +40,6 @@ export type Database = {
           created_at: string | null
           data: Json
           exercise_id: string
-          hasVoted: boolean | null
           id: string
           is_reviewed: boolean | null
         }
@@ -49,7 +48,6 @@ export type Database = {
           created_at?: string | null
           data: Json
           exercise_id: string
-          hasVoted?: boolean | null
           id?: string
           is_reviewed?: boolean | null
         }
@@ -58,7 +56,6 @@ export type Database = {
           created_at?: string | null
           data?: Json
           exercise_id?: string
-          hasVoted?: boolean | null
           id?: string
           is_reviewed?: boolean | null
         }
@@ -284,12 +281,6 @@ export type Database = {
       }
     }
     Functions: {
-      check_exercise_completion: {
-        Args: {
-          p_exercise_id: string
-        }
-        Returns: boolean
-      }
       check_team_management_permission: {
         Args: {
           team_id: string
@@ -402,17 +393,6 @@ export type Database = {
         }
         Returns: boolean
       }
-      update_has_voted:
-        | {
-            Args: Record<PropertyKey, never>
-            Returns: boolean
-          }
-        | {
-            Args: {
-              p_exercise_id: string
-            }
-            Returns: boolean
-          }
       update_profile: {
         Args: {
           p_username?: string

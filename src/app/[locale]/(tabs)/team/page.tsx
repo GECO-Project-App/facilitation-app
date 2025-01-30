@@ -7,23 +7,22 @@ import {
   TeamSelect,
   TeamTabs,
 } from '@/components';
-import {createClient} from '@/lib/supabase/server';
+import {getUserTeams} from '@/lib/actions/teamActions';
 
 export default async function TeamPage() {
-  const supabase = createClient();
-  const {
-    data: {user},
-  } = await supabase.auth.getUser();
+  const {teams} = await getUserTeams();
+
   return (
     <PageLayout
       header={
-        user && (
+        teams &&
+        teams.length > 0 && (
           <Header showBackButton={false}>
             <TeamSelect />
           </Header>
         )
       }>
-      {user ? (
+      {teams && teams.length > 0 ? (
         <section className="flex flex-col gap-6 ">
           <div className="flex justify-center">
             <EditTeamDialog />

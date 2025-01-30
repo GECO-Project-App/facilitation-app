@@ -41,7 +41,7 @@ export const SwipeFeed: FC<{stage: string}> = ({stage}) => {
         <RiveAnimation src="swipe_up.riv" height={160} width={160} />
         <h3 className="text-center">{t('review.swipe.read')}</h3>
       </div>
-      {teamExerciseData &&
+      {teamExerciseData.length > 0 &&
         teamExerciseData.map((entry: TeamExerciseData, index: number) => (
           <div
             key={index}

@@ -46,6 +46,7 @@
     },
     "toast": {
       "created": "You have created a team!",
+      "error": "Something went wrong, please try again.",
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },

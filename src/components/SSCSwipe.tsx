@@ -119,7 +119,9 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
     <PageLayout
       backgroundColor="bg-yellow"
       header={
-        <Header rightContent={<DateBadge date={deadline} />}>
+        <Header
+          rightContent={<DateBadge date={deadline} />}
+          onBackButton={() => router.replace('/exercises/ssc/introduction')}>
           <CarouselPagination steps={Object.keys(form.getValues())} currentStep={currentStep} />
         </Header>
       }
@@ -171,33 +173,6 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
             </Carousel>
           </form>
         </Form>
-        {/* <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 flex flex-col">
-            <FormField
-              control={form.control}
-              name={stage}
-              render={({field}) => (
-                <FormItem className="flex flex-col flex-1">
-                  <FormControl>
-                    <Textarea
-                      variant="default"
-                      {...field.value}
-                      {...form.register(stage, {required: true})}
-                      placeholder="240-480 characters *"
-                      className={cn(
-                        'flex-grow resize-none ',
-                        field.name === 'start' ? '!border-yellow' : '',
-                        field.name === 'stop' ? '!border-red' : '',
-                        field.name === 'continue' ? '!border-green' : '',
-                      )}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form> */}
       </div>
     </PageLayout>
   );

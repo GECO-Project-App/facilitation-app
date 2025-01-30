@@ -9,14 +9,14 @@ create type "public"."team_invitation_status" as enum ('pending', 'awaiting_sign
 
 create type "public"."team_role" as enum ('member', 'facilitator');
 
+
 create table "public"."exercise_data" (
     "id" uuid not null default gen_random_uuid(),
     "exercise_id" uuid not null,
     "author_id" uuid not null,
     "data" jsonb not null,
     "is_reviewed" boolean default false,
-    "created_at" timestamp with time zone default now(),
-    "hasVoted" boolean default false
+    "created_at" timestamp with time zone default now()
 );
 
 

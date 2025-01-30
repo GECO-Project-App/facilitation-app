@@ -1,5 +1,4 @@
 'use server';
-import {getLocale} from 'next-intl/server';
 import {revalidatePath} from 'next/cache';
 import {Enums} from '../../../database.types';
 import {createClient} from '../supabase/server';
@@ -119,7 +118,6 @@ export async function updateTeam(data: UpdateTeamSchema, teamId: string) {
 
 export async function joinTeamByCode(teamCode: string) {
   const supabase = createClient();
-  const locale = await getLocale();
   try {
     const {data: teamId, error: joinError} = await supabase.rpc('join_team_by_code', {
       team_code_input: teamCode.toUpperCase(),
