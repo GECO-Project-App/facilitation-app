@@ -41,7 +41,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
   const [api, setApi] = useState<CarouselApi>();
   const router = useRouter();
   const {toast} = useToast();
-  const {stage, setStage} = useLocalStore();
+  const {setStage} = useLocalStore();
   const {setData, data, submitExerciseData} = useExerciseStore();
   const searchParams = useSearchParams();
 
@@ -85,14 +85,23 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
     });
   }, [api, currentStep, form, setStage]);
 
+  useEffect(() => {
+    const subscription = form.watch((formData) => {
+      if (formData) {
+        setData(formData as SSCBrainstormSchema);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, setData]);
+
   const onSubmit = async (data: SSCBrainstormSchema) => {
-    console.log(data);
     const exerciseId = searchParams.get('id');
 
     setStage(Object.keys(form.getValues())[currentStep] as ExerciseStage);
     if (currentStep < 2) {
       api?.scrollTo(currentStep + 1);
-      setData(data);
+
       return;
     } else {
       if (!exerciseId) return;
@@ -105,7 +114,9 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
           variant: 'success',
           title: t('exercises.toast.success'),
         });
-        router.replace(`/exercises/ssc?id=${exerciseId}`);
+        setTimeout(() => {
+          router.refresh();
+        }, 1000);
       } else {
         toast({
           variant: 'destructive',
@@ -127,11 +138,11 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       }
       footer={
         <Button variant="pink" className="mx-auto" onClick={form.handleSubmit(onSubmit)}>
-          {currentStep === 2 ? 'Submit' : ' Next'} <Send size={22} />
+          {currentStep === 2 ? t('common.submit') : t('common.next')} <Send size={22} />
         </Button>
       }>
       <div className="flex flex-col gap-4 h-full w-full flex-1 ">
-        <SSCButtons />
+        <SSCButtons selectedStage={Object.keys(form.getValues())[currentStep] as ExerciseStage} />
 
         <Form {...form}>
           <form
@@ -146,7 +157,8 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
                     </p>
                     <FormField
                       control={form.control}
-                      name={`${key}.value` as keyof SSCBrainstormSchema}
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      name={`${key}.value` as any}
                       render={({field}) => (
                         <FormItem className="flex flex-col h-full">
                           <FormControl>
@@ -160,7 +172,7 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
                                 key === 'continue' ? '!border-green' : '',
                               )}
                               {...field}
-                              value={field.value.value}
+                              value={field.value}
                             />
                           </FormControl>
                           <FormMessage />

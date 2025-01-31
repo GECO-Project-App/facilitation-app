@@ -434,6 +434,8 @@
     "logOut": "Log Out",
     "save": "Save",
     "goBack": "Go Back",
+    "submit": "Submit",
+    "next": "Next",
     "languages": [
       {
         "label": "English",

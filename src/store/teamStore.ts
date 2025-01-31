@@ -18,7 +18,7 @@ type TeamState = {
   isFacilitator: boolean; // Whether current user is facilitator
   userProfile: Tables<'team_members'> | null; // Current user's profile
   userTeams: Tables<'teams'>[];
-  updateUserTeams: () => Promise<void>;
+  updateUserTeams: () => Promise<Tables<'teams'>[] | undefined>;
 };
 
 // Create the team store using Zustand
@@ -35,6 +35,7 @@ export const useTeamStore = create<TeamState>()(
       updateUserTeams: async () => {
         const {teams} = await getUserTeams();
         set({userTeams: teams});
+        return teams;
       },
       // Initialize the store by loading the user's first team
       init: async () => {

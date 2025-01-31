@@ -28,6 +28,7 @@ import {
 
 export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
   const t = useTranslations('exercises');
+  const tCommon = useTranslations('common');
   const [api, setApi] = useState<CarouselApi>();
 
   const steps: {title: string; description: string}[] = t
@@ -78,6 +79,16 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
     });
   }, [api]);
 
+  useEffect(() => {
+    const subscription = form.watch((formData) => {
+      if (formData) {
+        setData(formData as TTMExercisesSchema);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, setData]);
+
   const onSubmit = async (data: TTMExercisesSchema) => {
     const exerciseId = searchParams.get('id');
 
@@ -96,7 +107,9 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
           variant: 'success',
           title: t('toast.success'),
         });
-        router.replace(`/exercises/ttm?id=${exerciseId}`);
+        setTimeout(() => {
+          router.refresh();
+        }, 1000);
       } else {
         toast({
           variant: 'destructive',
@@ -120,7 +133,7 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
       }
       footer={
         <Button variant="purple" className="mx-auto" onClick={form.handleSubmit(onSubmit)}>
-          {currentStep === 2 ? 'Submit' : ' Next'}
+          {currentStep === 2 ? tCommon('submit') : tCommon('next')}
         </Button>
       }>
       <Form {...form}>
@@ -137,20 +150,23 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
                   </p>
                   <FormField
                     control={form.control}
-                    name={`${key}.value` as keyof TTMExercisesSchema}
-                    render={({field}) => (
-                      <FormItem className="flex flex-col h-full">
-                        <FormControl>
-                          <Textarea
-                            placeholder={`240 - 480 characters`}
-                            className="flex-grow resize-none"
-                            {...field}
-                            value={field.value.value}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    name={`${key}.value` as any}
+                    render={({field}) => {
+                      return (
+                        <FormItem className="flex flex-col h-full">
+                          <FormControl>
+                            <Textarea
+                              placeholder={field.value}
+                              className="flex-grow resize-none"
+                              {...field}
+                              value={field.value}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
                   />
                 </CarouselItem>
               ))}

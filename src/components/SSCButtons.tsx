@@ -13,9 +13,11 @@ export const SSCButtons = ({
   selectedStage?: ExerciseStage;
   onClick?: (stage: ExerciseStage) => void;
 }) => {
-  const [stage, setStage] = useState<ExerciseStage>(selectedStage ?? 'start');
+  const [stage, setStage] = useState<ExerciseStage>('start');
   const t = useTranslations();
   const chapters = t.raw(`exercises.ssc.chapters`);
+
+  const currentStage = selectedStage ?? stage;
 
   return (
     <div className="flex flex-row items-center justify-between h-fit gap-2 ">
@@ -23,7 +25,7 @@ export const SSCButtons = ({
         <button
           key={index}
           className={cn(
-            chapter !== stage ? 'opacity-60' : '',
+            chapter !== currentStage ? 'opacity-60' : '',
             chapter === 'start' ? 'bg-yellow' : '',
             chapter === 'stop' ? 'bg-red' : '',
             chapter === 'continue' ? 'bg-green' : '',

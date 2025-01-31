@@ -33,10 +33,13 @@ export default function TTMExercisesPage() {
       getUserExerciseData(id);
       router.push(`ttm?id=${id}&status=${exercise.status}`);
     }
+  }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
+
+  useEffect(() => {
     if (id && !status) {
       router.push(`ttm?id=${id}&status=${exercise.status}`);
     }
-  }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
+  }, [exercise, status, router, id]);
 
   useEffect(() => {
     const fetchPendingUsers = async () => {

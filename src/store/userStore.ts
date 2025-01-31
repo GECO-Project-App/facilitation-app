@@ -100,7 +100,10 @@ export const useUserStore = create<UserState>()(
                 .update({avatar_url: data.path})
                 .eq('id', user.id);
 
-              if (profileError) throw profileError;
+              if (profileError) {
+                console.error('Profile update error:', profileError);
+                return {success: false, avatarUrl: '', error: profileError.message};
+              }
 
               await supabase.auth.updateUser({
                 data: {
