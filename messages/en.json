@@ -46,6 +46,7 @@
     },
     "toast": {
       "created": "You have created a team!",
+      "error": "Something went wrong, please try again.",
       "joined": "You have joined a team!",
       "inviteSent": "You have sent an invite to a team member!"
     },
@@ -150,12 +151,23 @@
         "subtitle": "5-15 minutes | 2-20 members",
         "description": "End your meetings right by giving each team member the space to share something with the team.",
         "button": "Start",
-        "link": "/exercises/tutorial-to-me/introduction",
+        "link": "/exercises/ttm/introduction",
         "type": "tutorial-to-me"
       }
     ]
   },
   "exercises": {
+    "deadline": {
+        "title": "Define Timeline",
+        "description": "Let's set the deadline for the exercise.",
+        "writingPhase": "Writing Phase",
+        "reviewingPhase": "Reviewing Phase",
+        "pickADateAndTime": "Pick a date and time",
+        "pickADate": "Pick a date",
+        "nextStep": "Next Step"
+        
+      
+    },
     "checkIn": {
       "title": "Check In Exercise",
       "subtitle": "5-15 minutes | 2-20 members",
@@ -208,8 +220,11 @@
         "description": "The Start, Stop, Continue (SSC) exercise is a feedback technique that helps people and teams reflect on what activities they should start, stop, or continue doing. It can be used for a variety of purposes, such as, create a framework for feedback, encourage new ideas, focus on action and collaboration, and promote broader thinking.",
         "button": "Start"
       },
-      "buttons": ["Start", "Stop", "Continue"],
-
+  "chapters": {
+    "start": "Start",
+      "stop": "Stop",
+      "continue": "Continue"
+    },
       "start": {
         "title": "Chapter 1: Start",
         "subtitle": "4-5 minutes | 2-20 members",
@@ -342,17 +357,33 @@
       "waitingForOthersP2": "to finish their Tutorial to me. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else answers.",
       "thereIsAnExerciseToDo": "There is an exercise to do",
       "youAlreadyDidThisExercise": "You already did this exercise",
-
-      "defineTimeline": {
-        "title": "Define Timeline",
-        "description": "Let's set the deadline for the exercise.",
-        "writingPhase": "Writing Phase",
-        "reviewingPhase": "Reviewing Phase",
-        "pickADateAndTime": "Pick a date and time"
-      },
       "inviteTeamMember": "Invite team member",
       "removeTeamMember": "Remove team member",
       "submit": "Submit",
+      "desc": "Name three <bold>{stage}</bold> you have when working on a project?",
+      "stages": {
+        "strengths": "Strengths",
+        "weaknesses": "Weaknesses",
+        "communication": "Communication practices"
+      },
+
+      "review": {
+        "title": "Review",
+        "description": "Take a look at your teammates' preferences.",
+        "button": "Complete review",
+        "startButton": {
+          "reviewed": "Reviewed",
+          "start": "Let's get started"
+        },
+        "swipe": {
+          "read": "to read the cards",
+          "done": "You have reviewed all your teammates' {stage} preferences!",
+          "markAsReviewed": "Mark as reviewed",
+          "reviewed": "Reviewed"
+        }
+
+      },
+
       "steps": [
         {
           "title": "Strength",
@@ -370,8 +401,15 @@
           "button": "Submit"
         }
       ]
-    }
+
+    },
+         "toast": {
+          "success": "Your contribution have been submitted!",
+          "error": "Something went wrong, please try again."
+        }
+
   },
+
   "feedback": {
     "title": " What worked well during this exercise? And what didn't?",
     "subtitle": "What didn't?",
@@ -381,7 +419,12 @@
   },
 
 
+
   "common": {
+     "waitingStatus": {
+        "reviewing": "We are still waiting on <underline>{people}</underline> to finish their review.",
+        "writing": "We are still waiting on <underline>{people}</underline> to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."
+      },
     "nextStep": "Next Step",
     "letsStart": "Let's Start",
     "goToHome": "Go to home",
@@ -389,6 +432,10 @@
     "thankYouText": "Thank you for your feedback!",
     "greatJob": "GREAT JOB! YOU DID IT!",
     "logOut": "Log Out",
+    "save": "Save",
+    "goBack": "Go Back",
+    "submit": "Submit",
+    "next": "Next",
     "languages": [
       {
         "label": "English",
@@ -406,7 +453,8 @@
       "check-out": "Check Out",
       "ssc": "Start  Stop Continue",
       "ttm": "Tutorial to me"
-    }
+    },
+    "noStats": "User insights cannot be shown until this user has completed the Tutorial to me exercise."
   },
 
   "errors": {

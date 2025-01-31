@@ -12,6 +12,8 @@ export type MemberSchema = z.infer<typeof memberSchema>;
 export type UpdateTeamSchema = z.infer<typeof updateTeamSchema>;
 export type InviteTeamMemberSchema = z.infer<typeof inviteTeamMemberSchema>;
 export type SSCBrainstormSchema = z.infer<typeof sscBrainstormSchema>;
+export type TTMExercisesSchema = z.infer<typeof ttmSchema>;
+
 export const updatePasswordSchema = z
   .object({
     password: z.string(),
@@ -102,7 +104,49 @@ export const inviteTeamMemberSchema = z.object({
 });
 
 export const sscBrainstormSchema = z.object({
-  start: z.string().min(240).max(480).default(''),
-  stop: z.string().min(240).max(480).default(''),
-  continue: z.string().min(240).max(480).default(''),
+  start: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  stop: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  continue: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+});
+
+export const ttmSchema = z.object({
+  strengths: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  weaknesses: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
+  communication: z.object({
+    value: z.string().max(480).default(''),
+    vote: z.object({
+      yes: z.number().default(0),
+      no: z.number().default(0),
+    }),
+  }),
 });

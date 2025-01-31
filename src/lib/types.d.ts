@@ -86,3 +86,45 @@ export type ExerciseType = {
     communications: string;
   };
 };
+
+export type SubmitExerciseDataParams = {
+  exerciseId: string;
+  data: Json;
+};
+
+export type CreateExerciseParams = {
+  teamId: string;
+  slug: string;
+  reviewType?: Database['public']['Enums']['exercise_review_type'];
+  deadline: {
+    writing: string;
+    reviewing: string;
+  };
+};
+
+export type FormattedReview = {
+  author_name: string;
+  category: string;
+  id: string;
+  value: string;
+};
+
+export type Exercise = Database['public']['Tables']['exercises']['Row'];
+export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];
+export type PendingUsers = Database['public']['Functions']['get_pending_users']['Returns'][number];
+export type PendingUser = Database['public']['Functions']['get_pending_users']['Returns'][number];
+export type ExerciseStatus = Database['public']['Enums']['exercise_status'];
+export type TeamExerciseData =
+  Database['public']['Functions']['get_team_exercise_data']['Returns'][number];
+export type ExerciseStage =
+  | 'start'
+  | 'stop'
+  | 'continue'
+  | 'strengths'
+  | 'weaknesses'
+  | 'communication'
+  | null;
+export type TTMExerciseData =
+  Database['public']['Functions']['get_ttm_exercise_data']['Returns'][number];
+
+export type VoteType = 'yes' | 'no';

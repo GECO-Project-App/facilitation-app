@@ -1,24 +1,31 @@
 'use client';
 import {Link} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
+import {useExerciseStore} from '@/store/exerciseStore';
 import {useUserStore} from '@/store/userStore';
 import {Pencil} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
 import {MemberForm} from './forms';
 
 export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
   const {user} = useUserStore();
-  const t = useTranslations('common');
+  const {getTTMExerciseData, ttmData} = useExerciseStore();
+  const t = useTranslations();
 
   const isCurrentUser = useMemo(() => user?.id === member.user_id, [user, member]);
+
+  useEffect(() => {
+    getTTMExerciseData(member.user_id);
+  }, [member.user_id, getTTMExerciseData]);
+
   return (
     <section className="h-full flex-1 flex flex-col justify-center gap-6">
       <div className="text-center space-y-1">
         <h3 className=" text-xl font-bold">{`${member.profile_name}`}</h3>
-        <p>{t(member.role)}</p>
+        <p>{t(`common.${member.role}`)}</p>
       </div>
       <div
         className={cn(
@@ -46,15 +53,18 @@ export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
           <p className="font-light">{member.description}</p>
         )}
 
-        {/* TODO: add a stats section from tutorial to me here */}
-        <section className="grid grid-cols-1 gap-4  ">
-          {['Strength', 'Weakness', 'Communication Style', 'Skills Assessment'].map((stat) => (
-            <div key={stat}>
-              <h4>{stat}:</h4>
-              <p className="font-light">Value</p>
-            </div>
-          ))}
-        </section>
+        {ttmData ? (
+          <section className="grid grid-cols-1 gap-4  ">
+            {Object.keys(ttmData.data).map((stat) => (
+              <div key={stat}>
+                <h4>{t(`exercises.tutorialToMe.stages.${stat}`)}:</h4>
+                <p className="font-light">{ttmData.data[stat].value}</p>
+              </div>
+            ))}
+          </section>
+        ) : (
+          <h3>{t('common.noStats')}</h3>
+        )}
       </section>
     </section>
   );

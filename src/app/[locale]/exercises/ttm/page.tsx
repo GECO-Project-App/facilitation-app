@@ -1,5 +1,6 @@
 'use client';
-import {SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
+import {TTMSwipe} from '@/components';
+import {TTMReview} from '@/components/TTMReview';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
@@ -7,15 +8,15 @@ import {useExerciseStore} from '@/store/exerciseStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 
-export default function SSCPage() {
+export default function TTMExercisesPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const status = searchParams.get('status') as ExerciseStatus;
-  const {exercise, getExerciseById, getUserExerciseData, pendingUsers, getPendingUsers} =
-    useExerciseStore();
   const router = useRouter();
+  const {exercise, getExerciseById, getUserExerciseData, getPendingUsers, pendingUsers} =
+    useExerciseStore();
   const {user} = useUserStore();
   const t = useTranslations();
 
@@ -23,35 +24,36 @@ export default function SSCPage() {
     if (id) {
       if (!exercise) {
         const getExercise = async () => {
-          const {exercise} = await getExerciseById(id);
-          if (exercise) {
-            router.push(`ssc?id=${id}&status=${exercise.status}`);
-          }
+          await getExerciseById(id);
         };
 
         getExercise();
         return;
       }
       getUserExerciseData(id);
-      router.push(`ssc?id=${id}&status=${exercise.status}`);
-    } else {
-      router.push(`ssc`);
+      router.push(`ttm?id=${id}&status=${exercise.status}`);
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
-  const fetchPendingUsers = useCallback(async () => {
-    if (!id || !exercise?.status) return;
-    await getPendingUsers(id, exercise.status);
-  }, [id, exercise?.status, getPendingUsers]);
+  useEffect(() => {
+    if (id && !status) {
+      router.push(`ttm?id=${id}&status=${exercise.status}`);
+    }
+  }, [exercise, status, router, id]);
 
   useEffect(() => {
+    const fetchPendingUsers = async () => {
+      if (!id || !exercise?.status || exercise.status === 'completed') return;
+      await getPendingUsers(id, exercise.status);
+    };
     fetchPendingUsers();
-  }, [fetchPendingUsers]);
+  }, [id, exercise?.status, getPendingUsers]);
 
-  if (!id || !exercise?.id) {
+  if (!exercise || !id) {
     return <div>loading...</div>;
   }
 
+  // If the user is not in the pending users list, show the waiting for component
   if (
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
     exercise.status !== 'completed'
@@ -69,10 +71,10 @@ export default function SSCPage() {
 
   switch (status as ExerciseStatus) {
     case 'writing':
-      return <SSCSwipe deadline={new Date(exercise.deadline[exercise.status])} />;
+      return <TTMSwipe deadline={new Date(exercise.deadline[exercise.status])} />;
     case 'reviewing':
-      return <SwipeReview />;
+      return <TTMReview />;
     case 'completed':
-      return <SSCCompleted />;
+      return <TTMReview isCompleted={true} />;
   }
 }

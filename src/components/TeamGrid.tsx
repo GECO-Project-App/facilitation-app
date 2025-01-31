@@ -2,6 +2,7 @@
 import {cn} from '@/lib/utils';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {FC, useCallback, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
 import {TeamGridButtons} from './TeamGridButtons';
@@ -9,8 +10,9 @@ import {TeamTabs} from './TeamTabs';
 
 export const TeamGrid: FC = () => {
   const [openCards, setOpenCards] = useState([0]);
-  const {currentTeam, facilitator, currentTeamId} = useTeamStore();
+  const {currentTeam, facilitator} = useTeamStore();
   const t = useTranslations('team.page');
+  const teamId = useSearchParams().get('teamId');
 
   const facilitators = currentTeam?.team_members?.filter(
     (member) => member && member?.role === 'facilitator',
@@ -24,7 +26,7 @@ export const TeamGrid: FC = () => {
   if (!currentTeam) return null;
   return (
     <>
-      {currentTeamId === 'new' ? (
+      {teamId === 'new' ? (
         <TeamTabs />
       ) : (
         <section className="space-y-4">

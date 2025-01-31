@@ -3,6 +3,7 @@ import {useToast} from '@/hooks/useToast';
 import {useTeamStore} from '@/store/teamStore';
 import {Copy} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {useRef} from 'react';
 import {InviteTeamMemberDialog} from './dialogs';
 import {Button} from './ui/button';
@@ -11,8 +12,8 @@ export const InviteCodeCard = () => {
   const t = useTranslations('team.page');
   const btnRef = useRef<HTMLButtonElement>(null);
   const {toast} = useToast();
-  const {currentTeam, currentTeamId} = useTeamStore();
-
+  const {currentTeam} = useTeamStore();
+  const teamId = useSearchParams().get('teamId');
   const copyCode = () => {
     navigator.clipboard
       .writeText(btnRef.current?.textContent || '')
@@ -28,7 +29,7 @@ export const InviteCodeCard = () => {
       });
   };
 
-  if (!currentTeam || currentTeamId === 'new') return null;
+  if (!currentTeam || teamId === 'new') return null;
 
   return (
     <div className=" py-6 px-4 rounded-4xl border-2 border-black flex flex-col items-center h-fit bg-green gap-4">

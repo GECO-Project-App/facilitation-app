@@ -2,8 +2,7 @@
 import {useRouter} from '@/i18n/routing';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
-import {useSearchParams} from 'next/navigation';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useState} from 'react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from './ui';
 
 export const TeamSelect = ({
@@ -13,25 +12,26 @@ export const TeamSelect = ({
   disableCreateOrJoin?: boolean;
   className?: string;
 }) => {
-  const {setCurrentTeamId, currentTeam, currentTeamId, userTeams} = useTeamStore();
+  const {setCurrentTeamId, currentTeam, currentTeamId, userTeams, updateUserTeams} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const teamValue = useMemo(() => {
-    const teamId = searchParams.get('id');
-    if (!teamId) {
-      return;
-    }
-
-    return teamId ?? userTeams[0].id;
-  }, [searchParams, userTeams]);
+  const [teamValue, setTeamValue] = useState<string>('new');
 
   useEffect(() => {
-    if (teamValue) {
-      setCurrentTeamId(teamValue);
-    }
-  }, [setCurrentTeamId, teamValue]);
+    const updateTeams = async () => {
+      const teams = await updateUserTeams();
+
+      if (teams && teams.length > 0) {
+        setCurrentTeamId(teams[0].id);
+        setTeamValue(teams[0].id);
+        router.push(`?teamId=${teams[0].id}`);
+      } else {
+        router.push(`?teamId=new`);
+      }
+    };
+
+    updateTeams();
+  }, [setCurrentTeamId, router, currentTeamId, updateUserTeams]);
 
   if (!currentTeam) return null;
 
@@ -39,7 +39,7 @@ export const TeamSelect = ({
     <Select
       defaultValue={currentTeam?.id ?? ''}
       value={teamValue}
-      onValueChange={(value) => router.push(`?id=${value}`)}>
+      onValueChange={(value) => router.push(`?teamId=${value}`)}>
       <SelectTrigger className={className}>
         <SelectValue placeholder={currentTeam?.name ?? 'Select a team'} />
       </SelectTrigger>

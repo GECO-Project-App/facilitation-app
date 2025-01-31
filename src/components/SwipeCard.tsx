@@ -1,74 +1,107 @@
 'use client';
-import {motion, PanInfo, useMotionValue, useTransform} from 'framer-motion';
+import {motion, PanInfo, useAnimationControls, useMotionValue, useTransform} from 'framer-motion';
 import {Card, CardContent, CardTitle} from './ui';
 
+import {ExerciseStage} from '@/lib/types';
 import {cn} from '@/lib/utils';
+import {forwardRef, useEffect, useImperativeHandle} from 'react';
 import {CardHeader} from './ui';
+
+export type SwipeCardHandle = {
+  swipeLeft: () => Promise<void>;
+  swipeRight: () => Promise<void>;
+};
 
 type SwipeCardProps = {
   children: React.ReactNode;
   title: string;
   onAgree: () => void;
   onDisagree: () => void;
-  type?: 'start' | 'stop' | 'continue';
-  forceSwipe: number;
+  type?: ExerciseStage;
+  index?: number;
 };
 
-export const SwipeCard = ({
-  children,
-  title,
-  onAgree,
-  onDisagree,
-  type = 'start',
-  forceSwipe,
-}: SwipeCardProps) => {
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-100, 100], [-10, 10]);
+export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
+  ({children, title, onAgree, onDisagree, type = 'start', index = 0}, ref) => {
+    const x = useMotionValue(0);
+    const rotate = useTransform(x, [-300, 300], [-30, 30]);
+    const controls = useAnimationControls();
 
-  const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (info.offset.x > 100) {
-      onAgree();
-    } else if (info.offset.x < -100) {
-      onDisagree();
-    }
-  };
+    useEffect(() => {
+      const resetCard = async () => {
+        await controls.start({
+          x: 0,
+          rotate: 0,
+          transition: {type: 'spring', stiffness: 300, damping: 20},
+        });
+        x.set(0);
+      };
+      resetCard();
+    }, [type, controls, x]);
 
-  return (
-    <motion.div
-      className={cn(
-        'absolute h-auto aspect-[9/16] w-11/12 flex-1 flex flex-col cursor-grab active:cursor-grabbing rounded-4xl',
-      )}
-      drag="x"
-      style={{
-        x,
-        rotate,
-      }}
-      dragConstraints={{
-        left: 0,
-        right: 0,
-      }}
-      initial={{
-        scale: 1,
-      }}
-      exit={{
-        x: forceSwipe === 1 ? 1000 : -1000,
+    const swipeRight = async () => {
+      await controls.start({
+        x: 300,
+        rotate: 30,
         opacity: 0,
-        scale: 0.5,
-        transition: {duration: 1},
-      }}
-      dragTransition={{bounceStiffness: 600, bounceDamping: 20}}
-      onDragEnd={handleDragEnd}>
-      <Card
-        className={cn(
-          type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
-          'flex-1',
-        )}>
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
-        </CardHeader>
+      });
+      onAgree();
+    };
 
-        <CardContent>{children}</CardContent>
-      </Card>
-    </motion.div>
-  );
-};
+    const swipeLeft = async () => {
+      await controls.start({
+        x: -300,
+        rotate: -30,
+        opacity: 0,
+      });
+      onDisagree();
+    };
+
+    const handleDragEnd = async (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+      if (info.offset.x > 300) {
+        await swipeRight();
+      } else if (info.offset.x < -300) {
+        await swipeLeft();
+      }
+    };
+
+    useImperativeHandle(ref, () => ({
+      swipeLeft,
+      swipeRight,
+    }));
+
+    return (
+      <motion.div
+        animate={controls}
+        className={cn(
+          'absolute h-[90%] w-[90%] max-w-[350px] max-h-[600px] flex flex-col cursor-grab active:cursor-grabbing rounded-4xl',
+        )}
+        drag="x"
+        style={{
+          x,
+          rotate,
+          zIndex: -index,
+        }}
+        dragConstraints={{
+          left: -100,
+          right: 100,
+        }}
+        dragTransition={{bounceStiffness: 600, bounceDamping: 20}}
+        onDragEnd={handleDragEnd}>
+        <Card
+          className={cn(
+            type === 'start' ? 'bg-yellow' : type === 'stop' ? 'bg-red' : 'bg-green',
+            'relative flex-grow ',
+          )}>
+          <CardHeader>
+            <CardTitle>{title}</CardTitle>
+          </CardHeader>
+
+          <CardContent className="">{children}</CardContent>
+        </Card>
+      </motion.div>
+    );
+  },
+);
+
+SwipeCard.displayName = 'SwipeCard';

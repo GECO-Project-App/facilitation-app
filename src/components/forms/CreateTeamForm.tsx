@@ -33,7 +33,7 @@ export const CreateTeamForm = () => {
     if (result?.error) {
       toast({
         variant: 'destructive',
-        title: t('error.title'),
+        title: t('toast.error'),
         description: result.error,
       });
     } else {
@@ -50,7 +50,7 @@ export const CreateTeamForm = () => {
         ),
       });
 
-      router.push(`/team?id=${result.teamId}`);
+      router.push(`/team?teamId=${result.teamId}`);
       updateTeams();
     }
   };

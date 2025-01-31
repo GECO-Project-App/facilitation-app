@@ -49,7 +49,7 @@ export const AvatarBuilder: FC = () => {
                 title: t('updateSuccess'),
               });
 
-              router.back();
+              router.replace('/team');
             }
           }}>
           {t('button')} <Save />

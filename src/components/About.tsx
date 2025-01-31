@@ -1,13 +1,12 @@
 'use client';
-import {useDoneTutorialExercise} from '@/hooks/useDoneExercise';
-import {useSSCChaptersHandler} from '@/hooks/useSSCChaptersHandler';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
-import {useExercisesStore} from '@/store/useExercises';
+import {useExerciseStore} from '@/store/exerciseStore';
+import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
-import {FC, useMemo} from 'react';
+import {FC, useEffect, useMemo} from 'react';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
 import {RiveAnimation} from './RiveAnimation';
@@ -21,15 +20,20 @@ export const About: FC<{
   subtitle: string;
   description: string;
   buttonText: string;
-}> = ({slug, title, subtitle, description, buttonText}) => {
+  hideTeamSelect?: boolean;
+}> = ({slug, title, subtitle, description, buttonText, hideTeamSelect = false}) => {
   const router = useRouter();
   const posthog = usePostHog();
-  const {currentTutorialExerciseId} = useExercisesStore();
-  const {done, theTimePassed} = useDoneTutorialExercise();
-  const {removeLocalStorageItem} = useSSCChaptersHandler();
+  const {isFacilitator, currentTeam} = useTeamStore();
+  const {exercise, getExerciseBySlugAndTeamId} = useExerciseStore();
+
+  useEffect(() => {
+    if (currentTeam) {
+      getExerciseBySlugAndTeamId(slug, currentTeam.id);
+    }
+  }, [slug, currentTeam, getExerciseBySlugAndTeamId]);
 
   const handleClick = () => {
-    removeLocalStorageItem('reviewDone');
     posthog.capture('exercise_start', {
       name: slug,
     });
@@ -49,29 +53,34 @@ export const About: FC<{
         return sscMock.continue.about;
       case 'ssc':
         return sscMock.about;
-      case 'tutorial-to-me':
+      case 'ttm':
         return tutorialMock.about;
       default:
         return ccMock.checkOut.about;
     }
   }, [slug]);
 
+  const exerciseLink = useMemo(() => {
+    return exercise
+      ? exercise.status === 'completed' && isFacilitator
+        ? `/exercises/${slug}/deadline`
+        : `/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`
+      : isFacilitator
+        ? `/exercises/${slug}/deadline`
+        : `/exercises/${slug}`;
+  }, [isFacilitator, exercise, slug]);
+
   return (
     <PageLayout
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
-        <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
-          <Link
-            href={
-              currentTutorialExerciseId && slug === 'tutorial-to-me'
-                ? done || theTimePassed
-                  ? `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}/review`
-                  : `/exercises/tutorial-to-me/id/${currentTutorialExerciseId}`
-                : mock.button.link
-            }>
-            {buttonText} <ArrowRight size={28} />
-          </Link>
-        </Button>
+        isFacilitator || (exercise && slug !== 'ttm') || slug !== 'ssc' ? (
+          <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
+            <Link href={exerciseLink}>
+              {buttonText} <ArrowRight size={28} />
+            </Link>
+          </Button>
+        ) : null
       }>
       <div className="space-y-6">
         {mock?.rive && (
@@ -91,8 +100,12 @@ export const About: FC<{
           </div>
           <p>{description}</p>
         </div>
-        <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
-        <TeamCard />
+        {!hideTeamSelect && (
+          <>
+            <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
+            <TeamCard />
+          </>
+        )}
       </div>
     </PageLayout>
   );

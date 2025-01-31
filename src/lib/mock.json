@@ -1,0 +1,126 @@
+[
+  {
+    "id": "a3419a1c-e6cb-4455-96d0-1c0ff6a70a07",
+    "exercise_id": "8000b800-6da0-449c-8225-0e83bcabd286",
+    "author_id": "aa6a1020-7394-4578-909d-753f6f1dbd77",
+    "data": {
+      "strengths": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "My strengrths aredjddfhjaefphefhiojefw"
+      },
+      "weaknesses": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Weaknesses eiopreifewäpweöoihwrgegew"
+      },
+      "communication": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "lkdiwefkelrw-akjgöowreg roögfjöoareijg öoaerijg öoaerijg öo"
+      }
+    },
+    "is_reviewed": false,
+    "created_at": "2025-01-24 13:24:58.361919+00",
+    "hasVoted": false
+  },
+  {
+    "id": "aef9c1dc-6b50-49a6-8850-8aa38baa3828",
+    "exercise_id": "8000b800-6da0-449c-8225-0e83bcabd286",
+    "author_id": "c6a6dfb9-1705-49f1-b87e-af2a5356c28c",
+    "data": {
+      "strengths": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Mina styrkor är sjdoieqfh weofjwoejfjf fuq0w0we30sw dkdd dpd pd dpåwrie "
+      },
+      "weaknesses": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Svagehetetdr dfijjfer fesopfeso opfes "
+      },
+      "communication": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "fodiuöewöfoiwjerf wef päfjf ewj äipfew jf"
+      }
+    },
+    "is_reviewed": true,
+    "created_at": "2025-01-24 13:28:50.545709+00",
+    "hasVoted": false
+  },
+  {
+    "id": "8a79abf8-c4df-440c-88f0-1793372d1aef",
+    "exercise_id": "02f2c012-70d5-4610-b508-a675c21aae84",
+    "author_id": "aa6a1020-7394-4578-909d-753f6f1dbd77",
+    "data": {
+      "stop": {
+        "vote": {
+          "no": 1,
+          "yes": 0
+        },
+        "value": "Ludde sluta delwjflkwelöfwelfj"
+      },
+      "start": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Ludde börja"
+      },
+      "continue": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Ludde wfdorttäd diefad fiofhjöoqweihF Öowehwqöliföuw FOewuh uöweoh"
+      }
+    },
+    "is_reviewed": false,
+    "created_at": "2025-01-24 15:08:25.992081+00",
+    "hasVoted": false
+  },
+  {
+    "id": "452ca64b-be55-48f1-a5ac-587fc35580a9",
+    "exercise_id": "02f2c012-70d5-4610-b508-a675c21aae84",
+    "author_id": "c6a6dfb9-1705-49f1-b87e-af2a5356c28c",
+    "data": {
+      "stop": {
+        "vote": {
+          "no": 1,
+          "yes": 0
+        },
+        "value": "Sluta"
+      },
+      "start": {
+        "vote": {
+          "no": 1,
+          "yes": 0
+        },
+        "value": "Börja"
+      },
+      "continue": {
+        "vote": {
+          "no": 0,
+          "yes": 0
+        },
+        "value": "Forts'tt"
+      }
+    },
+    "is_reviewed": false,
+    "created_at": "2025-01-24 15:07:16.766901+00",
+    "hasVoted": false
+  }
+]

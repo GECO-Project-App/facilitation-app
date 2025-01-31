@@ -15,7 +15,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex w-full items-center justify-center rounded-full border-2 border-black',
+      'inline-flex w-full items-center justify-center rounded-full border-2 border-black *:-inset-[1px] ',
       className,
     )}
     {...props}
@@ -24,7 +24,7 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const tabVariants = cva(
-  'inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-full border-x-2 border-transparent p-4 text-xl font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-black data-[state=active]:shadow first:data-[state=active]:border-r-2 last:data-[state=active]:border-l-2',
+  'inline-flex flex-1 items-center justify-center whitespace-nowrap rounded-full border-transparent p-4 text-xl font-bold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-black data-[state=active]:shadow data-[state=active]:border-2 -m-[2px] relative',
   {
     variants: {
       variant: {
