@@ -88,16 +88,6 @@ export async function getExerciseById(exerciseId: string) {
     .single();
   return {exercise, error};
 }
-export const getExerciseBySlugAndId = async (slug: string, exerciseId: string) => {
-  const supabase = createClient();
-  const {data: exercise, error} = await supabase
-    .from('exercises')
-    .select()
-    .eq('slug', slug)
-    .eq('id', exerciseId)
-    .single();
-  return {exercise, error};
-};
 
 export const getExerciseBySlugAndTeamId = async (slug: string, teamId: string) => {
   const supabase = createClient();
@@ -229,5 +219,19 @@ export async function handleExerciseVote(
   } catch (error) {
     console.error('Failed to increment vote:', error);
     return {success: false, error: 'Failed to increment vote'};
+  }
+}
+
+export async function getActiveExercises() {
+  const supabase = createClient();
+
+  try {
+    const {data, error} = await supabase.rpc('get_active_exercises');
+
+    if (error) throw error;
+    return {exercises: data, error: null};
+  } catch (error) {
+    console.error('Error fetching active exercises:', error);
+    return {exercises: null, error};
   }
 }

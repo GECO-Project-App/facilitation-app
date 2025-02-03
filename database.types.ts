@@ -302,6 +302,21 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_active_exercises: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          team_id: string
+          created_by: string
+          created_at: string
+          status: Database["public"]["Enums"]["exercise_status"]
+          review_type: Database["public"]["Enums"]["exercise_review_type"]
+          deadline: Json
+          slug: string
+          team_name: string
+          creator_name: string
+        }[]
+      }
       get_my_profile: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["CompositeTypes"]["profile_response"]
@@ -359,6 +374,12 @@ export type Database = {
           exercise_status: Database["public"]["Enums"]["exercise_status"]
           exercise_deadline: Json
         }[]
+      }
+      get_user_email: {
+        Args: {
+          user_id: string
+        }
+        Returns: string
       }
       increment_exercise_vote: {
         Args: {

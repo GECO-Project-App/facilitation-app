@@ -109,6 +109,7 @@ export type FormattedReview = {
   value: string;
 };
 
+export type Exercises = Database['public']['Functions']['get_active_exercises']['Returns'][number];
 export type Exercise = Database['public']['Tables']['exercises']['Row'];
 export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];
 export type PendingUsers = Database['public']['Functions']['get_pending_users']['Returns'][number];

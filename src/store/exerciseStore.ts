@@ -1,8 +1,8 @@
 'use client';
 import {
   createExercise,
+  getActiveExercises,
   getExerciseById,
-  getExerciseBySlugAndId,
   getExerciseBySlugAndTeamId,
   getPendingUsers,
   getTeamExerciseData,
@@ -16,6 +16,7 @@ import type {
   CreateExerciseParams,
   Exercise,
   ExerciseData,
+  Exercises,
   ExerciseStage,
   ExerciseStatus,
   PendingUsers,
@@ -36,6 +37,7 @@ type ExerciseState = {
   exerciseData: ExerciseData | null;
   teamExerciseData: TeamExerciseData | null;
   exercise: Exercise | null;
+  exercises: Exercises | [];
   createdExercise: Exercise | null;
   submittedExerciseData: ExerciseData | null;
   status: 'writing' | 'reviewing' | 'results';
@@ -48,7 +50,6 @@ type ExerciseState = {
   createExercise: (newExercise: CreateExerciseParams) => Promise<Exercise>;
   submitExerciseData: (exerciseId: string, data: Json) => Promise<ExerciseData>;
   getExerciseById: (exerciseId: string) => Exercise | null;
-  getExerciseBySlugAndId: (slug: string, exerciseId: string) => Exercise | null;
   getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
   getUserExerciseData: (exerciseId: string, userId?: string) => ExerciseData | null;
   currentExercise: Exercise | null;
@@ -61,6 +62,7 @@ type ExerciseState = {
     category: ExerciseStage,
     voteType: VoteType,
   ) => Promise<void>;
+  getActiveExercises: () => Promise<void>;
 };
 
 export const useExerciseStore = create<ExerciseState>()(
@@ -74,6 +76,7 @@ export const useExerciseStore = create<ExerciseState>()(
       exerciseData: null,
       teamExerciseData: null,
       exercise: null,
+      exercises: [],
       createdExercise: null,
       submittedExerciseData: null,
       reviewedStages: [],
@@ -99,12 +102,6 @@ export const useExerciseStore = create<ExerciseState>()(
 
         set({submittedExerciseData: submission});
         return submission;
-      },
-      getExerciseBySlugAndId: async (slug, exerciseId) => {
-        const {exercise} = await getExerciseBySlugAndId(slug, exerciseId);
-        set({exercise});
-
-        return exercise;
       },
       getExerciseBySlugAndTeamId: async (slug, teamId) => {
         const {exercise} = await getExerciseBySlugAndTeamId(slug, teamId);
@@ -147,6 +144,17 @@ export const useExerciseStore = create<ExerciseState>()(
         if (!success) {
           throw new Error('Failed to increment vote');
         }
+      },
+      getActiveExercises: async () => {
+        const {exercises} = await getActiveExercises();
+        set({exercises});
+      },
+
+      getActiveExercisesByTeamId: (teamId: string) => {
+        const filteredExercises = get().exercises.filter(
+          (exercise: Exercise) => exercise.team_id === teamId,
+        );
+        set({exercises: filteredExercises});
       },
     }),
 
