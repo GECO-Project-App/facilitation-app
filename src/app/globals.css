@@ -97,4 +97,8 @@ input[type='time']::-webkit-calendar-picker-indicator {
   .animation-transition {
     @apply transition duration-300 ease-in-out;
   }
+
+  .swipe-card {
+    @apply absolute flex h-[90%] max-h-[600px] w-[90%] max-w-[350px] cursor-grab flex-col overflow-scroll rounded-4xl active:cursor-grabbing;
+  }
 }

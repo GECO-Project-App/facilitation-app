@@ -328,6 +328,14 @@
         "feedbackButton": "Send Feedback",
         "homeButton": "Go to Home"
       },
+
+      "review": {
+        "title": "Review everything your team members wrote down",
+        "button": {
+          "agree": "Agree",
+          "disagree": "Disagree"
+        }
+      },
       "feedback": {
         "title": "GECO App",
         "subtitle": "Start-Stop-Continue Exercise: Feedback",

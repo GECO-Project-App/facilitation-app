@@ -31,6 +31,7 @@ export const SwipeReview: FC = () => {
         const data = await getTeamExerciseData(exerciseId);
 
         const reviews = extractReviews(data);
+        console.log(reviews);
         const unreviewed = reviews.filter(
           (review: FormattedReview) => !reviewedCards.includes(`${review.category}-${review.id}`),
         );
@@ -97,15 +98,21 @@ export const SwipeReview: FC = () => {
                 </div>
               </SwipeCard>
             ))}
+            <SwipeCard title={''} onAgree={() => {}} onDisagree={() => {}}>
+              <div className="flex flex-col items-center justify-center gap-4">
+                <h3 className="text-2xl font-bold text-center">{t('review.title')}</h3>
+                <RiveAnimation src="swipe_right_left.riv" width={'100%'} height={80} />
+              </div>
+            </SwipeCard>
           </AnimatePresence>
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-lg px-4">
-        <Button variant="red" onClick={() => handleSwipe(false)}>
-          Disagree <X />
+        <Button variant="red">
+          {t('review.button.disagree')} <X />
         </Button>
-        <Button variant="green" onClick={() => handleSwipe(true)}>
-          Agree <Check />
+        <Button variant="green">
+          {t('review.button.agree')} <Check />
         </Button>
       </div>
     </section>

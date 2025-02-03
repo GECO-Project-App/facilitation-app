@@ -73,9 +73,7 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
     return (
       <motion.div
         animate={controls}
-        className={cn(
-          'absolute h-[90%] w-[90%] max-w-[350px] max-h-[600px] flex flex-col cursor-grab active:cursor-grabbing rounded-4xl',
-        )}
+        className={cn('swipe-card')}
         drag="x"
         style={{
           x,
