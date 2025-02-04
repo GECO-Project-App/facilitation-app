@@ -407,6 +407,14 @@ export type Database = {
         }
         Returns: string
       }
+      schedule_deadline_check: {
+        Args: {
+          exercise_id: string
+          deadline_time: string
+          new_status: string
+        }
+        Returns: undefined
+      }
       sync_team_member_profile: {
         Args: {
           p_team_id: string

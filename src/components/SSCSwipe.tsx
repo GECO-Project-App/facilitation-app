@@ -51,21 +51,21 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       start: {
         value: data?.start.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },
       stop: {
         value: data?.stop.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },
       continue: {
         value: data?.continue.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },

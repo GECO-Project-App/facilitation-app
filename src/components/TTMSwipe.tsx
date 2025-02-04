@@ -46,21 +46,21 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
       strengths: {
         value: data?.strengths.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },
       weaknesses: {
         value: data?.weaknesses.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },
       communication: {
         value: data?.communication.value ?? '',
         vote: {
-          yes: 0,
+          yes: 1,
           no: 0,
         },
       },
