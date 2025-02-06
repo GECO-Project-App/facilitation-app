@@ -115,9 +115,9 @@
     "error": "Ett fel uppstod",
     "updateSuccess": "Profil uppdaterad"
   },
-  "home": {
-    "title": "Projekt GECO",
-    "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer",
+  "exerciseCatalogue": {
+    "title": "Övningar",
+    "desc": "Bläddra igenom övningarna och hitta den som passar dina behov.",
     "catalogue": [
       {
         "title": "Incheckning",
@@ -152,6 +152,12 @@
         "type": "tutorial-to-me"
       }
     ]
+  },
+  "home": {
+    "title": "Projekt GECO",
+    "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer"
+    
+
   },
   "exercises": {
     "deadline": {
