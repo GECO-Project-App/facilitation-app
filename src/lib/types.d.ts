@@ -104,6 +104,7 @@ export type CreateExerciseParams = {
 
 export type FormattedReview = {
   author_name: string;
+  author_id: string;
   category: string;
   id: string;
   value: string;

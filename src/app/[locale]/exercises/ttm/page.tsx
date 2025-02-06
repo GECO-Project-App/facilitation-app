@@ -5,6 +5,7 @@ import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
+import {useTeamStore} from '@/store/teamStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
@@ -15,8 +16,15 @@ export default function TTMExercisesPage() {
   const id = searchParams.get('id');
   const status = searchParams.get('status') as ExerciseStatus;
   const router = useRouter();
-  const {exercise, getExerciseById, getUserExerciseData, getPendingUsers, pendingUsers} =
-    useExerciseStore();
+  const {
+    exercise,
+    getExerciseById,
+    getUserExerciseData,
+    getPendingUsers,
+    pendingUsers,
+    getExerciseBySlugAndTeamId,
+  } = useExerciseStore();
+  const {currentTeam} = useTeamStore();
   const {user} = useUserStore();
   const t = useTranslations();
 
@@ -39,7 +47,16 @@ export default function TTMExercisesPage() {
     if (id && !status) {
       router.push(`ttm?id=${id}&status=${exercise.status}`);
     }
-  }, [exercise, status, router, id]);
+    const getExercise = async () => {
+      if (!currentTeam) return;
+      const exercise = await getExerciseBySlugAndTeamId('ttm', currentTeam.id);
+      console.log('exercise', exercise);
+      if (exercise) {
+        router.push(`ttm?id=${exercise.id}&status=${exercise.status}`);
+      }
+    };
+    getExercise();
+  }, [exercise, status, router, id, currentTeam, getExerciseBySlugAndTeamId]);
 
   useEffect(() => {
     const fetchPendingUsers = async () => {

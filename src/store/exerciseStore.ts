@@ -50,7 +50,7 @@ type ExerciseState = {
   createExercise: (newExercise: CreateExerciseParams) => Promise<Exercise>;
   submitExerciseData: (exerciseId: string, data: Json) => Promise<ExerciseData>;
   getExerciseById: (exerciseId: string) => Exercise | null;
-  getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Exercise | null;
+  getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Promise<Exercise | null>;
   getUserExerciseData: (exerciseId: string, userId?: string) => ExerciseData | null;
   currentExercise: Exercise | null;
   getPendingUsers: (exerciseId: string, status: ExerciseStatus) => PendingUsers | null;

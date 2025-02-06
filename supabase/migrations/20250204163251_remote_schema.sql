@@ -14,4 +14,5 @@ to public
 using ((bucket_id = 'avatars'::text));
 
 
-
+insert into storage.buckets (id, name)
+  values ('avatars', 'avatars');

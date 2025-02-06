@@ -42,6 +42,7 @@ export const extractReviews = (exerciseData: TeamExerciseData[]) => {
     return dataKeys
       .map((key) => ({
         author_name: item.author_name,
+        author_id: item.author_id,
         category: key,
         id: item.id,
         value: item.data[key].value,

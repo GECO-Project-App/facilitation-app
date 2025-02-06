@@ -1,19 +1,20 @@
 'use client';
 
 import {toast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {ExerciseStage, FormattedReview} from '@/lib/types';
 import {extractReviews} from '@/lib/utils';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {useLocalStore} from '@/store/localStore';
+import {useUserStore} from '@/store/userStore';
 import {AnimatePresence} from 'framer-motion';
-import {Check, X} from 'lucide-react';
+import {ArrowLeft, ArrowRight} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
 import {FC, useEffect, useState} from 'react';
 import {Header} from './Header';
 import {RiveAnimation} from './RiveAnimation';
 import {SwipeCard} from './SwipeCard';
-import {Button} from './ui/button';
 
 export const SwipeReview: FC = () => {
   const {getTeamExerciseData, handleExerciseVote, setExerciseDataAsReviewed} = useExerciseStore();
@@ -22,8 +23,9 @@ export const SwipeReview: FC = () => {
   const [cards, setCards] = useState<FormattedReview[]>([]);
   const t = useTranslations('exercises.ssc');
   const t2 = useTranslations('common');
-
+  const {user} = useUserStore();
   const {reviewedCards, addReviewedCard, setReviewedCards} = useLocalStore();
+  const router = useRouter();
 
   useEffect(() => {
     const getCards = async () => {
@@ -31,15 +33,17 @@ export const SwipeReview: FC = () => {
         const data = await getTeamExerciseData(exerciseId);
 
         const reviews = extractReviews(data);
-        console.log(reviews);
+
         const unreviewed = reviews.filter(
-          (review: FormattedReview) => !reviewedCards.includes(`${review.category}-${review.id}`),
+          (review: FormattedReview) =>
+            review.author_id !== user?.id &&
+            !reviewedCards.includes(`${review.category}-${review.id}`),
         );
         setCards(unreviewed);
       }
     };
     getCards();
-  }, [exerciseId, getTeamExerciseData, reviewedCards]);
+  }, [exerciseId, getTeamExerciseData, reviewedCards, user]);
 
   const handleSwipe = async (agree: boolean) => {
     const currentCard = cards[0];
@@ -80,7 +84,7 @@ export const SwipeReview: FC = () => {
 
   return (
     <section className="flex flex-col items-center w-full min-h-svh h-svh pt-4 pb-6">
-      <Header />
+      <Header onBackButton={() => router.replace('/exercises/ssc/introduction')} />
       <div className="flex flex-col items-center w-full flex-1 ">
         <div className="relative flex-1 flex items-center justify-center w-full overflow-hidden px-4">
           <AnimatePresence>
@@ -99,7 +103,7 @@ export const SwipeReview: FC = () => {
               </SwipeCard>
             ))}
             <SwipeCard title={''} onAgree={() => {}} onDisagree={() => {}}>
-              <div className="flex flex-col items-center justify-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-4 ">
                 <h3 className="text-2xl font-bold text-center">{t('review.title')}</h3>
                 <RiveAnimation src="swipe_right_left.riv" width={'100%'} height={80} />
               </div>
@@ -108,12 +112,13 @@ export const SwipeReview: FC = () => {
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-lg px-4">
-        <Button variant="red">
-          {t('review.button.disagree')} <X />
-        </Button>
-        <Button variant="green">
-          {t('review.button.agree')} <Check />
-        </Button>
+        <div className="bg-red flex items-center gap-2 rounded-full p-4 border-2 border-black">
+          <ArrowLeft />
+          {t('review.button.disagree')}
+        </div>
+        <div className="bg-green flex items-center gap-2 rounded-full p-4 border-2 border-black">
+          {t('review.button.agree')} <ArrowRight />
+        </div>
       </div>
     </section>
   );

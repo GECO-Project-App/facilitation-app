@@ -281,6 +281,10 @@ export type Database = {
       }
     }
     Functions: {
+      check_exercise_deadlines: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       check_team_management_permission: {
         Args: {
           team_id: string

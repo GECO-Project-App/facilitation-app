@@ -4,6 +4,7 @@ import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {useTeamStore} from '@/store/teamStore';
 import {ArrowRight} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
 import {FC, useEffect, useMemo} from 'react';
@@ -26,6 +27,7 @@ export const About: FC<{
   const posthog = usePostHog();
   const {isFacilitator, currentTeam} = useTeamStore();
   const {exercise, getExerciseBySlugAndTeamId} = useExerciseStore();
+  const t = useTranslations('common');
 
   useEffect(() => {
     if (currentTeam) {
@@ -74,13 +76,17 @@ export const About: FC<{
     <PageLayout
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
-        isFacilitator || (exercise && slug !== 'ttm') || slug !== 'ssc' ? (
+        isFacilitator || (slug !== 'ttm' && slug !== 'ssc') || exercise !== null ? (
           <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
             <Link href={exerciseLink}>
               {buttonText} <ArrowRight size={28} />
             </Link>
           </Button>
-        ) : null
+        ) : (
+          <Button variant={mock.button.variant} asChild disabled className="mx-auto">
+            {t('exerciseBlocked')}
+          </Button>
+        )
       }>
       <div className="space-y-6">
         {mock?.rive && (

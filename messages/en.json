@@ -462,7 +462,8 @@
       "ssc": "Start  Stop Continue",
       "ttm": "Tutorial to me"
     },
-    "noStats": "User insights cannot be shown until this user has completed the Tutorial to me exercise."
+    "noStats": "User insights cannot be shown until this user has completed the Tutorial to me exercise.",
+    "exerciseBlocked": "Your team facilitator has not started this exercise yet."
   },
 
   "errors": {

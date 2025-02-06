@@ -4,13 +4,8 @@ import {Card, CardContent, CardTitle} from './ui';
 
 import {ExerciseStage} from '@/lib/types';
 import {cn} from '@/lib/utils';
-import {forwardRef, useEffect, useImperativeHandle} from 'react';
+import {forwardRef, useEffect} from 'react';
 import {CardHeader} from './ui';
-
-export type SwipeCardHandle = {
-  swipeLeft: () => Promise<void>;
-  swipeRight: () => Promise<void>;
-};
 
 type SwipeCardProps = {
   children: React.ReactNode;
@@ -21,7 +16,7 @@ type SwipeCardProps = {
   index?: number;
 };
 
-export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
+export const SwipeCard = forwardRef<HTMLDivElement, SwipeCardProps>(
   ({children, title, onAgree, onDisagree, type = 'start', index = 0}, ref) => {
     const x = useMotionValue(0);
     const rotate = useTransform(x, [-300, 300], [-30, 30]);
@@ -64,11 +59,6 @@ export const SwipeCard = forwardRef<SwipeCardHandle, SwipeCardProps>(
         await swipeLeft();
       }
     };
-
-    useImperativeHandle(ref, () => ({
-      swipeLeft,
-      swipeRight,
-    }));
 
     return (
       <motion.div

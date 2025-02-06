@@ -446,7 +446,8 @@
       "ssc": "Börja Sluta Fortsätta",
       "ttm": "Handledning till mig"
     },
-    "noStats": "Insikter om användaren kan inte visas förrän denna användare har slutfört övningen 'Handledning till mig'."
+    "noStats": "Insikter om användaren kan inte visas förrän denna användare har slutfört övningen 'Handledning till mig'.",
+    "exerciseBlocked": "Din teamledare har inte startat denna övning än."
   },
 
   "errors": {
