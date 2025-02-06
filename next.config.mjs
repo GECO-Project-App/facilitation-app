@@ -20,6 +20,24 @@ const withPWA = withPWAInit({
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  redirects: async () => [
+    {
+      source: '/',
+      destination: '/exercise-catalogue',
+      permanent: true,
+    },
+    {
+      source: '/en',
+      destination: '/exercise-catalogue',
+      permanent: true,
+    },
+    {
+      source: '/sv',
+      destination: '/exercise-catalogue',
+      permanent: true,
+    },
+    
+  ],
 };
 
 export default withNextIntl(withPWA(nextConfig));
