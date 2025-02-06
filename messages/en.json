@@ -121,7 +121,7 @@
   "exerciseCatalogue": {
     "title": "Exercise Catalogue",
     "desc": "Browse through the exercises and find the one that best suits your needs.",
-        "catalogue": [
+    "catalogue": [
       {
         "title": "Check In",
         "subtitle": "5-15 minutes | 2-20 members",
