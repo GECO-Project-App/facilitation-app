@@ -1,7 +1,6 @@
 'use client';
-import {locales} from '@/i18n/config';
 import {Link} from '@/i18n/routing';
-import {Home, Library, ListTodo, Settings, Users} from 'lucide-react';
+import {Library, ListTodo, Settings, Users} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 import {FC} from 'react';
 
@@ -23,18 +22,11 @@ export const TabBar: FC = () => {
           <ListTodo size={24} className={colorText('activities')} />
         </li>
         <li>
-          <Library size={24} className={colorText('library')} />
-        </li>
-        <li>
-          <Link href="/">
-            <Home
-              size={24}
-              className={
-                locales.includes(pathname.split('/').pop() || '') ? 'text-green' : 'text-black'
-              }
-            />
+          <Link href="/exercise-catalogue">
+            <Library size={24} className={colorText('exercise-catalogue')} />
           </Link>
         </li>
+
         <li>
           <Link href="/team">
             <Users size={24} className={colorText('team')} />

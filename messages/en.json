@@ -118,10 +118,10 @@
     "error": "Error",
     "updateSuccess": "Profile updated successfully"
   },
-  "home": {
-    "title": "Project GECO",
-    "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
-    "catalogue": [
+  "exerciseCatalogue": {
+    "title": "Exercise Catalogue",
+    "desc": "Browse through the exercises and find the one that best suits your needs.",
+        "catalogue": [
       {
         "title": "Check In",
         "subtitle": "5-15 minutes | 2-20 members",
@@ -155,6 +155,10 @@
         "type": "tutorial-to-me"
       }
     ]
+  },
+  "home": {
+    "title": "Project GECO",
+    "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
   "exercises": {
     "deadline": {
