@@ -1,8 +1,10 @@
 'use client';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {checkExerciseAvailibility} from '@/lib/utils';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {useTeamStore} from '@/store/teamStore';
+import {useUserStore} from '@/store/userStore';
 import {ArrowRight} from 'lucide-react';
 import Image from 'next/image';
 import {usePostHog} from 'posthog-js/react';
@@ -26,6 +28,7 @@ export const About: FC<{
   const posthog = usePostHog();
   const {isFacilitator, currentTeam} = useTeamStore();
   const {exercise, getExerciseBySlugAndTeamId} = useExerciseStore();
+  const {user} = useUserStore();
 
   useEffect(() => {
     if (currentTeam) {
@@ -74,7 +77,7 @@ export const About: FC<{
     <PageLayout
       header={<Header onBackButton={() => router.push('/')} />}
       footer={
-        isFacilitator || (exercise && slug !== 'ttm') || slug !== 'ssc' ? (
+        checkExerciseAvailibility(slug, isFacilitator, user, exercise) ? (
           <Button variant={mock.button.variant} asChild onClick={handleClick} className="mx-auto">
             <Link href={exerciseLink}>
               {buttonText} <ArrowRight size={28} />
@@ -100,12 +103,13 @@ export const About: FC<{
           </div>
           <p>{description}</p>
         </div>
-        {!hideTeamSelect && (
-          <>
-            <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
-            <TeamCard />
-          </>
-        )}
+        {!hideTeamSelect ||
+          (exercise !== null && user !== null && (slug == 'ttm' || slug == 'ssc') && (
+            <>
+              <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
+              <TeamCard />
+            </>
+          ))}
       </div>
     </PageLayout>
   );

@@ -1,6 +1,7 @@
+import {User} from '@supabase/supabase-js';
 import {clsx, type ClassValue} from 'clsx';
 import {twMerge} from 'tailwind-merge';
-import {TeamExerciseData} from './types';
+import {Exercise, TeamExerciseData} from './types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -55,4 +56,26 @@ export const extractReviews = (exerciseData: TeamExerciseData[]) => {
     .sort((a, b) => {
       return categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category);
     });
+};
+
+export const checkExerciseAvailibility = (
+  slug: string,
+  isFacilitator: boolean,
+  user: User | null,
+  exercise: Exercise | null,
+) => {
+  switch (slug) {
+    case 'ttm':
+      if (exercise !== null && user !== null) {
+        return true;
+      }
+      return false;
+    case 'ssc':
+      if (exercise !== null && user !== null) {
+        return true;
+      }
+      return false;
+    default:
+      return true;
+  }
 };
