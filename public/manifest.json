@@ -21,7 +21,7 @@
   ],
   "theme_color": "#0CAC56",
   "background_color": "#0CAC56",
-  "start_url": "/",
+  "start_url": "/exercise-catalogue",
   "display": "standalone",
   "orientation": "portrait"
 }

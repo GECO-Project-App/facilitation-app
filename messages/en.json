@@ -3,6 +3,9 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
+"activities": {
+  "title": "Activities"
+},
 
   "team": {
     "tabs": {
@@ -118,9 +121,9 @@
     "error": "Error",
     "updateSuccess": "Profile updated successfully"
   },
-  "home": {
-    "title": "Project GECO",
-    "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators",
+  "exerciseCatalogue": {
+    "title": "Exercise Catalogue",
+    "desc": "Browse through the exercises and find the one that best suits your needs.",
     "catalogue": [
       {
         "title": "Check In",
@@ -155,6 +158,10 @@
         "type": "tutorial-to-me"
       }
     ]
+  },
+  "home": {
+    "title": "Project GECO",
+    "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
   "exercises": {
     "deadline": {

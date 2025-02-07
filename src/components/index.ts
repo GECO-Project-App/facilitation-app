@@ -1,4 +1,5 @@
 export * from './About';
+export * from './ActivityItem';
 export * from './AuthTabs';
 export * from './AvatarBuilder';
 export * from './BaseballCard';
@@ -10,6 +11,7 @@ export * from './forms';
 export * from './Header';
 export * from './InviteCodeCard';
 export * from './LanguageSelector';
+export * from './NotificationItem';
 export * from './PageLayout';
 export * from './PassItOn';
 export * from './ProfileAvatar';
