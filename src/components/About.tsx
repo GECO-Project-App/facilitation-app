@@ -1,6 +1,7 @@
 'use client';
 import {Link, useRouter} from '@/i18n/routing';
 import {ccMock, sscMock, tutorialMock} from '@/lib/mock';
+import {checkExerciseAvailibility} from '@/lib/utils';
 import {useExerciseStore} from '@/store/exerciseStore';
 import {useTeamStore} from '@/store/teamStore';
 import {useUserStore} from '@/store/userStore';
