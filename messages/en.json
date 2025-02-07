@@ -3,6 +3,9 @@
     "title": "Project GECO",
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
+"activities": {
+  "title": "Activities"
+},
 
   "team": {
     "tabs": {

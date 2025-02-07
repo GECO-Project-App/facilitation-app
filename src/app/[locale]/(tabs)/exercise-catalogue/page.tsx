@@ -9,7 +9,6 @@ export default async function ExerciseCatalogue() {
 
   return (
     <PageLayout
-      hasPadding={false}
       header={
         <Header
           showBackButton={false}

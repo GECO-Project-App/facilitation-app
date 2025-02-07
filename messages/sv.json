@@ -3,6 +3,10 @@
     "title": "Projekt GECO",
     "desc": "Hjälp teamledare att etablera och upprätthålla produktiv gruppdynamik genom att bli bättre facilitatorer"
   },
+
+  "activities": {
+    "title": "Aktiviteter"
+  },
   "team": {
     "tabs": {
       "create": "Skapa Team", 
