@@ -5,7 +5,7 @@ import {useState} from 'react';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
 
-export const TeamAvatars = ({teamMembers}: {teamMembers: Array<Tables<'team_members'>> | []}) => {
+export const TeamAvatars = ({teamMembers}: {teamMembers?: Array<Tables<'team_members'>> | []}) => {
   const {currentTeam} = useTeamStore();
   const [team, setTeam] = useState<Array<Tables<'team_members'>> | []>(
     teamMembers ?? currentTeam?.team_members ?? [],
