@@ -235,3 +235,9 @@ export async function getActiveExercises() {
     return {exercises: null, error};
   }
 }
+
+export const getUserTeamActivities = async () => {
+  const supabase = createClient();
+  const {data, error} = await supabase.rpc('get_user_team_exercises');
+  return {data, error};
+};

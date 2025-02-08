@@ -4,7 +4,8 @@
     "desc": "Help team leaders establish and maintain productive group dynamics by becoming better facilitators"
   },
 "activities": {
-  "title": "Activities"
+  "title": "Activities",
+  "noActivities": "No activities to show"
 },
 
   "team": {

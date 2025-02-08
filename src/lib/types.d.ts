@@ -128,5 +128,6 @@ export type ExerciseStage =
   | null;
 export type TTMExerciseData =
   Database['public']['Functions']['get_ttm_exercise_data']['Returns'][number];
-
+export type UserTeamExercises =
+  Database['public']['Functions']['get_user_team_exercises']['Returns'][number];
 export type VoteType = 'yes' | 'no';

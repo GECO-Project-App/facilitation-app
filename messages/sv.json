@@ -5,7 +5,8 @@
   },
 
   "activities": {
-    "title": "Aktiviteter"
+    "title": "Aktiviteter",
+    "noActivities": "Inga aktiviteter att visa"
   },
   "team": {
     "tabs": {
