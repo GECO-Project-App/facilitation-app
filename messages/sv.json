@@ -101,7 +101,9 @@
     }
     
   },
-
+"settings": {
+  "title": "Inställningar"
+},
   "profile": {
     "title": "Profil",
     "welcome": "Välkommen, {name}!",

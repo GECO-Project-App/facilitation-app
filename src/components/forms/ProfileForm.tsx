@@ -58,7 +58,7 @@ export const ProfileForm = () => {
   if (!user) return <AuthTabs />;
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex flex-col gap-6 w-full">
       <h1 className="text-2xl font-bold">
         {t('profile.welcome', {name: user.user_metadata.first_name})}
       </h1>

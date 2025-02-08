@@ -103,7 +103,9 @@
 
 
   },
-
+"settings": {
+  "title": "Settings"
+},
   "profile": {
     "title": "Profile",
     "welcome": "Welcome, {name}!",
