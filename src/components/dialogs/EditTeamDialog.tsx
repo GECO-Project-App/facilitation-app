@@ -2,6 +2,7 @@
 
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import {UpdateTeamForm} from '../forms/UpdateTeamForm';
 import {EditTeam} from '../icons';
@@ -16,10 +17,13 @@ import {
 } from '../ui';
 
 export const EditTeamDialog = () => {
-  const {currentTeam, currentTeamId, isFacilitator} = useTeamStore();
+  const {isFacilitator, currentTeam} = useTeamStore();
   const t = useTranslations('team.edit');
   const [open, setOpen] = useState(false);
-  if (!currentTeam || currentTeamId === 'new' || !isFacilitator) return null;
+  const searchParams = useSearchParams();
+
+  const teamId = searchParams.get('teamId');
+  if (!teamId || teamId === 'new' || !isFacilitator) return null;
 
   return (
     <>

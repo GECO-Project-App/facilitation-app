@@ -88,7 +88,7 @@ export const TeamCard = () => {
                         {...field}
                         placeholder={t('teamCard.enterCode')}
                         className="px-4 py-2 text-sm font-normal "
-                        autoComplete="off"
+                        autoComplete="false"
                       />
                     </FormControl>
                     <FormMessage />

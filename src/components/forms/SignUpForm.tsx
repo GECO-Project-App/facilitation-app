@@ -42,7 +42,6 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
     } else if (result?.user) {
       if (invitationId) {
         // Handle team invitation
-        console.log('invitationIdUsers', result.user.id);
         const inviteResult = await acceptTeamInvitation(invitationId);
         if (inviteResult.error) {
           toast({
@@ -50,9 +49,9 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
             title: inviteResult.error,
           });
         }
-        router.push('/team');
+        router.refresh();
       } else {
-        router.push('/team');
+        router.refresh();
       }
     }
   };
@@ -83,7 +82,7 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
                   type="password"
                   {...field}
                   placeholder={t('enterPassword')}
-                  autoComplete="current-password"
+                  autoComplete="false"
                 />
               </FormControl>
               <FormMessage />

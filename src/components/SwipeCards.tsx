@@ -19,7 +19,6 @@ export const SwipeCards = () => {
     if (exerciseId) {
       const getCards = async () => {
         const data = await getTeamExerciseData(exerciseId);
-        console.log(data);
         const noVotes = data.filter(
           (item: TeamExerciseData) =>
             item.data[stage].vote.yes === 0 || item.data[stage].vote.no === 0,

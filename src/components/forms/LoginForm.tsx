@@ -71,7 +71,7 @@ export const LoginForm = () => {
                   type="password"
                   {...field}
                   placeholder={t('enterPassword')}
-                  autoComplete="current-password"
+                  autoComplete="false"
                 />
               </FormControl>
               <FormMessage />

@@ -23,7 +23,6 @@ Deno.serve(async (req) => {
 
   try {
     const { teamId, email, language = 'en', authUserId } = await req.json()
-    console.log('Received request with:', { teamId, email, language, authUserId });
 
     if ( !authUserId) {
       return new Response(
@@ -37,7 +36,6 @@ Deno.serve(async (req) => {
       'check_team_management_permission',
       { team_id: teamId, user_id: authUserId }
     )
-    console.log('Authorization check:', { isAuthorized, authError });
 
     if (authError || !isAuthorized) {
       return new Response(
@@ -52,7 +50,6 @@ Deno.serve(async (req) => {
         email_input: email.toLowerCase() 
       });
     
-    console.log('Existing user check:', { existingUser, userError });
 
     if (userError) {
       console.error('User lookup error:', userError);
@@ -66,7 +63,6 @@ Deno.serve(async (req) => {
       .eq('id', teamId)
       .single();
     
-    console.log('Team query:', { team, teamError, teamId });
 
     if (teamError || !team) {
       console.error('Team error:', teamError);

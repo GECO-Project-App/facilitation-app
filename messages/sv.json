@@ -5,7 +5,8 @@
   },
 
   "activities": {
-    "title": "Aktiviteter"
+    "title": "Aktiviteter",
+    "noActivities": "Inga aktiviteter att visa"
   },
   "team": {
     "tabs": {
@@ -155,10 +156,10 @@
       {
         "title": "Handledning till mig",
         "subtitle": "5-15 minuter | 2-20 deltagare",
-        "description": "Avsluta era möten rätt genom att ge varje teammedlem utrymme att dela något med teamet.",
+        "description": "Dela dina styrkor, svagheter och föredragna sätt att kommunicera när ni börjar arbeta som team.",
         "button": "Starta",
         "link": "/exercises/ttm/introduction",
-        "type": "tutorial-to-me"
+        "type": "ttm"
       }
     ]
   },
@@ -429,6 +430,10 @@
 
 
   "common": {
+    "status": {
+      "writing": "Skrivning",
+      "reviewing": "Granskning"
+    },
     "waitingStatus": {
         "reviewing": "Vi väntar fortfarande på att <underline>{people}</underline> ska slutföra sin granskning.",
         "writing": "Vi väntar fortfarande på att <underline>{people}</underline> ska skicka in sina svar. Vi skickar ett mail när du kan börja granska andras svar."
@@ -461,7 +466,8 @@
       "ssc": "Börja Sluta Fortsätta",
       "ttm": "Handledning till mig"
     },
-    "noStats": "Insikter om användaren kan inte visas förrän denna användare har slutfört övningen 'Handledning till mig'."
+    "noStats": "Insikter om användaren kan inte visas förrän denna användare har slutfört övningen 'Handledning till mig'.",
+    "exerciseBlocked": "Din teamledare har inte startat denna övning än."
   },
 
   "errors": {

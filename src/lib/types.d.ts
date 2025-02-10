@@ -20,7 +20,7 @@ export type ExerciseCardType = {
   description: string;
   button: string;
   link: string;
-  type: 'check-in' | 'check-out' | 'ssc' | 'tutorial-to-me';
+  type: 'check-in' | 'check-out' | 'ssc' | 'ttm';
 };
 
 export type Step = {
@@ -104,11 +104,13 @@ export type CreateExerciseParams = {
 
 export type FormattedReview = {
   author_name: string;
+  author_id: string;
   category: string;
   id: string;
   value: string;
 };
 
+export type Exercises = Database['public']['Functions']['get_active_exercises']['Returns'][number];
 export type Exercise = Database['public']['Tables']['exercises']['Row'];
 export type ExerciseData = Database['public']['Tables']['exercise_data']['Row'];
 export type PendingUsers = Database['public']['Functions']['get_pending_users']['Returns'][number];
@@ -126,5 +128,6 @@ export type ExerciseStage =
   | null;
 export type TTMExerciseData =
   Database['public']['Functions']['get_ttm_exercise_data']['Returns'][number];
-
+export type UserTeamExercises =
+  Database['public']['Functions']['get_user_team_exercises']['Returns'][number];
 export type VoteType = 'yes' | 'no';

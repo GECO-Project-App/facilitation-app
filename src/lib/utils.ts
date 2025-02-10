@@ -43,6 +43,7 @@ export const extractReviews = (exerciseData: TeamExerciseData[]) => {
     return dataKeys
       .map((key) => ({
         author_name: item.author_name,
+        author_id: item.author_id,
         category: key,
         id: item.id,
         value: item.data[key].value,
@@ -66,15 +67,16 @@ export const checkExerciseAvailibility = (
 ) => {
   switch (slug) {
     case 'ttm':
-      if (exercise !== null && user !== null) {
-        return true;
+      if (exercise == null && user == null) {
+        return false;
       }
-      return false;
+
+      return true;
     case 'ssc':
-      if (exercise !== null && user !== null) {
-        return true;
+      if (exercise == null && user == null) {
+        return false;
       }
-      return false;
+      return true;
     default:
       return true;
   }

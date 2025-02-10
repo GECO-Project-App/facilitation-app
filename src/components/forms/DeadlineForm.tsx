@@ -45,6 +45,11 @@ export const DeadlineForm = () => {
     return newDate;
   };
 
+  const isInPast = (date: Date) => {
+    const now = new Date();
+    return date < new Date(now.setHours(0, 0, 0, 0));
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -79,7 +84,7 @@ export const DeadlineForm = () => {
                       selected={field.value}
                       onSelect={field.onChange}
                       initialFocus
-                      disabled={(date) => date < new Date()}
+                      disabled={isInPast}
                     />
                     <input
                       type="time"
@@ -143,10 +148,7 @@ export const DeadlineForm = () => {
                       selected={field.value}
                       onSelect={field.onChange}
                       initialFocus
-                      disabled={(date) => {
-                        const writingDate = form.getValues('writingDate');
-                        return writingDate ? date < writingDate : false;
-                      }}
+                      disabled={isInPast}
                     />
                     <input
                       type="time"

@@ -257,6 +257,21 @@ export type Database = {
       }
     }
     Views: {
+      team_members_view: {
+        Row: {
+          team_id: string | null
+          team_members: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_members_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       team_permissions: {
         Row: {
           team_id: string | null
@@ -281,6 +296,10 @@ export type Database = {
       }
     }
     Functions: {
+      check_exercise_deadlines: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       check_team_management_permission: {
         Args: {
           team_id: string
@@ -301,6 +320,21 @@ export type Database = {
       generate_team_code: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_active_exercises: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          team_id: string
+          created_by: string
+          created_at: string
+          status: Database["public"]["Enums"]["exercise_status"]
+          review_type: Database["public"]["Enums"]["exercise_review_type"]
+          deadline: Json
+          slug: string
+          team_name: string
+          creator_name: string
+        }[]
       }
       get_my_profile: {
         Args: Record<PropertyKey, never>
@@ -360,6 +394,27 @@ export type Database = {
           exercise_deadline: Json
         }[]
       }
+      get_user_email: {
+        Args: {
+          user_id: string
+        }
+        Returns: string
+      }
+      get_user_team_exercises: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          team_id: string
+          created_by: string
+          created_at: string
+          status: Database["public"]["Enums"]["exercise_status"]
+          review_type: Database["public"]["Enums"]["exercise_review_type"]
+          deadline: Json
+          slug: string
+          team_name: string
+          team_members: Json
+        }[]
+      }
       increment_exercise_vote: {
         Args: {
           p_exercise_data_id: string
@@ -385,6 +440,14 @@ export type Database = {
           p_user_id: string
         }
         Returns: string
+      }
+      schedule_deadline_check: {
+        Args: {
+          exercise_id: string
+          deadline_time: string
+          new_status: string
+        }
+        Returns: undefined
       }
       sync_team_member_profile: {
         Args: {
