@@ -1,8 +1,6 @@
 import {Header, PageLayout} from '@/components';
 import {ActivityItem} from '@/components/ActivityItem';
-import {Link} from '@/i18n/routing';
 import {getUserTeamActivities} from '@/lib/actions/exerciseActions';
-import {Bell} from 'lucide-react';
 import {getTranslations} from 'next-intl/server';
 
 export default async function ActivitiesPage() {
@@ -15,11 +13,12 @@ export default async function ActivitiesPage() {
       header={
         <Header
           showBackButton={false}
-          rightContent={
-            <Link href="/notifications">
-              <Bell size={24} />
-            </Link>
-          }>
+          // rightContent={
+          //   <Link href="/notifications">
+          //     <Bell size={24} />
+          //   </Link>
+          // }
+        >
           <h4 className="font-bold">{t('title')}</h4>
         </Header>
       }>
