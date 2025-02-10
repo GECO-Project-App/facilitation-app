@@ -1,5 +1,5 @@
 'use client';
-import {useRouter} from '@/i18n/routing';
+import {usePathname, useRouter} from '@/i18n/routing';
 import {cn} from '@/lib/utils';
 import {useLocale, useTranslations} from 'next-intl';
 import {useParams} from 'next/navigation';
@@ -20,6 +20,7 @@ export const LanguageSelector: FC = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const params = useParams();
+  const pathname = usePathname();
 
   const countries = useMemo(() => {
     return languages.map((lang) => {
@@ -49,9 +50,13 @@ export const LanguageSelector: FC = () => {
     });
   }, [languages]);
 
-  const switchLanguage = (locale: string) => {
+  const switchLanguage = (selectedLocale: string) => {
     startTransition(() => {
-      router.replace(locale, params);
+      router.replace(
+        // @ts-expect-error -- TypeScript will validate that only known `params`
+        {pathname, params},
+        {locale: selectedLocale},
+      );
     });
   };
 

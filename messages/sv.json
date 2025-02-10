@@ -102,9 +102,11 @@
     }
     
   },
-
+"settings": {
+  "title": "Inställningar"
+},
   "profile": {
-    "title": "Profil",
+    "title": "Ditt konto",
     "welcome": "Välkommen, {name}!",
     "save": "Spara ändringar",
     "logout": "Logga ut",
@@ -114,6 +116,9 @@
       "email": "E-post",
       "username": "Användarnamn",
       "enterUsername": "Ange användarnamn",
+      "currentPassword": "Nuvarande lösenord",
+      "newPassword": "Nytt lösenord",
+      "newPasswordPlaceholder": "Ange ditt nuvarande lösenord för att byta",
       "password": "Lösenord"
     },
     "success": "Profil uppdaterad",

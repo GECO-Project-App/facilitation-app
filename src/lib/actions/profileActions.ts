@@ -23,6 +23,7 @@ export async function updateProfile(data: ProfileSchema) {
       data: {
         first_name: validatedFields.first_name,
         last_name: validatedFields.last_name,
+        password: validatedFields.new_password,
       },
     });
 
