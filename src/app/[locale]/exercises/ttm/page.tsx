@@ -50,7 +50,6 @@ export default function TTMExercisesPage() {
     const getExercise = async () => {
       if (!currentTeam) return;
       const exercise = await getExerciseBySlugAndTeamId('ttm', currentTeam.id);
-      console.log('exercise', exercise);
       if (exercise) {
         router.push(`ttm?id=${exercise.id}&status=${exercise.status}`);
       }

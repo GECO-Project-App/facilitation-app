@@ -56,7 +56,6 @@ export default function SSCPage() {
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
     exercise.status !== 'completed'
   ) {
-    console.log('pendingUsers', pendingUsers);
     return (
       <WaitingFor
         deadline={new Date(exercise.deadline[exercise.status])}

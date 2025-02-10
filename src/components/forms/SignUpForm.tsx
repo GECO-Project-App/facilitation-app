@@ -82,7 +82,7 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
                   type="password"
                   {...field}
                   placeholder={t('enterPassword')}
-                  autoComplete="current-password"
+                  autoComplete="false"
                 />
               </FormControl>
               <FormMessage />

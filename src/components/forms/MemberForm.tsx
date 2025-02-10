@@ -83,7 +83,7 @@ export const MemberForm = ({user}: {user: Tables<'team_members'>}) => {
                     type="text"
                     {...field}
                     placeholder={t('role')}
-                    autoComplete="off"
+                    autoComplete="false"
                     className="bg-yellow font-bold"
                     readOnly
                   />

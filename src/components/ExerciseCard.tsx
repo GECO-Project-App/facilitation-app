@@ -21,7 +21,7 @@ export const ExerciseCard: FC<ExerciseCardType> = ({
         return 'bg-green';
       case 'ssc':
         return 'bg-orange';
-      case 'tutorial-to-me':
+      case 'ttm':
         return 'bg-red';
     }
   }, [type]);

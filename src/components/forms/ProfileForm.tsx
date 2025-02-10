@@ -147,7 +147,7 @@ export const ProfileForm = () => {
                     type="password"
                     {...field}
                     placeholder={t('profile.metadata.newPassword')}
-                    autoComplete="password"
+                    autoComplete="false"
                   />
                 </FormControl>
                 <FormMessage />

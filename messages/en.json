@@ -157,10 +157,10 @@
       {
         "title": "Tutorial to me",
         "subtitle": "5-15 minutes | 2-20 members",
-        "description": "End your meetings right by giving each team member the space to share something with the team.",
+        "description": "Share your Strengths, Weaknesses, and preferred ways of communicating when starting to work as a team.",
         "button": "Start",
         "link": "/exercises/ttm/introduction",
-        "type": "tutorial-to-me"
+        "type": "ttm"
       }
     ]
   },
@@ -441,6 +441,10 @@
 
 
   "common": {
+    "status": {
+      "writing": "Writing",
+      "reviewing": "Reviewing"
+    },
      "waitingStatus": {
         "reviewing": "We are still waiting on <underline>{people}</underline> to finish their review.",
         "writing": "We are still waiting on <underline>{people}</underline> to submit their answers. We will send you an email once everyone has completed their exercise, so you can come back here and review everyone else's answers."

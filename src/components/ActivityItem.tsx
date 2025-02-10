@@ -1,8 +1,9 @@
-import {UserTeamExercises} from '@/lib/types';
+'use client';
+import {ExerciseCardType, UserTeamExercises} from '@/lib/types';
 import {cn} from '@/lib/utils';
 import {ArrowRight} from 'lucide-react';
-import {useFormatter} from 'next-intl';
-import {FC} from 'react';
+import {useFormatter, useTranslations} from 'next-intl';
+import {FC, useMemo} from 'react';
 import {TeamAvatars} from './TeamAvatars';
 import {Button} from './ui';
 
@@ -13,6 +14,12 @@ type ActivityItemProps = {
 
 export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity}) => {
   const format = useFormatter();
+  const t = useTranslations();
+  const catalogue: ExerciseCardType[] = t.raw('exerciseCatalogue.catalogue');
+
+  const activityType = useMemo(() => {
+    return catalogue.find((item) => item.type === activity.slug);
+  }, [activity.slug, catalogue]);
 
   return (
     <div className={cn(hasBottomBorder ? 'border-b-2' : '', 'border-t-2 border-x-2 border-black')}>
@@ -26,8 +33,8 @@ export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity})
       </h3>
       <div className="flex flex-col gap-6 p-4 pb-6 bg-purple">
         <div className="flex flex-col gap-2">
-          <h3 className="text-2xl font-bold">{activity.slug}</h3>
-          <p className="font-light">5-15 minutes | 2-20 members</p>
+          <h3 className="text-2xl font-bold">{t(`common.slugs.${activity.slug}`)}</h3>
+          <p className="font-light">{activityType?.subtitle}</p>
         </div>
         <p className="font-bold">
           Deadline:{' '}
@@ -35,15 +42,12 @@ export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity})
             hour: '2-digit',
             minute: '2-digit',
           })}{' '}
-          - {activity.status}
+          - {t(`common.status.${activity.status}`)}
         </p>
-        <p>
-          Start your meetings right by giving each team member the space to share something with the
-          team.
-        </p>
+        <p>{activityType?.description}</p>
         <TeamAvatars />
         <Button variant="white" className="mx-auto">
-          Start
+          {t('common.letsStart')}
           <ArrowRight size={24} />
         </Button>
       </div>

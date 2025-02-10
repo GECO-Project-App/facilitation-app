@@ -76,7 +76,7 @@ export const UpdateTeamForm = ({
               <FormItem>
                 <FormLabel>{t('tabs.name')}</FormLabel>
                 <FormControl>
-                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="off" />
+                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="false" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

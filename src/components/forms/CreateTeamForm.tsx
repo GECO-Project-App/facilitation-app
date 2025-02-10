@@ -66,7 +66,7 @@ export const CreateTeamForm = () => {
             render={({field}) => (
               <FormItem>
                 <FormControl>
-                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="off" />
+                  <Input type="text" {...field} placeholder={t('tabs.name')} autoComplete="false" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

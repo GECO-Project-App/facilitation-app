@@ -109,13 +109,12 @@ export const About: FC<{
           </div>
           <p>{description}</p>
         </div>
-        {!hideTeamSelect ||
-          (exercise !== null && user !== null && (slug == 'ttm' || slug == 'ssc') && (
-            <>
-              <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
-              <TeamCard />
-            </>
-          ))}
+        {!hideTeamSelect && user !== null && (slug == 'ttm' || slug == 'ssc') && (
+          <>
+            <TeamSelect disableCreateOrJoin className="w-fit min-w-28 mx-auto" />
+            <TeamCard />
+          </>
+        )}
       </div>
     </PageLayout>
   );
