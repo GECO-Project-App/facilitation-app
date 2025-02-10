@@ -103,9 +103,11 @@
 
 
   },
-
+"settings": {
+  "title": "Settings"
+},
   "profile": {
-    "title": "Profile",
+    "title": "Your account",
     "welcome": "Welcome, {name}!",
     "save": "Save Changes",
     "logout": "Log Out",
@@ -115,6 +117,8 @@
       "lastName": "Last Name",
       "email": "Email",
       "enterUsername": "Select profile name",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
       "password": "Password"
     },
     "success": "Success",
