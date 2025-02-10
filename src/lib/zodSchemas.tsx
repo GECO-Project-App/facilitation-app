@@ -63,6 +63,7 @@ export const profileSchema = z.object({
   email: z.string().email(),
   first_name: z.string(),
   last_name: z.string(),
+  new_password: z.string(),
 });
 
 export const memberSchema = z.object({

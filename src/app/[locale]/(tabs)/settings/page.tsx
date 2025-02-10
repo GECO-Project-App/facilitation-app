@@ -18,9 +18,11 @@ export default async function SettingsPage() {
           }
         />
       }>
-      <div className="flex flex-col gap-8  w-full justify-center items-center">
+      <div className="flex flex-col gap-8 flex-1 w-full items-center">
         <LanguageSelector />
-        <ProfileForm />
+        <div className="flex flex-col justify-center items-center w-full flex-1">
+          <ProfileForm />
+        </div>
       </div>
     </PageLayout>
   );

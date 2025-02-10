@@ -4,6 +4,7 @@ import {updateProfile} from '@/lib/actions/profileActions';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
 import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
@@ -14,18 +15,19 @@ export const ProfileForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
   const {user, signOut} = useUserStore();
-
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       email: user?.email ?? user?.user_metadata.email ?? '',
       first_name: user?.user_metadata.first_name ?? '',
       last_name: user?.user_metadata.last_name ?? '',
+      new_password: '',
     },
     values: {
       email: user?.email ?? user?.user_metadata.email ?? '',
       first_name: user?.user_metadata.first_name ?? '',
       last_name: user?.user_metadata.last_name ?? '',
+      new_password: '',
     },
   });
 
@@ -34,6 +36,7 @@ export const ProfileForm = () => {
       email: user?.email ?? user?.user_metadata.email ?? '',
       first_name: user?.user_metadata.first_name ?? '',
       last_name: user?.user_metadata.last_name ?? '',
+      new_password: '',
     });
   }, [form, user]);
 
@@ -55,17 +58,23 @@ export const ProfileForm = () => {
     }
   };
 
-  if (!user) return <AuthTabs />;
+  if (!user)
+    return (
+      <section className="flex flex-col gap-6 w-full">
+        <AuthTabs />
+      </section>
+    );
 
   return (
     <section className="flex flex-col gap-6 w-full">
       <h1 className="text-2xl font-bold">
-        {t('profile.welcome', {name: user.user_metadata.first_name})}
+        {/* {t('profile.welcome', {name: user.user_metadata.first_name})} */}
+        {t('profile.title')}
       </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 h-full justify-center">
+          className="flex flex-col gap-4 h-full justify-center w-full">
           <FormField
             control={form.control}
             name="first_name"
@@ -126,21 +135,42 @@ export const ProfileForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="new_password"
+            render={({field}) => (
+              <FormItem>
+                <FormLabel>{t('profile.metadata.password')}</FormLabel>
+
+                <FormControl>
+                  <Input
+                    type="password"
+                    {...field}
+                    placeholder={t('profile.metadata.newPassword')}
+                    autoComplete="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <div className="mt-8 flex justify-center gap-4">
-            <Button type="submit" disabled={form.formState.isSubmitting} variant="green">
-              {form.formState.isSubmitting ? (
-                <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin" />
-              ) : (
-                t('profile.save')
-              )}
-            </Button>
+            {form.formState.isDirty && (
+              <button type="submit">
+                {form.formState.isSubmitting ? (
+                  <div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin" />
+                ) : (
+                  <h3 className="text-green underline">{t('profile.save')}</h3>
+                )}
+              </button>
+            )}
           </div>
         </form>
       </Form>
       <div className="flex justify-center ">
         <Button variant="red" type="submit" onClick={signOut}>
-          {t('profile.logout')}
+          {t('profile.logout')} <ArrowLeft size={24} />
         </Button>
       </div>
     </section>
