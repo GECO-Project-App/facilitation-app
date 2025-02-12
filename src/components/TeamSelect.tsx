@@ -12,7 +12,7 @@ export const TeamSelect = ({
   disableCreateOrJoin?: boolean;
   className?: string;
 }) => {
-  const {setCurrentTeamId, currentTeam, currentTeamId, userTeams, updateUserTeams} = useTeamStore();
+  const {setCurrentTeamId, currentTeam, userTeams, updateUserTeams} = useTeamStore();
   const t = useTranslations('team.page');
   const router = useRouter();
   const [teamValue, setTeamValue] = useState<string>('new');
@@ -31,7 +31,7 @@ export const TeamSelect = ({
     };
 
     updateTeams();
-  }, [setCurrentTeamId, router, currentTeamId, updateUserTeams]);
+  }, [setCurrentTeamId, router, updateUserTeams]);
 
   if (!currentTeam) return null;
 
@@ -41,6 +41,7 @@ export const TeamSelect = ({
       value={teamValue}
       onValueChange={(value) => {
         setTeamValue(value);
+        setCurrentTeamId(value);
         router.push(`?teamId=${value}`);
       }}>
       <SelectTrigger className={className}>

@@ -7,7 +7,16 @@
   "title": "Activities",
   "noActivities": "No activities to show"
 },
-
+"notifications": {
+  "title": "Notifications",
+  "noNotifications": "No notifications to show",
+  "type": {
+    "new_exercise": "A new exercise is available for {teamName}",
+    "team_invitation": "{user} has invited you to team {teamName}",
+    "exercise_status_change": "An exercise requires your attention with {teamName}",
+    "upcoming_deadline": "An exercise is about to start with {teamName}"
+  }
+},
   "team": {
     "tabs": {
       "create": "Create Team",

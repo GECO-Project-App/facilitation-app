@@ -33,7 +33,6 @@ type ExerciseState = {
     writingPhase: Date | null;
     reviewingPhase: Date | null;
   };
-  pendingUsers: PendingUsers | [];
   exerciseData: ExerciseData | null;
   teamExerciseData: TeamExerciseData | null;
   exercise: Exercise | null;
@@ -44,6 +43,9 @@ type ExerciseState = {
   data: ExerciseData | null;
   reviewedStages: string[];
   ttmData: TTMExerciseData | null;
+  pendingUsers: PendingUsers | null;
+  getPendingUsers: (exerciseId: string, status: ExerciseStatus) => Promise<PendingUsers | null>;
+  setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
   setReviewedStages: (stage: string | null) => void;
   setDeadline: (deadline: {writingPhase: Date | null; reviewingPhase: Date | null}) => void;
   setData: (data: Json) => void;
@@ -53,9 +55,7 @@ type ExerciseState = {
   getExerciseBySlugAndTeamId: (slug: string, teamId: string) => Promise<Exercise | null>;
   getUserExerciseData: (exerciseId: string, userId?: string) => ExerciseData | null;
   currentExercise: Exercise | null;
-  getPendingUsers: (exerciseId: string, status: ExerciseStatus) => PendingUsers | null;
   getTeamExerciseData: (exerciseId: string) => ExerciseData | null;
-  setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
   getTTMExerciseData: (userId: string) => TTMExerciseData | null;
   handleExerciseVote: (
     exerciseDataId: string,
@@ -72,7 +72,6 @@ export const useExerciseStore = create<ExerciseState>()(
         writingPhase: null,
         reviewingPhase: null,
       },
-      pendingUsers: [],
       exerciseData: null,
       teamExerciseData: null,
       exercise: null,
@@ -84,12 +83,23 @@ export const useExerciseStore = create<ExerciseState>()(
       data: null,
       currentExercise: null,
       ttmData: null,
+      pendingUsers: null,
+      getPendingUsers: async (exerciseId, status) => {
+        const {pendingUsers} = await getPendingUsers(exerciseId, status);
+        set({pendingUsers});
+        return pendingUsers;
+      },
       setDeadline: (deadline) => set({deadline}),
       setData: (data) => set({data}),
       createExercise: async (newExercise) => {
         const {exercise} = await createExercise(newExercise);
         set({createdExercise: exercise});
         set({deadline: {writingPhase: null, reviewingPhase: null}});
+        return exercise;
+      },
+      setExerciseDataAsReviewed: async (exerciseId) => {
+        const {exercise} = await setExerciseDataAsReviewed(exerciseId);
+        set({exercise});
         return exercise;
       },
       getExerciseById: async (exerciseId) => {
@@ -113,16 +123,6 @@ export const useExerciseStore = create<ExerciseState>()(
         const {exerciseData} = await getUserExerciseData(exerciseId);
         set({exerciseData});
         return exerciseData;
-      },
-      getPendingUsers: async (exerciseId, status) => {
-        const {pendingUsers} = await getPendingUsers(exerciseId, status);
-        set({pendingUsers});
-        return pendingUsers;
-      },
-      setExerciseDataAsReviewed: async (exerciseId) => {
-        const {exercise} = await setExerciseDataAsReviewed(exerciseId);
-        set({exercise});
-        return exercise;
       },
       getTeamExerciseData: async (exerciseId) => {
         const {exerciseData} = await getTeamExerciseData(exerciseId);
@@ -157,10 +157,14 @@ export const useExerciseStore = create<ExerciseState>()(
         set({exercises: filteredExercises});
       },
     }),
-
     {
       name: 'ExerciseStore',
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        ...state,
+        pendingUsers: [],
+        getPendingUsers: () => {},
+      }),
     },
   ),
 );

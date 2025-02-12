@@ -51,6 +51,6 @@ END;
 $function$
 ;
 
-select cron.schedule('30-minutes-deadline-check', '0,30 * * * *', 'CALL public.check_exercise_deadlines()');
+select cron.schedule('30-minutes-deadline-check', '0,30 * * * *', 'SELECT public.check_exercise_deadlines()');
 
 

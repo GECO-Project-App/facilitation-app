@@ -3,7 +3,7 @@
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {UpdateTeamForm} from '../forms/UpdateTeamForm';
 import {EditTeam} from '../icons';
 import {
@@ -23,24 +23,29 @@ export const EditTeamDialog = () => {
   const searchParams = useSearchParams();
 
   const teamId = searchParams.get('teamId');
-  if (!teamId || teamId === 'new' || !isFacilitator) return null;
+
+  const showDialog = useMemo(() => {
+    return teamId !== 'new' && isFacilitator;
+  }, [teamId, isFacilitator]);
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="white" size="xs" className=" ">
-            {t('title')} <EditTeam />
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t('title')}</DialogTitle>
-            <DialogDescription>{t('description')}</DialogDescription>
-          </DialogHeader>
-          <UpdateTeamForm currentTeam={currentTeam} onComplete={() => setOpen(false)} />
-        </DialogContent>
-      </Dialog>
+      {showDialog && (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button variant="white" size="xs" className=" ">
+              {t('title')} <EditTeam />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t('title')}</DialogTitle>
+              <DialogDescription>{t('description')}</DialogDescription>
+            </DialogHeader>
+            <UpdateTeamForm currentTeam={currentTeam} onComplete={() => setOpen(false)} />
+          </DialogContent>
+        </Dialog>
+      )}
     </>
   );
 };

@@ -8,9 +8,19 @@
     "title": "Aktiviteter",
     "noActivities": "Inga aktiviteter att visa"
   },
+  "notifications": {
+    "title": "Notifikationer",
+    "noNotifications": "Inga notifikationer att visa",
+    "type": {
+      "new_exercise": "En ny övning är tillgänglig för {teamName}",
+      "team_invitation": "{user} har inbjudit dig till team {teamName}",
+      "exercise_status_change": "En övning kräver din uppmärksamhet för {teamName}",
+      "upcoming_deadline": "En övning börjar snart för {teamName}"
+    }
+  },
   "team": {
     "tabs": {
-      "create": "Skapa Team", 
+      "create": "Skapa Team",   
       "join": "Gå med i Team",
       "name": "Teamnamn",
       "invite": "Bjud in medlemmar",
@@ -346,6 +356,13 @@
         "feedbackButton": "Skicka feedback",
         "homeButton": "Gå tillbaka"
       },
+      "review": {
+        "title": "Granska vad dina kollegor skrivit",
+        "button": {
+          "agree": "Stämmer",
+          "disagree": "Stämmer inte"
+        }
+      },
       "completeButton": "Slutför",
       "exerciseButton": "Go till övningen",
       "nextStep": "Nästa steg",
@@ -431,8 +448,8 @@
 
   "common": {
     "status": {
-      "writing": "Skrivning",
-      "reviewing": "Granskning"
+      "writing": "Skriva",
+      "reviewing": "Granska"
     },
     "waitingStatus": {
         "reviewing": "Vi väntar fortfarande på att <underline>{people}</underline> ska slutföra sin granskning.",
