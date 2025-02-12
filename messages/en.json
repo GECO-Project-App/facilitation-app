@@ -11,10 +11,10 @@
   "title": "Notifications",
   "noNotifications": "No notifications to show",
   "type": {
-    "new_exercise": "A new exercise is available for {teamName}",
-    "team_invitation": "{user} has invited you to team {teamName}",
-    "exercise_status_change": "An exercise requires your attention with {teamName}",
-    "upcoming_deadline": "An exercise is about to start with {teamName}"
+    "new_exercise": "A new exercise is available for team \"{teamName}\"",
+    "team_invitation": "{user} has invited you to their team \"{teamName}\"",
+    "exercise_status_change": "An exercise for team \"{teamName}\" requires your attention",
+    "upcoming_deadline": "An exercise is about to start with team \"{teamName}\""
   }
 },
   "team": {

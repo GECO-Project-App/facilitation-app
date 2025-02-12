@@ -17,6 +17,7 @@ export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity})
   const t = useTranslations();
   const catalogue: ExerciseCardType[] = t.raw('exerciseCatalogue.catalogue');
 
+  console.log(activity);
   const activityType = useMemo(() => {
     return catalogue.find((item) => item.type === activity.slug);
   }, [activity.slug, catalogue]);
@@ -44,7 +45,11 @@ export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity})
           })}{' '}
           - {t(`common.status.${activity.status}`)}
         </p>
+
         <p>{activityType?.description}</p>
+        <div className="flex h-9 w-fit gap-4 items-center justify-between whitespace-nowrap rounded-full border-2 border-black bg-white px-4 py-2 shadow-sm mx-auto">
+          <p>{activity.team_name}</p>
+        </div>
         <TeamAvatars />
         <Button variant="white" className="mx-auto">
           {t('common.letsStart')}

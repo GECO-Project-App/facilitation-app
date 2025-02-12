@@ -31,13 +31,29 @@ export const NotificationItem = ({notification}: {notification: Notification}) =
 
   const markAsRead = async () => {
     const supabase = createClient();
+
     try {
       const {data, error} = await supabase.rpc('mark_notification_read', {
         p_notification_id: notification.id,
       });
 
       if (data) {
-        router.refresh();
+        switch (notification.type) {
+          case 'new_exercise':
+            router.push(`/exercise/${notification.data.slug}?id=${notification.data.exercise_id}`);
+            break;
+          case 'team_invitation':
+            router.push(`/team?teamId=${notification.data.team_id}`);
+            break;
+          case 'exercise_status_change':
+            router.push(`/exercise/${notification.data.slug}?id=${notification.data.exercise_id}`);
+            break;
+          case 'upcoming_deadline':
+            router.push(`/exercise/${notification.data.slug}?id=${notification.data.exercise_id}`);
+            break;
+          default:
+            router.refresh();
+        }
       }
 
       if (error) throw error;
@@ -69,7 +85,6 @@ export const NotificationItem = ({notification}: {notification: Notification}) =
           </div>
         ),
       });
-      router.push(`/team?teamId=${inviteResult.teamId}`);
     }
   };
 

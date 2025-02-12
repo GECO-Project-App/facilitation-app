@@ -12,10 +12,10 @@
     "title": "Notifikationer",
     "noNotifications": "Inga notifikationer att visa",
     "type": {
-      "new_exercise": "En ny övning är tillgänglig för {teamName}",
-      "team_invitation": "{user} har inbjudit dig till team {teamName}",
-      "exercise_status_change": "En övning kräver din uppmärksamhet för {teamName}",
-      "upcoming_deadline": "En övning börjar snart för {teamName}"
+      "new_exercise": "En ny övning är tillgänglig för \"{teamName}\"",
+      "team_invitation": "{user} har inbjudit dig till sitt team \"{teamName}\"",
+      "exercise_status_change": "En övning kräver din uppmärksamhet för \"{teamName}\"",
+      "upcoming_deadline": "En övning börjar snart för \"{teamName}\""
     }
   },
   "team": {
