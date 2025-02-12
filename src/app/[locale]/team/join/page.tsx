@@ -79,7 +79,7 @@ export default function JoinTeamPage() {
           title: t('toast.joined'),
           description: t('toast.joinedDescription'),
         });
-        router.replace(`/team?teamId=${result.teamId}`);
+        router.push(`/team?teamId=${result.teamId}`);
       }
     };
 

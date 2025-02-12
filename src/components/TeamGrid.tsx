@@ -3,7 +3,7 @@ import {cn} from '@/lib/utils';
 import {useTeamStore} from '@/store/teamStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {FC, useCallback, useState} from 'react';
+import {FC, useCallback, useMemo, useState} from 'react';
 import {BaseballCard} from './BaseballCard';
 import {TeamGridButtons} from './TeamGridButtons';
 import {TeamTabs} from './TeamTabs';
@@ -23,10 +23,12 @@ export const TeamGrid: FC = () => {
     );
   }, []);
 
-  if (!currentTeam) return null;
+  const showDialog = useMemo(() => {
+    return !teamId || teamId === 'new' || !currentTeam;
+  }, [teamId, currentTeam]);
   return (
     <>
-      {teamId === 'new' ? (
+      {showDialog ? (
         <TeamTabs />
       ) : (
         <section className="space-y-4">

@@ -131,3 +131,5 @@ export type TTMExerciseData =
 export type UserTeamExercises =
   Database['public']['Functions']['get_user_team_exercises']['Returns'][number];
 export type VoteType = 'yes' | 'no';
+export type Notification = Database['public']['Tables']['notifications']['Row'];
+export type NotificationType = Database['public']['Enums']['notification_type'];

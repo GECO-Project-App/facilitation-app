@@ -67,17 +67,37 @@ export const checkExerciseAvailibility = (
 ) => {
   switch (slug) {
     case 'ttm':
-      if (exercise == null && user == null) {
+      if (user == null) {
+        return false;
+      }
+      if (exercise === null && !isFacilitator) {
         return false;
       }
 
       return true;
     case 'ssc':
-      if (exercise == null && user == null) {
+      if (user == null) {
         return false;
       }
+      if (exercise === null && !isFacilitator) {
+        return false;
+      }
+
       return true;
     default:
       return true;
+  }
+};
+
+export const getExerciseColor = (type: string) => {
+  switch (type) {
+    case 'check-in':
+      return 'bg-purple';
+    case 'check-out':
+      return 'bg-green';
+    case 'ssc':
+      return 'bg-orange';
+    case 'ttm':
+      return 'bg-red';
   }
 };

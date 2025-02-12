@@ -7,7 +7,7 @@ import {useExerciseStore} from '@/store/exerciseStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 
 export default function SSCPage() {
   const searchParams = useSearchParams();
@@ -39,14 +39,13 @@ export default function SSCPage() {
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
-  const fetchPendingUsers = useCallback(async () => {
-    if (!id || !exercise?.status) return;
-    await getPendingUsers(id, exercise.status);
-  }, [id, exercise?.status, getPendingUsers]);
-
   useEffect(() => {
+    const fetchPendingUsers = async () => {
+      if (!id || !exercise?.status || exercise.status === 'completed') return;
+      await getPendingUsers(id, exercise.status);
+    };
     fetchPendingUsers();
-  }, [fetchPendingUsers]);
+  }, [id, exercise?.status, getPendingUsers]);
 
   if (!id || !exercise?.id) {
     return <div>loading...</div>;

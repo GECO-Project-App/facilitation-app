@@ -115,6 +115,44 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string | null
+          data: Json
+          id: string
+          is_read: boolean
+          type: Database["public"]["Enums"]["notification_type"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          data: Json
+          id?: string
+          is_read?: boolean
+          type: Database["public"]["Enums"]["notification_type"]
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          data?: Json
+          id?: string
+          is_read?: boolean
+          type?: Database["public"]["Enums"]["notification_type"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -307,12 +345,55 @@ export type Database = {
         }
         Returns: boolean
       }
+      check_upcoming_deadlines: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       check_user_exists: {
         Args: {
           email_input: string
         }
         Returns: boolean
       }
+      create_deadline_notification: {
+        Args: {
+          p_exercise_id: string
+          p_deadline_type: string
+        }
+        Returns: undefined
+      }
+      create_exercise_status_notification: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: undefined
+      }
+      create_new_exercise_notification: {
+        Args: {
+          p_exercise_id: string
+        }
+        Returns: undefined
+      }
+      create_team_invitation_notification:
+        | {
+            Args: {
+              p_user_id: string
+              p_team_id: string
+              p_team_name: string
+              p_inviter_name: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              p_user_id: string
+              p_team_id: string
+              p_team_name: string
+              p_inviter_name: string
+              p_invitation_id: string
+            }
+            Returns: undefined
+          }
       current_user_email: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -441,6 +522,12 @@ export type Database = {
         }
         Returns: string
       }
+      mark_notification_read: {
+        Args: {
+          p_notification_id: string
+        }
+        Returns: boolean
+      }
       schedule_deadline_check: {
         Args: {
           exercise_id: string
@@ -484,6 +571,11 @@ export type Database = {
     Enums: {
       exercise_review_type: "read_only" | "vote"
       exercise_status: "writing" | "reviewing" | "completed"
+      notification_type:
+        | "team_invitation"
+        | "exercise_status_change"
+        | "new_exercise"
+        | "upcoming_deadline"
       team_invitation_status:
         | "pending"
         | "awaiting_signup"

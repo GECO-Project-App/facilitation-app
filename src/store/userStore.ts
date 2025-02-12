@@ -95,26 +95,32 @@ export const useUserStore = create<UserState>()(
               });
 
             if (data) {
-              const {error: profileError} = await supabase
-                .from('profiles')
-                .update({avatar_url: data.path})
-                .eq('id', user.id);
-
-              if (profileError) {
-                console.error('Profile update error:', profileError);
-                return {success: false, avatarUrl: '', error: profileError.message};
-              }
-
-              await supabase.auth.updateUser({
-                data: {
-                  avatar_url: data.path,
-                },
-              });
-
               return {success: true, avatarUrl: data.path};
             } else {
               return {success: false, avatarUrl: '', error: uploadError?.message};
             }
+
+            // if (data) {
+            //   const {error: profileError} = await supabase
+            //     .from('profiles')
+            //     .update({avatar_url: data.path})
+            //     .eq('id', user.id);
+
+            //   if (profileError) {
+            //     console.error('Profile update error:', profileError);
+            //     return {success: false, avatarUrl: '', error: profileError.message};
+            //   }
+
+            //   await supabase.auth.updateUser({
+            //     data: {
+            //       avatar_url: data.path,
+            //     },
+            //   });
+
+            //   return {success: true, avatarUrl: data.path};
+            // } else {
+            //   return {success: false, avatarUrl: '', error: uploadError?.message};
+            // }
           },
         };
       },

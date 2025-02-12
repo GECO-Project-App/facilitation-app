@@ -7,6 +7,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import {Rocket} from 'lucide-react';
 import {useTranslations} from 'next-intl';
+import {useSearchParams} from 'next/navigation';
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {InviteTeam} from '../icons';
@@ -26,17 +27,19 @@ export const InviteTeamMemberDialog = () => {
   const {currentTeam, isFacilitator} = useTeamStore();
   const {toast} = useToast();
   const t = useTranslations('team');
+  const searchParams = useSearchParams();
+  const teamId = searchParams.get('teamId');
   const [open, setOpen] = useState(false);
 
   const form = useForm<InviteTeamMemberSchema>({
     resolver: zodResolver(inviteTeamMemberSchema),
-    defaultValues: {email: '', teamId: currentTeam?.id},
+    defaultValues: {email: '', teamId: teamId ?? undefined},
   });
 
   if (!currentTeam) return null;
 
   const onSubmit = async (data: InviteTeamMemberSchema) => {
-    const {error} = await inviteTeamMember(data);
+    const {error} = await inviteTeamMember({...data, teamId: currentTeam.id});
     if (error) {
       toast({
         title: t('page.inviteTeam.error'),

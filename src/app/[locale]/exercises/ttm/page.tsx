@@ -69,7 +69,6 @@ export default function TTMExercisesPage() {
     return <div>loading...</div>;
   }
 
-  // If the user is not in the pending users list, show the waiting for component
   if (
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
     exercise.status !== 'completed'
