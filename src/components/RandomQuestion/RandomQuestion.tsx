@@ -2,6 +2,7 @@
 
 import {PolygonAlt2, PolygonAlt3, Rounded, Star, StarAlt2} from '@/components/icons/shapes';
 import {Colors} from '@/lib/constants';
+import {useLocalStore} from '@/store/localStore';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import {useCallback, useEffect, useState} from 'react';
@@ -13,13 +14,13 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [currentShapeIndex, setCurrentShapeIndex] = useState(0);
-  const [displayedQuestion, setDisplayedQuestion] = useState<string | null>(null);
+  const {question, setQuestion} = useLocalStore();
   const t = useTranslations('common');
 
   const shuffleShape = useCallback(() => {
     setCurrentShapeIndex((prevIndex) => (prevIndex + 1) % shapes.length);
-    setDisplayedQuestion(() => questions[Math.floor(Math.random() * questions.length)]);
-  }, [questions]);
+    setQuestion(questions[Math.floor(Math.random() * questions.length)]);
+  }, [questions, setQuestion]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -33,7 +34,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
 
   const spinWheel = useCallback(() => {
     setIsSpinning(true);
-    setDisplayedQuestion(null);
+
     const newRotation = rotation + 720 + 360;
     setRotation(newRotation);
 
@@ -81,7 +82,7 @@ export const RandomQuestion = ({questions}: {questions: string[]}) => {
                   exit={{
                     opacity: 0,
                   }}>
-                  {displayedQuestion ?? t('pressToGetNewQuestion')}
+                  {question ?? t('pressToGetNewQuestion')}
                 </motion.h4>
               </AnimatePresence>
             )}
