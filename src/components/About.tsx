@@ -70,7 +70,7 @@ export const About: FC<{
       ? exercise.status === 'completed' && isFacilitator
         ? `/exercises/${slug}/deadline`
         : `/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`
-      : isFacilitator
+      : isFacilitator && (slug === 'ttm' || slug === 'ssc')
         ? `/exercises/${slug}/deadline`
         : `/exercises/${slug}`;
   }, [isFacilitator, exercise, slug]);
