@@ -226,8 +226,8 @@
     "passItOn": {
       "title": "Pass It On Method",
       "steps": [
-        "Pick a person to answer the question first.",
-        "Once that person gave their answer, they pick who should answer next.",
+        "Pick who answers the question first. They have up to two minutes to respond.",
+        "They pick who should answer next, once they gave their answer.",
         "Continue this process until everyone has answered the question."
       ],
       "homeButton": "Back to menu",

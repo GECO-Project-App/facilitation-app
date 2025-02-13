@@ -226,7 +226,7 @@
     "passItOn": {
       "title": "Skicka vidare-metoden",
       "steps": [
-        "Välj en person som ska svara på frågan först.",
+        "Välj vem som ska svara på frågan först. De har upp till två minuter att svara.",
         "När den personen har gett sitt svar väljer de vem som ska svara näst.",
         "Upprepa denna process tills alla har svarat på frågan."
       ],
