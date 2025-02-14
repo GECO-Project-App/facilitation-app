@@ -67,7 +67,7 @@ export const checkExerciseAvailibility = (
 ) => {
   switch (slug) {
     case 'ttm':
-      if (user == null) {
+      if (!user) {
         return false;
       }
       if (exercise === null && !isFacilitator) {
@@ -76,7 +76,7 @@ export const checkExerciseAvailibility = (
 
       return true;
     case 'ssc':
-      if (user == null) {
+      if (!user) {
         return false;
       }
       if (exercise === null && !isFacilitator) {

@@ -1,4 +1,5 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {ExerciseCardType, UserTeamExercises} from '@/lib/types';
 import {cn, getExerciseColor} from '@/lib/utils';
 import {ArrowRight} from 'lucide-react';
@@ -49,9 +50,12 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
           <p>{activity.team_name}</p>
         </div>
         <TeamAvatars />
-        <Button variant="white" className="mx-auto">
-          {t('common.letsStart')}
-          <ArrowRight size={24} />
+
+        <Button variant="white" className="mx-auto" asChild>
+          <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
+            {t('common.letsStart')}
+            <ArrowRight size={24} />
+          </Link>
         </Button>
       </div>
     </div>

@@ -44,9 +44,6 @@ export default function TTMExercisesPage() {
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
   useEffect(() => {
-    if (id && !status) {
-      router.push(`ttm?id=${id}&status=${exercise.status}`);
-    }
     const getExercise = async () => {
       if (!currentTeam) return;
       const exercise = await getExerciseBySlugAndTeamId('ttm', currentTeam.id);
@@ -54,8 +51,9 @@ export default function TTMExercisesPage() {
         router.push(`ttm?id=${exercise.id}&status=${exercise.status}`);
       }
     };
+
     getExercise();
-  }, [exercise, status, router, id, currentTeam, getExerciseBySlugAndTeamId]);
+  }, [status, router, currentTeam, getExerciseBySlugAndTeamId]);
 
   useEffect(() => {
     const fetchPendingUsers = async () => {
@@ -71,7 +69,8 @@ export default function TTMExercisesPage() {
 
   if (
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
-    exercise.status !== 'completed'
+    exercise.status !== 'completed' &&
+    pendingUsers.length > 0
   ) {
     return (
       <WaitingFor
