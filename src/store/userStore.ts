@@ -32,8 +32,6 @@ export const useUserStore = create<UserState>()(
 
         // Set up auth listener when store is created
         supabase.auth.onAuthStateChange((_event, session) => {
-          console.log(_event);
-
           set({
             user: session?.user ?? null,
             session: session ?? null,
