@@ -1,15 +1,20 @@
 'use client';
 import {useTeamStore} from '@/store/teamStore';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Tables} from '../../database.types';
 import {ProfileAvatar} from './ProfileAvatar';
 
 export const TeamAvatars = ({teamMembers}: {teamMembers?: Array<Tables<'team_members'>> | []}) => {
-  const {currentTeam} = useTeamStore();
+  const {currentTeam, updateUserTeams} = useTeamStore();
   const [team, setTeam] = useState<Array<Tables<'team_members'>> | []>(
     teamMembers ?? currentTeam?.team_members ?? [],
   );
+
+  useEffect(() => {
+    updateUserTeams();
+  }, []);
+
   return (
     <div className="flex [&>*]:-mr-4 items-center justify-center">
       {team &&

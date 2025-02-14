@@ -1,6 +1,6 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
-import {Link} from '@/i18n/routing';
+import {Link, useRouter} from '@/i18n/routing';
 import {login} from '@/lib/actions/authActions';
 import {LoginSchema, loginSchema} from '@/lib/zodSchemas';
 import {useTeamStore} from '@/store/teamStore';
@@ -15,6 +15,7 @@ export const LoginForm = () => {
   const t = useTranslations('authenticate');
   const setUser = useUserStore((state) => state.setUser);
   const {init} = useTeamStore();
+  const router = useRouter();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -40,6 +41,7 @@ export const LoginForm = () => {
         variant: 'success',
         title: t('loggedIn'),
       });
+      router.push('/activities');
     }
   };
 
