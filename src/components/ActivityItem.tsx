@@ -1,4 +1,5 @@
 'use client';
+import {Link} from '@/i18n/routing';
 import {ExerciseCardType, UserTeamExercises} from '@/lib/types';
 import {cn, getExerciseColor} from '@/lib/utils';
 import {ArrowRight} from 'lucide-react';
@@ -8,22 +9,20 @@ import {TeamAvatars} from './TeamAvatars';
 import {Button} from './ui';
 
 type ActivityItemProps = {
-  hasBottomBorder: boolean;
   activity: UserTeamExercises;
 };
 
-export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity}) => {
+export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
   const format = useFormatter();
   const t = useTranslations();
   const catalogue: ExerciseCardType[] = t.raw('exerciseCatalogue.catalogue');
 
-  console.log(activity);
   const activityType = useMemo(() => {
     return catalogue.find((item) => item.type === activity.slug);
   }, [activity.slug, catalogue]);
 
   return (
-    <div className={cn(hasBottomBorder ? 'border-b-2' : '', 'border-t-2 border-x-2 border-black')}>
+    <div className={cn('border-b-2 border-x-2 border-black')}>
       <h3 className="text-center p-4 text-2xl font-bold bg-white border-b-2 border-black text-deepPurple">
         {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
           weekday: 'short',
@@ -51,9 +50,12 @@ export const ActivityItem: FC<ActivityItemProps> = ({hasBottomBorder, activity})
           <p>{activity.team_name}</p>
         </div>
         <TeamAvatars />
-        <Button variant="white" className="mx-auto">
-          {t('common.letsStart')}
-          <ArrowRight size={24} />
+
+        <Button variant="white" className="mx-auto" asChild>
+          <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
+            {t('common.letsStart')}
+            <ArrowRight size={24} />
+          </Link>
         </Button>
       </div>
     </div>

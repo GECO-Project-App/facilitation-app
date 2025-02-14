@@ -9,6 +9,7 @@ export default async function NotificationsPage() {
     .from('notifications')
     .select('*')
     .order('created_at', {ascending: false});
+
   return (
     <PageLayout
       backgroundColor="bg-purple"

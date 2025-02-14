@@ -96,6 +96,9 @@ export const getExerciseBySlugAndTeamId = async (slug: string, teamId: string) =
     .select()
     .eq('slug', slug)
     .eq('team_id', teamId)
+    .neq('status', 'completed')
+    .order('created_at', {ascending: false})
+    .limit(1)
     .single();
   return {exercise, error};
 };

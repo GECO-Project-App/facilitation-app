@@ -49,9 +49,9 @@ export const SignUpForm = ({defaultEmail, invitationId}: SignUpFormProps) => {
             title: inviteResult.error,
           });
         }
-        router.refresh();
+        router.replace('/activities');
       } else {
-        router.refresh();
+        router.replace('/activities');
       }
     }
   };

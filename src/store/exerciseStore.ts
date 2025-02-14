@@ -12,6 +12,7 @@ import {
   setExerciseDataAsReviewed,
   submitExerciseData,
 } from '@/lib/actions/exerciseActions';
+import {createClient} from '@/lib/supabase/client';
 import type {
   CreateExerciseParams,
   Exercise,
@@ -19,6 +20,7 @@ import type {
   Exercises,
   ExerciseStage,
   ExerciseStatus,
+  Notification,
   PendingUsers,
   TeamExerciseData,
   TTMExerciseData,
@@ -27,12 +29,12 @@ import type {
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {Json} from '../../database.types';
-
 type ExerciseState = {
   deadline: {
     writingPhase: Date | null;
     reviewingPhase: Date | null;
   };
+  notifications: Notification[] | null;
   exerciseData: ExerciseData | null;
   teamExerciseData: TeamExerciseData | null;
   exercise: Exercise | null;
@@ -44,6 +46,7 @@ type ExerciseState = {
   reviewedStages: string[];
   ttmData: TTMExerciseData | null;
   pendingUsers: PendingUsers | null;
+  getNotifications: () => Promise<Notification[] | null>;
   getPendingUsers: (exerciseId: string, status: ExerciseStatus) => Promise<PendingUsers | null>;
   setExerciseDataAsReviewed: (exerciseId: string) => ExerciseData | null;
   setReviewedStages: (stage: string | null) => void;
@@ -72,6 +75,7 @@ export const useExerciseStore = create<ExerciseState>()(
         writingPhase: null,
         reviewingPhase: null,
       },
+      notifications: [],
       exerciseData: null,
       teamExerciseData: null,
       exercise: null,
@@ -84,6 +88,16 @@ export const useExerciseStore = create<ExerciseState>()(
       currentExercise: null,
       ttmData: null,
       pendingUsers: null,
+      getNotifications: async () => {
+        const supabase = createClient();
+        const {data: notifications} = await supabase
+          .from('notifications')
+          .select('*')
+          .order('created_at', {ascending: false})
+          .eq('is_read', false);
+        set({notifications});
+        return notifications;
+      },
       getPendingUsers: async (exerciseId, status) => {
         const {pendingUsers} = await getPendingUsers(exerciseId, status);
         set({pendingUsers});
@@ -164,6 +178,7 @@ export const useExerciseStore = create<ExerciseState>()(
         ...state,
         pendingUsers: [],
         getPendingUsers: () => {},
+        getNotifications: () => {},
       }),
     },
   ),
