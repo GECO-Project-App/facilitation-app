@@ -8,6 +8,7 @@ export * from './DateBadge';
 export * from './dialogs';
 export * from './ExerciseCard';
 export * from './forms';
+export * from './GecoLoader';
 export * from './Header';
 export * from './InviteCodeCard';
 export * from './LanguageSelector';

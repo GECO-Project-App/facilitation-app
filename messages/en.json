@@ -9,7 +9,7 @@
 },
 "notifications": {
   "title": "Notifications",
-  "noNotifications": "No notifications to show",
+  "noNotifications": "No new notifications to show",
   "type": {
     "new_exercise": "A new exercise is available for team \"{teamName}\"",
     "team_invitation": "{user} has invited you to their team \"{teamName}\"",

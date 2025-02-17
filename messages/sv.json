@@ -10,7 +10,7 @@
   },
   "notifications": {
     "title": "Notifikationer",
-    "noNotifications": "Inga notifikationer att visa",
+    "noNotifications": "Inga nya notifikationer att visa",
     "type": {
       "new_exercise": "En ny övning är tillgänglig för \"{teamName}\"",
       "team_invitation": "{user} har inbjudit dig till sitt team \"{teamName}\"",

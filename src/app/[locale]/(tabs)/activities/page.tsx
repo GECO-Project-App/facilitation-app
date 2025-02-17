@@ -68,7 +68,7 @@ export default async function ActivitiesPage() {
       }>
       <div
         className={cn(
-          data && data.length > 0 && 'border-t-2 border-black',
+          data && data.length > 0 && 'border-t-2 border-black rounded-t-4xl',
           'flex flex-col flex-1',
         )}>
         {data && data.length > 0 ? (
