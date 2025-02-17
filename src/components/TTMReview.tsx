@@ -40,7 +40,7 @@ export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
       header={
         <Header
           rightContent={<DateBadge date={new Date()} />}
-          onBackButton={() => router.push('/exercises/ttm/introduction')}
+          onBackButton={() => router.push('/activities')}
         />
       }
       footer={

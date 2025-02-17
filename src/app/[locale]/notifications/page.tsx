@@ -20,12 +20,12 @@ export default async function NotificationsPage() {
         </Header>
       }>
       <div className=" flex-1 flex flex-col gap-6">
-        {notifications ? (
+        {notifications && notifications.length > 0 ? (
           notifications.map((notification) => (
             <NotificationItem key={notification.id} notification={notification} />
           ))
         ) : (
-          <p>{t('noNotifications')}</p>
+          <p className="text-center font-bold">{t('noNotifications')}</p>
         )}
       </div>
     </PageLayout>

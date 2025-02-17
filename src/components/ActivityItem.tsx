@@ -2,7 +2,7 @@
 import {Link} from '@/i18n/routing';
 import {ExerciseCardType, UserTeamExercises} from '@/lib/types';
 import {cn, getExerciseColor} from '@/lib/utils';
-import {ArrowRight} from 'lucide-react';
+import {ArrowRight, ScanFace, SmilePlus, Timer} from 'lucide-react';
 import {useFormatter, useTranslations} from 'next-intl';
 import {FC, useMemo} from 'react';
 import {TeamAvatars} from './TeamAvatars';
@@ -21,8 +21,21 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
     return catalogue.find((item) => item.type === activity.slug);
   }, [activity.slug, catalogue]);
 
+  const Icon: React.ReactNode = useMemo(() => {
+    switch (activity.slug) {
+      case 'check-in':
+        return <Timer size={24} />;
+      case 'check-out':
+        return <Timer size={24} />;
+      case 'ssc':
+        return <SmilePlus size={24} />;
+      case 'ttm':
+        return <ScanFace size={24} />;
+    }
+  }, [activity.slug]);
+
   return (
-    <div className={cn('border-b-2 border-x-2 border-black')}>
+    <div className={cn('border-b-2 border-x-2 border-black rounded-4xl overflow-hidden')}>
       <h3 className="text-center p-4 text-2xl font-bold bg-white border-b-2 border-black text-deepPurple">
         {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
           weekday: 'short',
@@ -33,7 +46,10 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
       </h3>
       <div className={cn(getExerciseColor(activity.slug), 'flex flex-col gap-6 p-4 pb-6')}>
         <div className="flex flex-col gap-2">
-          <h3 className="text-2xl font-bold">{t(`common.slugs.${activity.slug}`)}</h3>
+          <div className="flex flex-row items-center gap-4 ">
+            {Icon}
+            <h4 className="text-2xl font-bold">{t(`common.slugs.${activity.slug}`)}</h4>
+          </div>{' '}
           <p className="font-light">{activityType?.subtitle}</p>
         </div>
         <p className="font-bold">
@@ -51,7 +67,7 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
         </div>
         <TeamAvatars />
 
-        <Button variant="white" className="mx-auto" asChild>
+        <Button variant="white" className="w-full !text-lg" asChild size="small">
           <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
             {t('common.letsStart')}
             <ArrowRight size={24} />
