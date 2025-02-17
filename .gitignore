@@ -50,3 +50,12 @@ package.json
 **/public/worker-*.js.map
 **/public/swe-worker-development.js
 **/public/swe-worker-*.js
+**/public/workbox-*.js
+**/public/sw.js
+**/public/worker-*.js
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+**/public/sw.js.map
+**/public/workbox-*.js
+**/public/sw.js
+**/public/worker-*.js
