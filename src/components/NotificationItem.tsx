@@ -93,7 +93,7 @@ export const NotificationItem = ({notification}: {notification: Notification}) =
       className={cn(
         'border-2 border-black rounded-4xl bg-white p-6 shadow-dark flex flex-col gap-4',
         !notification.is_read && notification.type !== 'team_invitation' && 'cursor-pointer ',
-        notification.is_read && 'opacity-75',
+        notification.is_read && 'opacity-50',
       )}
       onClick={
         !notification.is_read && notification.type !== 'team_invitation' ? markAsRead : undefined
