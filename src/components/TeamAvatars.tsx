@@ -13,7 +13,7 @@ export const TeamAvatars = ({teamMembers}: {teamMembers?: Array<Tables<'team_mem
 
   useEffect(() => {
     updateUserTeams();
-  }, []);
+  }, [updateUserTeams]);
 
   return (
     <div className="flex [&>*]:-mr-4 items-center justify-center">

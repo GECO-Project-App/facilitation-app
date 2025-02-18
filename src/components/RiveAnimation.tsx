@@ -1,6 +1,5 @@
 'use client';
 import {useRive, UseRiveParameters} from '@rive-app/react-canvas';
-import {useEffect} from 'react';
 
 type RiveComponentProps = UseRiveParameters & {
   width?: string | number;
@@ -25,21 +24,6 @@ export const RiveAnimation = ({
     stateMachines,
     ...riveProps,
   });
-
-  useEffect(() => {
-    if (rive && stateMachines && triggers && autoplay) {
-      // rive.on(EventType.StateChange, (event) => {
-      //   console.log(event.data);
-      // });
-      const input = rive
-        .stateMachineInputs(stateMachines?.[0])
-        ?.find((i) => i.name === triggers?.[0]);
-
-      if (input) {
-        input.fire();
-      }
-    }
-  }, [rive]);
 
   return <RiveComponent style={{width, height}} className={className} />;
 };
