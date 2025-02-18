@@ -1,11 +1,5 @@
 import webpush from 'web-push';
 
-webpush.setVapidDetails(
-  'mailto: <aanglesjo@gmail.com>',
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY!,
-);
-
 type WebPushSubscription = {
   endpoint: string;
   keys: {
@@ -17,6 +11,12 @@ type WebPushSubscription = {
 let subscription: WebPushSubscription;
 
 export async function POST(request: Request) {
+  webpush.setVapidDetails(
+    'mailto: <aanglesjo@gmail.com>',
+    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+    process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY!,
+  );
+
   const {pathname} = new URL(request.url);
   switch (pathname) {
     case '/api/web-push/subscription':
