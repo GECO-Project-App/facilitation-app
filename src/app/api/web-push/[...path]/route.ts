@@ -1,20 +1,13 @@
+import type {PushSubscription} from 'web-push';
 import webpush from 'web-push';
 
-type WebPushSubscription = {
-  endpoint: string;
-  keys: {
-    p256dh: string;
-    auth: string;
-  };
-};
-
-let subscription: WebPushSubscription;
+let subscription: PushSubscription;
 
 export async function POST(request: Request) {
   webpush.setVapidDetails(
-    'mailto: <aanglesjo@gmail.com>',
-    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-    process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY!,
+    'mailto:mail@example.com',
+    process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY as string,
+    process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY as string,
   );
 
   const {pathname} = new URL(request.url);
@@ -29,17 +22,24 @@ export async function POST(request: Request) {
 }
 
 async function setSubscription(request: Request) {
-  const body: {subscription: WebPushSubscription} = await request.json();
+  const body = await request.json();
+  // Store the raw subscription object without calling toJSON()
   subscription = body.subscription;
-  return new Response(JSON.stringify({message: 'Subscription set.'}), {});
+  return new Response(JSON.stringify({message: 'Subscription set.'}), {
+    headers: {'Content-Type': 'application/json'},
+  });
 }
 
 async function sendPush(request: Request) {
-  console.log(subscription, 'subs');
   const body = await request.json();
   const pushPayload = JSON.stringify(body);
-  await webpush.sendNotification(subscription, pushPayload);
-  return new Response(JSON.stringify({message: 'Push sent.'}), {});
+
+  // Use the subscription object directly with webpush
+  await webpush.sendNotification(subscription as PushSubscription, pushPayload);
+
+  return new Response(JSON.stringify({message: 'Push sent.'}), {
+    headers: {'Content-Type': 'application/json'},
+  });
 }
 
 async function notFoundApi() {
