@@ -1,4 +1,4 @@
-import webpush from 'web-push';
+import webpush from 'npm:web-push';
 
 interface WebPushPayload {
   subscription: webpush.PushSubscription;
