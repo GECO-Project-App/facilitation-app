@@ -32,7 +32,7 @@ export const TabBarNotification = ({showNumber = false}: {showNumber?: boolean})
       {notifications && notifications?.length > 0 && (
         <div
           className={cn(
-            'bg-red rounded-full absolute text-xs font-bold aspect-square items-center justify-center flex',
+            'bg-red rounded-full absolute text-xs font-bold aspect-square items-center justify-center flex border-2 border-black',
             showNumber && notifications?.length > 0
               ? ' h-5 w-5 -top-2 -right-2 '
               : ' h-3 w-3 -top-1 -right-1',

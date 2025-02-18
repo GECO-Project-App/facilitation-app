@@ -159,6 +159,7 @@ export type Database = {
           first_name: string | null
           id: string
           last_name: string | null
+          notification_preferences: Json
           updated_at: string | null
           username: string | null
         }
@@ -167,6 +168,7 @@ export type Database = {
           first_name?: string | null
           id: string
           last_name?: string | null
+          notification_preferences?: Json
           updated_at?: string | null
           username?: string | null
         }
@@ -175,6 +177,7 @@ export type Database = {
           first_name?: string | null
           id?: string
           last_name?: string | null
+          notification_preferences?: Json
           updated_at?: string | null
           username?: string | null
         }
@@ -292,6 +295,38 @@ export type Database = {
           team_code?: string | null
         }
         Relationships: []
+      }
+      web_push_subscriptions: {
+        Row: {
+          created_at: string | null
+          id: string
+          subscription: Json
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          subscription: Json
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          subscription?: Json
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "web_push_subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -542,6 +577,13 @@ export type Database = {
           p_user_id: string
         }
         Returns: boolean
+      }
+      update_notification_preferences: {
+        Args: {
+          p_push_enabled?: boolean
+          p_notification_settings?: Json
+        }
+        Returns: Json
       }
       update_profile: {
         Args: {

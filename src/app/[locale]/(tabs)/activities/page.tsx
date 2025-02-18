@@ -1,4 +1,4 @@
-import {AuthTabs, Header, PageLayout} from '@/components';
+import {AuthTabs, Header, PageLayout, PushNotificationBanner} from '@/components';
 import {ActivityItem} from '@/components/ActivityItem';
 import {TabBarNotification} from '@/components/TabBarNotification';
 import {Link} from '@/i18n/routing';
@@ -36,7 +36,6 @@ export default async function ActivitiesPage() {
   }
   return (
     <PageLayout
-      hasPadding={false}
       backgroundColor="bg-purple"
       contentColor="bg-purple"
       header={
@@ -66,6 +65,7 @@ export default async function ActivitiesPage() {
           <h4 className="font-bold">{t('title')}</h4>
         </Header>
       }>
+      <PushNotificationBanner />
       <div
         className={cn(
           data && data.length > 0 && 'border-t-2 border-black rounded-t-4xl',
