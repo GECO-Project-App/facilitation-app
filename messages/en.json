@@ -5,7 +5,11 @@
   },
 "activities": {
   "title": "Activities",
-  "noActivities": "No activities to show"
+  "noActivities": "No activities to show",
+  "notificationBanner": {
+    "title": "Turn on push notifications!",
+    "description": "You can always turn them off in your browser settings."
+  }
 },
 "notifications": {
   "title": "Notifications",
@@ -114,7 +118,17 @@
 
   },
 "settings": {
-  "title": "Settings"
+  "title": "Settings",
+  "notifications": {
+    "pushNotifications": "Push Notifications",
+    "pushDescription": "Receive notifications about important updates",
+    "teamInvitations": "Team Invitations",
+    "statusChanges": "Exercise Status Changes",
+    "newExercises": "New Exercises",
+    "deadlines": "Deadline Reminders",
+    "updateSuccess": "Notification settings updated",
+    "updateError": "Failed to update notification settings"
+  }
 },
   "profile": {
     "title": "Your account",
@@ -205,7 +219,7 @@
         "What's one thing you're grateful for today?",
         "If you could teleport anywhere for your next break, where would you go?",
         "What's one goal you're working towards right now?",
-        "What is a pleasure you maybe shouldn’t do but can’t resist doing?"
+        "What is a pleasure you maybe shouldn't do but can't resist doing?"
       ],
       "passItOnButton": "Pass it on"
     },
@@ -270,7 +284,7 @@
           },
           {
             "title": "Proritize",
-            "description": "Group similar suggestions. Let members place one “dot” on the suggestion they agree with most.",
+            "description": "Group similar suggestions. Let members place one \"dot\" on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]
@@ -298,7 +312,7 @@
           },
           {
             "title": "Proritize",
-            "description": "Group similar suggestions. Let members place one “dot” on the suggestion they agree with most.",
+            "description": "Group similar suggestions. Let members place one \"dot\" on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]
@@ -326,7 +340,7 @@
           },
           {
             "title": "Proritize",
-            "description": "Group similar suggestions. Let members place one “dot” on the suggestion they agree with most.",
+            "description": "Group similar suggestions. Let members place one \"dot\" on the suggestion they agree with most.",
             "button": "Next step"
           }
         ]

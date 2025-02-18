@@ -102,6 +102,18 @@ export const getExerciseColor = (type: string) => {
   }
 };
 
+export const urlBase64ToUint8Array = (base64String: string) => {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+};
 const SERVICE_WORKER_FILE_PATH = '/sw.js';
 
 export function notificationUnsupported(): boolean {
@@ -132,22 +144,25 @@ export function checkPermissionStateAndAct(
 }
 
 async function subscribe(onSubscribe: (subs: PushSubscription | null) => void): Promise<void> {
-  navigator.serviceWorker.ready
-    .then((registration: ServiceWorkerRegistration) => {
-      return registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-      });
-    })
-    .then((subscription: PushSubscription) => {
-      console.info('Created subscription Object: ', subscription.toJSON());
-      submitSubscription(subscription).then((_) => {
-        onSubscribe(subscription);
-      });
-    })
-    .catch((e) => {
-      console.error('Failed to subscribe cause of: ', e);
+  try {
+    const registration = await navigator.serviceWorker.ready;
+
+    // Convert VAPID key from base64 to Uint8Array
+    const applicationServerKey = urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!);
+
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: applicationServerKey,
     });
+
+    console.info('Created subscription Object: ', subscription.toJSON());
+
+    await submitSubscription(subscription);
+    onSubscribe(subscription);
+  } catch (e) {
+    console.error('Failed to subscribe:', e);
+    onSubscribe(null);
+  }
 }
 
 async function submitSubscription(subscription: PushSubscription): Promise<void> {

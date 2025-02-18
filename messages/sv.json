@@ -6,7 +6,11 @@
 
   "activities": {
     "title": "Aktiviteter",
-    "noActivities": "Inga aktiviteter att visa"
+    "noActivities": "Inga aktiviteter att visa",
+    "notificationBanner": {
+      "title": "Påminnelse om push-notiser!",
+      "description": "Du kan alltid stänga av dem i dina webbläsarinställningar."
+    }
   },
   "notifications": {
     "title": "Notifikationer",
@@ -113,7 +117,17 @@
     
   },
 "settings": {
-  "title": "Inställningar"
+  "title": "Inställningar",
+  "notifications": {
+    "pushNotifications": "Push-notiser",
+    "pushDescription": "Få notiser om viktiga uppdateringar",
+    "teamInvitations": "Teaminbjudningar",
+    "statusChanges": "Övningsstatusändringar",
+    "newExercises": "Nya övningar",
+    "deadlines": "Deadline-påminnelser",
+    "updateSuccess": "Notifieringsinställningar uppdaterade",
+    "updateError": "Det gick inte att uppdatera notifieringsinställningarna"
+  }
 },
   "profile": {
     "title": "Ditt konto",

@@ -11,6 +11,7 @@ export default function Test() {
   const [unsupported, setUnsupported] = useState<boolean>(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+
   useEffect(() => {
     const isUnsupported = notificationUnsupported();
     setUnsupported(isUnsupported);

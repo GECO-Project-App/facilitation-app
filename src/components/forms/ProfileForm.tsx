@@ -67,10 +67,10 @@ export const ProfileForm = () => {
 
   return (
     <section className="flex flex-col gap-6 w-full">
-      <h1 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold">
         {/* {t('profile.welcome', {name: user.user_metadata.first_name})} */}
         {t('profile.title')}
-      </h1>
+      </h2>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -168,6 +168,7 @@ export const ProfileForm = () => {
           </div>
         </form>
       </Form>
+      <hr className="w-full" />
       <div className="flex justify-center ">
         <Button variant="red" type="submit" onClick={signOut}>
           {t('profile.logout')} <ArrowLeft size={24} />
