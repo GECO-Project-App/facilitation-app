@@ -181,13 +181,41 @@ async function submitSubscription(subscription: PushSubscription): Promise<void>
 }
 
 export async function registerAndSubscribe(
-  onSubscribe: (subs: PushSubscription | null) => void,
-): Promise<void> {
+  setSubscription: (subscription: PushSubscription | null) => void,
+) {
   try {
-    await navigator.serviceWorker.register(SERVICE_WORKER_FILE_PATH);
-    await subscribe(onSubscribe);
-  } catch (e) {
-    console.error('Failed to register service-worker: ', e);
+    const registration = await navigator.serviceWorker.ready;
+
+    // First, unsubscribe from any existing subscription
+    const existingSubscription = await registration.pushManager.getSubscription();
+    if (existingSubscription) {
+      await existingSubscription.unsubscribe();
+    }
+
+    // Now create a new subscription
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY as string,
+      ),
+    });
+
+    const response = await fetch('/api/web-push/subscription', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({subscription}),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to store subscription');
+    }
+
+    setSubscription(subscription);
+  } catch (err) {
+    console.error('Failed to subscribe:', err);
+    throw err;
   }
 }
 
