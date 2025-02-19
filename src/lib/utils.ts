@@ -104,22 +104,17 @@ export const getExerciseColor = (type: string) => {
 
 export const urlBase64ToUint8Array = (base64String: string) => {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-  try {
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-  } catch (e) {
-    console.error('Error decoding base64:', e);
-    throw e;
+  const base64 = (base64String + padding)
+    // eslint-disable-next-line no-useless-escape
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
   }
+  return outputArray;
 };
-const SERVICE_WORKER_FILE_PATH = '/sw.js';
 
 export function notificationUnsupported(): boolean {
   let unsupported = false;
@@ -220,14 +215,24 @@ export async function registerAndSubscribe(
 }
 
 export async function sendWebPush(message: string | null): Promise<void> {
+  // First, get the current subscription
+  const registration = await navigator.serviceWorker.ready;
+  const subscription = await registration.pushManager.getSubscription();
+
+  if (!subscription) {
+    throw new Error('No push subscription found');
+  }
+
   const endPointUrl = '/api/web-push/send';
   const pushBody = {
+    subscription: subscription, // Add the subscription object
     title: 'Test Push',
     body: message ?? 'This is a test push message',
     image: '/next.png',
     icon: 'nextjs.png',
     url: 'https://google.com',
   };
+
   const res = await fetch(endPointUrl, {
     method: 'POST',
     headers: {
@@ -235,6 +240,11 @@ export async function sendWebPush(message: string | null): Promise<void> {
     },
     body: JSON.stringify(pushBody),
   });
+
+  if (!res.ok) {
+    throw new Error('Failed to send push notification');
+  }
+
   const result = await res.json();
   console.log(result);
 }
