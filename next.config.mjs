@@ -8,7 +8,8 @@ const withNextIntl = createNextIntlPlugin();
 
 const withPWA = withPWAInit({
   dest: 'public',
-  sw: 'sw.js',
+  sw: 'sw-pwa.js',
+  register: true,
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,

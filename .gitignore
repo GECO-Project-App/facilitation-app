@@ -59,3 +59,10 @@ package.json
 **/public/workbox-*.js
 **/public/sw.js
 **/public/worker-*.js
+
+
+public/sw-pwa.js
+public/sw-pwa.js.map
+public/workbox-*.js
+public/workbox-*.js.map
+/.idea
