@@ -8,19 +8,19 @@ const NotificationSubscriptionStatus = () => {
       <h1 className="text-2xl font-bold mb-4 text-center">Push Notification Subscription</h1>
 
       {isDenied && (
-        <p className="text-red-600 text-center mb-4">
+        <p className="text-red text-center mb-4">
           You have denied permission for push notifications. To enable, please update your browser
           settings.
         </p>
       )}
 
-      {errorMessage && <p className="text-red-600 text-center mb-4">Error: {errorMessage}</p>}
+      {errorMessage && <p className="text-red text-center mb-4">Error: {errorMessage}</p>}
 
       <div>
         {!isSubscribed && (
           <button
             onClick={handleSubscribe}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+            className="w-full bg-blue text-white py-2 px-4 rounded-lg hover:bg-blue transition"
             disabled={isDenied}>
             Subscribe to Push Notifications
           </button>
@@ -28,7 +28,7 @@ const NotificationSubscriptionStatus = () => {
 
         {isGranted && (
           <div className="text-center">
-            <p className="text-green-600 font-semibold">You are subscribed!</p>
+            <p className="text-green font-semibold">You are subscribed!</p>
           </div>
         )}
       </div>
