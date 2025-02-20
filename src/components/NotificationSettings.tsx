@@ -1,9 +1,9 @@
 'use client';
 import {Switch} from '@/components/ui/switch';
 import {useToast} from '@/hooks/useToast';
+import {useNotification} from '@/lib/providers/notifications/useNotification';
 import {createClient} from '@/lib/supabase/client';
 import {NotificationPreferences} from '@/lib/types';
-import {checkPermissionStateAndAct, notificationUnsupported} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useEffect, useState} from 'react';
@@ -14,17 +14,7 @@ export const NotificationSettings = () => {
   const t = useTranslations('settings.notifications');
   const supabase = createClient();
   const {user} = useUserStore();
-  const [unsupported, setUnsupported] = useState<boolean>(false);
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null);
-
-  useEffect(() => {
-    const isUnsupported = notificationUnsupported();
-    setUnsupported(isUnsupported);
-    if (isUnsupported) {
-      return;
-    }
-    checkPermissionStateAndAct(setSubscription);
-  }, []);
+  const {isSupported} = useNotification();
 
   useEffect(() => {
     const loadPreferences = async () => {
@@ -69,7 +59,7 @@ export const NotificationSettings = () => {
     }
   };
 
-  if (!preferences || !user || unsupported) return null;
+  if (!preferences || !user || !isSupported) return null;
 
   return (
     <div className="w-full space-y-6">

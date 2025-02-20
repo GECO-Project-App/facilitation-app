@@ -1,59 +1,19 @@
 'use client';
-import {
-  checkPermissionStateAndAct,
-  notificationUnsupported,
-  registerAndSubscribe,
-  sendWebPush,
-} from '@/lib/utils';
-import {useEffect, useState} from 'react';
+import {NotificationSubscriptionForm} from '@/components/NotificationSubscriptionForm';
+import NotificationSubscriptionStatus from '@/components/NotificationSubscriptionStatus';
+import {UnsupportedNotificationMessage} from '@/components/UnsupportedNotificationMessage';
+import {useNotification} from '@/lib/providers/notifications/useNotification';
 
-export default function Test() {
-  const [unsupported, setUnsupported] = useState<boolean>(false);
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const isUnsupported = notificationUnsupported();
-    setUnsupported(isUnsupported);
-    if (isUnsupported) {
-      return;
-    }
-    checkPermissionStateAndAct(setSubscription);
-  }, []);
+const Test = () => {
+  const {isSupported, isSubscribed} = useNotification();
 
   return (
-    <main>
-      <div>
-        <button
-          disabled={unsupported}
-          onClick={() => registerAndSubscribe(setSubscription)}
-          className={subscription ? 'bg-green-500' : ''}>
-          {unsupported
-            ? 'Notification Unsupported'
-            : subscription
-              ? 'Notification allowed'
-              : 'Allow notification'}
-        </button>
-        {subscription ? (
-          <>
-            <input
-              placeholder={'Type push message ...'}
-              style={{marginTop: '5rem'}}
-              value={message ?? ''}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button onClick={() => sendWebPush(message)}>Test Web Push</button>
-          </>
-        ) : null}
-        <div>
-          <span>Push subscription:</span>
-        </div>
-        <code>
-          {subscription
-            ? JSON.stringify(subscription?.toJSON(), undefined, 2)
-            : 'There is no subscription'}
-        </code>
-      </div>
-    </main>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100dvh)] bg-gray-100 p-4">
+      {!isSupported ? <UnsupportedNotificationMessage /> : <NotificationSubscriptionStatus />}
+
+      {isSubscribed && <NotificationSubscriptionForm />}
+    </div>
   );
-}
+};
+
+export default Test;
