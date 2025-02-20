@@ -16,7 +16,7 @@ export const sendNotification = async (
     body: message,
     //image: "/logo.png", if you want to add an image
     icon: '/user.png',
-    url: process.env.NOTIFICATION_URL ?? '/',
+    url: process.env.APP_URL ?? '/',
     badge: '/logo.svg',
   };
 
