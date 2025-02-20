@@ -1,9 +1,9 @@
 'use client';
 
 import {Link} from '@/i18n/routing';
+import {useNotification} from '@/lib/providers/notifications/useNotification';
 import {createClient} from '@/lib/supabase/client';
 import {NotificationPreferences} from '@/lib/types';
-import {checkPermissionStateAndAct, notificationUnsupported} from '@/lib/utils';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useEffect, useState} from 'react';
@@ -11,20 +11,10 @@ import {GecoEnvelop} from './icons/geco-envelop';
 
 export const PushNotificationBanner = () => {
   const t = useTranslations('activities.notificationBanner');
-  const [unsupported, setUnsupported] = useState<boolean>(false);
-  const [subscription, setSubscription] = useState<PushSubscription | null>(null);
   const {user} = useUserStore();
   const supabase = createClient();
   const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
-
-  useEffect(() => {
-    const isUnsupported = notificationUnsupported();
-    setUnsupported(isUnsupported);
-    if (isUnsupported) {
-      return;
-    }
-    checkPermissionStateAndAct(setSubscription);
-  }, []);
+  const {subscription, isSupported} = useNotification();
 
   useEffect(() => {
     const loadPreferences = async () => {
@@ -43,7 +33,7 @@ export const PushNotificationBanner = () => {
     loadPreferences();
   }, [supabase, user]);
 
-  if (subscription || unsupported || preferences?.push_enabled) {
+  if (subscription || !isSupported || preferences?.push_enabled) {
     return null;
   }
   return (

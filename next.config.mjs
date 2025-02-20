@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const withPWA = withPWAInit({
   dest: 'public',
+  sw: 'sw.js',
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
@@ -16,7 +17,6 @@ const withPWA = withPWAInit({
     disableDevLogs: true,
   },
 });
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
