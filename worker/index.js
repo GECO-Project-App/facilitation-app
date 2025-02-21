@@ -1,22 +1,9 @@
-self.addEventListener("install", () => {
-    console.info("service worker installed.");
-});
-
-const sendDeliveryReportAction = () => {
-    console.log("Web push delivered.");
-};
-
-self.addEventListener("push", function (event) {
-    if (!event.data) {
-        return;
-    }
-
+self.addEventListener("push", (event) => {
     const payload = event.data.json();
     const { body, icon, image, badge, url, title } = payload;
-    const notificationTitle = title ?? "Unknown title";
+
     const notificationOptions = {
         body,
-        icon,
         image,
         data: {
             url,
@@ -24,33 +11,32 @@ self.addEventListener("push", function (event) {
         badge,
     };
 
-    event.waitUntil(
-        self.registration.showNotification(notificationTitle, notificationOptions).then(() => {
-            sendDeliveryReportAction();
-        })
-    );
+
+  event.waitUntil(
+    self.registration.showNotification(title ?? 'GECO', {
+      body: event.data.text(),
+      icon: '/icon-192x192.png',
+      ...notificationOptions,
+    })
+  );
 });
 
-self.addEventListener("notificationclick", function (event) {
-    console.log("Notification clicked.");
-    event.notification.close();
-
-    event.waitUntil(
-        clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
-            const url = event.notification.data.url;
-
-            if (!url) return;
-
-            for (const client of clientList) {
-                if (client.url === url && "focus" in client) {
-                    return client.focus();
-                }
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        if (clientList.length > 0) {
+          let client = clientList[0];
+          for (let i = 0; i < clientList.length; i++) {
+            if (clientList[i].focused) {
+              client = clientList[i];
             }
-
-            if (clients.openWindow) {
-                console.log("Opening window.");
-                return clients.openWindow(url);
-            }
-        })
-    );
+          }
+          return client.focus();
+        }
+        return self.clients.openWindow("/");
+      })
+  );
 });

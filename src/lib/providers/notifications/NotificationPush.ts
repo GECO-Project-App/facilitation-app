@@ -1,4 +1,4 @@
-const SERVICE_WORKER_FILE_PATH = '/notification-sw.js';
+const SERVICE_WORKER_FILE_PATH = 'worker/index.js';
 
 export function isNotificationSupported(): boolean {
   let unsupported = false;
@@ -25,7 +25,7 @@ export async function registerAndSubscribe(
   onError: (e: Error) => void,
 ): Promise<void> {
   try {
-    await navigator.serviceWorker.register(SERVICE_WORKER_FILE_PATH);
+    // await navigator.serviceWorker.register(SERVICE_WORKER_FILE_PATH);
     //subscribe to notification
     navigator.serviceWorker.ready
       .then((registration: ServiceWorkerRegistration) => {

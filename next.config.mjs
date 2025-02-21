@@ -7,16 +7,12 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin();
 
 const withPWA = withPWAInit({
-  dest: 'public',
-  sw: 'sw-pwa.js',
+  dest: "public",
   register: true,
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
-  reloadOnOnline: true,
-  disable: process.env.NODE_ENV === 'development' ? false : false,
+  extendDefaultRuntimeCaching: true,
   workboxOptions: {
-    disableDevLogs: true,
-  },
+    skipWaiting: true,
+  }
 });
 const nextConfig = {
   reactStrictMode: true,
