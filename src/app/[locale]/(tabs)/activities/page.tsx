@@ -25,6 +25,7 @@ export default async function ActivitiesPage() {
             rightContent={
               <div className="flex flex-row items-center gap-2">
                 <h4 className=" font-bold">{t('title')}</h4>
+
                 <ListTodo size={24} />
               </div>
             }
@@ -62,7 +63,9 @@ export default async function ActivitiesPage() {
               </Link>
             )
           }>
-          <h4 className="font-bold">{t('title')}</h4>
+          <Link href="/test">
+            <h4 className="font-bold">{t('title')}</h4>
+          </Link>
         </Header>
       }>
       <PushNotificationBanner />
