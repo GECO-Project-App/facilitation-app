@@ -1,12 +1,14 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
 import {updateProfile} from '@/lib/actions/profileActions';
+import {createClient} from '@/lib/supabase/client';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
 import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {User} from '@supabase/supabase-js';
 import {ArrowLeft} from 'lucide-react';
 import {useTranslations} from 'next-intl';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {AuthTabs} from '../AuthTabs';
 import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input} from '../ui';
@@ -14,7 +16,21 @@ import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, 
 export const ProfileForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
-  const {user, signOut} = useUserStore();
+  const {signOut} = useUserStore();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const supabase = createClient();
+      const {
+        data: {user},
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+  }, []);
+
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
