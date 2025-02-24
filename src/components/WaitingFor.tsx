@@ -18,14 +18,9 @@ export const WaitingFor: FC<WaitingForProps> = ({deadline, text}) => {
 
   return (
     <PageLayout
-      header={
-        <Header
-          onBackButton={() => router.replace(`/`)}
-          rightContent={<DateBadge date={deadline} />}
-        />
-      }
+      header={<Header rightContent={<DateBadge date={deadline} />} />}
       footer={
-        <Button variant="pink" onClick={() => router.replace(`/`)}>
+        <Button variant="pink" onClick={() => router.back()}>
           {t('goBack')}
         </Button>
       }>

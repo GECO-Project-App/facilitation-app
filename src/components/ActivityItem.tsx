@@ -35,7 +35,7 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
   }, [activity.slug]);
 
   return (
-    <div className={cn('border-b-2 border-x-2 border-black rounded-4xl overflow-hidden')}>
+    <div className={cn('border-2  border-black rounded-4xl overflow-hidden ')}>
       <h3 className="text-center p-4 text-2xl font-bold bg-white border-b-2 border-black text-deepPurple">
         {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
           weekday: 'short',

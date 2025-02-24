@@ -100,6 +100,7 @@ export const getExerciseBySlugAndTeamId = async (slug: string, teamId: string) =
     .order('created_at', {ascending: false})
     .limit(1)
     .single();
+
   return {exercise, error};
 };
 

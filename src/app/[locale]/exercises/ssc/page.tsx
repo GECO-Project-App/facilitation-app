@@ -1,5 +1,5 @@
 'use client';
-import {GecoLoader, SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
+import {SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
@@ -25,7 +25,7 @@ export default function SSCPage() {
         const getExercise = async () => {
           const {exercise} = await getExerciseById(id);
           if (exercise) {
-            router.push(`ssc?id=${id}&status=${exercise.status}`);
+            router.push(`ssc?id=${id}&teamId=${exercise.team_id}&status=${exercise.status}`);
           }
         };
 
@@ -33,9 +33,9 @@ export default function SSCPage() {
         return;
       }
       getUserExerciseData(id);
-      router.push(`ssc?id=${id}&status=${exercise.status}`);
+      router.replace(`ssc?id=${id}&teamId=${exercise.team_id}&status=${exercise.status}`);
     } else {
-      router.push(`ssc`);
+      router.replace(`ssc/introduction`);
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
@@ -46,10 +46,6 @@ export default function SSCPage() {
     };
     fetchPendingUsers();
   }, [id, exercise?.status, getPendingUsers]);
-
-  if (!id || !exercise?.id) {
-    return <GecoLoader />;
-  }
 
   if (
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&

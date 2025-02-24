@@ -69,11 +69,7 @@ export default async function ActivitiesPage() {
         </Header>
       }>
       <PushNotificationBanner />
-      <div
-        className={cn(
-          data && data.length > 0 && 'border-t-2 border-black rounded-t-4xl',
-          'flex flex-col flex-1',
-        )}>
+      <div className={cn('flex flex-col flex-1 gap-4')}>
         {data && data.length > 0 ? (
           data?.map((activity, index) => <ActivityItem key={index} activity={activity} />)
         ) : (

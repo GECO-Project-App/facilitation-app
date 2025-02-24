@@ -35,7 +35,6 @@ export async function registerAndSubscribe(
         });
       })
       .then((subscription: PushSubscription) => {
-        console.info('Created subscription Object: ', subscription.toJSON());
         onSubscribe(subscription);
       })
       .catch((e) => {

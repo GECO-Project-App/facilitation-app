@@ -103,13 +103,12 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
       if (exerciseData) {
         setData(null);
 
+        router.push(`/exercises/ttm/introduction`);
+
         toast({
           variant: 'success',
           title: t('toast.success'),
         });
-        setTimeout(() => {
-          router.refresh();
-        }, 1000);
       } else {
         toast({
           variant: 'destructive',
