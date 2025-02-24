@@ -18,7 +18,7 @@ export const TabBar: FC = () => {
 
   return (
     <nav className="fixed bottom-0 border-t-2 border-black bg-yellow w-full">
-      <ul className="flex flex-row items-center justify-between max-w-md mx-auto h-full p-4 sm:pb-8">
+      <ul className="flex flex-row items-center justify-between max-w-md mx-auto h-full p-4 pb-8 lg:pb-0">
         <li className="relative">
           <Link href="/activities">
             <ListTodo size={28} className={colorText('activities')} />
