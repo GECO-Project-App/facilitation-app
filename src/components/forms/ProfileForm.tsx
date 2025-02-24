@@ -1,9 +1,9 @@
 'use client';
 import {useToast} from '@/hooks/useToast';
+import {useRouter} from '@/i18n/routing';
 import {updateProfile} from '@/lib/actions/profileActions';
 import {createClient} from '@/lib/supabase/client';
 import {profileSchema, ProfileSchema} from '@/lib/zodSchemas';
-import {useUserStore} from '@/store/userStore';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {User} from '@supabase/supabase-js';
 import {ArrowLeft} from 'lucide-react';
@@ -16,12 +16,11 @@ import {Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, 
 export const ProfileForm = () => {
   const {toast} = useToast();
   const t = useTranslations();
-  const {signOut} = useUserStore();
   const [user, setUser] = useState<User | null>(null);
-
+  const supabase = createClient();
+  const router = useRouter();
   useEffect(() => {
     const getUser = async () => {
-      const supabase = createClient();
       const {
         data: {user},
       } = await supabase.auth.getUser();
@@ -29,7 +28,13 @@ export const ProfileForm = () => {
     };
 
     getUser();
-  }, []);
+  }, [supabase]);
+
+  const signOut = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/');
+  };
 
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
