@@ -63,7 +63,7 @@ export const PassItOn: FC<{slug: string}> = ({slug}) => {
             variant="blue"
             className="mx-auto"
             onClick={() => {
-              router.push(`/`);
+              router.push(`/exercises/${slug}/feedback`);
               toast({
                 variant: 'transparent',
                 size: 'fullscreen',
