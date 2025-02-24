@@ -8,6 +8,7 @@ self.addEventListener("push", (event) => {
         data: {
             url,
         },
+        icon, 
         badge,
     };
 

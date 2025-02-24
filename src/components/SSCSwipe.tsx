@@ -110,13 +110,11 @@ export const SSCSwipe: FC<SSCSwipeProps> = ({deadline}) => {
       if (exerciseData) {
         setData(null);
         setStage(null);
+        router.push(`/exercises/ssc/introduction`);
         toast({
           variant: 'success',
           title: t('exercises.toast.success'),
         });
-        setTimeout(() => {
-          router.refresh();
-        }, 1000);
       } else {
         toast({
           variant: 'destructive',

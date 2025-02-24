@@ -40,6 +40,8 @@ export default function TTMExercisesPage() {
       }
       getUserExerciseData(id);
       router.push(`ttm?id=${id}&status=${exercise.status}`);
+    } else {
+      router.replace(`ttm/introduction`);
     }
   }, [id, exercise, getExerciseById, getUserExerciseData, getPendingUsers, router, status]);
 
