@@ -4,6 +4,7 @@ import {NotificationProvider} from '@/lib/providers/notifications/useNotificatio
 import {PHProvider} from '@/lib/providers/PHProvider';
 import {cn} from '@/lib/utils';
 import type {Metadata} from 'next';
+import {Viewport} from 'next';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import dynamic from 'next/dynamic';
@@ -15,6 +16,12 @@ export const metadata: Metadata = {
   title: 'GECO',
 };
 
+export const viewport: Viewport = {
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export const revalidate = 0;
 const PostHogPageView = dynamic(() => import('@/components/PostHogPageView'), {
   ssr: false,
 });
