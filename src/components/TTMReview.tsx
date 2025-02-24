@@ -52,6 +52,7 @@ export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
               const reviewedExercise = setExerciseDataAsReviewed(exercise.id);
               if (reviewedExercise) {
                 setReviewedStages(null);
+                router.push('/exercises/ttm/feedback');
                 toast({
                   variant: 'transparent',
                   size: 'fullscreen',

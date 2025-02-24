@@ -1,4 +1,5 @@
 'use client';
+import {useToast} from '@/hooks/useToast';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStage, TeamExerciseData} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
@@ -7,8 +8,10 @@ import {useState} from 'react';
 import {DateBadge} from './DateBadge';
 import {Header} from './Header';
 import {PageLayout} from './PageLayout';
+import {RiveAnimation} from './RiveAnimation';
 import {SSCButtons} from './SSCButtons';
 import {VoteCard} from './VoteCard';
+import {Complete} from './icons';
 import {Button} from './ui/button';
 
 export const SSCCompleted = () => {
@@ -16,7 +19,7 @@ export const SSCCompleted = () => {
   const [stage, setStage] = useState<ExerciseStage>('start');
   const {exercise, teamExerciseData} = useExerciseStore();
   const t = useTranslations('common');
-
+  const {toast} = useToast();
   return (
     <PageLayout
       backgroundColor="bg-orange"
@@ -27,8 +30,24 @@ export const SSCCompleted = () => {
         />
       }
       footer={
-        <Button variant="blue" onClick={() => router.replace('/')}>
-          {t('goToHome')}
+        <Button
+          variant="blue"
+          onClick={() => {
+            router.push(`/exercises/ssc/feedback`);
+            toast({
+              variant: 'transparent',
+              size: 'fullscreen',
+              duration: 2000,
+              className: 'text-black bg-blue',
+              children: (
+                <>
+                  <h3 className="text-3xl font-bold">{t('common.greatJob')}</h3>
+                  <RiveAnimation src="geckograttis.riv" width={300} height={300} />
+                </>
+              ),
+            });
+          }}>
+          {t('complete')} <Complete />
         </Button>
       }>
       <div className="flex flex-col gap-8 h-full w-full flex-1 ">
