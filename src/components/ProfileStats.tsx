@@ -46,7 +46,7 @@ export const ProfileStats = ({member}: {member: Tables<'team_members'>}) => {
           <ProfileAvatar memberProfile={member} size="lg" />
         )}
       </div>
-      <section className="page-constraints flex flex-col gap-6">
+      <section className="page-constraints flex flex-col gap-6 p-4">
         {isCurrentUser ? (
           <MemberForm user={member} />
         ) : (

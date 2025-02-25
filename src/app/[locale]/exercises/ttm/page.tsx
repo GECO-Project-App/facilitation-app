@@ -1,5 +1,5 @@
 'use client';
-import {TTMSwipe} from '@/components';
+import {GecoLoader, TTMSwipe} from '@/components';
 import {TTMReview} from '@/components/TTMReview';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
@@ -65,13 +65,13 @@ export default function TTMExercisesPage() {
     fetchPendingUsers();
   }, [id, exercise?.status, getPendingUsers]);
 
-  if (!exercise || !id) {
-    return <div>loading...</div>;
+  if (!exercise || !id || !pendingUsers) {
+    return <GecoLoader />;
   }
 
   if (
-    !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
-    exercise.status !== 'completed' &&
+    (!pendingUsers?.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
+      exercise.status !== 'completed') ||
     pendingUsers.length > 0
   ) {
     return (

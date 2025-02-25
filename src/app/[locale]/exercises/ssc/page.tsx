@@ -1,5 +1,5 @@
 'use client';
-import {SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
+import {GecoLoader, SSCCompleted, SSCSwipe, SwipeReview} from '@/components';
 import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
@@ -47,9 +47,13 @@ export default function SSCPage() {
     fetchPendingUsers();
   }, [id, exercise?.status, getPendingUsers]);
 
+  if (!exercise || !pendingUsers) {
+    return <GecoLoader />;
+  }
+
   if (
-    !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
-    exercise.status !== 'completed' &&
+    (!pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
+      exercise.status !== 'completed') ||
     pendingUsers.length > 0
   ) {
     return (
