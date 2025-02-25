@@ -52,8 +52,8 @@ export default function SSCPage() {
   }
 
   if (
-    (!pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
-      exercise.status !== 'completed') ||
+    !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
+    exercise.status !== 'completed' &&
     pendingUsers.length > 0
   ) {
     return (
