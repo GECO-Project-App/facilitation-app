@@ -132,7 +132,7 @@ export const useTeamStore = create<TeamState>()(
             .single();
 
           if (error) {
-            console.log(error);
+            console.error(error);
           }
 
           const user = useUserStore.getState().user;

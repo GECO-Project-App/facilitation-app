@@ -25,30 +25,60 @@ export const DeadlineForm = () => {
   const {deadline, setDeadline} = useExerciseStore();
   const [writingDialogOpen, setWritingDialogOpen] = useState(false);
   const [reviewingDialogOpen, setReviewingDialogOpen] = useState(false);
-  const [timeValue, setTimeValue] = useState<string>(() => {
+  const [reviewingTime, setReviewingTime] = useState<string>(() => {
+    const now = new Date();
+    return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+  });
+  const [writingTime, setWritingTime] = useState<string>(() => {
     const now = new Date();
     return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-  });
+  // Safely create Date objects from potentially invalid values
+  const safeDate = (date: Date | null | undefined): Date => {
+    if (!date) return new Date();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log('onSubmit', values);
+    // Check if the date is valid
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? new Date() : d;
   };
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      writingDate: safeDate(deadline.writingPhase),
+      reviewingDate: safeDate(deadline.reviewingPhase),
+    },
+  });
+
   const combineDateTime = (date: Date, timeStr: string) => {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const newDate = new Date(date);
-    newDate.setHours(hours, minutes);
-    return newDate;
+    try {
+      if (!date || isNaN(date.getTime())) {
+        console.error('Invalid date provided to combineDateTime');
+        return new Date();
+      }
+
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      const newDate = new Date(date);
+      newDate.setHours(hours || 0, minutes || 0);
+      return newDate;
+    } catch (error) {
+      console.error('Error combining date and time:', error);
+      return new Date(); // Return current date if there's an error
+    }
   };
 
   const isInPast = (date: Date) => {
-    const now = new Date();
-    return date < new Date(now.setHours(0, 0, 0, 0));
+    try {
+      const now = new Date();
+      return date < new Date(now.setHours(0, 0, 0, 0));
+    } catch (error) {
+      console.error('Error checking if date is in past:', error);
+      return false;
+    }
   };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {};
 
   return (
     <Form {...form}>
@@ -69,9 +99,18 @@ export const DeadlineForm = () => {
                   <DialogTrigger asChild>
                     <Button variant="pink" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {(field.value ?? deadline.writingPhase)
-                        ? format(field.value ?? deadline.writingPhase, 'PP HH:mm')
-                        : t('exercises.deadline.pickADateAndTime')}
+                      {(() => {
+                        try {
+                          const dateToFormat = field.value ?? deadline.writingPhase;
+                          if (dateToFormat && !isNaN(new Date(dateToFormat).getTime())) {
+                            return format(dateToFormat, 'PP HH:mm');
+                          }
+                          return t('exercises.deadline.pickADateAndTime');
+                        } catch (error) {
+                          console.error('Error formatting date:', error);
+                          return t('exercises.deadline.pickADateAndTime');
+                        }
+                      })()}
                     </Button>
                   </DialogTrigger>
                   <DialogContent size="fullscreen" className="flex flex-col gap-4 md:gap-6">
@@ -89,17 +128,18 @@ export const DeadlineForm = () => {
                     <input
                       type="time"
                       className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
-                      value={timeValue}
-                      onChange={(e) => setTimeValue(e.target.value)}
+                      value={writingTime}
+                      onChange={(e) => setWritingTime(e.target.value)}
                     />
                     <Button
                       variant="green"
                       className="h-fit mx-auto"
+                      disabled={isInPast(combineDateTime(field.value, writingTime))}
                       onClick={() => {
                         if (field.value) {
-                          field.onChange(combineDateTime(field.value, timeValue));
+                          field.onChange(combineDateTime(field.value, writingTime));
                           setDeadline({
-                            writingPhase: combineDateTime(field.value, timeValue),
+                            writingPhase: combineDateTime(field.value, writingTime),
                             reviewingPhase: deadline.reviewingPhase,
                           });
                         }
@@ -130,9 +170,18 @@ export const DeadlineForm = () => {
                   <DialogTrigger asChild>
                     <Button variant="blue" className="w-full">
                       <CalendarClock size={22} className="text-black" />
-                      {(field.value ?? deadline.reviewingPhase)
-                        ? format(field.value ?? deadline.reviewingPhase, 'PP HH:mm')
-                        : t('exercises.deadline.pickADateAndTime')}
+                      {(() => {
+                        try {
+                          const dateToFormat = field.value ?? deadline.reviewingPhase;
+                          if (dateToFormat && !isNaN(new Date(dateToFormat).getTime())) {
+                            return format(dateToFormat, 'PP HH:mm');
+                          }
+                          return t('exercises.deadline.pickADateAndTime');
+                        } catch (error) {
+                          console.error('Error formatting date:', error);
+                          return t('exercises.deadline.pickADateAndTime');
+                        }
+                      })()}
                     </Button>
                   </DialogTrigger>
                   <DialogContent
@@ -153,18 +202,26 @@ export const DeadlineForm = () => {
                     <input
                       type="time"
                       className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
-                      value={timeValue}
-                      onChange={(e) => setTimeValue(e.target.value)}
+                      value={reviewingTime}
+                      onChange={(e) => setReviewingTime(e.target.value)}
                     />
                     <Button
                       variant="green"
                       className="h-fit mx-auto"
+                      disabled={
+                        combineDateTime(form.getValues('writingDate') ?? new Date(), writingTime) >
+                        combineDateTime(
+                          form.getValues('reviewingDate') ?? new Date(),
+
+                          reviewingTime,
+                        )
+                      }
                       onClick={() => {
                         if (field.value) {
-                          field.onChange(combineDateTime(field.value, timeValue));
+                          field.onChange(combineDateTime(field.value, reviewingTime));
                           setDeadline({
                             writingPhase: deadline.writingPhase,
-                            reviewingPhase: combineDateTime(field.value, timeValue),
+                            reviewingPhase: combineDateTime(field.value, reviewingTime),
                           });
                         }
                         setReviewingDialogOpen(false);

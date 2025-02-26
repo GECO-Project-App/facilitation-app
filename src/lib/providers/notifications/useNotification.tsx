@@ -132,7 +132,6 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
 
       if (!currentSubscription) {
         // If there's no active browser subscription, remove all database subscriptions
-        console.log('No active browser subscription, cleaning up all database subscriptions');
         await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
         return;
       }
@@ -159,8 +158,6 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
       });
 
       if (subscriptions.length > 1 || !hasMatchingSubscription) {
-        console.log(`Found ${subscriptions.length} subscriptions, cleaning up stale ones`);
-
         // Delete all subscriptions
         await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
 
@@ -171,7 +168,6 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
             user_id: user.id,
             subscription: serializedSub as unknown as JsonValue,
           });
-          console.log('Re-added current subscription after cleanup');
         }
       }
     } catch (error) {
@@ -226,7 +222,6 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
       await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
 
       // Log for debugging
-      console.log('Removed all push subscriptions for user:', user.id);
     } catch (error) {
       console.error('Error removing subscription from Supabase:', error);
       toast({
@@ -314,11 +309,9 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
 
     try {
       setIsUnsubscribing(true);
-      console.log('Starting unsubscribe process');
 
       // If there's no subscription to unsubscribe from, just return
       if (!subscription) {
-        console.log('No subscription to unsubscribe from');
         return;
       }
 
@@ -334,12 +327,10 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
       // If there's an active subscription, unsubscribe from it
       if (pushSubscription) {
         try {
-          console.log('Unsubscribing from browser push subscription');
           const success = await pushSubscription.unsubscribe();
 
           if (success) {
             // Remove from Supabase if unsubscribe was successful
-            console.log('Browser unsubscribe successful, removing from database');
             await removeSubscriptionFromSupabase(subscription.endpoint);
 
             // Update state
@@ -364,7 +355,6 @@ export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Ele
       } else {
         // No browser subscription found, but we had one in state
         // Just remove from Supabase and clear state
-        console.log('No browser subscription found, cleaning up database');
         await removeSubscriptionFromSupabase(subscription.endpoint);
         setSubscription(null);
 

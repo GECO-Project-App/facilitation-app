@@ -23,7 +23,7 @@ export const sendNotification = async (
   webpush
     .sendNotification(subscription, JSON.stringify(pushPayload))
     .then(() => {
-      console.log('Notification sent');
+      console.info('Notification sent');
     })
     .catch((error) => {
       console.error('Error sending notification', error);

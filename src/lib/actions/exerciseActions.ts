@@ -24,6 +24,11 @@ export async function createExercise({
     } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
 
+    // Validate deadline format
+    if (!deadline || typeof deadline !== 'object' || !deadline.writing || !deadline.reviewing) {
+      throw new Error('Invalid deadline format');
+    }
+
     // Create exercise
     const {data: exercise, error: exerciseError} = await supabase
       .from('exercises')
@@ -32,19 +37,30 @@ export async function createExercise({
         created_by: user.id,
         slug,
         review_type: reviewType,
-        deadline: deadline,
+        deadline: {
+          writing: deadline.writing,
+          reviewing: deadline.reviewing,
+        },
         status: 'writing',
       })
       .select()
       .single();
 
-    if (exerciseError) throw exerciseError;
+    if (exerciseError) {
+      console.error('Supabase error details:', exerciseError);
+      throw exerciseError;
+    }
     if (!exercise) throw new Error('Failed to create exercise');
 
     revalidatePath(`/exercises/${slug}?id=${exercise.id}&status=${exercise.status}`);
     return {exercise};
   } catch (error) {
     console.error('Error creating exercise:', error);
+    // Log more details about the error
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
     throw error;
   }
 }
