@@ -1,7 +1,9 @@
 import {useNotification} from '@/lib/providers/notifications/useNotification';
+import {Button} from './ui/button';
 
 const NotificationSubscriptionStatus = () => {
-  const {isSubscribed, handleSubscribe, isGranted, isDenied, errorMessage} = useNotification();
+  const {isSubscribed, handleSubscribe, handleUnsubscribe, isGranted, isDenied, errorMessage} =
+    useNotification();
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
@@ -16,19 +18,23 @@ const NotificationSubscriptionStatus = () => {
 
       {errorMessage && <p className="text-red text-center mb-4">Error: {errorMessage}</p>}
 
-      <div>
+      <div className="flex flex-col gap-4">
         {!isSubscribed && (
-          <button
+          <Button
             onClick={handleSubscribe}
             className="w-full bg-blue text-white py-2 px-4 rounded-lg hover:bg-blue transition"
             disabled={isDenied}>
             Subscribe to Push Notifications
-          </button>
+          </Button>
         )}
 
-        {isGranted && (
-          <div className="text-center">
+        {isGranted && isSubscribed && (
+          <div className="flex flex-col items-center gap-4">
             <p className="text-green font-semibold">You are subscribed!</p>
+
+            <Button onClick={handleUnsubscribe} className="w-full bg-red text-white">
+              Unsubscribe from Notifications
+            </Button>
           </div>
         )}
       </div>

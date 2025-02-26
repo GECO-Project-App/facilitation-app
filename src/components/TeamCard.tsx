@@ -57,7 +57,7 @@ export const TeamCard = () => {
     <div className="max-w-xs mx-auto">
       {currentTeam ? (
         <div className="bg-yellow  rounded-3xl border-2 border-black p-4 flex flex-col gap-4 h-full">
-          <TeamAvatars />
+          <TeamAvatars teamMembers={currentTeam.team_members} />
           <InviteTeamMemberDialog />
           {isFacilitator && (
             <Link href={`/team?teamId=${currentTeam.id}`}>

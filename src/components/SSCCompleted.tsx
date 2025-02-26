@@ -20,6 +20,7 @@ export const SSCCompleted = () => {
   const {exercise, teamExerciseData} = useExerciseStore();
   const t = useTranslations('common');
   const {toast} = useToast();
+
   return (
     <PageLayout
       backgroundColor="bg-orange"
@@ -41,7 +42,7 @@ export const SSCCompleted = () => {
               className: 'text-black bg-blue',
               children: (
                 <>
-                  <h3 className="text-3xl font-bold">{t('common.greatJob')}</h3>
+                  <h3 className="text-3xl font-bold">{t('greatJob')}</h3>
                   <RiveAnimation src="geckograttis.riv" width={300} height={300} />
                 </>
               ),

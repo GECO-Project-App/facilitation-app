@@ -37,12 +37,17 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
   return (
     <div className={cn('border-2  border-black rounded-4xl overflow-hidden ')}>
       <h3 className="text-center p-4 text-2xl font-bold bg-white border-b-2 border-black text-deepPurple">
-        {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-        })}
+        {format.dateTime(
+          new Date(
+            activity.deadline[`${activity.status !== 'completed' ? activity.status : 'reviewing'}`],
+          ),
+          {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+          },
+        )}
       </h3>
       <div className={cn(getExerciseColor(activity.slug), 'flex flex-col gap-6 p-4 pb-6')}>
         <div className="flex flex-col gap-2">
@@ -54,25 +59,33 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
         </div>
         <p className="font-bold">
           Deadline:{' '}
-          {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
-            hour: '2-digit',
-            minute: '2-digit',
-          })}{' '}
-          - {t(`common.status.${activity.status}`)}
+          {activity.status !== 'completed' ? (
+            <>
+              {format.dateTime(new Date(activity.deadline[`${activity.status}`]), {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}{' '}
+              - {t(`common.status.${activity.status}`)}
+            </>
+          ) : (
+            t('common.completed')
+          )}
         </p>
 
         <p>{activityType?.description}</p>
         <div className="flex h-9 w-fit gap-4 items-center justify-between whitespace-nowrap rounded-full border-2 border-black bg-white px-4 py-2 shadow-sm mx-auto">
           <p>{activity.team_name}</p>
         </div>
-        <TeamAvatars />
+        <TeamAvatars teamMembers={activity.team_members} />
 
-        <Button variant="white" className="w-full !text-lg" asChild size="small">
-          <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
-            {t('common.letsStart')}
-            <ArrowRight size={24} />
-          </Link>
-        </Button>
+        {activity.status !== 'completed' && (
+          <Button variant="white" className="w-full !text-lg" asChild size="small">
+            <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
+              {t('common.letsStart')}
+              <ArrowRight size={24} />
+            </Link>
+          </Button>
+        )}
       </div>
     </div>
   );
