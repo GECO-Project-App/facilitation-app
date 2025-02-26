@@ -38,9 +38,9 @@ export const PushNotificationBanner = () => {
   }
   return (
     <Link href="/settings">
-      <div className="relative rounded-4xl border-2 border-black bg-orange p-6 min-h-44 justify-end flex flex-row items-end">
+      <div className="relative rounded-4xl border-2 border-black bg-orange p-6 min-h-38 flex flex-row justify-end items-center">
         <GecoEnvelop className="absolute top-1/2 -translate-y-1/2 -left-8" />
-        <div className="flex flex-col gap-2 w-[50%] justify-end items-end ">
+        <div className="flex flex-col  w-3/5">
           <h3 className=" font-bold">{t('title')}</h3>
           <p className="text-xs">{t('description')}</p>
         </div>

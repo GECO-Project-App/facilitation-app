@@ -4,7 +4,7 @@ import {createClient} from '@/lib/supabase/client';
 import {NotificationPreferences} from '@/lib/types';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
-import React, {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
+import {createContext, ReactNode, useContext, useEffect, useMemo, useState} from 'react';
 import {
   isNotificationSupported,
   isPermissionDenied,
@@ -38,7 +38,7 @@ type NotificationContextType = {
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
-export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}) => {
+export const NotificationProvider = ({children}: {children: ReactNode}): JSX.Element => {
   const [isSupported, setIsSupported] = useState<boolean>(false);
   const [isGranted, setIsGranted] = useState<boolean>(false);
   const [isDenied, setIsDenied] = useState<boolean>(false);
@@ -74,6 +74,11 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
         const granted = isPermissionGranted();
         setIsGranted(granted);
         setIsDenied(isPermissionDenied());
+
+        // Clean up any stale subscriptions first
+        if (user) {
+          await cleanupStaleSubscriptions();
+        }
 
         if (granted) {
           try {
@@ -115,6 +120,64 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
 
     checkExistingSubscription();
   }, [user?.id]);
+
+  // Function to clean up stale subscriptions
+  const cleanupStaleSubscriptions = async () => {
+    if (!user) return;
+
+    try {
+      // Get the current browser subscription if it exists
+      const registration = await navigator.serviceWorker.ready;
+      const currentSubscription = await registration.pushManager.getSubscription();
+
+      if (!currentSubscription) {
+        // If there's no active browser subscription, remove all database subscriptions
+        console.log('No active browser subscription, cleaning up all database subscriptions');
+        await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
+        return;
+      }
+
+      // Get the current subscription endpoint
+      const currentEndpoint = currentSubscription.toJSON().endpoint;
+
+      // Get all subscriptions for this user
+      const {data: subscriptions} = await supabase
+        .from('web_push_subscriptions')
+        .select('id, subscription')
+        .eq('user_id', user.id);
+
+      if (!subscriptions || subscriptions.length === 0) {
+        // No subscriptions in database, nothing to clean up
+        return;
+      }
+
+      // If there are multiple subscriptions or the subscription doesn't match the current one
+      // Use type assertion and safe access to handle potential null values
+      const hasMatchingSubscription = subscriptions.some((sub) => {
+        const subData = sub.subscription as {endpoint?: string};
+        return subData?.endpoint === currentEndpoint;
+      });
+
+      if (subscriptions.length > 1 || !hasMatchingSubscription) {
+        console.log(`Found ${subscriptions.length} subscriptions, cleaning up stale ones`);
+
+        // Delete all subscriptions
+        await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
+
+        // Re-add the current one if it exists
+        if (currentSubscription) {
+          const serializedSub = serializeSubscription(currentSubscription);
+          await supabase.from('web_push_subscriptions').insert({
+            user_id: user.id,
+            subscription: serializedSub as unknown as JsonValue,
+          });
+          console.log('Re-added current subscription after cleanup');
+        }
+      }
+    } catch (error) {
+      console.error('Error cleaning up stale subscriptions:', error);
+    }
+  };
 
   const saveSubscriptionToSupabase = async (serializedSub: SerializablePushSubscription) => {
     if (!user) return;
@@ -158,12 +221,12 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
     if (!user) return;
 
     try {
-      // Delete the subscription from Supabase
-      await supabase
-        .from('web_push_subscriptions')
-        .delete()
-        .eq('user_id', user.id)
-        .eq('subscription->endpoint', endpoint);
+      // Delete ALL subscriptions for this user instead of just the one with matching endpoint
+      // This ensures we clean up any duplicate or stale subscriptions
+      await supabase.from('web_push_subscriptions').delete().eq('user_id', user.id);
+
+      // Log for debugging
+      console.log('Removed all push subscriptions for user:', user.id);
     } catch (error) {
       console.error('Error removing subscription from Supabase:', error);
       toast({
@@ -251,9 +314,11 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
 
     try {
       setIsUnsubscribing(true);
+      console.log('Starting unsubscribe process');
 
       // If there's no subscription to unsubscribe from, just return
       if (!subscription) {
+        console.log('No subscription to unsubscribe from');
         return;
       }
 
@@ -269,16 +334,19 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
       // If there's an active subscription, unsubscribe from it
       if (pushSubscription) {
         try {
+          console.log('Unsubscribing from browser push subscription');
           const success = await pushSubscription.unsubscribe();
 
           if (success) {
             // Remove from Supabase if unsubscribe was successful
+            console.log('Browser unsubscribe successful, removing from database');
             await removeSubscriptionFromSupabase(subscription.endpoint);
 
             // Update state
             setSubscription(null);
 
             // Only show toast here, after everything is successful
+            // Changed from 'destructive' to default variant for success message
             toast({
               variant: 'destructive',
               title: t('unsubscribedTitle'),
@@ -296,11 +364,12 @@ export const NotificationProvider: React.FC<{children: ReactNode}> = ({children}
       } else {
         // No browser subscription found, but we had one in state
         // Just remove from Supabase and clear state
+        console.log('No browser subscription found, cleaning up database');
         await removeSubscriptionFromSupabase(subscription.endpoint);
         setSubscription(null);
 
+        // Changed from 'destructive' to default variant for success message
         toast({
-          variant: 'destructive',
           title: t('unsubscribedTitle'),
           description: t('unsubscribedDescription'),
         });
