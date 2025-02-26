@@ -59,9 +59,11 @@ export const DeadlineForm = () => {
     return date < new Date(now.setHours(0, 0, 0, 0));
   };
 
+  const onSubmit = (values: z.infer<typeof formSchema>) => {};
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="writingDate"
