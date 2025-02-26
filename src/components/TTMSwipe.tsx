@@ -140,7 +140,7 @@ export const TTMSwipe: FC<{deadline: Date}> = ({deadline}) => {
           <Carousel className="h-full flex-1" setApi={setApi}>
             <CarouselContent>
               {Object.entries(form.getValues()).map(([key, _], index) => (
-                <CarouselItem key={index} className="aspect-[4/6]">
+                <CarouselItem key={index} className="aspect-[5/6]">
                   <p className="text-center text-xl pb-4">
                     {t.rich('tutorialToMe.desc', {
                       stage: t(`tutorialToMe.stages.${key}`).toLowerCase(),

@@ -63,6 +63,7 @@ export const SwipeReview: FC = () => {
     if (cards.length === 1) {
       const reviewedExercise = setExerciseDataAsReviewed(exerciseId);
       if (reviewedExercise) {
+        router.push('/exercises/ssc/feedback');
         toast({
           variant: 'transparent',
           size: 'fullscreen',

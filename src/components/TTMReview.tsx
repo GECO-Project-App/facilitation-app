@@ -57,6 +57,7 @@ export const TTMReview = ({isCompleted = false}: {isCompleted?: boolean}) => {
                   variant: 'transparent',
                   size: 'fullscreen',
                   duration: 2000,
+
                   className: 'text-black bg-blue',
                   children: (
                     <>
