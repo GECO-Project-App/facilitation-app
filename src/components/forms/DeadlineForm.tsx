@@ -25,33 +25,24 @@ export const DeadlineForm = () => {
   const {deadline, setDeadline} = useExerciseStore();
   const [writingDialogOpen, setWritingDialogOpen] = useState(false);
   const [reviewingDialogOpen, setReviewingDialogOpen] = useState(false);
-  const [reviewingTime, setReviewingTime] = useState<string>(() => {
-    const now = new Date();
-    return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-  });
-  const [writingTime, setWritingTime] = useState<string>(() => {
+  const [timeValue, setTimeValue] = useState<string>(() => {
     const now = new Date();
     return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      writingDate: deadline.writingPhase || new Date(),
-      reviewingDate: deadline.reviewingPhase || new Date(),
-    },
   });
 
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log('onSubmit', values);
+  };
+
   const combineDateTime = (date: Date, timeStr: string) => {
-    try {
-      const [hours, minutes] = timeStr.split(':').map(Number);
-      const newDate = new Date(date);
-      newDate.setHours(hours || 0, minutes || 0);
-      return newDate;
-    } catch (error) {
-      console.error('Error combining date and time:', error);
-      return date; // Return original date if there's an error
-    }
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const newDate = new Date(date);
+    newDate.setHours(hours, minutes);
+    return newDate;
   };
 
   const isInPast = (date: Date) => {
@@ -59,11 +50,9 @@ export const DeadlineForm = () => {
     return date < new Date(now.setHours(0, 0, 0, 0));
   };
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {};
-
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="writingDate"
@@ -99,19 +88,18 @@ export const DeadlineForm = () => {
                     />
                     <input
                       type="time"
-                      id="writingTime"
                       className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
-                      value={writingTime}
-                      onChange={(e) => setWritingTime(e.target.value)}
+                      value={timeValue}
+                      onChange={(e) => setTimeValue(e.target.value)}
                     />
                     <Button
                       variant="green"
                       className="h-fit mx-auto"
                       onClick={() => {
                         if (field.value) {
-                          field.onChange(combineDateTime(field.value, writingTime));
+                          field.onChange(combineDateTime(field.value, timeValue));
                           setDeadline({
-                            writingPhase: combineDateTime(field.value, writingTime),
+                            writingPhase: combineDateTime(field.value, timeValue),
                             reviewingPhase: deadline.reviewingPhase,
                           });
                         }
@@ -159,35 +147,24 @@ export const DeadlineForm = () => {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      onDayClick={(date) => {
-                        console.log(date);
-                      }}
                       initialFocus
                       disabled={isInPast}
                     />
                     <input
                       type="time"
                       className="border-2 border-black w-fit rounded-md px-4 h-fit py-2 mx-auto"
-                      value={reviewingTime}
-                      id="reviewingTime"
-                      onChange={(e) => setReviewingTime(e.target.value)}
+                      value={timeValue}
+                      onChange={(e) => setTimeValue(e.target.value)}
                     />
                     <Button
                       variant="green"
-                      className="h-fit mx-auto "
-                      disabled={
-                        combineDateTime(form.getValues('writingDate') ?? new Date(), writingTime) >
-                        combineDateTime(
-                          form.getValues('reviewingDate') ?? new Date(),
-                          reviewingTime,
-                        )
-                      }
+                      className="h-fit mx-auto"
                       onClick={() => {
                         if (field.value) {
-                          field.onChange(combineDateTime(field.value, reviewingTime));
+                          field.onChange(combineDateTime(field.value, timeValue));
                           setDeadline({
                             writingPhase: deadline.writingPhase,
-                            reviewingPhase: combineDateTime(field.value, reviewingTime),
+                            reviewingPhase: combineDateTime(field.value, timeValue),
                           });
                         }
                         setReviewingDialogOpen(false);
