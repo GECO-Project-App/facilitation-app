@@ -36,13 +36,22 @@ export const DeadlineForm = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      writingDate: deadline.writingPhase || new Date(),
+      reviewingDate: deadline.reviewingPhase || new Date(),
+    },
   });
 
   const combineDateTime = (date: Date, timeStr: string) => {
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const newDate = new Date(date);
-    newDate.setHours(hours, minutes);
-    return newDate;
+    try {
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      const newDate = new Date(date);
+      newDate.setHours(hours || 0, minutes || 0);
+      return newDate;
+    } catch (error) {
+      console.error('Error combining date and time:', error);
+      return date; // Return original date if there's an error
+    }
   };
 
   const isInPast = (date: Date) => {
