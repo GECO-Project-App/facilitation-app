@@ -1,33 +1,34 @@
-import {Header, NotificationItem, PageLayout} from '@/components';
-import {createClient} from '@/lib/supabase/server';
-import {getTranslations} from 'next-intl/server';
+'use client';
+import {NotificationSubscriptionForm} from '@/components/NotificationSubscriptionForm';
+import NotificationSubscriptionStatus from '@/components/NotificationSubscriptionStatus';
+import {UnsupportedNotificationMessage} from '@/components/UnsupportedNotificationMessage';
+import {useNotification} from '@/lib/providers/notifications/useNotification';
+import {useTranslations} from 'next-intl';
 
-export default async function NotificationsPage() {
-  const supabase = createClient();
-  const t = await getTranslations('notifications');
-  const {data: notifications} = await supabase
-    .from('notifications')
-    .select('*')
-    .order('created_at', {ascending: false});
+export default function NotificationsPage() {
+  const {isSupported, isSubscribed} = useNotification();
+  const t = useTranslations('notifications');
 
   return (
-    <PageLayout
-      backgroundColor="bg-purple"
-      contentColor="bg-purple"
-      header={
-        <Header>
-          <h4 className=" font-bold">{t('title')}</h4>
-        </Header>
-      }>
-      <div className=" flex-1 flex flex-col gap-6">
-        {notifications && notifications.length > 0 ? (
-          notifications.map((notification) => (
-            <NotificationItem key={notification.id} notification={notification} />
-          ))
-        ) : (
-          <p className="text-center font-bold">{t('noNotifications')}</p>
+    <div className="container mx-auto py-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">{t('title')}</h1>
+
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h2 className="text-xl font-semibold mb-4">{t('manage')}</h2>
+          <p className="mb-6">{t('description')}</p>
+
+          {!isSupported ? <UnsupportedNotificationMessage /> : <NotificationSubscriptionStatus />}
+        </div>
+
+        {isSubscribed && (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-xl font-semibold mb-4">{t('testNotification')}</h2>
+            <p className="mb-6">{t('testDescription')}</p>
+            <NotificationSubscriptionForm />
+          </div>
         )}
       </div>
-    </PageLayout>
+    </div>
   );
 }

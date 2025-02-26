@@ -15,6 +15,19 @@
   "notifications": {
     "title": "Notifikationer",
     "noNotifications": "Inga nya notifikationer att visa",
+    "manage": "Hantera notifikationer",
+    "description": "Prenumerera eller avsluta prenumerationen på push-notiser för att stanna uppdaterad med de senaste uppdateringarna.",
+    "testNotification": "Testa notifikationer",
+    "testDescription": "Skicka en testnotifikation för att verifiera att din prenumeration fungerar korrekt.",
+    "unsubscribedTitle": "Push-notiser inaktiverade",
+    "unsubscribedDescription": "Du kommer inte längre att få push-notiser.",
+    "subscribedTitle": "Push-notiser aktiverade",
+    "subscribedDescription": "Du kommer att få push-notiser.",
+    "subscribeErrorTitle": "Misslyckades att prenumerera",
+    "subscribeErrorMessage": "Försök igen.",
+    "unsubscribeErrorTitle": "Misslyckades att avsluta prenumerationen",
+    "unsubscribeErrorMessage": "Försök igen.",
+    
     "type": {
       "new_exercise": "En ny övning är tillgänglig för \"{teamName}\"",
       "team_invitation": "{user} har inbjudit dig till sitt team \"{teamName}\"",
@@ -126,7 +139,11 @@
     "newExercises": "Nya övningar",
     "deadlines": "Deadline-påminnelser",
     "updateSuccess": "Notifieringsinställningar uppdaterade",
-    "updateError": "Det gick inte att uppdatera notifieringsinställningarna"
+    "updateError": "Det gick inte att uppdatera notifieringsinställningarna",
+    "permissionDenied": "Tillstånd nekats",
+    "permissionDeniedDescription": "Du måste tillåta notifieringar i dina webbläsarinställningar för att aktivera push-notiser.",
+    "permissionError": "Tillståndsfelet",
+    "permissionErrorDescription": "Det uppstod ett fel när tillståndet begärdes. Försök igen."
   }
 },
   "profile": {
@@ -471,6 +488,7 @@
       },
     "save": "Spara",
     "complete": "Slutför",
+    "completed": "Slutfört",
     "nextStep": "Nästa steg",
     "letsStart": "Starta nu",
     "goToHome": "Gå till hem",

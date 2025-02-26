@@ -12,8 +12,22 @@
   }
 },
 "notifications": {
-  "title": "Notifications",
-  "noNotifications": "No new notifications to show",
+    "title": "Notifications",
+    "manage": "Manage Notifications",
+    "description": "Subscribe or unsubscribe from push notifications to stay updated with the latest information.",
+    "testNotification": "Test Notifications",
+    "testDescription": "Send a test notification to verify your subscription is working correctly.",
+    "noNotifications": "You don't have any notifications yet.",
+    "unsubscribedTitle": "Unsubscribed from notifications",
+    "unsubscribedDescription": "You will no longer receive push notifications.",
+    "subscribedTitle": "Subscribed to notifications",
+    "subscribedDescription": "You will receive push notifications.",
+    "subscribeErrorTitle": "Failed to subscribe",
+    "subscribeErrorMessage": "Please try again.",
+    "unsubscribeErrorTitle": "Failed to unsubscribe",
+    "unsubscribeErrorMessage": "Please try again.",
+    
+
   "type": {
     "new_exercise": "A new exercise is available for team \"{teamName}\"",
     "team_invitation": "{user} has invited you to their team \"{teamName}\"",
@@ -120,14 +134,18 @@
 "settings": {
   "title": "Settings",
   "notifications": {
-    "pushNotifications": "Push Notifications",
-    "pushDescription": "Receive notifications about important updates",
-    "teamInvitations": "Team Invitations",
-    "statusChanges": "Exercise Status Changes",
-    "newExercises": "New Exercises",
-    "deadlines": "Deadline Reminders",
-    "updateSuccess": "Notification settings updated",
-    "updateError": "Failed to update notification settings"
+          "pushNotifications": "Push Notifications",
+      "pushDescription": "Receive notifications about important updates and events.",
+      "teamInvitations": "Team Invitations",
+      "statusChanges": "Exercise Status Changes",
+      "newExercises": "New Exercises",
+      "deadlines": "Upcoming Deadlines",
+      "updateSuccess": "Notification preferences updated successfully",
+      "updateError": "Failed to update notification preferences",
+      "permissionDenied": "Permission Denied",
+      "permissionDeniedDescription": "You need to allow notifications in your browser settings to enable push notifications.",
+      "permissionError": "Permission Error",
+      "permissionErrorDescription": "There was an error requesting notification permission. Please try again."
   }
 },
   "profile": {
@@ -476,6 +494,7 @@
     "letsStart": "Let's Start",
     "goToHome": "Go to home",
     "complete": "Complete",
+    "completed": "Completed",
     "pressToGetNewQuestion": "Press to get a new question!",
     "thankYouText": "Thank you for your feedback!",
     "greatJob": "GREAT JOB! YOU DID IT!",

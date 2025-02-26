@@ -5,7 +5,7 @@ import {RiveAnimation} from '@/components/RiveAnimation';
 import {cn} from '@/lib/utils';
 
 const textAreaVariants = cva(
-  'bg-white flex min-h-[60px] max-h-[680px] w-full rounded-4xl border-2 border-black p-6  placeholder:text-black/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+  'bg-white flex min-h-[60px] max-h-[400px] md:max-h-[600px] w-full rounded-4xl border-2 border-black p-6  placeholder:text-black/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {

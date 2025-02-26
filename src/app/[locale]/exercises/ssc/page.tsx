@@ -50,6 +50,7 @@ export default function SSCPage() {
   if (!exercise || !pendingUsers) {
     return <GecoLoader />;
   }
+  console.log(pendingUsers);
 
   if (
     !pendingUsers.some((pendingUser: PendingUser) => pendingUser.user_id === user?.id) &&
