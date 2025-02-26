@@ -78,14 +78,12 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
         </div>
         <TeamAvatars teamMembers={activity.team_members} />
 
-        {activity.status !== 'completed' && (
-          <Button variant="white" className="w-full !text-lg" asChild size="small">
-            <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
-              {t('common.letsStart')}
-              <ArrowRight size={24} />
-            </Link>
-          </Button>
-        )}
+        <Button variant="white" className="w-full !text-lg" asChild size="small">
+          <Link href={`/exercises/${activity.slug}?id=${activity.id}`}>
+            {t('common.letsStart')}
+            <ArrowRight size={24} />
+          </Link>
+        </Button>
       </div>
     </div>
   );
