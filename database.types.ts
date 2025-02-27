@@ -122,6 +122,7 @@ export type Database = {
           id: string
           is_read: boolean
           push_eligible: boolean | null
+          push_sent: boolean | null
           type: Database["public"]["Enums"]["notification_type"]
           updated_at: string | null
           user_id: string
@@ -132,6 +133,7 @@ export type Database = {
           id?: string
           is_read?: boolean
           push_eligible?: boolean | null
+          push_sent?: boolean | null
           type: Database["public"]["Enums"]["notification_type"]
           updated_at?: string | null
           user_id: string
@@ -142,6 +144,7 @@ export type Database = {
           id?: string
           is_read?: boolean
           push_eligible?: boolean | null
+          push_sent?: boolean | null
           type?: Database["public"]["Enums"]["notification_type"]
           updated_at?: string | null
           user_id?: string
@@ -559,6 +562,12 @@ export type Database = {
           p_user_id: string
         }
         Returns: string
+      }
+      mark_notification_for_push: {
+        Args: {
+          p_notification_id: string
+        }
+        Returns: boolean
       }
       mark_notification_read: {
         Args: {

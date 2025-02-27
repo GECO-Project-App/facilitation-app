@@ -51,20 +51,43 @@ Deno.serve(async (req) => {
         body: `${data.inviter_name} has invited you to join their team`,
         icon: '/team-icon.png',
         data: {
-          url: `/invitations/${data.invitation_id}`
+          url: `/notifications`
         }
       }
     } else if (type === 'exercise_status_change') {
       notification = {
         title: `Exercise Status Update`,
-        body: `"${data.exercise_title}" is now ${data.new_status}`,
+        body: `"${data.exercise_title || data.slug}" is now ${data.new_status}`,
         icon: '/exercise-icon.png',
         data: {
-          url: `/exercises/${data.exercise_id}`
+          url: `/exercises/${data.slug}?id=${data.exercise_id}`
+        }
+      }
+    } else if (type === 'new_exercise') {
+      // Add handler for new exercise notifications
+      notification = {
+        title: `New Exercise in ${data.team_name}`,
+        body: `A new exercise has been created in your team`,
+        icon: '/exercise-icon.png',
+        data: {
+          url: `/exercises/${data.slug}?id=${data.exercise_id}`
+        }
+      }
+    } else if (type === 'upcoming_deadline') {
+      // Add handler for upcoming deadline notifications
+      const deadlineType = data.deadline_type === 'writing' ? 'writing' : 'reviewing'
+      const formattedDate = new Date(data.deadline_time).toLocaleString()
+      
+      notification = {
+        title: `Upcoming Deadline`,
+        body: `The ${deadlineType} deadline for an exercise in ${data.team_name} is approaching (${formattedDate})`,
+        icon: '/deadline-icon.png',
+        data: {
+          url: `/exercises/${data.slug}?id=${data.exercise_id}`
         }
       }
     } else {
-      // Generic notification
+      // Generic notification (keep this as fallback)
       notification = {
         title: data.title || 'New Notification',
         body: data.body || 'You have a new notification',

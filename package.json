@@ -12,6 +12,7 @@
     "build-storybook": "storybook build",
     "supabase": "npx supabase start && npx supabase functions serve",
     "supabase-pull": "npx supabase db pull  --local && npx supabase gen types typescript --local > database.types.ts",
+    "supabase-deploy": "npx supabase functions deploy && npx supabase db push",
     "prepare": "husky"
   },
   "lint-staged": {
