@@ -1,111 +1,108 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import webpush from 'npm:web-push';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import webpush from 'npm:web-push'
 
-const supabaseUrl = Deno.env.get('SUPABASE_URL') as string
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') as string
-
-interface WebPushPayload {
-  subscription: webpush.PushSubscription;
-  notification: {
-    team_name?: string;
-    exercise_id?: string;
-    inviter_name?: string;
-    deadline_type?: string;
-    deadline_time?: string;
-    slug?: string;
-  };
-  type: 'team_invitation' | 'exercise_status_change' | 'new_exercise' | 'upcoming_deadline';
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getNotificationContent = (type: string, data: any) => {
-  switch (type) {
-    case 'team_invitation':
-      return {
-        title: 'New Team Invitation',
-        body: `${data.inviter_name} invited you to join ${data.team_name}`,
-      };
-    case 'exercise_status_change':
-      return {
-        title: 'Exercise Status Updated',
-        body: `Exercise in ${data.team_name} has moved to ${data.new_status}`,
-      };
-    case 'new_exercise':
-      return {
-        title: 'New Exercise',
-        body: `A new exercise has been created in ${data.team_name}`,
-      };
-    case 'upcoming_deadline':
-      return {
-        title: 'Upcoming Deadline',
-        body: `${data.deadline_type} deadline for ${data.team_name} is approaching`,
-      };
-    default:
-      return {
-        title: 'New Notification',
-        body: 'You have a new notification',
-      };
-  }
-};
+// Configure web-push with your VAPID keys
+webpush.setVapidDetails(
+  'mailto:your-email@example.com',
+  Deno.env.get('VAPID_PUBLIC_KEY') || '',
+  Deno.env.get('VAPID_PRIVATE_KEY') || ''
+)
 
 Deno.serve(async (req) => {
   try {
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
-    const payload = await req.json()
-    
-    // Get the user ID and notification data from the webhook payload
-    const { user_id, type, data } = payload
-    
-    // Fetch all web push subscriptions for this user
-    const { data: subscriptions, error } = await supabase
+    // Create Supabase client
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') || '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || ''
+    )
+
+    // Parse the request body
+    const { user_id, notification_id, type, data } = await req.json()
+
+    if (!user_id) {
+      return new Response(
+        JSON.stringify({ error: 'user_id is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Get the user's push subscription from the database
+    const { data: subscriptionData, error: subscriptionError } = await supabaseClient
       .from('web_push_subscriptions')
       .select('subscription')
       .eq('user_id', user_id)
-    
-    if (error) throw error
-    
-    // Send push notification to each subscription
-    for (const sub of subscriptions) {
-      await sendPushNotification(sub.subscription, {
-        type,
-        notification: data
-      })
+      .maybeSingle()
+
+    if (subscriptionError || !subscriptionData?.subscription) {
+      console.error('No subscription found for user:', user_id)
+      return new Response(
+        JSON.stringify({ error: 'No subscription found for this user' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
+      )
     }
-    
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 200
+
+    const subscription = subscriptionData.subscription
+
+    // Format notification based on type
+    let notification
+    if (type === 'team_invitation') {
+      notification = {
+        title: `Invitation to join ${data.team_name}`,
+        body: `${data.inviter_name} has invited you to join their team`,
+        icon: '/team-icon.png',
+        data: {
+          url: `/invitations/${data.invitation_id}`
+        }
+      }
+    } else if (type === 'exercise_status_change') {
+      notification = {
+        title: `Exercise Status Update`,
+        body: `"${data.exercise_title}" is now ${data.new_status}`,
+        icon: '/exercise-icon.png',
+        data: {
+          url: `/exercises/${data.exercise_id}`
+        }
+      }
+    } else {
+      // Generic notification
+      notification = {
+        title: data.title || 'New Notification',
+        body: data.body || 'You have a new notification',
+        icon: data.icon || '/notification-icon.png',
+        data: {
+          url: data.url || `/notifications/${notification_id}`
+        }
+      }
+    }
+
+    // Create the payload - THIS WAS MISSING
+    const payload = JSON.stringify({
+      title: notification.title,
+      body: notification.body,
+      icon: notification.icon,
+      data: notification.data
     })
+
+    // Send the notification
+    await webpush.sendNotification(subscription, payload)
+
+    // If notification_id is provided, mark it as sent
+    if (notification_id) {
+      await supabaseClient
+        .from('notifications')
+        .update({ push_sent: true })
+        .eq('id', notification_id)
+    }
+
+    return new Response(
+      JSON.stringify({ success: true }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    )
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 500
-    })
+    console.error('Error sending push notification:', error)
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
   }
 })
-
-async function sendPushNotification(subscription, payload) {
-  // Your push notification sending logic here
-  // This would use the web-push library or similar
-}
-
-webpush.setVapidDetails(
-  'mailto:your-email@example.com',
-  Deno.env.get('VAPID_PUBLIC_KEY')!,
-  Deno.env.get('VAPID_PRIVATE_KEY')!
-);
-
-const notificationContent = getNotificationContent(payload.type, payload.notification);
-
-async function sendNotification(subscription, payload) {
-  await webpush.sendNotification(
-    subscription,
-    JSON.stringify({
-      ...notificationContent,
-      data: {
-        url: payload.notification.slug ? `/exercise/${payload.notification.slug}` : '/',
-      },
-    })
-  );
-}
-

@@ -79,8 +79,7 @@ export const ActivityItem: FC<ActivityItemProps> = ({activity}) => {
         <TeamAvatars teamMembers={activity.team_members} />
 
         <Button variant="white" className="w-full !text-lg" asChild size="small">
-          <Link
-            href={`/exercises/${activity.slug}?id=${activity.id}&teamId=${activity.team_id}&status=${activity.status}`}>
+          <Link href={`/exercises/${activity.slug}?id=${activity.id}&teamId=${activity.team_id}`}>
             {activity.status === 'completed' ? t('common.viewResults') : t('common.letsStart')}
             <ArrowRight size={24} />
           </Link>
