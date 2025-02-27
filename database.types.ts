@@ -121,6 +121,7 @@ export type Database = {
           data: Json
           id: string
           is_read: boolean
+          push_eligible: boolean | null
           type: Database["public"]["Enums"]["notification_type"]
           updated_at: string | null
           user_id: string
@@ -130,6 +131,7 @@ export type Database = {
           data: Json
           id?: string
           is_read?: boolean
+          push_eligible?: boolean | null
           type: Database["public"]["Enums"]["notification_type"]
           updated_at?: string | null
           user_id: string
@@ -139,6 +141,7 @@ export type Database = {
           data?: Json
           id?: string
           is_read?: boolean
+          push_eligible?: boolean | null
           type?: Database["public"]["Enums"]["notification_type"]
           updated_at?: string | null
           user_id?: string
