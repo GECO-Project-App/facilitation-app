@@ -53,22 +53,6 @@ Key Supabase documentation:
 - [TypeScript Types](https://supabase.com/docs/guides/api/rest/generating-types)
 - [Server-side auth](https://supabase.com/docs/guides/auth/server-side/nextjs)
 
-#### Supabase webhooks
-You can set this up in the Supabase Dashboard:
-Go to your Supabase project dashboard
-Navigate to Database → Webhooks
-Click "Create a new webhook"
-Configure the webhook:
-Name: notification_push_webhook
-Table: notifications
-Events: Select INSERT and UPDATE (to catch both new notifications and when they're marked as push_eligible)
-HTTP Method: POST
-URL: Your Edge Function URL: https://your-project-ref.supabase.co/functions/v1/send-web-push
-Headers: Add the Authorization header with your service role key:
-Authorization
-Filter: Add a condition to only trigger for push-eligible notifications:
-
-
 ## Internationalization (i18n)
 
 This project supports multiple languages. To add or update translations, see the `messages` directory.
