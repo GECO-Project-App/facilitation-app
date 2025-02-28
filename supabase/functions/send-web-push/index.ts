@@ -111,10 +111,25 @@ Deno.serve(async (req) => {
 
     // If notification_id is provided, mark it as sent
     if (notification_id) {
+      // Check if notification has already been sent
+      const { data: notificationData } = await supabaseClient
+        .from('notifications')
+        .select('push_sent')
+        .eq('id', notification_id)
+        .single();
+      
+      if (notificationData?.push_sent) {
+        return new Response(
+          JSON.stringify({ message: 'Notification already sent' }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      // Mark as sent before sending to prevent race conditions
       await supabaseClient
         .from('notifications')
         .update({ push_sent: true })
-        .eq('id', notification_id)
+        .eq('id', notification_id);
     }
 
     return new Response(

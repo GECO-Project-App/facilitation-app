@@ -142,7 +142,7 @@ export const NotificationSettings = () => {
             <p className="text-sm text-gray-500">{t('pushDescription')}</p>
           </div>
           <Switch
-            checked={preferences.push_enabled}
+            checked={preferences.push_enabled && isSubscribed}
             onCheckedChange={(checked) => updatePreferences(checked)}
           />
         </div>
@@ -151,7 +151,7 @@ export const NotificationSettings = () => {
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">{t('teamInvitations')}</label>
             <Switch
-              checked={preferences.notifications.team_invitation}
+              checked={preferences.notifications.team_invitation && isSubscribed}
               onCheckedChange={(checked) =>
                 updatePreferences(undefined, {team_invitation: checked})
               }
@@ -162,7 +162,7 @@ export const NotificationSettings = () => {
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">{t('statusChanges')}</label>
             <Switch
-              checked={preferences.notifications.exercise_status_change}
+              checked={preferences.notifications.exercise_status_change && isSubscribed}
               onCheckedChange={(checked) =>
                 updatePreferences(undefined, {exercise_status_change: checked})
               }
@@ -173,7 +173,7 @@ export const NotificationSettings = () => {
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">{t('newExercises')}</label>
             <Switch
-              checked={preferences.notifications.new_exercise}
+              checked={preferences.notifications.new_exercise && isSubscribed}
               onCheckedChange={(checked) => updatePreferences(undefined, {new_exercise: checked})}
               disabled={!preferences.push_enabled}
             />
@@ -182,7 +182,7 @@ export const NotificationSettings = () => {
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium">{t('deadlines')}</label>
             <Switch
-              checked={preferences.notifications.upcoming_deadline}
+              checked={preferences.notifications.upcoming_deadline && isSubscribed}
               onCheckedChange={(checked) =>
                 updatePreferences(undefined, {upcoming_deadline: checked})
               }
