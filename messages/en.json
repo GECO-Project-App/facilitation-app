@@ -482,6 +482,10 @@
 
 
   "common": {
+    "error": {
+      "title": "Something went wrong!",
+      "description": "Please try again later."
+    },
     "status": {
       "writing": "Writing",
       "reviewing": "Reviewing"

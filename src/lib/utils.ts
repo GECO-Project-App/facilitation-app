@@ -67,19 +67,19 @@ export const checkExerciseAvailibility = (
 ) => {
   switch (slug) {
     case 'ttm':
-      if (!user) {
-        return false;
-      }
-      if (exercise === null && !isFacilitator) {
-        return false;
-      }
-
-      return true;
     case 'ssc':
       if (!user) {
         return false;
       }
+
       if (exercise === null && !isFacilitator) {
+        return false;
+      }
+
+      if (exercise?.reviewing_deadline && new Date() > new Date(exercise.reviewing_deadline)) {
+        if (isFacilitator) {
+          return `/exercises/${slug}/deadline`;
+        }
         return false;
       }
 

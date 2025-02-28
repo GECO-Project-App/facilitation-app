@@ -4,6 +4,7 @@ import {WaitingFor} from '@/components/WaitingFor';
 import {useRouter} from '@/i18n/routing';
 import {ExerciseStatus, PendingUser} from '@/lib/types';
 import {useExerciseStore} from '@/store/exerciseStore';
+import {useTeamStore} from '@/store/teamStore';
 import {useUserStore} from '@/store/userStore';
 import {useTranslations} from 'next-intl';
 import {useSearchParams} from 'next/navigation';
@@ -18,6 +19,7 @@ export default function SSCPage() {
   const router = useRouter();
   const {user} = useUserStore();
   const t = useTranslations();
+  const {isFacilitator} = useTeamStore();
 
   useEffect(() => {
     if (id) {
