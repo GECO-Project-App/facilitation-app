@@ -14,7 +14,7 @@ export const PushNotificationBanner = () => {
   const {user} = useUserStore();
   const supabase = createClient();
   const [preferences, setPreferences] = useState<NotificationPreferences | null>(null);
-  const {subscription, isSupported} = useNotification();
+  const {subscription, isSupported, isSubscribed} = useNotification();
 
   useEffect(() => {
     const loadPreferences = async () => {
@@ -33,7 +33,7 @@ export const PushNotificationBanner = () => {
     loadPreferences();
   }, [supabase, user]);
 
-  if (subscription || !isSupported || preferences?.push_enabled) {
+  if (subscription || !isSupported || preferences?.push_enabled || isSubscribed) {
     return null;
   }
   return (

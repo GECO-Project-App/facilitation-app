@@ -50,43 +50,57 @@ Deno.serve(async (req) => {
 
     if (membersError) throw membersError;
 
-    // Get emails for each team member
-    const membersWithEmails = await Promise.all(
-      teamMembers.map(async (member) => {
-        const { data: email } = await supabaseClient
-          .rpc('get_user_email', { user_id: member.user_id });
-        return { ...member, email };
-      })
-    );
-
-    // Send email to each team member
-    const emailPromises = membersWithEmails.map(async (member) => {
-      if (!member.email) return;
-
-      return fetch('https://api.resend.com/emails', {
+    // Process each team member
+    for (const member of teamMembers) {
+      // Get email for the team member
+      const { data: email } = await supabaseClient
+        .rpc('get_user_email', { user_id: member.user_id });
+      
+      // 1. Send email notification
+      if (email) {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${Deno.env.get("RESEND_API_KEY")}`
+          },
+          body: JSON.stringify({
+            from: 'GECO Team <support@info.projectgeco.com>',
+            to: email,
+            subject: `A new exercise is ready for review`,
+            html: `
+              <p>Hello ${member.profile_name},</p>
+              <p>All team members in ${exercise.teams.name} have submitted their answers.</p>
+              <p>You can now review your team members' submissions.</p>
+              <p>Click the link below to start reviewing:</p>
+              <a href="${Deno.env.get('APP_URL')}/exercises/${exercise.slug}?id=${exercise.id}&status=reviewing">
+                Start Reviewing
+              </a>
+            `
+          })
+        });
+      }
+      
+      // 2. Send web push notification
+      await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/send-web-push`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${Deno.env.get("RESEND_API_KEY")}`
+          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`
         },
         body: JSON.stringify({
-          from: 'GECO Team <support@info.projectgeco.com>',
-          to: member.email,
-          subject: `A new exercise is ready for review`,
-          html: `
-            <p>Hello ${member.profile_name},</p>
-            <p>All team members in ${exercise.teams.name} have submitted their answers.</p>
-            <p>You can now review your team members' submissions.</p>
-            <p>Click the link below to start reviewing:</p>
-            <a href="${Deno.env.get('APP_URL')}/exercises/${exercise.slug}?id=${exercise.id}&status=reviewing">
-              Start Reviewing
-            </a>
-          `
+          user_id: member.user_id,
+          type: 'exercise_status_change',
+          data: {
+            exercise_id: exercise.id,
+            exercise_title: exercise.title || exercise.slug,
+            team_name: exercise.teams.name,
+            new_status: exercise.status,
+            slug: exercise.slug
+          }
         })
       });
-    });
-
-    await Promise.all(emailPromises);
+    }
 
     return new Response(
       JSON.stringify({ success: true }),

@@ -478,6 +478,10 @@
 
 
   "common": {
+    "error": {
+      "title": "Något gick fel!",
+      "description": "Försök igen senare."
+    },
     "status": {
       "writing": "Skriva",
       "reviewing": "Granska"

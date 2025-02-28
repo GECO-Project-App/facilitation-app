@@ -10,13 +10,12 @@ export const sendNotification = async (
   subscription: PushSubscription,
   title: string,
   message: string,
+  data: {url: string},
 ) => {
   const pushPayload = {
     title: title,
     body: message,
-    //image: "/logo.png", if you want to add an image
-    icon: '/user.png',
-    url: process.env.APP_URL ?? '/',
+    data: data,
     badge: '/logo.svg',
   };
 

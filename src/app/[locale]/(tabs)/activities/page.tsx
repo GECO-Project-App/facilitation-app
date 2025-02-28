@@ -63,9 +63,7 @@ export default async function ActivitiesPage() {
               </Link>
             )
           }>
-          <Link href="/test">
-            <h4 className="font-bold">{t('title')}</h4>
-          </Link>
+          <h4 className="font-bold">{t('title')}</h4>
         </Header>
       }>
       <PushNotificationBanner />

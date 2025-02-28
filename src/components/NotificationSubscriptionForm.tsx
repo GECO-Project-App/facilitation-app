@@ -7,17 +7,19 @@ export const NotificationSubscriptionForm = () => {
 
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('/notifications');
 
   const sendNotification = async () => {
     await fetch('/api/web-push/send', {
       method: 'POST',
-      body: JSON.stringify({title, message, subscription}),
+      body: JSON.stringify({title, message, subscription, data: {url}}),
       headers: {
         'Content-Type': 'application/json',
       },
     });
     setMessage('');
     setTitle('');
+    // Keep the URL as is for convenience in testing
   };
 
   return (
@@ -38,6 +40,15 @@ export const NotificationSubscriptionForm = () => {
         placeholder="Notification Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
+      />
+
+      {/* URL Input */}
+      <input
+        type="text"
+        placeholder="Redirect URL"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
         className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
       />
 

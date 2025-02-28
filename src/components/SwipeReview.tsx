@@ -31,6 +31,10 @@ export const SwipeReview: FC = () => {
     const getCards = async () => {
       if (exerciseId) {
         const data = await getTeamExerciseData(exerciseId);
+        if (data.length === 0) {
+          router.push('/exercises/ssc/feedback');
+          return;
+        }
 
         const reviews = extractReviews(data);
 
@@ -43,7 +47,7 @@ export const SwipeReview: FC = () => {
       }
     };
     getCards();
-  }, [exerciseId, getTeamExerciseData, reviewedCards, user]);
+  }, [exerciseId, getTeamExerciseData, reviewedCards, user, router]);
 
   const handleSwipe = async (agree: boolean) => {
     const currentCard = cards[0];
