@@ -144,6 +144,16 @@
     "permissionDeniedDescription": "Du måste tillåta notifieringar i dina webbläsarinställningar för att aktivera push-notiser.",
     "permissionError": "Tillståndsfelet",
     "permissionErrorDescription": "Det uppstod ett fel när tillståndet begärdes. Försök igen."
+  },
+  "emails": {
+      "emailNotifications": "E-postnotifikationer",
+      "emailDescription": "Få e-postnotifikationer om viktiga uppdateringar",
+      "teamInvitations": "Teaminbjudningar",
+      "statusChanges": "Övningsstatusändringar",
+      "newExercises": "Nya övningar",
+      "deadlines": "Deadline-påminnelser",
+      "updateSuccess": "E-postinställningar uppdaterade",
+      "updateError": "Det gick inte att uppdatera e-postinställningarna"
   }
 },
   "profile": {

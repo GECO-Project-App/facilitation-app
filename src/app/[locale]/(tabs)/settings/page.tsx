@@ -1,4 +1,5 @@
 import {
+  EmailSettings,
   Header,
   LanguageSelector,
   NotificationSettings,
@@ -28,6 +29,8 @@ export default async function SettingsPage() {
         <LanguageSelector />
         <div className="flex flex-col justify-center items-center w-full flex-1 gap-8 ">
           <NotificationSettings />
+          <hr className="w-full" />
+          <EmailSettings />
           <hr className="w-full" />
           <ProfileForm />
         </div>

@@ -56,8 +56,25 @@ Deno.serve(async (req) => {
       const { data: email } = await supabaseClient
         .rpc('get_user_email', { user_id: member.user_id });
       
-      // 1. Send email notification
-      if (email) {
+      // Get user's email preferences
+      const { data: userProfile, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('email_preferences')
+        .eq('id', member.user_id)
+        .single();
+      
+      // Check if user has opted out of emails or specifically exercise status change emails
+      let shouldSendEmail = true;
+      if (!profileError && userProfile && userProfile.email_preferences) {
+        const emailPreferences = userProfile.email_preferences;
+        const emailEnabled = emailPreferences?.email_enabled === true;
+        const exerciseStatusChangeEnabled = emailPreferences?.notifications?.exercise_status_change === true;
+        
+        shouldSendEmail = emailEnabled && exerciseStatusChangeEnabled;
+      }
+      
+      // 1. Send email notification if user hasn't opted out
+      if (email && shouldSendEmail) {
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -96,7 +113,8 @@ Deno.serve(async (req) => {
             exercise_title: exercise.title || exercise.slug,
             team_name: exercise.teams.name,
             new_status: exercise.status,
-            slug: exercise.slug
+            slug: exercise.slug,
+            url: `${Deno.env.get('APP_URL')}/exercises/${exercise.slug}?id=${exercise.id}&status=reviewing`
           }
         })
       });

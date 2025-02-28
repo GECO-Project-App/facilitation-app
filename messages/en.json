@@ -146,6 +146,16 @@
       "permissionDeniedDescription": "You need to allow notifications in your browser settings to enable push notifications.",
       "permissionError": "Permission Error",
       "permissionErrorDescription": "There was an error requesting notification permission. Please try again."
+  },
+  "emails": {
+      "emailNotifications": "Email Notifications",
+      "emailDescription": "Receive email notifications about important updates and events.",
+      "teamInvitations": "Team Invitations",
+      "statusChanges": "Exercise Status Changes",
+      "newExercises": "New Exercises",
+      "deadlines": "Upcoming Deadlines",
+      "updateSuccess": "Email preferences updated successfully",
+      "updateError": "Failed to update email preferences"
   }
 },
   "profile": {

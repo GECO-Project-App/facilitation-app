@@ -166,6 +166,7 @@ export type Database = {
           id: string
           last_name: string | null
           notification_preferences: Json
+          email_preferences: Json
           updated_at: string | null
           username: string | null
         }
@@ -175,6 +176,7 @@ export type Database = {
           id: string
           last_name?: string | null
           notification_preferences?: Json
+          email_preferences?: Json
           updated_at?: string | null
           username?: string | null
         }
@@ -184,6 +186,7 @@ export type Database = {
           id?: string
           last_name?: string | null
           notification_preferences?: Json
+          email_preferences?: Json
           updated_at?: string | null
           username?: string | null
         }
@@ -620,6 +623,13 @@ export type Database = {
           p_profile_name: string
         }
         Returns: boolean
+      }
+      update_email_preferences: {
+        Args: {
+          p_email_enabled?: boolean
+          p_notification_settings?: Json
+        }
+        Returns: Json
       }
     }
     Enums: {
