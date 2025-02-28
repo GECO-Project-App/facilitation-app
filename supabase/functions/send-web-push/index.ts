@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
     } else if (type === 'exercise_status_change') {
       notification = {
         title: `Exercise Status Update`,
-        body: `"${data.exercise_title || data.slug}" is now ${data.new_status}`,
+        body: `An exercise with ${data.team_name} is now ${data.new_status}`,
         icon: '/exercise-icon.png',
         data: {
           url: `/exercises/${data.slug}?id=${data.exercise_id}`

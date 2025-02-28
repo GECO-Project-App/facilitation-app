@@ -135,3 +135,12 @@ export type Notification = Database['public']['Tables']['notifications']['Row'];
 export type NotificationType = Database['public']['Enums']['notification_type'];
 export type NotificationPreferences =
   Database['public']['Tables']['notification_preferences']['Row'];
+export type EmailPreferences = {
+  email_enabled: boolean;
+  notifications: {
+    team_invitation: boolean;
+    exercise_status_change: boolean;
+    new_exercise: boolean;
+    upcoming_deadline: boolean;
+  };
+};

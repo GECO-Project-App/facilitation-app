@@ -6,6 +6,7 @@ export * from './BaseballCard';
 export * from './CarouselPagination';
 export * from './DateBadge';
 export * from './dialogs';
+export * from './EmailSettings';
 export * from './ExerciseCard';
 export * from './forms';
 export * from './GecoLoader';
